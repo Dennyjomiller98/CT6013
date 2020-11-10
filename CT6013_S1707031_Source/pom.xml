@@ -56,6 +56,11 @@
     </dependencies>
 
     <build>
+        <resources>
+            <resource>
+                <directory>Config</directory>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

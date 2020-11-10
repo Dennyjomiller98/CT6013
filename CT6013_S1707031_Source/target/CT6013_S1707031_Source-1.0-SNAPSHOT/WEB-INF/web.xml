@@ -7,11 +7,11 @@
     <!--Servlet and Mapping for Servlet (For MongoDB Server)-->
     <servlet>
         <servlet-name>Registration</servlet-name>
-        <servlet-class>Registration</servlet-class>
+        <servlet-class>servlets.Registration</servlet-class>
     </servlet>
 
     <servlet-mapping>
         <servlet-name>Registration</servlet-name>
-        <url-pattern>/registration</url-pattern>
+        <url-pattern>/servlets/registration</url-pattern>
     </servlet-mapping>
 </web-app>
