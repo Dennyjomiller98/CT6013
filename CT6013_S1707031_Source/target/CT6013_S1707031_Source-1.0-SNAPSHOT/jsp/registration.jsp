@@ -8,12 +8,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>servlets.Registration Page</title>
+    <title>Registration Page</title>
 </head>
 <body>
 
 <%--Test form--%>
-<H2>servlets.Registration</H2>
+<H2>Registration</H2>
 <form action="${pageContext.request.contextPath}/servlets/registration" method="POST">
     <label for="firstname">Firstname:</label>
     <input type="text" name="firstname" id="firstname"/>

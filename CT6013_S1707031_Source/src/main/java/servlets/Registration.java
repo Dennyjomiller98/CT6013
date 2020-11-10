@@ -7,13 +7,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import org.apache.logging.log4j.*;
-@WebServlet(name = "servlets.Registration")
+import org.apache.log4j.Logger;
+@WebServlet(name = "Registration")
 public class Registration extends HttpServlet {
-    private static final Logger LOG = LogManager.getLogger(Registration.class);
+    static Logger LOG = Logger.getLogger(Registration.class);
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PrintWriter pw = response.getWriter();
-        pw.print("Testing Servlet servlets.Registration Post Method");
+        pw.print("Testing Servlet Registration Post Method");
         registerCustomer();
     }
 
@@ -21,7 +21,7 @@ public class Registration extends HttpServlet {
     }
 
     private void registerCustomer() {
-        LOG.debug("Beginning Customer servlets.Registration");
+        LOG.debug("Beginning Customer Registration");
     }
 
 
