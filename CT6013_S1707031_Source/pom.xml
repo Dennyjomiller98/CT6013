@@ -53,7 +53,7 @@
     <build>
         <resources>
             <resource>
-                <directory>Config</directory>
+                <directory>src/main/resources/Config</directory>
             </resource>
         </resources>
         <plugins>
