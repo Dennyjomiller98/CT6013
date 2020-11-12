@@ -1,12 +1,11 @@
 package servlets;
 
-import org.apache.log4j.Logger;
-
+import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+import org.apache.log4j.Logger;
 
 @WebServlet(name = "DatabaseSelection")
 public class DatabaseSelection extends HttpServlet
@@ -19,13 +18,15 @@ public class DatabaseSelection extends HttpServlet
         handleDatabaseSelectRequest(request, response);
     }
 
-    private void handleDatabaseSelectRequest(HttpServletRequest request, HttpServletResponse response) {
-        response.setContentType("text/jsp");
+    private void handleDatabaseSelectRequest(HttpServletRequest request, HttpServletResponse response)
+    {
         //Assert Oracle selection
+        boolean haveSelected=false;
         String choice = request.getParameter("oracle");
         if (choice != null && !choice.equals("") && choice.equals("oracle")) {
             try {
-                response.sendRedirect("jsp/oraclehomepage.jsp");
+                response.sendRedirect(request.getContextPath() + "/jsp/oraclehomepage.jsp");
+                haveSelected=true;
             } catch (IOException e) {
                 LOG.error("Failure to select Oracle as preferred database", e);
             }
@@ -35,24 +36,24 @@ public class DatabaseSelection extends HttpServlet
         if (mongodb != null && !mongodb.equals("") && mongodb.equals("mongodb"))
         {
             try {
-                response.sendRedirect("mongohomepage.jsp");
+                response.sendRedirect(request.getContextPath() + "/jsp/mongohomepage.jsp");
+                haveSelected=true;
             } catch (IOException e) {
                 LOG.error("Failure to select MongoDB as preferred database", e);
             }
         }
 
         //Default Fallback - go back to DB select page
-        try {
-            response.sendRedirect("databaseselection.jsp");
-        } catch (IOException e) {
-            LOG.error("No Database selected, and failure in returning to Main DBSelection page", e);
+        if(!haveSelected)
+        {
+            try
+            {
+                response.sendRedirect(request.getContextPath() + "databaseselection.jsp");
+            }
+            catch (IOException e)
+            {
+                LOG.error("No Database selected, and failure in returning to Main DBSelection page", e);
+            }
         }
-
-    }
-
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) {
-        // Empty, should not use GET.
-        // Reason:Form submission in db select: method="POST"
     }
 }

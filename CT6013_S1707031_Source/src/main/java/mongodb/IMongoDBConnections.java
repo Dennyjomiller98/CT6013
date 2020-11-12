@@ -1,6 +1,6 @@
 package mongodb;
 
-import beans.StudentBean;
+import mongodbbeans.StudentBean;
 import org.bson.Document;
 
 import java.util.List;

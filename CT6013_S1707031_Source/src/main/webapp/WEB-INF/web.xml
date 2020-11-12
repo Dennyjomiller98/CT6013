@@ -6,11 +6,11 @@
 
     <!--Servlet and Mapping for Servlet (For MongoDB Server)-->
     <servlet>
-        <servlet-name>Registration</servlet-name>
-        <servlet-class>servlets.StudentRegistration</servlet-class>
+        <servlet-name>mongoStudentRegistration</servlet-name>
+        <servlet-class>servlets.mongoservlets.StudentRegistration</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>Registration</servlet-name>
+        <servlet-name>mongoStudentRegistration</servlet-name>
         <url-pattern>/servlets/StudentRegistration</url-pattern>
     </servlet-mapping>
     <servlet>

@@ -1,11 +1,10 @@
-package beans;
+package oraclebeans;
 
-import org.bson.Document;
-
+import java.util.Date;
 import javax.ejb.ConcurrencyManagement;
 import javax.ejb.ConcurrencyManagementType;
 import javax.ejb.Singleton;
-import java.util.Date;
+import org.bson.Document;
 
 @Singleton(name = "MongoClientProviderEJB")
 @ConcurrencyManagement(ConcurrencyManagementType.CONTAINER)

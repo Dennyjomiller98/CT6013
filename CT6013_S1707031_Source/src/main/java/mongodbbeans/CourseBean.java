@@ -1,4 +1,4 @@
-package beans;
+package mongodbbeans;
 
 public class CourseBean {
 }
