@@ -5,14 +5,7 @@
          version="4.0">
 
     <!--Servlet and Mapping for Servlet (For MongoDB Server)-->
-    <servlet>
-        <servlet-name>mongoStudentRegistration</servlet-name>
-        <servlet-class>servlets.mongoservlets.StudentRegistration</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>mongoStudentRegistration</servlet-name>
-        <url-pattern>/servlets/StudentRegistration</url-pattern>
-    </servlet-mapping>
+    <!--Database Selection-->
     <servlet>
         <servlet-name>DatabaseSelection</servlet-name>
         <servlet-class>servlets.DatabaseSelection</servlet-class>
@@ -21,4 +14,25 @@
         <servlet-name>DatabaseSelection</servlet-name>
         <url-pattern>/servlets/DatabaseSelection</url-pattern>
     </servlet-mapping>
+
+    <!--Students-->
+    <servlet>
+        <servlet-name>mongoStudentRegistration</servlet-name>
+        <servlet-class>servlets.mongoservlets.StudentRegistration</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>mongoStudentRegistration</servlet-name>
+        <url-pattern>/servlets/StudentRegistration</url-pattern>
+    </servlet-mapping>
+
+    <!--Teachers-->
+    <servlet>
+        <servlet-name>mongoTeacherRegistration</servlet-name>
+        <servlet-class>servlets.mongoservlets.TeacherRegistration</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>mongoTeacherRegistration</servlet-name>
+        <url-pattern>/servlets/TeacherRegistration</url-pattern>
+    </servlet-mapping>
+
 </web-app>

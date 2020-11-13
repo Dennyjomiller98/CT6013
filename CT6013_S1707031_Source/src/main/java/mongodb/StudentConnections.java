@@ -9,17 +9,17 @@ import org.bson.Document;
 
 import java.util.ArrayList;
 
-public class StudentConnections extends AbstractMongoDBConnections {
+public class StudentConnections extends AbstractMongoDBConnections
+{
 
     public StudentConnections()
     {
         //Empty Constructor
     }
 
-    @Override
-    public void registerCustomerToDB(Document student) {
-        LOG.debug("Beginning Customer Registration");
-        //Create Mongo Client, access DB and Retrieve Collection to insert new customer Document into
+    public void registerStudentToDB(Document student) {
+        LOG.debug("Beginning Student Registration");
+        //Create Mongo Client, access DB and Retrieve Collection to insert new student Document into
         try (MongoClient mongo = new MongoClient(MONGO_HOST, MONGO_PORT))
         {
             MongoDatabase db = mongo.getDatabase(DBNAME);
@@ -31,7 +31,6 @@ public class StudentConnections extends AbstractMongoDBConnections {
         }
     }
 
-    @Override
     public ArrayList<StudentBean> retrieveAllStudents()
     {
         ArrayList<StudentBean> allStudents = new ArrayList<>();
@@ -53,7 +52,6 @@ public class StudentConnections extends AbstractMongoDBConnections {
         return allStudents;
     }
 
-    @Override
     public StudentBean retrieveSingleStudent(String studentID)
     {
         StudentBean beanToReturn = null;

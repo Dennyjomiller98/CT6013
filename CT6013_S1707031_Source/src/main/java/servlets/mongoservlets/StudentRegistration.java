@@ -17,21 +17,41 @@ public class StudentRegistration extends HttpServlet
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) {
-        Document customerToRegister = new Document();
-        customerToRegister.append("First_Name", request.getParameter("firstname"));
-        customerToRegister.append("Surname", request.getParameter("surname"));
-        customerToRegister.append("Email", request.getParameter("email"));
-        customerToRegister.append("Password", request.getParameter("pword"));
+        //Retrieve form values for Student
+        Document studentToRegister = new Document();
+        studentToRegister.append("Student_ID", request.getParameter("studentID"));
+        studentToRegister.append("First_Name", request.getParameter("firstname"));
+        studentToRegister.append("Surname", request.getParameter("surname"));
+        studentToRegister.append("Email", request.getParameter("email"));
+        studentToRegister.append("DOB", request.getParameter("dob"));
+        String fullAddress = request.getParameter("address1") + "," + request.getParameter("address2") + "," + request.getParameter("city") + "," + request.getParameter("postcode");
+        studentToRegister.append("Address", fullAddress);
+        studentToRegister.append("Password", request.getParameter("pword"));
+        studentToRegister.append("Is_Enrolled", "false");
 
         StudentConnections studentConn = new StudentConnections();
-        studentConn.registerCustomerToDB(customerToRegister);
-        LOG.debug("Customer Registration completed successfully");
 
-        //Attempt to retrieve cust data TODO - Dont do this way obvs (TESTING TO SEE BEAN FUNCTIONALITY)
-        StudentBean studentBean = studentConn.retrieveSingleStudent(request.getParameter("studentID"));
-        LOG.debug("Created studentBean: testing firstname, lastname, studentID, Password, email , etc:" + studentBean );
-
-        redirectMe(request, response);
+        //Check student is not already registered.
+        StudentBean studentEmail = studentConn.retrieveSingleStudent(studentToRegister.getString("Email"));
+        if(studentEmail == null)
+        {
+            //Register Student
+            studentConn.registerStudentToDB(studentToRegister);
+            LOG.debug("Student Registration completed successfully");
+            redirectMe(request, response);
+        }
+        else
+        {
+            request.getSession().setAttribute("registrationErrors", "Unable to register student, the email already exists.");
+            try
+            {
+                response.sendRedirect(request.getContextPath() + "/jsp/students/studentregistration.jsp");
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+        }
     }
 
     private void redirectMe(HttpServletRequest request, HttpServletResponse response)
@@ -40,7 +60,7 @@ public class StudentRegistration extends HttpServlet
         {
             response.sendRedirect(request.getContextPath() + "/jsp/students/studentlogin.jsp");
         } catch (IOException e) {
-            LOG.error("Failure to select Oracle as preferred database", e);
+            LOG.error("Failure to redirect after student successfully registered", e);
         }
     }
 }

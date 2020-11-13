@@ -33,8 +33,8 @@ public class StudentBean
         fDOB = (Date) studentDoc.get("DOB");
         fAddress = String.valueOf(studentDoc.get("Address"));
         fAddress = String.valueOf(studentDoc.get("Postcode"));
-        fPassword = String.valueOf(studentDoc.get("pword"));
-        String isEnrolled = String.valueOf(studentDoc.get("isEnrolled"));
+        fPassword = String.valueOf(studentDoc.get("Password"));
+        String isEnrolled = String.valueOf(studentDoc.get("Is_Enrolled"));
         fIsEnrolled = isEnrolled.equals("true");
     }
 
