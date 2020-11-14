@@ -91,6 +91,22 @@
         <servlet-name>mongoCourseEnrollment</servlet-name>
         <url-pattern>/servlets/course/CourseEnrollment</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>mongoCourseEnrollmentView</servlet-name>
+        <servlet-class>servlets.mongoservlets.course.CourseEnrollmentView</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>mongoCourseEnrollmentView</servlet-name>
+        <url-pattern>/servlets/course/CourseEnrollmentView</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>mongoCourseAddition</servlet-name>
+        <servlet-class>servlets.mongoservlets.course.CourseAddition</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>mongoCourseAddition</servlet-name>
+        <url-pattern>/servlets/course/CourseAddition</url-pattern>
+    </servlet-mapping>
     <!--Module Servlets-->
     <!--Marks Servlets-->
     <!--Redirects-->
@@ -143,6 +159,22 @@
         <url-pattern>/servlets/redirects/HomeToTeacherProfile</url-pattern>
     </servlet-mapping>
     <servlet>
+        <servlet-name>homeToTeacherIndex</servlet-name>
+        <servlet-class>servlets.mongoservlets.redirects.HomeToTeacherIndex</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>homeToTeacherIndex</servlet-name>
+        <url-pattern>/servlets/redirects/HomeToTeacherIndex</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>homeToStudentIndex</servlet-name>
+        <servlet-class>servlets.mongoservlets.redirects.HomeToStudentIndex</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>homeToStudentIndex</servlet-name>
+        <url-pattern>/servlets/redirects/HomeToStudentIndex</url-pattern>
+    </servlet-mapping>
+    <servlet>
         <servlet-name>homeToCourseEnrollment</servlet-name>
         <servlet-class>servlets.mongoservlets.redirects.HomeToCourseEnrollment</servlet-class>
     </servlet>
@@ -158,6 +190,21 @@
         <servlet-name>homeToCourseEnrollmentView</servlet-name>
         <url-pattern>/servlets/redirects/HomeToCourseEnrollmentView</url-pattern>
     </servlet-mapping>
-
+    <servlet>
+        <servlet-name>homeToModuleAddition</servlet-name>
+        <servlet-class>servlets.mongoservlets.redirects.HomeToModuleAddition</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>homeToModuleAddition</servlet-name>
+        <url-pattern>/servlets/redirects/HomeToModuleAddition</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>homeToCourseModuleView</servlet-name>
+        <servlet-class>servlets.mongoservlets.redirects.HomeToModuleView</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>homeToCourseModuleView</servlet-name>
+        <url-pattern>/servlets/redirects/HomeToModuleView</url-pattern>
+    </servlet-mapping>
     <!--ORACLE SERVLETS?-->
 </web-app>

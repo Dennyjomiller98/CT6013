@@ -28,6 +28,7 @@ public class TeacherLogin extends HttpServlet
 		{
 			try
 			{
+				request.getSession(true).removeAttribute("loginErrors");
 				addSessionAttributes(request, teacher);
 				response.sendRedirect(request.getContextPath() + "/jsp/teachers/teacherindex.jsp");
 			}

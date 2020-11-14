@@ -1,11 +1,9 @@
 package mongodbbeans;
 
-import org.bson.Document;
-
 import javax.ejb.ConcurrencyManagement;
 import javax.ejb.ConcurrencyManagementType;
 import javax.ejb.Singleton;
-import java.util.Date;
+import org.bson.Document;
 
 @Singleton(name = "MongoClientProviderEJB")
 @ConcurrencyManagement(ConcurrencyManagementType.CONTAINER)
@@ -15,9 +13,8 @@ public class TeacherBean
 	protected String fFirstName;
 	protected String fSurname;
 	protected String fEmail;
-	protected Date fDOB;
+	protected String fDOB;
 	protected String fAddress;
-	protected String fPostcode;
 	protected String fPassword;
 	protected boolean fIsTeacher;
 	protected boolean fIsEnrolled;
@@ -31,9 +28,8 @@ public class TeacherBean
 		fFirstName = String.valueOf(teacherDoc.get("First_Name"));
 		fSurname = String.valueOf(teacherDoc.get("Surname"));
 		fEmail = String.valueOf(teacherDoc.get("Email"));
-		fDOB = (Date) teacherDoc.get("DOB");
+		fDOB = String.valueOf(teacherDoc.get("DOB"));
 		fAddress = String.valueOf(teacherDoc.get("Address"));
-		fAddress = String.valueOf(teacherDoc.get("Postcode"));
 		fPassword = String.valueOf(teacherDoc.get("Password"));
 		String isTeacher = String.valueOf(teacherDoc.get("Is_Teacher"));
 		fIsTeacher = isTeacher.equals("true");
@@ -48,7 +44,7 @@ public class TeacherBean
 	}
 	public void setTeacherID(String teacherID)
 	{
-		fTeacherID = teacherID;
+		fTeacherID = "TODO";
 	}
 
 	public String getFirstName()
@@ -78,11 +74,11 @@ public class TeacherBean
 		fEmail = email;
 	}
 
-	public Date getDOB()
+	public String getDOB()
 	{
 		return fDOB;
 	}
-	public void setDOB(Date dateOfBirth)
+	public void setDOB(String dateOfBirth)
 	{
 		fDOB = dateOfBirth;
 	}
@@ -94,15 +90,6 @@ public class TeacherBean
 	public void setAddress(String addressCsv)
 	{
 		fAddress = addressCsv;
-	}
-
-	public String getPostcode()
-	{
-		return fPostcode;
-	}
-	public void setPostcode(String postcode)
-	{
-		fPostcode = postcode;
 	}
 
 	public String getPassword()
@@ -131,5 +118,4 @@ public class TeacherBean
 	{
 		fIsEnrolled = isEnrolled;
 	}
-
 }

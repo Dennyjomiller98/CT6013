@@ -4,14 +4,15 @@ import com.mongodb.MongoClient;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
 import java.util.ArrayList;
 import java.util.List;
 import mongodbbeans.StudentBean;
 import org.bson.Document;
+import org.bson.conversions.Bson;
 
 public class StudentConnections extends AbstractMongoDBConnections
 {
-
     public StudentConnections()
     {
         //Empty Constructor
@@ -44,23 +45,23 @@ public class StudentConnections extends AbstractMongoDBConnections
                 StudentBean sBean = new StudentBean(aStudent);
                 allStudents.add(sBean);
             }
-
             LOG.debug("All students retrieved, returning value of: " + allStudents);
         }
         catch (Exception e)
         {
-            LOG.error("Error Occurred during Student Registration", e);
+            LOG.error("Error Occurred trying to retrieve all student", e);
         }
         return allStudents;
     }
 
-    public StudentBean retrieveSingleStudent(String studentID)
+    public StudentBean retrieveSingleStudent(String studentEmail)
     {
+        LOG.debug("Attempting Retrieval of single student: " + studentEmail);
         StudentBean beanToReturn = null;
         List<StudentBean> allStudentBeans = retrieveAllStudents();
         for (StudentBean allStudentBean : allStudentBeans)
         {
-            if (allStudentBean.getEmail().equals(studentID))
+            if (allStudentBean.getEmail().equalsIgnoreCase(studentEmail))
             {
                 beanToReturn = allStudentBean;
             }
@@ -70,6 +71,7 @@ public class StudentConnections extends AbstractMongoDBConnections
 
     public boolean attemptLogin(StudentBean studentBean)
     {
+        LOG.debug("Attempting Student Login");
         //Find the associated email in DB and check login credentials are correct
         boolean isCorrectCredentials = false;
         String email = studentBean.getEmail();
@@ -77,16 +79,26 @@ public class StudentConnections extends AbstractMongoDBConnections
 
         StudentBean potentialStudent = retrieveSingleStudent(email);
         //Email will match at this point, only need to assert Password value to email to authenticate login
-        if(password.equals(potentialStudent.getPassword()))
+        if (potentialStudent != null && password.equals(potentialStudent.getPassword()))
         {
             isCorrectCredentials = true;
         }
         return isCorrectCredentials;
     }
 
-    public void updateStudentDetails(Document studentToUpdate)
+    public void updateStudentDetails(Document studentToUpdate, String email)
     {
-        //Store values into the
-
+        LOG.debug("attempting to update student details");
+        //Store values into the DB
+        try (MongoClient mongo = new MongoClient(MONGO_HOST, MONGO_PORT))
+        {
+            MongoDatabase db = mongo.getDatabase(DBNAME);
+            MongoCollection<Document> collection = db.getCollection(STUDENTS_COLLECTION);
+            Bson bson = Filters.eq("Email", email);
+            collection.replaceOne(bson, studentToUpdate);
+        } catch (Exception e)
+        {
+            LOG.error("Error Occurred during Student Update", e);
+        }
     }
 }

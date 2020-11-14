@@ -16,12 +16,6 @@ public class StudentProfile extends HttpServlet
 	static final Logger LOG = Logger.getLogger(StudentProfile.class);
 
 	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-	{
-		//Empty
-	}
-
-	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 	{
 		//Get Form Submission
@@ -44,8 +38,8 @@ public class StudentProfile extends HttpServlet
 		StudentBean studentBean = studentConn.retrieveSingleStudent(studentToUpdate.getString("Email"));
 		if(studentBean != null)
 		{
-			//Register Student
-			studentConn.updateStudentDetails(studentToUpdate);
+			//Update DB
+			studentConn.updateStudentDetails(studentToUpdate, studentBean.getEmail());
 			LOG.debug("Student Update completed successfully");
 			request.getSession(true).removeAttribute("editErrors");
 			request.getSession(true).setAttribute("updateSuccess", "Details Updated Successfully.");

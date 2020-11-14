@@ -25,7 +25,6 @@ public class TeacherLogout extends HttpServlet
 		{
 			LOG.error("Unable to redirect after Logout", e);
 		}
-
 	}
 
 	private void removeSessionAttributes(HttpServletRequest request)

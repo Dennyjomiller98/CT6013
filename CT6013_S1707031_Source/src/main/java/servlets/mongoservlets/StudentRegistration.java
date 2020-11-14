@@ -39,6 +39,7 @@ public class StudentRegistration extends HttpServlet
             //Register Student
             studentConn.registerStudentToDB(studentToRegister);
             LOG.debug("Student Registration completed successfully");
+            request.getSession(true).removeAttribute("registrationErrors");
             redirectMe(request, response);
         }
         else

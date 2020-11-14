@@ -4,10 +4,12 @@ import com.mongodb.MongoClient;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
 import java.util.ArrayList;
 import java.util.List;
 import mongodbbeans.TeacherBean;
 import org.bson.Document;
+import org.bson.conversions.Bson;
 
 public class TeacherConnections extends AbstractMongoDBConnections
 {
@@ -51,13 +53,13 @@ public class TeacherConnections extends AbstractMongoDBConnections
 		return allTeachers;
 	}
 
-	public TeacherBean retrieveSingleTeacher(String teacherID)
+	public TeacherBean retrieveSingleTeacher(String teacherEmail)
 	{
 		TeacherBean beanToReturn = null;
 		List<TeacherBean> allTeacherBeans = retrieveAllTeachers();
 		for (TeacherBean allTeacherBean : allTeacherBeans)
 		{
-			if (allTeacherBean.getTeacherID().equals(teacherID))
+			if (allTeacherBean.getEmail().equalsIgnoreCase(teacherEmail))
 			{
 				beanToReturn = allTeacherBean;
 			}
@@ -74,10 +76,26 @@ public class TeacherConnections extends AbstractMongoDBConnections
 
 		TeacherBean potentialTeacher = retrieveSingleTeacher(email);
 		//Email will match at this point, only need to assert Password value to email to authenticate login
-		if(password.equals(potentialTeacher.getPassword()))
+		if (potentialTeacher != null && password.equals(potentialTeacher.getPassword()))
 		{
 			isCorrectCredentials = true;
 		}
 		return isCorrectCredentials;
+	}
+
+	public void updateTeacherDetails(Document teacherToUpdate, String email)
+	{
+		LOG.debug("attempting to update teacher details");
+		//Store values into the DB
+		try (MongoClient mongo = new MongoClient(MONGO_HOST, MONGO_PORT))
+		{
+			MongoDatabase db = mongo.getDatabase(DBNAME);
+			MongoCollection<Document> collection = db.getCollection(TEACHERS_COLLECTION);
+			Bson bson = Filters.eq("Email", email);
+			collection.replaceOne(bson, teacherToUpdate);
+		} catch (Exception e)
+		{
+			LOG.error("Error Occurred during Teacher Update", e);
+		}
 	}
 }

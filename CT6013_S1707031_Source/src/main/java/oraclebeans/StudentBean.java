@@ -16,7 +16,6 @@ public class StudentBean
     private String fEmail;
     private Date fDOB;
     private String fAddress;
-    private String fPostcode;
     private boolean fIsEnrolled;
     private String fPassword;
 
@@ -31,7 +30,6 @@ public class StudentBean
         fEmail = String.valueOf(studentDoc.get("Email"));
         fDOB = (Date) studentDoc.get("DOB");
         fAddress = String.valueOf(studentDoc.get("Address"));
-        fAddress = String.valueOf(studentDoc.get("Postcode"));
         fPassword = String.valueOf(studentDoc.get("pword"));
         String isEnrolled = String.valueOf(studentDoc.get("isEnrolled"));
         fIsEnrolled = isEnrolled.equals("true");
@@ -41,7 +39,7 @@ public class StudentBean
     {
         return fStudentID;
     }
-    private void setStudentID(String studentID)
+    public void setStudentID(String studentID)
     {
         fStudentID = studentID;
     }
@@ -50,7 +48,7 @@ public class StudentBean
     {
         return fFirstName;
     }
-    private void setFirstName(String firstName)
+    public void setFirstName(String firstName)
     {
         fFirstName = firstName;
     }
@@ -59,7 +57,7 @@ public class StudentBean
     {
         return fSurname;
     }
-    private void setSurname(String surname)
+    public void setSurname(String surname)
     {
         fSurname = surname;
     }
@@ -68,7 +66,7 @@ public class StudentBean
     {
         return fEmail;
     }
-    private void setEmail(String email)
+    public void setEmail(String email)
     {
         fEmail = email;
     }
@@ -77,7 +75,7 @@ public class StudentBean
     {
         return fDOB;
     }
-    private void setDOB(Date dateOfBirth)
+    public void setDOB(Date dateOfBirth)
     {
         fDOB = dateOfBirth;
     }
@@ -86,25 +84,16 @@ public class StudentBean
     {
         return fAddress;
     }
-    private void setAddress(String addressCsv)
+    public void setAddress(String addressCsv)
     {
         fAddress = addressCsv;
-    }
-
-    public String getPostcode()
-    {
-        return fPostcode;
-    }
-    private void setPostcode(String postcode)
-    {
-        fPostcode = postcode;
     }
 
     public boolean isEnrolled()
     {
         return fIsEnrolled;
     }
-    private void setEnrolled(boolean isStudentEnrolled)
+    public void setEnrolled(boolean isStudentEnrolled)
     {
         fIsEnrolled = isStudentEnrolled;
     }
@@ -113,7 +102,7 @@ public class StudentBean
     {
         return fPassword;
     }
-    private void setPassword(String pword)
+    public void setPassword(String pword)
     {
         fPassword = pword;
     }

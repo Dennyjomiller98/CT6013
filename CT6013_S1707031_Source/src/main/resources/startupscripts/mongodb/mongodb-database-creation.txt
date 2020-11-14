@@ -1,0 +1,5 @@
+db=db.getSiblingDB('db_ct6013_s1707031');
+cust1 = {"First_Name":"test", "Surname":"test2", "Email":"test@test.com", "Password":"pword"};
+db.students.insert(cust1);
+cursor = db.students.find();
+cursor.forEach(printjson);

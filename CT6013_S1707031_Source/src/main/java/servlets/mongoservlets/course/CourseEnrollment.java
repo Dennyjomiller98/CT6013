@@ -14,13 +14,13 @@ public class CourseEnrollment extends HttpServlet
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 	{
-		//Retrieve Student details
+		//Empty Constructor
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 	{
-		//Save Student details
+		//Save course enrollment
 	}
 }
 

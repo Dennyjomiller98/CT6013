@@ -21,7 +21,10 @@
                 <h2>Student Registration</h2>
                 <%--Only show Profile/Logout if user is already logged in--%>
             </div>
-            <% String firstname = (String) session.getAttribute("firstname");
+            <% String firstname = null;
+                if(session.getAttribute("firstname") != null){
+                    firstname = session.getAttribute("firstname").toString();
+                }
                 boolean amITeacher = false;
                 if(session.getAttribute("isTeacher") != null)
                 {
@@ -36,7 +39,7 @@
                 }
                 if(firstname != null){%>
             <div class="topnavdiv">
-                Logged in as: <%=firstname%><br/>
+                <strong>Logged in as: <%=firstname%></strong><br/>
                 <% if(amITeacher)
                 {%>
                 <a style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToTeacherProfile>&nbsp;Profile&nbsp;</a>
@@ -61,6 +64,7 @@
             <% } %>
         </div>
 
+        <%--Main content--%>
         <div class="mainBody">
             <form action="${pageContext.request.contextPath}/servlets/StudentRegistration" method="POST">
 

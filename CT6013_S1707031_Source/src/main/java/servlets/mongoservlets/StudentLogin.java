@@ -29,6 +29,7 @@ public class StudentLogin extends HttpServlet
 			try
 			{
 				addSessionAttributes(request, student);
+				request.getSession(true).removeAttribute("loginErrors");
 				response.sendRedirect(request.getContextPath() + "/jsp/students/studentindex.jsp");
 			}
 			catch (IOException e)
