@@ -1,13 +1,13 @@
 package mongodb;
 
-import mongodbbeans.StudentBean;
 import com.mongodb.MongoClient;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
-import org.bson.Document;
-
 import java.util.ArrayList;
+import java.util.List;
+import mongodbbeans.StudentBean;
+import org.bson.Document;
 
 public class StudentConnections extends AbstractMongoDBConnections
 {
@@ -31,18 +31,20 @@ public class StudentConnections extends AbstractMongoDBConnections
         }
     }
 
-    public ArrayList<StudentBean> retrieveAllStudents()
+    public List<StudentBean> retrieveAllStudents()
     {
         ArrayList<StudentBean> allStudents = new ArrayList<>();
         try (MongoClient mongo = new MongoClient(MONGO_HOST, MONGO_PORT))
         {
             MongoDatabase db = mongo.getDatabase(DBNAME);
-            MongoCollection<Document> collection = db.getCollection(STUDENTS_COLLECTION);
-            FindIterable<Document> allRetrievedDocuments = collection.find();
-            for (Document aStudent : allRetrievedDocuments) {
+            MongoCollection<Document> allRetrievedDocuments = db.getCollection(STUDENTS_COLLECTION);
+            FindIterable<Document> documents = allRetrievedDocuments.find();
+            for (Document aStudent : documents)
+            {
                 StudentBean sBean = new StudentBean(aStudent);
                 allStudents.add(sBean);
             }
+
             LOG.debug("All students retrieved, returning value of: " + allStudents);
         }
         catch (Exception e)
@@ -55,10 +57,10 @@ public class StudentConnections extends AbstractMongoDBConnections
     public StudentBean retrieveSingleStudent(String studentID)
     {
         StudentBean beanToReturn = null;
-        ArrayList<StudentBean> allStudentBeans = retrieveAllStudents();
+        List<StudentBean> allStudentBeans = retrieveAllStudents();
         for (StudentBean allStudentBean : allStudentBeans)
         {
-            if (allStudentBean.getStudentID().equals(studentID))
+            if (allStudentBean.getEmail().equals(studentID))
             {
                 beanToReturn = allStudentBean;
             }
@@ -66,4 +68,25 @@ public class StudentConnections extends AbstractMongoDBConnections
         return beanToReturn;
     }
 
+    public boolean attemptLogin(StudentBean studentBean)
+    {
+        //Find the associated email in DB and check login credentials are correct
+        boolean isCorrectCredentials = false;
+        String email = studentBean.getEmail();
+        String password = studentBean.getPassword();
+
+        StudentBean potentialStudent = retrieveSingleStudent(email);
+        //Email will match at this point, only need to assert Password value to email to authenticate login
+        if(password.equals(potentialStudent.getPassword()))
+        {
+            isCorrectCredentials = true;
+        }
+        return isCorrectCredentials;
+    }
+
+    public void updateStudentDetails(Document studentToUpdate)
+    {
+        //Store values into the
+
+    }
 }

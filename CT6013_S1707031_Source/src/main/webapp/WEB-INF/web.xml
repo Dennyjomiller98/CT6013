@@ -15,6 +15,7 @@
         <url-pattern>/servlets/DatabaseSelection</url-pattern>
     </servlet-mapping>
 
+    <!--MONGODB SERVLETS-->
     <!--Students-->
     <servlet>
         <servlet-name>mongoStudentRegistration</servlet-name>
@@ -24,7 +25,30 @@
         <servlet-name>mongoStudentRegistration</servlet-name>
         <url-pattern>/servlets/StudentRegistration</url-pattern>
     </servlet-mapping>
-
+    <servlet>
+        <servlet-name>mongoStudentLogin</servlet-name>
+        <servlet-class>servlets.mongoservlets.StudentLogin</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>mongoStudentLogin</servlet-name>
+        <url-pattern>/servlets/StudentLogin</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>mongoStudentLogout</servlet-name>
+        <servlet-class>servlets.mongoservlets.StudentLogout</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>mongoStudentLogout</servlet-name>
+        <url-pattern>/servlets/StudentLogout</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>mongoStudentProfile</servlet-name>
+        <servlet-class>servlets.mongoservlets.StudentProfile</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>mongoStudentProfile</servlet-name>
+        <url-pattern>/servlets/StudentProfile</url-pattern>
+    </servlet-mapping>
     <!--Teachers-->
     <servlet>
         <servlet-name>mongoTeacherRegistration</servlet-name>
@@ -34,5 +58,106 @@
         <servlet-name>mongoTeacherRegistration</servlet-name>
         <url-pattern>/servlets/TeacherRegistration</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>mongoTeacherLogin</servlet-name>
+        <servlet-class>servlets.mongoservlets.TeacherLogin</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>mongoTeacherLogin</servlet-name>
+        <url-pattern>/servlets/TeacherLogin</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>mongoTeacherLogout</servlet-name>
+        <servlet-class>servlets.mongoservlets.TeacherLogout</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>mongoTeacherLogout</servlet-name>
+        <url-pattern>/servlets/TeacherLogout</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>mongoTeacherProfile</servlet-name>
+        <servlet-class>servlets.mongoservlets.TeacherProfile</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>mongoTeacherProfile</servlet-name>
+        <url-pattern>/servlets/TeacherProfile</url-pattern>
+    </servlet-mapping>
+    <!--Course Servlets-->
+    <servlet>
+        <servlet-name>mongoCourseEnrollment</servlet-name>
+        <servlet-class>servlets.mongoservlets.course.CourseEnrollment</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>mongoCourseEnrollment</servlet-name>
+        <url-pattern>/servlets/course/CourseEnrollment</url-pattern>
+    </servlet-mapping>
+    <!--Module Servlets-->
+    <!--Marks Servlets-->
+    <!--Redirects-->
+    <servlet>
+        <servlet-name>homeToStudentLogin</servlet-name>
+        <servlet-class>servlets.mongoservlets.redirects.HomeToStudentLogin</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>homeToStudentLogin</servlet-name>
+        <url-pattern>/servlets/redirects/HomeToStudentLogin</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>homeToStudentRegistration</servlet-name>
+        <servlet-class>servlets.mongoservlets.redirects.HomeToStudentRegistration</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>homeToStudentRegistration</servlet-name>
+        <url-pattern>/servlets/redirects/HomeToStudentRegistration</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>homeToTeacherLogin</servlet-name>
+        <servlet-class>servlets.mongoservlets.redirects.HomeToTeacherLogin</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>homeToTeacherLogin</servlet-name>
+        <url-pattern>/servlets/redirects/HomeToTeacherLogin</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>homeToTeacherRegistration</servlet-name>
+        <servlet-class>servlets.mongoservlets.redirects.HomeToTeacherRegistration</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>homeToTeacherRegistration</servlet-name>
+        <url-pattern>/servlets/redirects/HomeToTeacherRegistration</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>homeToStudentProfile</servlet-name>
+        <servlet-class>servlets.mongoservlets.redirects.HomeToStudentProfile</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>homeToStudentProfile</servlet-name>
+        <url-pattern>/servlets/redirects/HomeToStudentProfile</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>homeToTeacherProfile</servlet-name>
+        <servlet-class>servlets.mongoservlets.redirects.HomeToTeacherProfile</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>homeToTeacherProfile</servlet-name>
+        <url-pattern>/servlets/redirects/HomeToTeacherProfile</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>homeToCourseEnrollment</servlet-name>
+        <servlet-class>servlets.mongoservlets.redirects.HomeToCourseEnrollment</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>homeToCourseEnrollment</servlet-name>
+        <url-pattern>/servlets/redirects/HomeToCourseEnrollment</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>homeToCourseEnrollmentView</servlet-name>
+        <servlet-class>servlets.mongoservlets.redirects.HomeToCourseEnrollmentView</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>homeToCourseEnrollmentView</servlet-name>
+        <url-pattern>/servlets/redirects/HomeToCourseEnrollmentView</url-pattern>
+    </servlet-mapping>
 
+    <!--ORACLE SERVLETS?-->
 </web-app>

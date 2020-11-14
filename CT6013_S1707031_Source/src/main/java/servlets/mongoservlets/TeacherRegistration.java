@@ -27,6 +27,7 @@ public class TeacherRegistration extends HttpServlet
 		String fullAddress = request.getParameter("address1") + "," + request.getParameter("address2") + "," + request.getParameter("city") + "," + request.getParameter("postcode");
 		teacherToRegister.append("Address", fullAddress);
 		teacherToRegister.append("Password", request.getParameter("pword"));
+		teacherToRegister.append("Is_Teacher", "true");
 		teacherToRegister.append("Is_Enrolled", "false");
 
 		TeacherConnections teacherConn = new TeacherConnections();
@@ -49,7 +50,7 @@ public class TeacherRegistration extends HttpServlet
 			}
 			catch (IOException e)
 			{
-				e.printStackTrace();
+				LOG.error("Error redirecting Teacher to register page after Teacher registration error", e);
 			}
 		}
 	}

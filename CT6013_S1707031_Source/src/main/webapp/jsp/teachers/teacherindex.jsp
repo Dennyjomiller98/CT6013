@@ -5,10 +5,11 @@
   Time: 00:27
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
+<!DOCTYPE html>
+<%@ page contentType="text/html;charset=UTF-8" %>
+<html lang="en-GB">
 <head>
-    <title>Title</title>
+    <title>Teacher Portal</title>
 </head>
 <body>
     -Add Course

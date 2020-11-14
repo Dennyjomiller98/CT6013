@@ -5,6 +5,7 @@ import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import java.util.ArrayList;
+import java.util.List;
 import mongodbbeans.TeacherBean;
 import org.bson.Document;
 
@@ -29,7 +30,7 @@ public class TeacherConnections extends AbstractMongoDBConnections
 		}
 	}
 
-	public ArrayList<TeacherBean> retrieveAllTeachers()
+	public List<TeacherBean> retrieveAllTeachers()
 	{
 		ArrayList<TeacherBean> allTeachers = new ArrayList<>();
 		try (MongoClient mongo = new MongoClient(MONGO_HOST, MONGO_PORT))
@@ -53,7 +54,7 @@ public class TeacherConnections extends AbstractMongoDBConnections
 	public TeacherBean retrieveSingleTeacher(String teacherID)
 	{
 		TeacherBean beanToReturn = null;
-		ArrayList<TeacherBean> allTeacherBeans = retrieveAllTeachers();
+		List<TeacherBean> allTeacherBeans = retrieveAllTeachers();
 		for (TeacherBean allTeacherBean : allTeacherBeans)
 		{
 			if (allTeacherBean.getTeacherID().equals(teacherID))
@@ -62,5 +63,21 @@ public class TeacherConnections extends AbstractMongoDBConnections
 			}
 		}
 		return beanToReturn;
+	}
+
+	public boolean attemptLogin(TeacherBean teacherBean)
+	{
+		//Find the associated email in DB and check login credentials are correct
+		boolean isCorrectCredentials = false;
+		String email = teacherBean.getEmail();
+		String password = teacherBean.getPassword();
+
+		TeacherBean potentialTeacher = retrieveSingleTeacher(email);
+		//Email will match at this point, only need to assert Password value to email to authenticate login
+		if(password.equals(potentialTeacher.getPassword()))
+		{
+			isCorrectCredentials = true;
+		}
+		return isCorrectCredentials;
 	}
 }

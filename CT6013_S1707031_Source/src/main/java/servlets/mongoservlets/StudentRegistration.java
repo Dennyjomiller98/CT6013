@@ -28,6 +28,7 @@ public class StudentRegistration extends HttpServlet
         studentToRegister.append("Address", fullAddress);
         studentToRegister.append("Password", request.getParameter("pword"));
         studentToRegister.append("Is_Enrolled", "false");
+        studentToRegister.append("Is_Teacher", "false");
 
         StudentConnections studentConn = new StudentConnections();
 
@@ -42,14 +43,15 @@ public class StudentRegistration extends HttpServlet
         }
         else
         {
-            request.getSession().setAttribute("registrationErrors", "Unable to register student, the email already exists.");
+            //Register failure, email exists, alert user.
+            request.getSession(true).setAttribute("registrationErrors", "Unable to register student, the email already exists.");
             try
             {
                 response.sendRedirect(request.getContextPath() + "/jsp/students/studentregistration.jsp");
             }
             catch (IOException e)
             {
-                e.printStackTrace();
+                LOG.error("Unable to redirect after Student Registration Failure", e);
             }
         }
     }

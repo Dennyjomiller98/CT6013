@@ -1,0 +1,52 @@
+a {
+    text-decoration: none;
+    color: black;
+}
+a:hover {
+    color:white;
+    font-weight: bold;
+}
+
+.bodyA:hover {
+    color:black;
+    font-weight: bold;
+}
+a:visited {
+    text-decoration: none;
+}
+.navbar{
+    background: cornflowerblue;
+    display: inline-block;
+    width:100%;
+}
+.topnav{
+    justify-content: center;
+    width: 60%;
+    display: inline-block;
+    text-align: center;
+}
+.topnavdiv{
+    width:20%;
+    float:right;
+    display: inline-block;
+    text-align: center;
+    margin-top:10px;
+}
+.bottomnavdiv{
+    width:20%;
+    float:left;
+    display: inline-block;
+    text-align: center;
+    margin-top:10px;
+}
+h2{
+    color:black;
+    text-align: center;
+}
+#header h1{
+    margin:0;
+}
+body{
+    background: rgba(203,203,203,0.47);
+    margin:0;
+}

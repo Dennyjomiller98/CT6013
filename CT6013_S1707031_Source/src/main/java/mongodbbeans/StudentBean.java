@@ -1,27 +1,27 @@
 package mongodbbeans;
 
-import org.bson.Document;
-
+import java.io.Serializable;
 import javax.ejb.ConcurrencyManagement;
 import javax.ejb.ConcurrencyManagementType;
 import javax.ejb.Singleton;
-import java.util.Date;
+import org.bson.Document;
 
 @Singleton(name = "MongoClientProviderEJB")
 @ConcurrencyManagement(ConcurrencyManagementType.CONTAINER)
-public class StudentBean
+public class StudentBean implements Serializable
 {
-    private String fStudentID;
-    private String fFirstName;
-    private String fSurname;
-    private String fEmail;
-    private Date fDOB;
-    private String fAddress;
-    private String fPostcode;
-    private boolean fIsEnrolled;
-    private String fPassword;
+    protected String fStudentID;
+    protected String fFirstName;
+    protected String fSurname;
+    protected String fEmail;
+    protected String fDOB;
+    protected String fAddress;
+    protected boolean fIsEnrolled;
+    protected String fPassword;
+    protected boolean fIsTeacher;
 
-    public StudentBean() {
+    public StudentBean()
+    {
         //Empty NoArgs constructor
     }
     public StudentBean(Document studentDoc)
@@ -30,19 +30,21 @@ public class StudentBean
         fFirstName = String.valueOf(studentDoc.get("First_Name"));
         fSurname = String.valueOf(studentDoc.get("Surname"));
         fEmail = String.valueOf(studentDoc.get("Email"));
-        fDOB = (Date) studentDoc.get("DOB");
+        fDOB =  String.valueOf(studentDoc.get("DOB"));
         fAddress = String.valueOf(studentDoc.get("Address"));
-        fAddress = String.valueOf(studentDoc.get("Postcode"));
         fPassword = String.valueOf(studentDoc.get("Password"));
         String isEnrolled = String.valueOf(studentDoc.get("Is_Enrolled"));
         fIsEnrolled = isEnrolled.equals("true");
+        String isTeacher = String.valueOf(studentDoc.get("Is_Teacher"));
+        fIsTeacher = isTeacher.equals("true");
     }
 
+    //TODO change the return to fStudentID when auto-increment works
     public String getStudentID()
     {
-        return fStudentID;
+        return "TODO";
     }
-    private void setStudentID(String studentID)
+    public void setStudentID(String studentID)
     {
         fStudentID = studentID;
     }
@@ -51,7 +53,7 @@ public class StudentBean
     {
         return fFirstName;
     }
-    private void setFirstName(String firstName)
+    public void setFirstName(String firstName)
     {
         fFirstName = firstName;
     }
@@ -60,7 +62,7 @@ public class StudentBean
     {
         return fSurname;
     }
-    private void setSurname(String surname)
+    public void setSurname(String surname)
     {
         fSurname = surname;
     }
@@ -69,16 +71,16 @@ public class StudentBean
     {
         return fEmail;
     }
-    private void setEmail(String email)
+    public void setEmail(String email)
     {
         fEmail = email;
     }
 
-    public Date getDOB()
+    public String getDOB()
     {
         return fDOB;
     }
-    private void setDOB(Date dateOfBirth)
+    public void setDOB(String dateOfBirth)
     {
         fDOB = dateOfBirth;
     }
@@ -87,25 +89,16 @@ public class StudentBean
     {
         return fAddress;
     }
-    private void setAddress(String addressCsv)
+    public void setAddress(String addressCsv)
     {
         fAddress = addressCsv;
-    }
-
-    public String getPostcode()
-    {
-        return fPostcode;
-    }
-    private void setPostcode(String postcode)
-    {
-        fPostcode = postcode;
     }
 
     public boolean isEnrolled()
     {
         return fIsEnrolled;
     }
-    private void setEnrolled(boolean isStudentEnrolled)
+    public void setEnrolled(boolean isStudentEnrolled)
     {
         fIsEnrolled = isStudentEnrolled;
     }
@@ -114,8 +107,18 @@ public class StudentBean
     {
         return fPassword;
     }
-    private void setPassword(String pword)
+    public void setPassword(String pword)
     {
         fPassword = pword;
     }
+
+    public boolean isTeacher()
+    {
+        return fIsTeacher;
+    }
+    public void setTeacher(boolean isTeacher)
+    {
+        fIsTeacher = isTeacher;
+    }
+
 }

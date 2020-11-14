@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html lang="en-GB">
     <head>
-        <title>Teacher Login</title>
+        <title>Teacher Registration</title>
     </head>
     <body>
         <H2>Teacher Login</H2>

@@ -11,14 +11,16 @@ import java.util.Date;
 @ConcurrencyManagement(ConcurrencyManagementType.CONTAINER)
 public class TeacherBean
 {
-	private String fTeacherID;
-	private String fFirstName;
-	private String fSurname;
-	private String fEmail;
-	private Date fDOB;
-	private String fAddress;
-	private String fPostcode;
-	private String fPassword;
+	protected String fTeacherID;
+	protected String fFirstName;
+	protected String fSurname;
+	protected String fEmail;
+	protected Date fDOB;
+	protected String fAddress;
+	protected String fPostcode;
+	protected String fPassword;
+	protected boolean fIsTeacher;
+	protected boolean fIsEnrolled;
 
 	public TeacherBean() {
 		//Empty NoArgs constructor
@@ -33,13 +35,18 @@ public class TeacherBean
 		fAddress = String.valueOf(teacherDoc.get("Address"));
 		fAddress = String.valueOf(teacherDoc.get("Postcode"));
 		fPassword = String.valueOf(teacherDoc.get("Password"));
+		String isTeacher = String.valueOf(teacherDoc.get("Is_Teacher"));
+		fIsTeacher = isTeacher.equals("true");
+		String isEnrolled = String.valueOf(teacherDoc.get("Is_Enrolled"));
+		fIsEnrolled = isEnrolled.equals("true");
 	}
 
+	//TODO change the return to fTeacherID when auto-increment works
 	public String getTeacherID()
 	{
-		return fTeacherID;
+		return "TODO";
 	}
-	private void setTeacherID(String teacherID)
+	public void setTeacherID(String teacherID)
 	{
 		fTeacherID = teacherID;
 	}
@@ -48,7 +55,7 @@ public class TeacherBean
 	{
 		return fFirstName;
 	}
-	private void setFirstName(String firstName)
+	public void setFirstName(String firstName)
 	{
 		fFirstName = firstName;
 	}
@@ -57,7 +64,7 @@ public class TeacherBean
 	{
 		return fSurname;
 	}
-	private void setSurname(String surname)
+	public void setSurname(String surname)
 	{
 		fSurname = surname;
 	}
@@ -66,7 +73,7 @@ public class TeacherBean
 	{
 		return fEmail;
 	}
-	private void setEmail(String email)
+	public void setEmail(String email)
 	{
 		fEmail = email;
 	}
@@ -75,7 +82,7 @@ public class TeacherBean
 	{
 		return fDOB;
 	}
-	private void setDOB(Date dateOfBirth)
+	public void setDOB(Date dateOfBirth)
 	{
 		fDOB = dateOfBirth;
 	}
@@ -84,7 +91,7 @@ public class TeacherBean
 	{
 		return fAddress;
 	}
-	private void setAddress(String addressCsv)
+	public void setAddress(String addressCsv)
 	{
 		fAddress = addressCsv;
 	}
@@ -93,7 +100,7 @@ public class TeacherBean
 	{
 		return fPostcode;
 	}
-	private void setPostcode(String postcode)
+	public void setPostcode(String postcode)
 	{
 		fPostcode = postcode;
 	}
@@ -102,8 +109,27 @@ public class TeacherBean
 	{
 		return fPassword;
 	}
-	private void setPassword(String pword)
+	public void setPassword(String pword)
 	{
 		fPassword = pword;
 	}
+
+	public boolean isTeacher()
+	{
+		return fIsTeacher;
+	}
+	public void setTeacher(boolean isTeacher)
+	{
+		fIsTeacher = isTeacher;
+	}
+
+	public boolean isEnrolled()
+	{
+		return fIsEnrolled;
+	}
+	public void setEnrolled(boolean isEnrolled)
+	{
+		fIsEnrolled = isEnrolled;
+	}
+
 }

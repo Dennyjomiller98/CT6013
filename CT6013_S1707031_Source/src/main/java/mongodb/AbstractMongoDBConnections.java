@@ -17,6 +17,6 @@ public abstract class AbstractMongoDBConnections implements IMongoDBConnections{
 
     public AbstractMongoDBConnections()
     {
-        //Empty constructor
+        //Empty constructor, required as Abstract class
     }
 }
