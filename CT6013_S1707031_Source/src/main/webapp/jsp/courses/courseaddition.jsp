@@ -31,28 +31,22 @@
                     String isTeacher = session.getAttribute("isTeacher").toString();
                     amITeacher = isTeacher.equals("true");
                 }
-                boolean amIEnrolled=false;
-                if(session.getAttribute("isEnrolled") != null)
-                {
-                    String isEnrolled = session.getAttribute("isEnrolled").toString();
-                    amIEnrolled = isEnrolled.equals("true");
-                }
                 if(firstname != null){%>
-            <div class="topnavdiv">
-                <strong>Logged in as: <%=firstname%></strong><br/>
-                <% if(amITeacher)
-                {%>
-                <a style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToTeacherProfile>&nbsp;Profile&nbsp;</a>
-                &verbar;
-                <a style="display: inline" href=${pageContext.request.contextPath}/servlets/TeacherLogout>&nbsp;Logout&nbsp;</a>
-                <br/>
-                <a style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToTeacherRegistration>&nbsp;Register Teacher&nbsp;</a>
-                <% } else { %>
-                <a style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToStudentProfile>&nbsp;Profile&nbsp;</a>
-                &verbar;
-                <a style="display: inline" href=${pageContext.request.contextPath}/servlets/StudentLogout>&nbsp;Logout&nbsp;</a>
-                <%}%>
-            </div>
+                <div class="topnavdiv">
+                    <strong>Logged in as: <%=firstname%></strong><br/>
+                    <% if(amITeacher)
+                    {%>
+                    <a style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToTeacherProfile>&nbsp;Profile&nbsp;</a>
+                    &verbar;
+                    <a style="display: inline" href=${pageContext.request.contextPath}/servlets/TeacherLogout>&nbsp;Logout&nbsp;</a>
+                    <br/>
+                    <a style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToTeacherRegistration>&nbsp;Register Teacher&nbsp;</a>
+                    <% } else { %>
+                    <a style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToStudentProfile>&nbsp;Profile&nbsp;</a>
+                    &verbar;
+                    <a style="display: inline" href=${pageContext.request.contextPath}/servlets/StudentLogout>&nbsp;Logout&nbsp;</a>
+                    <%}%>
+                </div>
             <% }else{ %>
             <div class="topnavdiv">
                 <a style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToStudentLogin>&nbsp;Student Login&nbsp;</a>

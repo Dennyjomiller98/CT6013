@@ -10,12 +10,12 @@ import org.bson.Document;
 @ConcurrencyManagement(ConcurrencyManagementType.CONTAINER)
 public class ModuleBean implements Serializable
 {
-	protected String fModuleDeadlines;
+	protected String fModuleStart;
+	protected String fModuleEnd;
 	protected String fModuleCode;
 	protected String fModuleName;
 	protected String fModuleTutor;
 	protected String fRelatedCourse;
-	protected int fCATS;
 	protected int fSemester;
 	protected boolean fIsCompulsory;
 
@@ -30,13 +30,12 @@ public class ModuleBean implements Serializable
 		fModuleName = String.valueOf(moduleDoc.get("Module_Name"));
 		fModuleTutor = String.valueOf(moduleDoc.get("Module_Tutor"));
 		fRelatedCourse = String.valueOf(moduleDoc.get("Related_Course"));
-		String cats = String.valueOf(moduleDoc.get("CATS"));
-		fCATS = Integer.parseInt(cats);
 		String semesterString = String.valueOf(moduleDoc.get("Semester"));
 		fSemester = Integer.parseInt(semesterString);
 		String isCompulsory = String.valueOf(moduleDoc.get("Is_Compulsory"));
 		fIsCompulsory = isCompulsory.equals("true");
-		fModuleDeadlines = String.valueOf(moduleDoc.get("Module_Deadlines"));
+		fModuleStart = String.valueOf(moduleDoc.get("Module_Start"));
+		fModuleEnd = String.valueOf(moduleDoc.get("Module_End"));
 	}
 
 	public String getModuleCode()
@@ -75,16 +74,9 @@ public class ModuleBean implements Serializable
 		fRelatedCourse = relatedCourse;
 	}
 
-	public int getCATS()
-	{
-		return fCATS;
-	}
-	public void setCATS(int cats)
-	{
-		fCATS = cats;
-	}
-
 	//-1 both semesters, 1 semester 1, 2 semester 2
+	//if 1 / 2, Module CATS is 15
+	//if -1, CATS is 30, if -2 (placement) cats is 120
 	public int getSemester()
 	{
 		return fSemester;
@@ -103,13 +95,21 @@ public class ModuleBean implements Serializable
 		fIsCompulsory = isCompulsory;
 	}
 
-	//String csv, relates to semesters (each deadline is for each semester)
-	public String getModuleDeadlines()
+	public String getModuleStart()
 	{
-		return fModuleDeadlines;
+		return fModuleStart;
 	}
-	public void setModuleDeadlines(String moduleDeadlines)
+	public void setModuleStart(String moduleStart)
 	{
-		fModuleDeadlines = moduleDeadlines;
+		fModuleStart = moduleStart;
+	}
+
+	public String getModuleEnd()
+	{
+		return fModuleEnd;
+	}
+	public void setModuleEnd(String moduleEnd)
+	{
+		fModuleEnd = moduleEnd;
 	}
 }

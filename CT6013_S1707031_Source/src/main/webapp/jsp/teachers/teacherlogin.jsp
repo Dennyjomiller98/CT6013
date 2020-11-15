@@ -31,12 +31,6 @@
                     String isTeacher = session.getAttribute("isTeacher").toString();
                     amITeacher = isTeacher.equals("true");
                 }
-                boolean amIEnrolled=false;
-                if(session.getAttribute("isEnrolled") != null)
-                {
-                    String isEnrolled = session.getAttribute("isEnrolled").toString();
-                    amIEnrolled = isEnrolled.equals("true");
-                }
                 if(firstname != null){%>
             <div class="topnavdiv">
                 <strong>Logged in as: <%=firstname%></strong><br/>
@@ -77,11 +71,16 @@
                 <input type="submit" value="Submit">
             </form>
 
-            <% String errors = (String) session.getAttribute("loginErrors");
-                if(errors != null){%>
+            <%  String errors = null;
+                if(session.getAttribute("loginErrors") != null){
+                errors = session.getAttribute("loginErrors").toString();%>
             <p class="error-div" id="errorDiv"><%=errors%></p>
             <%}%>
+            <%if(amITeacher){%>
+                <p>
+                    If you have been sent here after registering a new Teacher, you can <a class="bodyA" style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToTeacherIndex>&nbsp;return to portal here.&nbsp;</a>
+                </p>
+            <% }%>
         </div>
-
     </body>
 </html>

@@ -25,9 +25,11 @@ public class DatabaseSelection extends HttpServlet
         String choice = request.getParameter("oracle");
         if (choice != null && !choice.equals("") && choice.equals("oracle")) {
             try {
+                request.getSession(true).setAttribute("DBSELECTION", "ORACLE");
                 response.sendRedirect(request.getContextPath() + "/jsp/oraclehomepage.jsp");
                 haveSelected=true;
             } catch (IOException e) {
+                request.getSession(true).removeAttribute("DBSELECTION");
                 LOG.error("Failure to select Oracle as preferred database", e);
             }
         }
@@ -36,9 +38,11 @@ public class DatabaseSelection extends HttpServlet
         if (mongodb != null && !mongodb.equals("") && mongodb.equals("mongodb"))
         {
             try {
+                request.getSession(true).setAttribute("DBSELECTION", "MONGODB");
                 response.sendRedirect(request.getContextPath() + "/jsp/mongohomepage.jsp");
                 haveSelected=true;
             } catch (IOException e) {
+                request.getSession(true).removeAttribute("DBSELECTION");
                 LOG.error("Failure to select MongoDB as preferred database", e);
             }
         }

@@ -4,11 +4,12 @@ import com.mongodb.MongoClient;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
 import java.util.ArrayList;
 import java.util.List;
 import mongodbbeans.CourseBean;
-import mongodbbeans.StudentBean;
 import org.bson.Document;
+import org.bson.conversions.Bson;
 
 public class CourseConnections extends AbstractMongoDBConnections
 {
@@ -70,8 +71,19 @@ public class CourseConnections extends AbstractMongoDBConnections
 		return beanToReturn;
 	}
 
-	public void updateCourse(Document CourseToUpdate, String CourseCode)
+	public void updateCourse(Document courseToUpdate, String courseCode)
 	{
-
+		LOG.debug("attempting to update course details of courseCode: " + courseCode);
+		//Store values into the DB
+		try (MongoClient mongo = new MongoClient(MONGO_HOST, MONGO_PORT))
+		{
+			MongoDatabase db = mongo.getDatabase(DBNAME);
+			MongoCollection<Document> collection = db.getCollection(COURSES_COLLECTION);
+			Bson bson = Filters.eq("Course_Code", courseCode);
+			collection.replaceOne(bson, courseToUpdate);
+		} catch (Exception e)
+		{
+			LOG.error("Error Occurred during Course Update", e);
+		}
 	}
 }

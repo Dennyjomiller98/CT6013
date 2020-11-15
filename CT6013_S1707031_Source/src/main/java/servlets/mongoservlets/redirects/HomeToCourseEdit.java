@@ -9,16 +9,15 @@ import mongodb.CourseConnections;
 import mongodbbeans.CourseBean;
 import org.apache.log4j.Logger;
 
-@WebServlet(name = "homeToCourseEnrollmentView")
-public class HomeToCourseEnrollmentView extends HttpServlet
+@WebServlet(name = "homeToCourseEdit")
+public class HomeToCourseEdit extends HttpServlet
 {
-	static final Logger LOG = Logger.getLogger(HomeToCourseEnrollmentView.class);
+	static final Logger LOG = Logger.getLogger(HomeToCourseEdit.class);
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 	{
-		//Remove any course attributes or table(s) will show regardless.
-		removeLingeringCourseSessionAttributes(request);
+		//Get course details passed through params (HomeToCourseEdit?value=courseCode)
 		String courseCode = request.getParameter("courseCode");
 		CourseConnections courseConn = new CourseConnections();
 		CourseBean beanToEdit = courseConn.retrieveSingleCourse(courseCode);
@@ -40,26 +39,14 @@ public class HomeToCourseEnrollmentView extends HttpServlet
 			request.getSession(true).removeAttribute("courseStart");
 			request.getSession(true).removeAttribute("courseEnd");
 		}
-
+		//Just A Redirect
 		try
 		{
-			response.sendRedirect(request.getContextPath() + "/jsp/courses/courseenrollmentview.jsp");
+			response.sendRedirect(request.getContextPath() + "/jsp/courses/courseedit.jsp");
 		}
 		catch (IOException e)
 		{
-			LOG.error("Unable to redirect to view course enrollment page.",e);
+			LOG.error("Unable to redirect to course edit page.",e);
 		}
-	}
-
-	private void removeLingeringCourseSessionAttributes(HttpServletRequest request)
-	{
-		request.removeAttribute("allCourses");
-		request.removeAttribute("courseCode");
-		request.removeAttribute("courseName");
-		request.removeAttribute("courseTutor");
-		request.removeAttribute("courseStart");
-		request.removeAttribute("courseEnd");
-		request.getSession(true).removeAttribute("courseSuccess");
-		request.getSession(true).removeAttribute("courseErrors");
 	}
 }

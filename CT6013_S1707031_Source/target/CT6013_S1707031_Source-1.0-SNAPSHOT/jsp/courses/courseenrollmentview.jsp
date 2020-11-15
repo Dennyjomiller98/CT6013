@@ -1,7 +1,7 @@
 <%@ page import="mongodb.CourseConnections" %>
 <%@ page import="mongodbbeans.CourseBean" %>
 <%@ page import="java.util.List" %>
-<%@ page import="java.util.ArrayList" %><%--
+<%--
   Created by IntelliJ IDEA.
   User: Denny-Jo
   Date: 14/11/2020
@@ -69,21 +69,21 @@
 
         <%--Main Content--%>
         <div class="mainBody">
+            <p>
+                Please select a course from the following available. If left on "Show ALL courses", all courses will be shown below.
+            </p>
             <form action="${pageContext.request.contextPath}/servlets/course/CourseEnrollmentView" method="GET">
                 <label for="courseSelect">Select a Course:</label>
-                <select style="width: 30%" name="courseSelect" id="courseSelect">
+                <select class="select-css" style="width: 50%; display: inline-block" name="courseSelect" id="courseSelect">
                     <option value="*">Show ALL courses</option>
-                        <%if (amIEnrolled || amITeacher)
+                        <%CourseConnections conn = new CourseConnections();
+                        List<CourseBean> courseBeans = conn.retrieveAllCourses();
+                        if (courseBeans != null)
                         {
-                            CourseConnections conn = new CourseConnections();
-                            List<CourseBean> courseBeans = conn.retrieveAllCourses();
-                            if (courseBeans != null)
-                            {
-                                for (CourseBean courseBean : courseBeans)
-                                { %>
-                                    <option value="<%=courseBean.getCourseCode()%>"><%=courseBean.getCourseCode()%> : <%=courseBean.getCourseName()%></option>
-                                <%}
-                            }
+                            for (CourseBean courseBean : courseBeans)
+                            { %>
+                                <option value="<%=courseBean.getCourseCode()%>"><%=courseBean.getCourseCode()%> : <%=courseBean.getCourseName()%></option>
+                            <%}
                         }%>
                 </select>
                 <input type="submit" value="Search">
@@ -100,7 +100,7 @@
             <p class="success-div" id="successDiv"><%=courseSuccess%></p>
             <% } %>
 
-            <%--All courses--%>
+            <%--All course details--%>
             <%if(session.getAttribute("allCourses") != null){ %>
                 <table id="AllCourse">
                     <caption></caption>
@@ -126,13 +126,16 @@
                         <td><%=courseTutor%></td>
                         <td><%=courseStart%></td>
                         <td><%=courseEnd%></td>
-                        <td>Actions</td>
+                        <td>
+                            <a class="bodyA" style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToModuleView?courseCode=<%=courseCode%>>&nbsp;<u>Modules</u>&nbsp;</a>
+                            <%if(amITeacher){%> &verbar; <a class="bodyA" style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToCourseEdit?courseCode=<%=courseCode%>>&nbsp;<u>Edit</u>&nbsp;</a> <%}%>
+                        </td>
                     </tr>
                 <% } %>
                 </table>
             <%}%>
 
-            <%--Show Course Details--%>
+            <%--Single Course Details--%>
             <%  String courseCode=null;
                 String courseName=null;
                 String courseTutor=null;
@@ -175,7 +178,10 @@
                     <td><%=courseTutor%></td>
                     <td><%=courseStart%></td>
                     <td><%=courseEnd%></td>
-                    <td>Actions</td>
+                    <td>
+                        <a class="bodyA" style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToModuleView?courseCode=<%=courseCode%>>&nbsp;<u>Modules</u>&nbsp;</a>
+                        <%if(amITeacher){%> &verbar; <a class="bodyA" style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToCourseEdit?courseCode=<%=courseCode%>>&nbsp;<u>Edit</u>&nbsp;</a><%}%>
+                    </td>
                 </tr>
             </table>
             <%}%>

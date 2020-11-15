@@ -18,6 +18,7 @@ a:visited {
     background: cornflowerblue;
     display: inline-block;
     width:100%;
+    border-radius: 5px
 }
 .topnav{
     justify-content: center;
@@ -39,6 +40,9 @@ a:visited {
     text-align: center;
     margin-top:10px;
 }
+.bottomnavdiv:hover {
+    color: black;
+}
 h2{
     color:black;
     text-align: center;
@@ -49,4 +53,17 @@ h2{
 body{
     background: rgba(203,203,203,0.47);
     margin:0;
+}
+
+.dbLogout {
+    display: inline;
+    float:left;
+    margin-left:20px;
+    margin-top:10px;
+    font-weight: bold;
+    border-radius: 5px;
+    background-color: gainsboro;
+}
+.dbLogout:hover {
+    color: black;
 }

@@ -51,10 +51,10 @@ public class CourseEnrollmentView extends HttpServlet
 			{
 				//Get CourseBean values, set in session
 				request.getSession(true).setAttribute("courseCode", beanToReturn.getCourseCode());
-				request.getSession(true).setAttribute("courseName", beanToReturn.getCourseCode());
-				request.getSession(true).setAttribute("courseTutor", beanToReturn.getCourseCode());
-				request.getSession(true).setAttribute("courseStart", beanToReturn.getCourseCode());
-				request.getSession(true).setAttribute("courseEnd", beanToReturn.getCourseCode());
+				request.getSession(true).setAttribute("courseName", beanToReturn.getCourseName());
+				request.getSession(true).setAttribute("courseTutor", beanToReturn.getCourseTutor());
+				request.getSession(true).setAttribute("courseStart", beanToReturn.getCourseStart());
+				request.getSession(true).setAttribute("courseEnd", beanToReturn.getCourseEnd());
 				request.getSession(true).removeAttribute("courseErrors");
 				request.getSession(true).removeAttribute("allCourses");
 				request.getSession(true).setAttribute("courseSuccess", "Course Data successfully retrieved.");

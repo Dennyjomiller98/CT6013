@@ -8,10 +8,61 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <!DOCTYPE html>
 <html lang="en-GB">
-<head>
-    <title>Oracle HomePage</title>
-</head>
-<body>
+<link href=${pageContext.request.contextPath}/css/navbar.css rel="stylesheet" type="text/css">
+<link href=${pageContext.request.contextPath}/css/mainbody.css rel="stylesheet" type="text/css">
+    <head>
+        <title>Oracle HomePage</title>
+    </head>
+    <body>
+        <%--Navbar--%>
+        <div class="navbar">
+            <div class="bottomnavdiv">
+                <a style="display: inline; float:left; margin-left:20px; margin-top:10px; border-radius: 5px; background-color: gainsboro;"  href=${pageContext.request.contextPath}/servlets/redirects/HomeToDatabaseLogout>&nbsp;DB Logout&nbsp;</a>
+            </div>
+            <div class="topnav">
+                <h2>Oracle Home</h2>
+                <%--Only show Profile/Logout if user is already logged in--%>
+            </div>
+            <% String firstname = null;
+                if(session.getAttribute("firstname") != null){
+                    firstname = session.getAttribute("firstname").toString();
+                }
+                boolean amITeacher = false;
+                if(session.getAttribute("isTeacher") != null)
+                {
+                    String isTeacher = session.getAttribute("isTeacher").toString();
+                    amITeacher = isTeacher.equals("true");
+                }
+                if(firstname != null){%>
+            <div class="topnavdiv">
+                <strong>Logged in as: <%=firstname%></strong><br/>
+                <% if(amITeacher)
+                {%>
+                <a style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToTeacherProfile>&nbsp;Profile&nbsp;</a>
+                &verbar;
+                <a style="display: inline" href=${pageContext.request.contextPath}/servlets/TeacherLogout>&nbsp;Logout&nbsp;</a>
+                <br/>
+                <a style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToTeacherRegistration>&nbsp;Register Teacher&nbsp;</a>
+                <% } else { %>
+                <a style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToStudentProfile>&nbsp;Profile&nbsp;</a>
+                &verbar;
+                <a style="display: inline" href=${pageContext.request.contextPath}/servlets/StudentLogout>&nbsp;Logout&nbsp;</a>
+                <%}%>
+            </div>
+            <% }else{ %>
+            <div class="topnavdiv">
+                <a style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToStudentLogin>&nbsp;Student Login&nbsp;</a>
+                &verbar;
+                <a style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToStudentRegistration>&nbsp;Register&nbsp;</a>
+                <br/>
+                <a style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToTeacherLogin>&nbsp;Teacher Login&nbsp;</a>
+            </div>
+            <% } %>
+        </div>
 
-</body>
+        <%--Main Content--%>
+        <div class="mainBody">
+
+        </div>
+    </body>
 </html>

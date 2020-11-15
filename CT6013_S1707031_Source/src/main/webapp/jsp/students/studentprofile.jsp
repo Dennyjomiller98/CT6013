@@ -123,6 +123,13 @@
                 if(success != null){%>
             <p class="success-div" id="successDiv"><%=success%></p>
             <%}%>
+
+            <ul>
+                <li><a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToStudentIndex>&nbsp;Student Portal&nbsp;</a></li>
+                <li><a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToCourseEnrollmentView>&nbsp;View Courses&nbsp;</a></li>
+                <li><a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToModuleView>&nbsp;View Modules&nbsp;</a></li>
+                <li><a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToModuleView>&nbsp;View Modules&nbsp;</a></li>
+            </ul>
         </div>
     </body>
 </html>

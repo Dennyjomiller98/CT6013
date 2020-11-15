@@ -2,7 +2,7 @@
   Created by IntelliJ IDEA.
   User: Denny-Jo
   Date: 14/11/2020
-  Time: 15:18
+  Time: 18:38
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" %>
@@ -11,14 +11,14 @@
 <link href=${pageContext.request.contextPath}/css/navbar.css rel="stylesheet" type="text/css">
 <link href=${pageContext.request.contextPath}/css/mainbody.css rel="stylesheet" type="text/css">
     <head>
-        <title>Add Module</title>
+        <title>Edit Course</title>
     </head>
     <body>
         <%--Navbar--%>
         <div class="navbar">
             <div class="bottomnavdiv"></div>
             <div class="topnav">
-                <h2>Add Module</h2>
+                <h2>Add Course</h2>
                 <%--Only show Profile/Logout if user is already logged in--%>
             </div>
             <% String firstname = null;
@@ -58,60 +58,70 @@
             <% } %>
         </div>
 
-        <%--Main content--%>
+        <%--Main Content--%>
         <div class="mainBody">
             <p>
-                To add a module, please fill in the following form.
+                Edit the required details and submit to save changes.
             </p>
-
-            <form action="${pageContext.request.contextPath}/servlets/module/ModuleAddition" method="POST">
-                <label for="moduleCode">Module Code:</label>
-                <input type="text" name="moduleCode" id="moduleCode" required/>
+            <form action="${pageContext.request.contextPath}/servlets/course/CourseUpdate" method="POST">
+                <% String courseCode = null;
+                    if (session.getAttribute("courseCode") != null)
+                    {
+                        courseCode = session.getAttribute("courseCode").toString();
+                    }%>
+                <label for="courseCode">Course Code:</label>
+                <input readonly type="text" name="courseCode" id="courseCode" <% if(courseCode != null){%> value="<%=courseCode%>" <%}%> required/>
                 <br/>
-                <label for="moduleName">Module Name:</label>
-                <input type="text" name="moduleName" id="moduleName" required/>
+                <% String courseName = null;
+                    if (session.getAttribute("courseName") != null)
+                    {
+                        courseName = session.getAttribute("courseName").toString();
+                    }%>
+                <label for="courseName">Course Name:</label>
+                <input type="text" name="courseName" id="courseName" <% if(courseName != null){%> value="<%=courseName%>" <%}%> required/>
                 <br/>
-                <label for="moduleTutor">Module Tutor Email:</label>
-                <input type="email" name="moduleTutor" id="moduleTutor" required/>
+                <% String courseTutor = null;
+                    if (session.getAttribute("courseTutor") != null)
+                    {
+                        courseTutor = session.getAttribute("courseTutor").toString();
+                    }%>
+                <label for="courseTutor">Course Tutor Email:</label>
+                <input type="email" name="courseTutor" id="courseTutor" <% if(courseTutor != null){%> value="<%=courseTutor%>" <%}%> required/>
                 <br/>
-                <label for="relatedCourse">Related Course:</label>
-                <input type="text" name="relatedCourse" id="relatedCourse" required/>
+                <% String courseStart = null;
+                    if (session.getAttribute("courseStart") != null)
+                    {
+                        courseStart = session.getAttribute("courseStart").toString();
+                    }%>
+                <label for="courseStart">Course Start Date:</label>
+                <input type="date" name="courseStart" id="courseStart" <% if(courseStart != null){%> value="<%=courseStart%>" <%}%> required/>
                 <br/>
-                <label for="isCompulsory">Compulsory Module:</label>
-                <input type="checkbox" name="isCompulsory" id="isCompulsory" />
-                <br/>
-                <label for="semester">Semester:</label>
-                <select class="select-css" style="width: 50%; display: inline-block" name="semester" id="semester">
-                    <option value="1">Semester 1</option>
-                    <option value="2">Semester 2</option>
-                    <option value="-1">Semester 1 and 2</option>
-                    <option value="-2">Placement</option>
-                </select>
-                <br/>
-                <label for="moduleStart">Course Start:</label>
-                <input type="date" name="moduleStart" id="moduleStart" required/>
-                <br/>
-                <label for="moduleEnd">Course End:</label>
-                <input type="date" name="moduleEnd" id="moduleEnd" required/>
+                <% String courseEnd = null;
+                    if (session.getAttribute("courseEnd") != null)
+                    {
+                        courseEnd = session.getAttribute("courseEnd").toString();
+                    }%>
+                <label for="courseEnd">Course End Date</label>
+                <input type="date" name="courseEnd" id="courseEnd" <% if(courseEnd != null){%> value="<%=courseEnd%>" <%}%> required/>
                 <br/>
                 <input type="reset" value="Clear">
                 <input type="submit" value="Submit">
             </form>
 
-            <% String success = (String) session.getAttribute("moduleSuccess");
+            <% String success = (String) session.getAttribute("courseSuccess");
                 if(success != null){%>
             <p class="success-div" id="successDiv"><%=success%></p>
             <%}%>
 
-            <% String errors = (String) session.getAttribute("moduleErrors");
+            <% String errors = (String) session.getAttribute("courseErrors");
                 if(errors != null){%>
             <p class="error-div" id="errorDiv"><%=errors%></p>
             <%}%>
 
             <ul>
-                <li><a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToModuleView>&nbsp;View Modules&nbsp;</a></li>
-                <li><a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToCourseAddition>&nbsp;Add Courses&nbsp;</a></li>
                 <li><a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToCourseEnrollmentView>&nbsp;View Courses&nbsp;</a></li>
+                <li><a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToModuleAddition>&nbsp;Add Modules&nbsp;</a></li>
+                <li><a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToModuleView>&nbsp;View Modules&nbsp;</a></li>
             </ul>
         </div>
     </body>

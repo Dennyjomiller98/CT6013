@@ -1,4 +1,4 @@
-<%@ page import="oraclebeans.StudentBean" %><%--
+<%--
   Created by IntelliJ IDEA.
   User: Denny-Jo
   Date: 10/11/2020
@@ -31,12 +31,6 @@
                     String isTeacher = session.getAttribute("isTeacher").toString();
                     amITeacher = isTeacher.equals("true");
                 }
-                boolean amIEnrolled=false;
-                if(session.getAttribute("isEnrolled") != null)
-                {
-                    String isEnrolled = session.getAttribute("isEnrolled").toString();
-                    amIEnrolled = isEnrolled.equals("true");
-                }
                 if(firstname != null){%>
             <div class="topnavdiv">
                 <strong>Logged in as: <%=firstname%></strong><br/>
@@ -67,7 +61,6 @@
         <%--Main content--%>
         <div class="mainBody">
             <form action="${pageContext.request.contextPath}/servlets/StudentRegistration" method="POST">
-
                 <label for="firstname">Firstname:</label>
                 <input type="text" name="firstname" id="firstname" required/>
                 <br/>
@@ -99,9 +92,12 @@
                 <input type="submit" value="Submit">
             </form>
 
-            <% String errors = (String) session.getAttribute("registrationErrors");
-                if(errors != null){%>
-            <p class="error-div" id="errorDiv"><%=errors%></p>
+            <% String errors = null;
+            if(session.getAttribute("registrationErrors") != null){
+                errors = session.getAttribute("registrationErrors").toString();
+            }
+            if(errors != null){%>
+                <p class="error-div" id="errorDiv"><%=errors%></p>
             <%}%>
         </div>
     </body>

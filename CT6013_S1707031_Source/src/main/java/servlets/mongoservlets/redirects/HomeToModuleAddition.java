@@ -18,6 +18,8 @@ public class HomeToModuleAddition extends HttpServlet
 		//Just A Redirect
 		try
 		{
+			request.getSession(true).removeAttribute("moduleSuccess");
+			request.getSession(true).removeAttribute("moduleErrors");
 			response.sendRedirect(request.getContextPath() + "/jsp/modules/moduleaddition.jsp");
 		}
 		catch (IOException e)

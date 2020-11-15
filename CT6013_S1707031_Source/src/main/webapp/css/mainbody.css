@@ -1,3 +1,7 @@
+*{
+    font-family: "Century Gothic", sans-serif;
+}
+
 .mainBody{
     text-align: center;
     color: black;
@@ -7,4 +11,205 @@
 table{
     text-align: center;
     width:100%
+}
+
+.success-div{
+    background: lightgreen;
+    text-align: center;
+    display: inline-block;
+    width:25%
+}
+
+.error-div{
+    background: #e53c3c;
+    text-align: center;
+    display: inline-block;
+    width:25%
+}
+
+.select-css {
+    display: block;
+    font-size: 16px;
+    font-family: sans-serif;
+    font-weight: 700;
+    color: #444;
+    padding: .6em 1.4em .5em .8em;
+    width: 50%;
+    max-width: 100%;
+    box-sizing: border-box;
+    margin: 0;
+    box-shadow: 0 1px 0 1px rgba(0,0,0,.04);
+    border-radius: .5em;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: rgba(203,203,203,0.47);
+    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23007CB2%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E'),
+    linear-gradient(to bottom, #ffffff 0%,#e5e5e5 100%);
+    background-repeat: no-repeat, repeat;
+    background-position: right .7em top 50%, 0 0;
+    background-size: .65em auto, 100%;
+}
+.select-css::-ms-expand {
+    display: none;
+}
+.select-css:hover {
+    border-color: #888;
+}
+.select-css:focus {
+    box-shadow: 0 0 0 3px -moz-mac-focusring;
+    color: #222;
+    outline: none;
+}
+.select-css option {
+    font-weight:normal;
+}
+
+form {
+    width:50%;
+    display: inline-block;
+    text-align: center;
+}
+
+input[type=text], select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+input[type=date], select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+input[type=email], select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+input[type=submit] {
+    width: 25%;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: white;
+    display: inline-block;
+    margin: 3%;
+}
+
+input[type=reset] {
+    width: 25%;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: white;
+    display: inline-block;
+    margin: 5%;
+}
+
+strong {
+    font-weight: bold;
+}
+
+em {
+    font-style: italic;
+}
+
+table {
+    background: #f5f5f5;
+    border-collapse: separate;
+    box-shadow: inset 0 1px 0 #fff;
+    line-height: 24px;
+    margin: 30px auto;
+    text-align: left;
+    width: 80%;
+}
+
+th {
+    background: lightblue;
+    border-left: 1px solid #555;
+    border-right: 1px solid #555;
+    border-top: 1px solid #555;
+    border-bottom: 1px solid #555;
+    font-weight: bold;
+    padding: 10px 15px;
+    position: relative;
+}
+
+th:after {
+    background: linear-gradient(rgba(255,255,255,0), rgba(255,255,255,.08));
+    content: '';
+    display: block;
+    height: 25%;
+    left: 0;
+    margin: 1px 0 0 0;
+    position: absolute;
+    top: 25%;
+    width: 100%;
+}
+
+th:first-child {
+    border-left: 1px solid #777;
+    box-shadow: inset 1px 1px 0 #999;
+}
+
+th:last-child {
+    box-shadow: inset -1px 1px 0 #999;
+}
+
+td {
+    border-right: 1px solid #fff;
+    border-left: 1px solid #e8e8e8;
+    border-top: 1px solid #fff;
+    border-bottom: 1px solid #e8e8e8;
+    padding: 10px 15px;
+    position: relative;
+    transition: all 300ms;
+}
+
+td:first-child {
+    box-shadow: inset 1px 0 0 #fff;
+}
+
+td:last-child {
+    border-right: 1px solid #e8e8e8;
+    box-shadow: inset -1px 0 0 #fff;
+}
+
+tr:last-of-type td {
+    box-shadow: inset 0 -1px 0 #fff;
+}
+
+tr:last-of-type td:first-child {
+    box-shadow: inset 1px -1px 0 #fff;
+}
+
+tr:last-of-type td:last-child {
+    box-shadow: inset -1px -1px 0 #fff;
+}
+
+tbody:hover td {
+}
+
+tbody:hover tr:hover td {
+    color: #444;
 }

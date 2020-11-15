@@ -18,6 +18,14 @@ public class HomeToCourseAddition extends HttpServlet
 		//Just A Redirect
 		try
 		{
+			request.getSession(true).removeAttribute("allCourses");
+			request.getSession(true).removeAttribute("courseCode");
+			request.getSession(true).removeAttribute("courseName");
+			request.getSession(true).removeAttribute("courseTutor");
+			request.getSession(true).removeAttribute("courseStart");
+			request.getSession(true).removeAttribute("courseEnd");
+			request.getSession(true).removeAttribute("courseSuccess");
+			request.getSession(true).removeAttribute("courseErrors");
 			response.sendRedirect(request.getContextPath() + "/jsp/courses/courseaddition.jsp");
 		}
 		catch (IOException e)

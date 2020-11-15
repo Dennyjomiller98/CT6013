@@ -16,7 +16,9 @@
     <body>
         <%--Navbar--%>
         <div class="navbar">
-            <div class="bottomnavdiv"></div>
+            <div class="bottomnavdiv">
+                <a style="display: inline; float:left; margin-left:20px; margin-top:10px; border-radius: 5px; background-color: gainsboro;"  href=${pageContext.request.contextPath}/servlets/redirects/HomeToDatabaseLogout>&nbsp;DB Logout&nbsp;</a>
+            </div>
             <div class="topnav">
                 <h2>MongoDB Home</h2>
                 <%--Only show Profile/Logout if user is already logged in--%>
@@ -30,12 +32,6 @@
                 {
                     String isTeacher = session.getAttribute("isTeacher").toString();
                     amITeacher = isTeacher.equals("true");
-                }
-                boolean amIEnrolled=false;
-                if(session.getAttribute("isEnrolled") != null)
-                {
-                    String isEnrolled = session.getAttribute("isEnrolled").toString();
-                    amIEnrolled = isEnrolled.equals("true");
                 }
                 if(firstname != null){%>
             <div class="topnavdiv">
@@ -83,7 +79,9 @@
                     Welcome. To progress further, you must first be logged in. Please select the appropriate action. <br/><br/>
                     To register as a student, please click <a class="bodyA" style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToStudentRegistration>&nbsp;<u>here.</u>&nbsp;</a> <br/>
                     To login as a student, please click <a class="bodyA" style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToStudentLogin>&nbsp;<u>here.</u>&nbsp;</a> <br/>
-                    To login as a Teacher, please click <a class="bodyA" style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToTeacherLogin>&nbsp;<u>here.</u>&nbsp;</a> <br/>
+                    To login as a Teacher, please click <a class="bodyA" style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToTeacherLogin>&nbsp;<u>here.</u>&nbsp;</a> <br/><br/>
+                    To view available Courses, please click <a class="bodyA" style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToCourseEnrollmentView>&nbsp;<u>here.</u>&nbsp;</a> <br/>
+                    To view available Modules, please click <a class="bodyA" style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToModuleView>&nbsp;<u>here.</u>&nbsp;</a> <br/><br/>
                     <strong>Please Note:</strong> Teacher Registration can only be performed by teachers. As this project is not in production, please view the related README to gain Teacher access in order to test Teacher features.
                 </p>
             <%}%>

@@ -67,13 +67,29 @@
 
     <%--Content--%>
     <div class="mainBody">
-    -Enroll/Select Modules (If not enrolled) <br/>
-    -View Modules (If Enrolled)<br/>
-    -View Marks (If Enrolled)<br/>
-    -Logout<br/>
-    -Profile (Just go to edit) <br/>
+        <%if(amITeacher){%>
+            <p>
+                Teachers should not access the student portal.<br/>
+                <a class="bodyA" style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToTeacherIndex>&nbsp;<u>Return to teacher portal.</u>&nbsp;</a> <br/>
+                <a class="bodyA" style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToCourseEnrollmentView>&nbsp;<u>View courses.</u>&nbsp;</a> <br/>
+                <a class="bodyA" style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToModuleView>&nbsp;<u>View available modules.</u>&nbsp;</a> <br/>
+            </p>
+        <%}
+        if(!amITeacher && !amIEnrolled)
+        {%>
+            <p>
+                You are currently not enrolled. <br/>
+                <a class="bodyA" style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToCourseEnrollment>&nbsp;<u>Enroll in a course.</u>&nbsp;</a> <br/>
+                <a class="bodyA" style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToCourseEnrollmentView>&nbsp;<u>View available courses.</u>&nbsp;</a> <br/>
+                <a class="bodyA" style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToModuleView>&nbsp;<u>View available modules.</u>&nbsp;</a> <br/>
+            </p>
+        <%}else if(!amITeacher){%>
+            <p>
+                <a class="bodyA" style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToMarksView>&nbsp;<u>View your enrollment and marks.</u>&nbsp;</a> <br/>
+                <a class="bodyA" style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToCourseEnrollmentView>&nbsp;<u>View courses.</u>&nbsp;</a> <br/>
+                <a class="bodyA" style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToModuleView>&nbsp;<u>View available modules.</u>&nbsp;</a> <br/>
+            </p>
+        <%}%>
     </div>
-
-
 </body>
 </html>

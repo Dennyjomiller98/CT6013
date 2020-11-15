@@ -31,17 +31,18 @@
 
             <p>
                 Welcome. From here, please select your database choice (Oracle or MongoDB). <br/>
-                <strong>Note:</strong> Data is not persistent between each Database (Registering a student account in MongoDB will NOT register a student in Oracle)
+                <strong>Note:</strong> Data is not persistent between each Database (Registering a student account in MongoDB will NOT register a student in Oracle) <br/>
+                To swap databases, you must first log out of the Student/Teacher account, taking you back to the relevant database homepage (OracleHomePage/MongoHomePage). In the top left of the page you can exit the database. <br>
             </p>
 
-            <form style="display:inline-block" action="${pageContext.request.contextPath}/servlets/DatabaseSelection" method="POST">
+            <form style="display:inline-block; float: left" action="${pageContext.request.contextPath}/servlets/DatabaseSelection" method="POST">
                 <label for="oracle"></label>
-                <input type="text"  name="oracle" id="oracle" value="oracle" hidden>
+                <input style="display: none" type="text" name="oracle" id="oracle" value="oracle" hidden>
                 <input type="submit" value="Select Oracle">
             </form>
-            <form style="display:inline-block" action="${pageContext.request.contextPath}/servlets/DatabaseSelection" method="POST">
+            <form style="display:inline-block; float: right" action="${pageContext.request.contextPath}/servlets/DatabaseSelection" method="POST">
                 <label for="mongodb"></label>
-                <input type="text"  name="mongodb" id="mongodb" value="mongodb" hidden>
+                <input style="display: none" type="text"  name="mongodb" id="mongodb" value="mongodb" hidden>
                 <input type="submit" value="Select MongoDB">
             </form>
         </div>

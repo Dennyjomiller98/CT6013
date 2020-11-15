@@ -4,8 +4,7 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
 
-    <!--Servlet and Mapping for Servlet (For MongoDB Server)-->
-    <!--Database Selection-->
+    <!--Database Selection Servlet-->
     <servlet>
         <servlet-name>DatabaseSelection</servlet-name>
         <servlet-class>servlets.DatabaseSelection</servlet-class>
@@ -15,7 +14,7 @@
         <url-pattern>/servlets/DatabaseSelection</url-pattern>
     </servlet-mapping>
 
-    <!--MONGODB SERVLETS-->
+    <!--Non-DB Specific Servlets-->
     <!--Students-->
     <servlet>
         <servlet-name>mongoStudentRegistration</servlet-name>
@@ -49,6 +48,8 @@
         <servlet-name>mongoStudentProfile</servlet-name>
         <url-pattern>/servlets/StudentProfile</url-pattern>
     </servlet-mapping>
+
+
     <!--Teachers-->
     <servlet>
         <servlet-name>mongoTeacherRegistration</servlet-name>
@@ -82,6 +83,8 @@
         <servlet-name>mongoTeacherProfile</servlet-name>
         <url-pattern>/servlets/TeacherProfile</url-pattern>
     </servlet-mapping>
+
+
     <!--Course Servlets-->
     <servlet>
         <servlet-name>mongoCourseEnrollment</servlet-name>
@@ -107,8 +110,42 @@
         <servlet-name>mongoCourseAddition</servlet-name>
         <url-pattern>/servlets/course/CourseAddition</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>mongoCourseUpdate</servlet-name>
+        <servlet-class>servlets.mongoservlets.course.CourseUpdate</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>mongoCourseUpdate</servlet-name>
+        <url-pattern>/servlets/course/CourseUpdate</url-pattern>
+    </servlet-mapping>
     <!--Module Servlets-->
+    <servlet>
+        <servlet-name>mongoModuleUpdate</servlet-name>
+        <servlet-class>servlets.mongoservlets.module.ModuleUpdate</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>mongoModuleUpdate</servlet-name>
+        <url-pattern>/servlets/module/ModuleUpdate</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>mongoModuleView</servlet-name>
+        <servlet-class>servlets.mongoservlets.module.ModuleView</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>mongoModuleView</servlet-name>
+        <url-pattern>/servlets/module/ModuleView</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>mongoModuleAddition</servlet-name>
+        <servlet-class>servlets.mongoservlets.module.ModuleAddition</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>mongoModuleAddition</servlet-name>
+        <url-pattern>/servlets/module/ModuleAddition</url-pattern>
+    </servlet-mapping>
     <!--Marks Servlets-->
+
+
     <!--Redirects-->
     <servlet>
         <servlet-name>homeToStudentLogin</servlet-name>
@@ -199,12 +236,51 @@
         <url-pattern>/servlets/redirects/HomeToModuleAddition</url-pattern>
     </servlet-mapping>
     <servlet>
-        <servlet-name>homeToCourseModuleView</servlet-name>
+        <servlet-name>homeToModuleView</servlet-name>
         <servlet-class>servlets.mongoservlets.redirects.HomeToModuleView</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>homeToCourseModuleView</servlet-name>
+        <servlet-name>homeToModuleView</servlet-name>
         <url-pattern>/servlets/redirects/HomeToModuleView</url-pattern>
     </servlet-mapping>
-    <!--ORACLE SERVLETS?-->
+    <servlet>
+        <servlet-name>homeToModuleUpdate</servlet-name>
+        <servlet-class>servlets.mongoservlets.redirects.HomeToModuleUpdate</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>homeToModuleUpdate</servlet-name>
+        <url-pattern>/servlets/redirects/HomeToModuleUpdate</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>homeToDatabaseLogout</servlet-name>
+        <servlet-class>servlets.mongoservlets.redirects.HomeToDatabaseLogout</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>homeToDatabaseLogout</servlet-name>
+        <url-pattern>/servlets/redirects/HomeToDatabaseLogout</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>homeToCourseEdit</servlet-name>
+        <servlet-class>servlets.mongoservlets.redirects.HomeToCourseEdit</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>homeToCourseEdit</servlet-name>
+        <url-pattern>/servlets/redirects/HomeToCourseEdit</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>homeToCourseAddition</servlet-name>
+        <servlet-class>servlets.mongoservlets.redirects.HomeToCourseAddition</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>homeToCourseAddition</servlet-name>
+        <url-pattern>/servlets/redirects/HomeToCourseAddition</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>homeToMarksView</servlet-name>
+        <servlet-class>servlets.mongoservlets.redirects.HomeToMarksView</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>homeToMarksView</servlet-name>
+        <url-pattern>/servlets/redirects/HomeToMarksView</url-pattern>
+    </servlet-mapping>
 </web-app>
