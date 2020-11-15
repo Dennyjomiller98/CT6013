@@ -69,21 +69,25 @@
             <%String email = (String) session.getAttribute("email");
             if(!amITeacher && !amIEnrolled && email != null){%>
             On this page, you will be able to enroll on a Course. <br/>
-            To enroll, first select a Course and choose from the modules available. <br/><br/>
-            Total Modules CATS should be equal to 120. <br/> <br/>
             More information on available courses can be found <a class="bodyA" style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToCourseEnrollmentView>&nbsp;<u>here.</u>&nbsp;</a> <br/>
+
+            After selecting an option from the Course Selector, you will be prompted to also select modules, totalling to 120 CATS. <br/>
             <form action="${pageContext.request.contextPath}/servlets/course/CourseEnrollment" method="GET">
                 <%--TODO - student enroll on course--%>
             </form>
 
-            <%--Student not logged in--%>
-            <%} else if(!amITeacher && email != null){%>
+            <%--Student already enrolled--%>
+            <%} else if(!amITeacher && amIEnrolled && email != null){%>
             You have already enrolled.<br/>
-            To view your enrollment, <a class="bodyA" style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToCourseEnrollmentView>&nbsp;<u>click here.</u>&nbsp;</a> <br/>
+            To view course, <a class="bodyA" style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToCourseEnrollmentView>&nbsp;<u>click here.</u>&nbsp;</a> <br/>
             To return to the Student Portal, <a class="bodyA" style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToStudentIndex>&nbsp;<u>click here.</u>&nbsp;</a>
             <%--Teacher--%>
-            <%} else {%>
+            <%} else if(amITeacher && email != null) {%>
             Teachers are not able to enroll on a course. <a class="bodyA" style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToTeacherIndex>&nbsp;<u>Return to Teacher Portal.</u>&nbsp;</a>
+            <%} else {%>
+                You are currently not logged in.<br/>
+                To log in, please click <a class="bodyA" style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToStudentLogin>&nbsp;<u>here.</u>&nbsp;</a> <br/>
+                To view courses available for enrolling, <a class="bodyA" style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToCourseEnrollmentView>&nbsp;<u>click here.</u>&nbsp;</a>
             <%}%>
         </div>
     </body>
