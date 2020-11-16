@@ -9,7 +9,6 @@ import org.bson.Document;
 @ConcurrencyManagement(ConcurrencyManagementType.CONTAINER)
 public class TeacherBean
 {
-	protected String fTeacherID;
 	protected String fFirstName;
 	protected String fSurname;
 	protected String fEmail;
@@ -24,7 +23,6 @@ public class TeacherBean
 	}
 	public TeacherBean(Document teacherDoc)
 	{
-		fTeacherID = String.valueOf(teacherDoc.get("Teacher_ID"));
 		fFirstName = String.valueOf(teacherDoc.get("First_Name"));
 		fSurname = String.valueOf(teacherDoc.get("Surname"));
 		fEmail = String.valueOf(teacherDoc.get("Email"));
@@ -35,16 +33,6 @@ public class TeacherBean
 		fIsTeacher = isTeacher.equals("true");
 		String isEnrolled = String.valueOf(teacherDoc.get("Is_Enrolled"));
 		fIsEnrolled = isEnrolled.equals("true");
-	}
-
-	//TODO change the return to fTeacherID when auto-increment works
-	public String getTeacherID()
-	{
-		return "TODO";
-	}
-	public void setTeacherID(String teacherID)
-	{
-		fTeacherID = "TODO";
 	}
 
 	public String getFirstName()

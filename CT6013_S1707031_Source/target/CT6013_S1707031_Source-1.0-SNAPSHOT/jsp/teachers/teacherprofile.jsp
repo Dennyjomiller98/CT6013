@@ -42,13 +42,13 @@
                 <strong>Logged in as: <%=firstname%></strong><br/>
                 <% if(amITeacher)
                 {%>
-                <a style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToTeacherProfile>&nbsp;Profile&nbsp;</a>
+                <a style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToTeacherIndex>&nbsp;Home&nbsp;</a>
                 &verbar;
                 <a style="display: inline" href=${pageContext.request.contextPath}/servlets/TeacherLogout>&nbsp;Logout&nbsp;</a>
                 <br/>
                 <a style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToTeacherRegistration>&nbsp;Register Teacher&nbsp;</a>
                 <% } else { %>
-                <a style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToStudentProfile>&nbsp;Profile&nbsp;</a>
+                <a style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToStudentIndex>&nbsp;Home&nbsp;</a>
                 &verbar;
                 <a style="display: inline" href=${pageContext.request.contextPath}/servlets/StudentLogout>&nbsp;Logout&nbsp;</a>
                 <%}%>
@@ -70,10 +70,8 @@
             </p>
 
             <form action="${pageContext.request.contextPath}/servlets/TeacherProfile" method="POST">
-                <label for="isEnrolled"></label><input readonly hidden type="text" name="isEnrolled" id="isEnrolled" value="<%=amIEnrolled%>" />
-                <label for="isTeacher"></label><input readonly hidden type="text" name="isTeacher" id="isTeacher" value="<%=amITeacher%>" />
-                <% String teacherID = session.getAttribute("teacherID").toString();%>
-                <label for="teacherID"></label><input readonly hidden type="text" name="teacherID" id="teacherID" value="<%=teacherID%>" />
+                <label for="isEnrolled"></label><input style="display: none" type="text" name="isEnrolled" id="isEnrolled" value="<%=amIEnrolled%>" />
+                <label for="isTeacher"></label><input style="display: none" type="text" name="isTeacher" id="isTeacher" value="<%=amITeacher%>" />
 
                 <label for="firstname">Firstname:</label>
                 <% firstname = session.getAttribute("firstname").toString();%>
@@ -113,6 +111,7 @@
                 <br/>
                 <input type="submit" value="Submit">
             </form>
+            <br/>
 
             <% String editErrors = (String) session.getAttribute("editErrors");
                 if(editErrors != null){%>
@@ -122,6 +121,12 @@
                 if(success != null){%>
             <p class="success-div" id="successDiv"><%=success%></p>
             <%}%>
+
+            <ul>
+                <li><a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToTeacherIndex>&nbsp;Teacher Portal&nbsp;</a></li>
+                <li><a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToCourseEnrollmentView>&nbsp;View Courses&nbsp;</a></li>
+                <li><a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToModuleView>&nbsp;View Modules&nbsp;</a></li>
+            </ul>
         </div>
     </body>
 </html>

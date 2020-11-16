@@ -101,4 +101,37 @@ public class StudentConnections extends AbstractMongoDBConnections
             LOG.error("Error Occurred during Student Update", e);
         }
     }
+
+    public void enrollStudent(String studentEmail)
+    {
+        LOG.debug("Attempting to enroll student in student DB");
+        try (MongoClient mongo = new MongoClient(MONGO_HOST, MONGO_PORT))
+        {
+            MongoDatabase db = mongo.getDatabase(DBNAME);
+            MongoCollection<Document> collection = db.getCollection(STUDENTS_COLLECTION);
+            Bson bson = Filters.eq("Email", studentEmail);
+
+            StudentBean studentBean = retrieveSingleStudent(studentEmail);
+            if (studentBean != null)
+            {
+                Document studentToEnroll = new Document();
+                studentToEnroll.append("First_Name", studentBean.getFirstName());
+                studentToEnroll.append("Surname", studentBean.getSurname());
+                studentToEnroll.append("Email", studentBean.getEmail());
+                studentToEnroll.append("DOB", studentBean.getDOB());
+                studentToEnroll.append("Address", studentBean.getAddress());
+                studentToEnroll.append("Password", studentBean.getPassword());
+                studentToEnroll.append("Is_Enrolled", "true");
+                studentToEnroll.append("Is_Teacher", "false");
+                collection.replaceOne(bson, studentToEnroll);
+            }
+            else
+            {
+                LOG.error("Student not found");
+            }
+        } catch (Exception e)
+        {
+            LOG.error("Error Occurred during Student Update", e);
+        }
+    }
 }

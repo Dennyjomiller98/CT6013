@@ -10,7 +10,6 @@ import org.bson.Document;
 @ConcurrencyManagement(ConcurrencyManagementType.CONTAINER)
 public class StudentBean implements Serializable
 {
-    protected String fStudentID;
     protected String fFirstName;
     protected String fSurname;
     protected String fEmail;
@@ -26,7 +25,6 @@ public class StudentBean implements Serializable
     }
     public StudentBean(Document studentDoc)
     {
-        fStudentID = String.valueOf(studentDoc.get("Student_ID"));
         fFirstName = String.valueOf(studentDoc.get("First_Name"));
         fSurname = String.valueOf(studentDoc.get("Surname"));
         fEmail = String.valueOf(studentDoc.get("Email"));
@@ -37,16 +35,6 @@ public class StudentBean implements Serializable
         fIsEnrolled = isEnrolled.equals("true");
         String isTeacher = String.valueOf(studentDoc.get("Is_Teacher"));
         fIsTeacher = isTeacher.equals("true");
-    }
-
-    //TODO change the return to fStudentID when auto-increment works
-    public String getStudentID()
-    {
-        return "TODO";
-    }
-    public void setStudentID(String studentID)
-    {
-        fStudentID = "TODO";
     }
 
     public String getFirstName()

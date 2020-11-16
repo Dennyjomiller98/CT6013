@@ -33,7 +33,7 @@ public class ModuleBean implements Serializable
 		String semesterString = String.valueOf(moduleDoc.get("Semester"));
 		fSemester = Integer.parseInt(semesterString);
 		String isCompulsory = String.valueOf(moduleDoc.get("Is_Compulsory"));
-		fIsCompulsory = isCompulsory.equals("true");
+		fIsCompulsory = isCompulsory.equals("on");
 		fModuleStart = String.valueOf(moduleDoc.get("Module_Start"));
 		fModuleEnd = String.valueOf(moduleDoc.get("Module_End"));
 	}

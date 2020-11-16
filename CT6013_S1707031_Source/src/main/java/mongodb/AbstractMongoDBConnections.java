@@ -9,7 +9,6 @@ public abstract class AbstractMongoDBConnections implements IMongoDBConnections{
     public static final int MONGO_PORT = 27017;
     public static final String DBNAME = "db_ct6013_s1707031";
     public static final String STUDENTS_COLLECTION = "students";
-    public static final String STUDENTID_COLLECTION = "students_ids"; //For Auto-Increment if needed?
     public static final String TEACHERS_COLLECTION = "teachers";
     public static final String MODULES_COLLECTION = "modules";
     public static final String COURSES_COLLECTION = "courses";

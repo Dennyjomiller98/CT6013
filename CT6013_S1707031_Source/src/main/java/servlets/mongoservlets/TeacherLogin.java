@@ -57,7 +57,6 @@ public class TeacherLogin extends HttpServlet
 		TeacherBean teacherBean = teacherConn.retrieveSingleTeacher(teacher.getEmail());
 
 		//Populate Bean
-		request.getSession(true).setAttribute("teacherID", teacherBean.getTeacherID());
 		request.getSession(true).setAttribute("firstname", teacherBean.getFirstName());
 		request.getSession(true).setAttribute("surname", teacherBean.getSurname());
 		request.getSession(true).setAttribute("email", teacherBean.getEmail());

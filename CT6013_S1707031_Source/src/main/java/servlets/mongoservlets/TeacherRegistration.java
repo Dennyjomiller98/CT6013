@@ -19,7 +19,6 @@ public class TeacherRegistration extends HttpServlet
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) {
 		//Retrieve form values for Teacher
 		Document teacherToRegister = new Document();
-		teacherToRegister.append("Teacher_ID", request.getParameter("teacherID"));
 		teacherToRegister.append("First_Name", request.getParameter("firstname"));
 		teacherToRegister.append("Surname", request.getParameter("surname"));
 		teacherToRegister.append("Email", request.getParameter("email"));

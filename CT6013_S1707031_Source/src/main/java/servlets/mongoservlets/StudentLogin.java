@@ -57,7 +57,6 @@ public class StudentLogin extends HttpServlet
 		StudentBean studentBean = studentConn.retrieveSingleStudent(student.getEmail());
 
 		//Populate Bean
-		request.getSession(true).setAttribute("studentID", studentBean.getStudentID());
 		request.getSession(true).setAttribute("firstname", studentBean.getFirstName());
 		request.getSession(true).setAttribute("surname", studentBean.getSurname());
 		request.getSession(true).setAttribute("email", studentBean.getEmail());

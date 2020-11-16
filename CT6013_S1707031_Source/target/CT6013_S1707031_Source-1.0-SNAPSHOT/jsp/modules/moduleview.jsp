@@ -131,7 +131,7 @@
                         <% } else if (semester == -1){%> Semester 1 and 2
                         <% } else if (semester == -2){%> Placement <% }%>
                     </td>
-                    <td><%=isCompulsory%></td>
+                    <td><%if(isCompulsory.equalsIgnoreCase("true")){%> Yes <% }else{ %> No <% } %></td>
                     <td><%=moduleStart%></td>
                     <td><%=moduleEnd%></td>
                     <td>

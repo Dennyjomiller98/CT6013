@@ -27,6 +27,11 @@
                 if(session.getAttribute("firstname") != null){
                     firstname = session.getAttribute("firstname").toString();
                 }
+                String email = null;
+                if(session.getAttribute("email") != null)
+                {
+                	email = session.getAttribute("email").toString();
+                }
                 boolean amITeacher = false;
                 if(session.getAttribute("isTeacher") != null)
                 {
@@ -69,7 +74,7 @@
                     To edit your profile, please click <a class="bodyA" style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToTeacherProfile>&nbsp;<u>here.</u>&nbsp;</a><br/>
                     <% } else { %>
                     To edit your profile, please click <a class="bodyA" style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToStudentProfile>&nbsp;<u>here.</u>&nbsp;</a><br/>
-                    For Course Enrollment, please click <a class="bodyA" style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToCourseEnrollment>&nbsp;<u>here.</u>&nbsp;</a><br/>
+                    For Course Enrollment, please click <a class="bodyA" style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToCourseEnrollment?studentEmail=<%=email%>>&nbsp;<u>here.</u>&nbsp;</a><br/>
                     To view Course Details, including Assignment Marks, please click <a class="bodyA" style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToCourseEnrollmentView>&nbsp;<u>here.</u>&nbsp;</a><br/>
                     <%}%>
                 </p>

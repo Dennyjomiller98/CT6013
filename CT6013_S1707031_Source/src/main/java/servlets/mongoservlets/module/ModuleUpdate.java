@@ -99,7 +99,15 @@ public class ModuleUpdate extends HttpServlet
 		request.getSession(true).setAttribute("moduleTutor", request.getParameter("moduleTutor"));
 		request.getSession(true).setAttribute("relatedCourse", request.getParameter("relatedCourse"));
 		request.getSession(true).setAttribute("semester", request.getParameter("semester"));
-		request.getSession(true).setAttribute("isCompulsory", request.getParameter("isCompulsory"));
+		String isCompulsory = request.getParameter("isCompulsory");
+		if (isCompulsory != null)
+		{
+			request.getSession(true).setAttribute("isCompulsory", "true");
+		}
+		else
+		{
+			request.getSession(true).setAttribute("isCompulsory", "false");
+		}
 		request.getSession(true).setAttribute("moduleStart", request.getParameter("moduleStart"));
 		request.getSession(true).setAttribute("moduleEnd", request.getParameter("moduleEnd"));
 	}

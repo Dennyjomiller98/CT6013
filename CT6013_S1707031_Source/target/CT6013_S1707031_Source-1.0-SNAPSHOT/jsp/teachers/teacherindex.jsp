@@ -72,7 +72,6 @@
                 <li><a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToModuleAddition>&nbsp;Add Modules&nbsp;</a></li>
                 <li><a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToModuleView>&nbsp;View and Edit Modules&nbsp;</a></li>
                 <li><a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToMarksAddition>&nbsp;Add Assignment Marks&nbsp;</a></li>
-                <li><a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToMarksView>&nbsp;View Assignment Marks&nbsp;</a></li>
             </ul>
         </div>
     </body>

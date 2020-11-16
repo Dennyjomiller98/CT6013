@@ -31,7 +31,6 @@ public class HomeToDatabaseLogout extends HttpServlet
 	{
 		request.getSession(true).removeAttribute("registrationErrors");
 		request.getSession(true).removeAttribute("loginErrors");
-		request.getSession(true).removeAttribute("studentID");
 		request.getSession(true).removeAttribute("firstname");
 		request.getSession(true).removeAttribute("surname");
 		request.getSession(true).removeAttribute("email");
@@ -45,7 +44,6 @@ public class HomeToDatabaseLogout extends HttpServlet
 		request.getSession(true).removeAttribute("isTeacher");
 		request.getSession(true).removeAttribute("updateSuccess");
 		request.getSession(true).removeAttribute("editErrors");
-		request.getSession(true).removeAttribute("teacherID");
 		request.getSession(true).removeAttribute("courseSuccess");
 		request.getSession(true).removeAttribute("courseErrors");
 		request.getSession(true).removeAttribute("allCourses");
@@ -65,8 +63,19 @@ public class HomeToDatabaseLogout extends HttpServlet
 		request.getSession(true).removeAttribute("isCompulsory");
 		request.getSession(true).removeAttribute("moduleStart");
 		request.getSession(true).removeAttribute("moduleEnd");
+		request.getSession(true).removeAttribute("enrollSuccess");
+		request.getSession(true).removeAttribute("enrollErrors");
+		request.getSession(true).removeAttribute("enrollStudent");
+		request.getSession(true).removeAttribute("enrollCourse");
+		request.getSession(true).removeAttribute("enrollModules");
+		request.getSession(true).removeAttribute("markSuccess");
+		request.getSession(true).removeAttribute("markErrors");
+		request.getSession(true).removeAttribute("allMarks");
+		request.getSession(true).removeAttribute("markModule");
+		request.getSession(true).removeAttribute("markStudent");
+		request.getSession(true).removeAttribute("markTeacher");
+		request.getSession(true).removeAttribute("markGrade");
 
 		request.getSession(true).removeAttribute("DBSELECTION");
-		/*TODO = remove any other session attributes that will be used, then place this (MINUS DBSELECTION) into student/teacher logout*/
 	}
 }

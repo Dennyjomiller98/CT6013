@@ -34,12 +34,6 @@
                     String isTeacher = session.getAttribute("isTeacher").toString();
                     amITeacher = isTeacher.equals("true");
                 }
-                boolean amIEnrolled=false;
-                if(session.getAttribute("isEnrolled") != null)
-                {
-                    String isEnrolled = session.getAttribute("isEnrolled").toString();
-                    amIEnrolled = isEnrolled.equals("true");
-                }
                 if(firstname != null){%>
             <div class="topnavdiv">
                 <strong>Logged in as: <%=firstname%></strong><br/>
@@ -88,6 +82,7 @@
                 </select>
                 <input type="submit" value="Search">
             </form>
+            <br/>
 
             <%if(session.getAttribute("courseErrors") != null)
             {

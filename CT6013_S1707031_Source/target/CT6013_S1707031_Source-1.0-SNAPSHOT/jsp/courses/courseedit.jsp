@@ -107,6 +107,7 @@
                 <input type="reset" value="Clear">
                 <input type="submit" value="Submit">
             </form>
+            <br/>
 
             <% String success = (String) session.getAttribute("courseSuccess");
                 if(success != null){%>

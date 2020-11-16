@@ -20,12 +20,23 @@ public class HomeToModuleView extends HttpServlet
 	{
 		//Get All Modules under provided course
 		String courseCode = request.getParameter("courseCode");
-		ModuleConnections moduleConn = new ModuleConnections();
-		List<ModuleBean> allModules = moduleConn.retrieveAllModulesOnCourse(courseCode);
-		request.getSession(true).setAttribute("allModules", allModules);
-		request.getSession(true).removeAttribute("moduleCode");
-		request.getSession(true).removeAttribute("moduleSuccess");
-		request.getSession(true).removeAttribute("moduleErrors");
+		if (courseCode != null)
+		{
+			ModuleConnections moduleConn = new ModuleConnections();
+			List<ModuleBean> allModules = moduleConn.retrieveAllModulesOnCourse(courseCode);
+			request.getSession(true).setAttribute("allModules", allModules);
+			request.getSession(true).removeAttribute("moduleCode");
+			request.getSession(true).removeAttribute("moduleSuccess");
+			request.getSession(true).removeAttribute("moduleErrors");
+		}
+		else
+		{
+			request.getSession(true).removeAttribute("allModules");
+			request.getSession(true).removeAttribute("moduleCode");
+			request.getSession(true).removeAttribute("moduleSuccess");
+			request.getSession(true).removeAttribute("moduleErrors");
+		}
+
 
 		try
 		{

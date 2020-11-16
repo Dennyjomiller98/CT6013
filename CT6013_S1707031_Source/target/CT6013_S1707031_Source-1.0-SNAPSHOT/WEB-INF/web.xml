@@ -118,6 +118,8 @@
         <servlet-name>mongoCourseUpdate</servlet-name>
         <url-pattern>/servlets/course/CourseUpdate</url-pattern>
     </servlet-mapping>
+
+
     <!--Module Servlets-->
     <servlet>
         <servlet-name>mongoModuleUpdate</servlet-name>
@@ -143,8 +145,27 @@
         <servlet-name>mongoModuleAddition</servlet-name>
         <url-pattern>/servlets/module/ModuleAddition</url-pattern>
     </servlet-mapping>
-    <!--Marks Servlets-->
 
+
+    <!--Marks Servlets-->
+    <servlet>
+        <servlet-name>mongoMarkAddition</servlet-name>
+        <servlet-class>servlets.mongoservlets.mark.MarkAddition</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>mongoMarkAddition</servlet-name>
+        <url-pattern>/servlets/mark/MarkAddition</url-pattern>
+    </servlet-mapping>
+
+    <!--Enrollment Servlets-->
+    <servlet>
+        <servlet-name>mongoEnrollmentCourseView</servlet-name>
+        <servlet-class>servlets.mongoservlets.enrollment.EnrollmentCourseView</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>mongoEnrollmentCourseView</servlet-name>
+        <url-pattern>/servlets/enrollment/EnrollmentCourseView</url-pattern>
+    </servlet-mapping>
 
     <!--Redirects-->
     <servlet>
@@ -282,5 +303,13 @@
     <servlet-mapping>
         <servlet-name>homeToMarksView</servlet-name>
         <url-pattern>/servlets/redirects/HomeToMarksView</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>homeToMarksAddition</servlet-name>
+        <servlet-class>servlets.mongoservlets.redirects.HomeToMarksAddition</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>homeToMarksAddition</servlet-name>
+        <url-pattern>/servlets/redirects/HomeToMarksAddition</url-pattern>
     </servlet-mapping>
 </web-app>

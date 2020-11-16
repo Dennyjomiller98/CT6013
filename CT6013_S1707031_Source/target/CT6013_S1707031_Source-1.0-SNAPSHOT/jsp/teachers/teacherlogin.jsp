@@ -78,7 +78,7 @@
             <%}%>
             <%if(amITeacher){%>
                 <p>
-                    If you have been sent here after registering a new Teacher, you can <a class="bodyA" style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToTeacherIndex>&nbsp;return to portal here.&nbsp;</a>
+                    If you have been sent here after registering a new Teacher, you can return to portal<a class="bodyA" style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToTeacherIndex>&nbsp;here.&nbsp;</a>
                 </p>
             <% }%>
         </div>

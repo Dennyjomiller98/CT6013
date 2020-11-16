@@ -20,7 +20,6 @@ public class StudentProfile extends HttpServlet
 	{
 		//Get Form Submission
 		Document studentToUpdate = new Document();
-		studentToUpdate.append("Student_ID", request.getParameter("studentID"));
 		studentToUpdate.append("First_Name", request.getParameter("firstname"));
 		studentToUpdate.append("Surname", request.getParameter("surname"));
 		studentToUpdate.append("Email", request.getParameter("email"));
@@ -67,7 +66,6 @@ public class StudentProfile extends HttpServlet
 	private void addUpdatedSessionAttributes(HttpServletRequest request)
 	{
 		//Populate Bean
-		request.getSession(true).setAttribute("studentID", request.getParameter("studentID"));
 		request.getSession(true).setAttribute("firstname", request.getParameter("firstname"));
 		request.getSession(true).setAttribute("surname", request.getParameter("surname"));
 		request.getSession(true).setAttribute("email", request.getParameter("email"));
@@ -75,6 +73,7 @@ public class StudentProfile extends HttpServlet
 		request.getSession(true).setAttribute("address1", request.getParameter("address1"));
 		request.getSession(true).setAttribute("address2", request.getParameter("address2"));
 		request.getSession(true).setAttribute("city", request.getParameter("city"));
+		request.getSession(true).setAttribute("postcode", request.getParameter("postcode"));
 		request.getSession(true).setAttribute("pword", request.getParameter("pword"));
 		request.getSession(true).setAttribute("isEnrolled", request.getParameter("isEnrolled"));
 		request.getSession(true).setAttribute("isTeacher", "false");

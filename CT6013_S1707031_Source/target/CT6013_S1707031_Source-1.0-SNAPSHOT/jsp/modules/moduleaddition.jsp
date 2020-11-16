@@ -79,7 +79,7 @@
                 <br/>
                 <label for="isCompulsory">Compulsory Module:</label>
                 <input type="checkbox" name="isCompulsory" id="isCompulsory" />
-                <br/>
+                <br/><br/>
                 <label for="semester">Semester:</label>
                 <select class="select-css" style="width: 50%; display: inline-block" name="semester" id="semester">
                     <option value="1">Semester 1</option>
@@ -97,6 +97,7 @@
                 <input type="reset" value="Clear">
                 <input type="submit" value="Submit">
             </form>
+            <br/>
 
             <% String success = (String) session.getAttribute("moduleSuccess");
                 if(success != null){%>
