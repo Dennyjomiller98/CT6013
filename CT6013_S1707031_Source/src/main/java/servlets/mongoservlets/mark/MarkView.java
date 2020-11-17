@@ -145,7 +145,7 @@ public class MarkView extends HttpServlet
 		}
 		catch (IOException e)
 		{
-			LOG.error("Unable to redirect back to module view page after module retrieval",e);
+			LOG.error("Unable to redirect back to marks addition page after module retrieval",e);
 		}
 	}
 

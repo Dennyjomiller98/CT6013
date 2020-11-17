@@ -1,5 +1,6 @@
 package servlets.mongoservlets.mark;
 
+import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -20,16 +21,25 @@ public class MarkAddition extends HttpServlet
 		LOG.debug("Adding marks data to DB");
 		MarkConnections markConn = new MarkConnections();
 		Document markDoc = new Document();
-		markDoc.append("Module_Code", "TESTCODE");
+		markDoc.append("Module_Code", request.getParameter("moduleCode"));
 		markDoc.append("Student_Email", request.getParameter("studentEmail"));
-		markDoc.append("Marker_Email", "g@g");
+		markDoc.append("Marker_Email", request.getParameter("courseTutor"));
 		markDoc.append("Final_Mark", request.getParameter("allGrades"));
 		markConn.addMarks(markDoc);
 
 		//Set attributes again
+		//TODO - Set session attributes once added
 
 
 		//Return to Add marks page
+		try
+		{
+			response.sendRedirect(request.getContextPath() + "/jsp/marks/marksaddition.jsp");
+		}
+		catch (IOException e)
+		{
+			LOG.error("Unable to redirect back to marks addition page after mark save",e);
+		}
 	}
 }
 

@@ -154,16 +154,13 @@
                                     {
                                         if(myMark.getModuleCode().equalsIgnoreCase(moduleBean.getModuleCode()))
                                         {%>
-                                            Grades: <%=myMark.getFinalMark()%>
-                                        <%} else {%>
-                                            N/A
-                                        <%}%>
-                                    <%}
+                                            Grade: <%=myMark.getFinalMark()%>%
+                                        <%}
+                                    }
                                 } else{%>
                                     Grades Unavailable
                                 <%}
-                            }
-                            %>
+                            }%>
                         </td>
                     </tr>
                 </table>

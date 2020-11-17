@@ -155,8 +155,6 @@
                                         if(myMark.getModuleCode().equalsIgnoreCase(moduleBean.getModuleCode()))
                                         {%>
                                             Grades: <%=myMark.getFinalMark()%>
-                                        <%} else {%>
-                                            N/A
                                         <%}%>
                                     <%}
                                 } else{%>

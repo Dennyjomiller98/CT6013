@@ -106,21 +106,42 @@
                 <%--All Students in modules table--%>
             <%if((session.getAttribute("allEnrollmentToReturn") != null && session.getAttribute("allMarkBeans") != null) ||
                     (session.getAttribute("singleEnrollmentToReturn") != null && session.getAttribute("singleMarkBean") != null)){%>
-                <table id="moduleAndMarks">
+            <table id="moduleAndMarks">
                     <caption></caption>
                     <tr>
                         <th id="allMarksModuleCode">Student Email</th>
                         <th id="allMarksModule">Module</th>
                         <th id="allMarksGrade">Marks (If provided)</th>
                     </tr>
+
                     <%if(session.getAttribute("allEnrollmentToReturn") != null && session.getAttribute("allMarkBeans") != null){
-                        List<EnrollmentBean> allEnrollBeans = (List<EnrollmentBean>) session.getAttribute("allEnrollmentToReturn");
                         List<MarkBean> allMarkBeans = (List<MarkBean>) session.getAttribute("allMarkBeans");
+                        List<EnrollmentBean> allEnrollBeans = (List<EnrollmentBean>) session.getAttribute("allEnrollmentToReturn");
+
+
+
+
+
+
+                        int moduleCount = 0;
                         for (int i =0; i<allEnrollBeans.size(); i++)
-                        {%>
+                        {
+                            String moduleCode;
+                            String[] splitModules = allEnrollBeans.get(i).getModuleSelections().split(",");
+                            if (moduleCount < splitModules.length)
+                            {
+                                moduleCode = splitModules[moduleCount];
+                            }
+                            else
+                            {
+                                moduleCount = 0;
+                                moduleCode = splitModules[moduleCount];
+                            }
+                            moduleCount++;
+                    %>
                     <tr>
                         <td><%=allEnrollBeans.get(i).getStudentEmail()%></td>
-                        <td><%=allEnrollBeans.get(i).getModuleSelections()%></td>
+                        <td><%=moduleCode%></td>
                         <td>
                             <%if (allMarkBeans != null)
                             {
@@ -132,26 +153,34 @@
                                         {
                                             if(myMark.getModuleCode() != null && myMark.getModuleCode().equalsIgnoreCase(allEnrollBeans.get(i).getCourseCode()))
                                             {
-                                            	finalMark = String.valueOf(myMark.getFinalMark());
+                                                finalMark = String.valueOf(myMark.getFinalMark());
                                             }
                                         }
                                     }
                                     if(finalMark != null)
                                     { %> Grade Given <%=finalMark%> <% } else {%>
-                                        <%--Add Marks form--%>
-                                        <form style="" action="${pageContext.request.contextPath}/servlets/mark/MarkAddition?studentEmail=<%=allEnrollBeans.get(i).getStudentEmail()%>&courseTutor=&moduleCode=" method="POST">
-                                            <label for="allGrades"></label><input type="text" name="allGrades" id="allGrades" />
-                                            <input type="submit" value="Search">
-                                        </form>
-                                    <%}
-                                } else{%>
-                                Grades Unavailable
-                                <%}
+                            <%--Add Marks form--%>
+                            <form style="" action="${pageContext.request.contextPath}/servlets/mark/MarkAddition?studentEmail=<%=allEnrollBeans.get(i).getStudentEmail()%>&courseTutor=<%=session.getAttribute("email").toString()%>&moduleCode=<%=moduleCode%>" method="POST">
+                                <label for="allGrades"></label><input type="text" name="allGrades" id="allGrades" />
+                                <input type="submit" value="Search">
+                            </form>
+                            <%}
+                            } else{%>
+                            Grades Unavailable
+                            <%}
                             }%>
                         </td>
                     </tr>
                     <%}
                     }%>
+
+
+
+
+
+
+
+
 
                 <%--Single module Students table--%>
                 <%if(session.getAttribute("singleEnrollmentToReturn") != null && session.getAttribute("singleMarkBean") != null){

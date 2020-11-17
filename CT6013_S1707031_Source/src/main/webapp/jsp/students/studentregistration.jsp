@@ -91,6 +91,7 @@
                 <input type="reset" value="Clear">
                 <input type="submit" value="Submit">
             </form>
+            <br/>
 
             <% String errors = null;
             if(session.getAttribute("registrationErrors") != null){
