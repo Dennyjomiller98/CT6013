@@ -67,12 +67,26 @@
         <%--Content--%>
         <div class="mainBody">
 
+            <%
+                if (amITeacher)
+                {
+
+                    String email = null;
+                    if(session.getAttribute("email") != null){
+                        email = session.getAttribute("email").toString();
+                    }%>
             <ul>
+                <li><a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToCourseAddition>&nbsp;Add Courses&nbsp;</a></li>
                 <li><a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToCourseEnrollmentView>&nbsp;View and Edit Courses&nbsp;</a></li>
                 <li><a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToModuleAddition>&nbsp;Add Modules&nbsp;</a></li>
                 <li><a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToModuleView>&nbsp;View and Edit Modules&nbsp;</a></li>
-                <li><a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToMarksAddition>&nbsp;Add Assignment Marks&nbsp;</a></li>
+                <li><a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToMarksAddition?email=<%=email%>>&nbsp;Add Assignment Marks&nbsp;</a></li>
             </ul>
+            <%} else {%>
+            <p>
+                You do not have access to view this page.
+            </p>
+            <%}%>
         </div>
     </body>
 </html>

@@ -114,19 +114,8 @@
                 Below is a list of your module choices, with details on your assignment marks. <br/>
                 If a teacher has submitted results for your module, you will see them in the table below.
             </p>
-            <%--Table of modules with marks--%>
-            <%  List<MarkBean> myMarks = null;
-                if (session.getAttribute("allMarks") != null)
-                {
-                	myMarks = (List<MarkBean>) session.getAttribute("allMarks");
-                }
-                if(myMarks != null){
-                    for (MarkBean myMark : myMarks)
-                    {%>
-                        Your marks are: <%=myMark.getModuleCode()%> <%=myMark.getStudentEmail()%> <%=myMark.getMarkerEmail()%> <%=myMark.getFinalMark()%>
-                    <%}
-                }%>
 
+            <%--Table of modules with marks--%>
             <%if(session.getAttribute("enrollModules") != null){
                 String allModules = session.getAttribute("enrollModules").toString();
                 String[] split = allModules.split(",");
@@ -134,7 +123,50 @@
                 {
                     ModuleConnections modConn = new ModuleConnections();
                     ModuleBean moduleBean = modConn.retrieveSingleModule(module);%>
-            Module data: <%=moduleBean.getModuleCode()%> <%=moduleBean.getModuleStart()%>
+
+                <%--MODULE/MARKS Table--%>
+                <table id="moduleAndMarks">
+                    <caption></caption>
+                    <tr>
+                        <th id="marksModuleCode">Module Code</th>
+                        <th id="marksModuleName">Name</th>
+                        <th id="marksModuleTutor">Module Leader</th>
+                        <th id="marksModuleStart">Start Date</th>
+                        <th id="marksModuleEnd">End Date</th>
+                        <th id="marksGrade">Marks (If provided)</th>
+                    </tr>
+                    <tr>
+                        <td><%=moduleBean.getModuleCode()%></td>
+                        <td><%=moduleBean.getModuleName()%></td>
+                        <td><%=moduleBean.getModuleTutor()%></td>
+                        <td><%=moduleBean.getModuleStart()%></td>
+                        <td><%=moduleBean.getModuleEnd()%></td>
+                        <td>
+                        <%  List<MarkBean> myMarks = null;
+                            if (session.getAttribute("allMarks") != null)
+                            {
+                                myMarks = (List<MarkBean>) session.getAttribute("allMarks");
+                            }
+                            if (myMarks != null)
+                            {
+                                if(myMarks.size() != 0){
+                                    for (MarkBean myMark : myMarks)
+                                    {
+                                        if(myMark.getModuleCode().equalsIgnoreCase(moduleBean.getModuleCode()))
+                                        {%>
+                                            Grades: <%=myMark.getFinalMark()%>
+                                        <%} else {%>
+                                            N/A
+                                        <%}%>
+                                    <%}
+                                } else{%>
+                                    Grades Unavailable
+                                <%}
+                            }
+                            %>
+                        </td>
+                    </tr>
+                </table>
             <% }
             }%>
 
@@ -144,7 +176,11 @@
             <%if (amITeacher){%>
             <%--Teacher access wrong page--%>
             <p>
-                As a teacher, you can add marks <a class="bodyA" style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToMarksAddition>&nbsp;<u>here.</u>&nbsp;</a>
+                <%String email = null;
+                    if(session.getAttribute("email") != null){
+                        email = session.getAttribute("email").toString();
+                    }%>
+                As a teacher, you can add marks <a class="bodyA" style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToMarksAddition?email=<%=email%>>&nbsp;<u>here.</u>&nbsp;</a>
             </p>
             <%} else {%>
             <p>

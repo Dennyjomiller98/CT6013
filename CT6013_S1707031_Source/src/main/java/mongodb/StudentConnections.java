@@ -26,7 +26,8 @@ public class StudentConnections extends AbstractMongoDBConnections
             MongoDatabase db = mongo.getDatabase(DBNAME);
             MongoCollection<Document> collection = db.getCollection(STUDENTS_COLLECTION);
             collection.insertOne(student);
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
             LOG.error("Error Occurred during Student Registration", e);
         }

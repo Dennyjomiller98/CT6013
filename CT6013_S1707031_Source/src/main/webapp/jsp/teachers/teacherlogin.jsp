@@ -70,8 +70,9 @@
                 <input type="reset" value="Clear">
                 <input type="submit" value="Submit">
             </form>
+            <br/>
 
-            <%  String errors = null;
+            <%  String errors;
                 if(session.getAttribute("loginErrors") != null){
                 errors = session.getAttribute("loginErrors").toString();%>
             <p class="error-div" id="errorDiv"><%=errors%></p>

@@ -43,7 +43,7 @@ public class HomeToCourseEnrollment extends HttpServlet
 					request.getSession(true).removeAttribute("enrollStudent");
 					request.getSession(true).removeAttribute("enrollCourse");
 					request.getSession(true).removeAttribute("enrollModules");
-					request.getSession(true).setAttribute("enrollErrors", "Unable to retrieve enrollment information.");
+					request.getSession(true).setAttribute("enrollErrors", "Please try selecting a course.");
 					request.getSession(true).removeAttribute("enrollSuccess");
 				}
 			}

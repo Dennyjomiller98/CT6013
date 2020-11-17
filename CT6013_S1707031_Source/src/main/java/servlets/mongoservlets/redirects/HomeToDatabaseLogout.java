@@ -75,6 +75,14 @@ public class HomeToDatabaseLogout extends HttpServlet
 		request.getSession(true).removeAttribute("markStudent");
 		request.getSession(true).removeAttribute("markTeacher");
 		request.getSession(true).removeAttribute("markGrade");
+		//TODO -- ADD any extra attributes, and place in student/teacher logout too
+		request.getSession(true).removeAttribute("allMarkModules");
+
+		request.getSession(true).removeAttribute("allMarkBeans");
+		request.getSession(true).removeAttribute("allEnrollmentToReturn");
+		request.getSession(true).removeAttribute("singleMarkBean");
+		request.getSession(true).removeAttribute("singleEnrollmentToReturn");
+
 
 		request.getSession(true).removeAttribute("DBSELECTION");
 	}

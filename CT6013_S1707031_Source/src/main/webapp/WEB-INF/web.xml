@@ -156,6 +156,14 @@
         <servlet-name>mongoMarkAddition</servlet-name>
         <url-pattern>/servlets/mark/MarkAddition</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>mongoMarkView</servlet-name>
+        <servlet-class>servlets.mongoservlets.mark.MarkView</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>mongoMarkView</servlet-name>
+        <url-pattern>/servlets/mark/MarkView</url-pattern>
+    </servlet-mapping>
 
     <!--Enrollment Servlets-->
     <servlet>
