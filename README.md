@@ -8,5 +8,5 @@ and is located as "logOutput.log" <br><br>
 
 The main page is SNAPSHOTDIR/jsp/databaseselection.jsp (e.g. http://localhost:8080/CT6013_S1707031_Source-1.0-SNAPSHOT/jsp/databaseselection.jsp when running on local glassfish server) <br><br>
 
-MongoDB Database Creation Scripts can be found: <b>*SourceCodeDirectory*/src/main/resources/startupscripts/mongodb/</b>
+MongoDB Database Creation Scripts can be found: <b>*SourceCodeDirectory*/src/main/resources/startupscripts/mongodb/</b> <br/>
 Oracle Database Creation Scripts can be found: <b>*SourceCodeDirectory*/src/main/resources/startupscripts/oracle/</b>
