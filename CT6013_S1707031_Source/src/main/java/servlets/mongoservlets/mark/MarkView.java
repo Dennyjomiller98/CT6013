@@ -33,109 +33,11 @@ public class MarkView extends HttpServlet
 		if(moduleBean.getModuleCode().equalsIgnoreCase("*"))
 		{
 			//Retrieve ALL modules
-			LOG.debug("All modules to be retrieved");
-			List<ModuleBean> allModules = moduleConn.retrieveAllModules();
-			EnrollmentConnections enrollmentConn = new EnrollmentConnections();
-			List<EnrollmentBean> allEnrollments = enrollmentConn.retrieveAllEnrollments();
-			for (ModuleBean aModule : allModules)
-			{
-				//Now get enrollment values for all module codes
-				for (EnrollmentBean enrollBean : allEnrollments)
-				{
-					String moduleSelections = enrollBean.getModuleSelections();
-					String[] split = moduleSelections.split(",");
-					for (String s : split)
-					{
-						if(aModule.getModuleCode().equalsIgnoreCase(s))
-						{
-							//Add the enrollment details.
-							enrollmentToReturn.add(enrollBean);
-						}
-					}
-				}
-			}
-
-			//Check if there are any mark details linked to the student
-			List<MarkBean> allMarkBeans = new ArrayList<>();
-			LOG.debug("Added enrollmentBeans, now finding existing Mark data");
-			for (EnrollmentBean enrollmentBean : enrollmentToReturn)
-			{
-				String studentEmail = enrollmentBean.getStudentEmail();
-				String moduleSelections = enrollmentBean.getModuleSelections();
-				String[] split = moduleSelections.split(",");
-				MarkConnections markConn = new MarkConnections();
-				for (String module : split)
-				{
-					MarkBean markBean = markConn.retrieveMarksForStudentInModule(studentEmail, module);
-					allMarkBeans.add(markBean);
-				}
-			}
-
-			//Put enrollment and mark data into session attributes
-			request.getSession(true).setAttribute("allMarkBeans", allMarkBeans);
-			request.getSession(true).setAttribute("allEnrollmentToReturn", enrollmentToReturn);
-			request.getSession(true).removeAttribute("singleMarkBean");
-			request.getSession(true).removeAttribute("singleEnrollmentToReturn");
-			request.getSession(true).setAttribute("markSuccess", "Student marks for all modules retrieved successfully");
-			request.getSession(true).removeAttribute("markErrors");
+			retrieveAllModules(request, enrollmentToReturn, moduleConn);
 		}
 		else
 		{
-			ModuleBean module = moduleConn.retrieveSingleModule(moduleBean.getModuleCode());
-			if(module != null)
-			{
-				//Now get enrollment values for all module codes
-				EnrollmentConnections enrollmentConn = new EnrollmentConnections();
-				List<EnrollmentBean> allEnrollments = enrollmentConn.retrieveAllEnrollments();
-				for (EnrollmentBean enrollBean : allEnrollments)
-				{
-					String moduleSelections = enrollBean.getModuleSelections();
-					String[] split = moduleSelections.split(",");
-					for (String s : split)
-					{
-						if(module.getModuleCode().equalsIgnoreCase(s))
-						{
-							//Add the enrollment details.
-							enrollmentToReturn.add(enrollBean);
-						}
-					}
-				}
-
-				//Get markBeans for single module enrollments
-				List<MarkBean> allMarkBeans = new ArrayList<>();
-				for (EnrollmentBean enrollmentBean : enrollmentToReturn)
-				{
-					String studentEmail = enrollmentBean.getStudentEmail();
-					String moduleSelections = enrollmentBean.getModuleSelections();
-					String[] split = moduleSelections.split(",");
-					MarkConnections markConn = new MarkConnections();
-					for (String s : split)
-					{
-						MarkBean markBean = markConn.retrieveMarksForStudentInModule(studentEmail, s);
-						allMarkBeans.add(markBean);
-					}
-				}
-
-				//Session attributes
-				request.getSession(true).removeAttribute("allMarkBeans");
-				request.getSession(true).removeAttribute("allEnrollmentToReturn");
-				request.getSession(true).setAttribute("singleMarkBean", allMarkBeans);
-				request.getSession(true).setAttribute("singleEnrollmentToReturn", enrollmentToReturn);
-				request.getSession(true).setAttribute("markSuccess", "Student marks retrieved successfully");
-				request.getSession(true).removeAttribute("markErrors");
-
-			}
-			else
-			{
-				LOG.debug("Unable to find module with code:" + moduleBean.getModuleCode());
-				//Remove session attributes
-				request.getSession(true).removeAttribute("singleMarkBean");
-				request.getSession(true).removeAttribute("singleEnrollmentToReturn");
-				request.getSession(true).removeAttribute("allMarkBeans");
-				request.getSession(true).removeAttribute("allEnrollmentToReturn");
-				request.getSession(true).removeAttribute("markSuccess");
-				request.getSession(true).setAttribute("markErrors", "Unable to find module enrollment information");
-			}
+			retrieveSingleModule(request, enrollmentToReturn, moduleBean, moduleConn);
 		}
 
 		//Redirect to marks addition page to let teachers see students marks/not marked yet
@@ -149,4 +51,116 @@ public class MarkView extends HttpServlet
 		}
 	}
 
+	private void retrieveSingleModule(HttpServletRequest request, List<EnrollmentBean> enrollmentToReturn, ModuleBean moduleBean, ModuleConnections moduleConn)
+	{
+		ModuleBean module = moduleConn.retrieveSingleModule(moduleBean.getModuleCode());
+		if(module != null)
+		{
+			getModule(request, enrollmentToReturn, module);
+
+		}
+		else
+		{
+			LOG.debug("Unable to find module with code:" + moduleBean.getModuleCode());
+			//Remove session attributes
+			request.getSession(true).removeAttribute("singleMarkBean");
+			request.getSession(true).removeAttribute("singleEnrollmentToReturn");
+			request.getSession(true).removeAttribute("allMarkBeans");
+			request.getSession(true).removeAttribute("allEnrollmentToReturn");
+			request.getSession(true).removeAttribute("markSuccess");
+			request.getSession(true).setAttribute("markErrors", "Unable to find module enrollment information");
+		}
+	}
+
+	private void getModule(HttpServletRequest request, List<EnrollmentBean> enrollmentToReturn, ModuleBean module)
+	{
+		//Now get enrollment values for all module codes
+		EnrollmentConnections enrollmentConn = new EnrollmentConnections();
+		List<EnrollmentBean> allEnrollments = enrollmentConn.retrieveAllEnrollments();
+		for (EnrollmentBean enrollBean : allEnrollments)
+		{
+			String moduleSelections = enrollBean.getModuleSelections();
+			String[] split = moduleSelections.split(",");
+			for (String s : split)
+			{
+				if(module.getModuleCode().equalsIgnoreCase(s))
+				{
+					//Add the enrollment details.
+					enrollmentToReturn.add(enrollBean);
+				}
+			}
+		}
+
+		//Get markBeans for single module enrollments
+		List<MarkBean> allMarkBeans = new ArrayList<>();
+		for (EnrollmentBean enrollmentBean : enrollmentToReturn)
+		{
+			String studentEmail = enrollmentBean.getStudentEmail();
+			String moduleSelections = enrollmentBean.getModuleSelections();
+			String[] split = moduleSelections.split(",");
+			MarkConnections markConn = new MarkConnections();
+			for (String s : split)
+			{
+				MarkBean markBean = markConn.retrieveMarksForStudentInModule(studentEmail, s);
+				allMarkBeans.add(markBean);
+			}
+		}
+
+		//Session attributes
+		request.getSession(true).removeAttribute("allMarkBeans");
+		request.getSession(true).removeAttribute("allEnrollmentToReturn");
+		request.getSession(true).setAttribute("singleMarkBean", allMarkBeans);
+		request.getSession(true).setAttribute("singleEnrollmentToReturn", enrollmentToReturn);
+		request.getSession(true).setAttribute("markSuccess", "Student marks retrieved successfully");
+		request.getSession(true).removeAttribute("markErrors");
+	}
+
+	private void retrieveAllModules(HttpServletRequest request, List<EnrollmentBean> enrollmentToReturn, ModuleConnections moduleConn)
+	{
+		LOG.debug("All modules to be retrieved");
+		List<ModuleBean> allModules = moduleConn.retrieveAllModules();
+		EnrollmentConnections enrollmentConn = new EnrollmentConnections();
+		List<EnrollmentBean> allEnrollments = enrollmentConn.retrieveAllEnrollments();
+		for (ModuleBean aModule : allModules)
+		{
+			//Now get enrollment values for all module codes
+			for (EnrollmentBean enrollBean : allEnrollments)
+			{
+				String moduleSelections = enrollBean.getModuleSelections();
+				String[] split = moduleSelections.split(",");
+				for (String s : split)
+				{
+					if(aModule.getModuleCode().equalsIgnoreCase(s))
+					{
+						//Add the enrollment details.
+						enrollmentToReturn.add(enrollBean);
+					}
+				}
+			}
+		}
+
+		//Check if there are any mark details linked to the student
+		List<MarkBean> allMarkBeans = new ArrayList<>();
+		LOG.debug("Added enrollmentBeans, now finding existing Mark data");
+		for (EnrollmentBean enrollmentBean : enrollmentToReturn)
+		{
+			String studentEmail = enrollmentBean.getStudentEmail();
+			String moduleSelections = enrollmentBean.getModuleSelections();
+			String[] split = moduleSelections.split(",");
+			MarkConnections markConn = new MarkConnections();
+			for (String module : split)
+			{
+				MarkBean markBean = markConn.retrieveMarksForStudentInModule(studentEmail, module);
+				allMarkBeans.add(markBean);
+			}
+		}
+
+		//Put enrollment and mark data into session attributes
+		request.getSession(true).setAttribute("allMarkBeans", allMarkBeans);
+		request.getSession(true).setAttribute("allEnrollmentToReturn", enrollmentToReturn);
+		request.getSession(true).removeAttribute("singleMarkBean");
+		request.getSession(true).removeAttribute("singleEnrollmentToReturn");
+		request.getSession(true).setAttribute("markSuccess", "Student marks for all modules retrieved successfully");
+		request.getSession(true).removeAttribute("markErrors");
+	}
 }

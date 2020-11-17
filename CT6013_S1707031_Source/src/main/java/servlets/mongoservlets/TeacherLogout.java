@@ -76,5 +76,10 @@ public class TeacherLogout extends HttpServlet
 		request.getSession(true).removeAttribute("markStudent");
 		request.getSession(true).removeAttribute("markTeacher");
 		request.getSession(true).removeAttribute("markGrade");
+		request.getSession(true).removeAttribute("allMarkModules");
+		request.getSession(true).removeAttribute("allMarkBeans");
+		request.getSession(true).removeAttribute("allEnrollmentToReturn");
+		request.getSession(true).removeAttribute("singleMarkBean");
+		request.getSession(true).removeAttribute("singleEnrollmentToReturn");
 	}
 }

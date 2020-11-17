@@ -24,12 +24,37 @@ public class MarkAddition extends HttpServlet
 		markDoc.append("Module_Code", request.getParameter("moduleCode"));
 		markDoc.append("Student_Email", request.getParameter("studentEmail"));
 		markDoc.append("Marker_Email", request.getParameter("courseTutor"));
-		markDoc.append("Final_Mark", request.getParameter("allGrades"));
-		markConn.addMarks(markDoc);
 
-		//Set attributes again
-		//TODO - Set session attributes once added
+		String allGrades = request.getParameter("allGrades");
+		String singleGrades = request.getParameter("singleGrades");
+		if(allGrades != null)
+		{
+			markDoc.append("Final_Mark", allGrades);
+		}
+		else if (singleGrades != null)
+		{
+			markDoc.append("Final_Mark", singleGrades);
+		}
+		//Check validity
+		if(amIPercentage(markDoc.getString("Final_Mark")))
+		{
+			//Ad to DB and set session values
+			LOG.debug("Adding marks to DB");
+			markConn.addMarks(markDoc);
+			request.getSession(true).setAttribute("markSuccess", "Mark submitted successfully");
+			request.getSession(true).removeAttribute("markErrors");
+		}
+		else
+		{
+			request.getSession(true).setAttribute("markErrors", "Provided Grade was not between 0 and 100.");
+			request.getSession(true).removeAttribute("markSuccess");
+		}
 
+		//Remove attributes
+		request.getSession(true).removeAttribute("allMarkBeans");
+		request.getSession(true).removeAttribute("allEnrollmentToReturn");
+		request.getSession(true).removeAttribute("singleMarkBean");
+		request.getSession(true).removeAttribute("singleEnrollmentToReturn");
 
 		//Return to Add marks page
 		try
@@ -39,6 +64,21 @@ public class MarkAddition extends HttpServlet
 		catch (IOException e)
 		{
 			LOG.error("Unable to redirect back to marks addition page after mark save",e);
+		}
+	}
+
+	private boolean amIPercentage(String markValue)
+	{
+		//If value isn't between 0 and 100, is not valid marks, so we fail addition to DB
+		try
+		{
+			int value = Integer.parseInt(markValue);
+			return value >= 0 && value <= 100;
+		}
+		catch(Exception e)
+		{
+			LOG.error("Value provided was NOT a number", e);
+			return false;
 		}
 	}
 }

@@ -118,16 +118,11 @@
                         List<MarkBean> allMarkBeans = (List<MarkBean>) session.getAttribute("allMarkBeans");
                         List<EnrollmentBean> allEnrollBeans = (List<EnrollmentBean>) session.getAttribute("allEnrollmentToReturn");
 
-
-
-
-
-
                         int moduleCount = 0;
-                        for (int i =0; i<allEnrollBeans.size(); i++)
+                        for (EnrollmentBean enrollBean : allEnrollBeans)
                         {
                             String moduleCode;
-                            String[] splitModules = allEnrollBeans.get(i).getModuleSelections().split(",");
+                            String[] splitModules = enrollBean.getModuleSelections().split(",");
                             if (moduleCount < splitModules.length)
                             {
                                 moduleCode = splitModules[moduleCount];
@@ -140,33 +135,35 @@
                             moduleCount++;
                     %>
                     <tr>
-                        <td><%=allEnrollBeans.get(i).getStudentEmail()%></td>
+                        <td><%=enrollBean.getStudentEmail()%></td>
                         <td><%=moduleCode%></td>
                         <td>
                             <%if (allMarkBeans != null)
                             {
-                                if(allMarkBeans.size() != 0){
-                                    String finalMark = null;
+                                if(allMarkBeans.size() != 0)
+                                {
+                                    int finalMark = 0;
                                     for (MarkBean myMark : allMarkBeans)
                                     {
-                                        if(myMark != null)
+                                        if(myMark != null && myMark.getModuleCode().equalsIgnoreCase(moduleCode) &&
+                                                enrollBean.getStudentEmail().equalsIgnoreCase(myMark.getStudentEmail()))
                                         {
-                                            if(myMark.getModuleCode() != null && myMark.getModuleCode().equalsIgnoreCase(allEnrollBeans.get(i).getCourseCode()))
-                                            {
-                                                finalMark = String.valueOf(myMark.getFinalMark());
-                                            }
+                                            finalMark =  myMark.getFinalMark();
                                         }
                                     }
-                                    if(finalMark != null)
-                                    { %> Grade Given <%=finalMark%> <% } else {%>
-                            <%--Add Marks form--%>
-                            <form style="" action="${pageContext.request.contextPath}/servlets/mark/MarkAddition?studentEmail=<%=allEnrollBeans.get(i).getStudentEmail()%>&courseTutor=<%=session.getAttribute("email").toString()%>&moduleCode=<%=moduleCode%>" method="POST">
-                                <label for="allGrades"></label><input type="text" name="allGrades" id="allGrades" />
-                                <input type="submit" value="Search">
-                            </form>
-                            <%}
-                            } else{%>
-                            Grades Unavailable
+                                    if(finalMark != 0)
+                                    {%>
+                                        Grade given: <%=finalMark%>%
+                                    <%} else { %>
+                                        <%--Add Marks form--%>
+                                        <form style="width:100%" action="${pageContext.request.contextPath}/servlets/mark/MarkAddition?studentEmail=<%=enrollBean.getStudentEmail()%>&courseTutor=<%=session.getAttribute("email").toString()%>&moduleCode=<%=moduleCode%>" method="POST">
+                                            <label for="allGrades"></label><input style="width: 50%" type="text" name="allGrades" id="allGrades" />
+                                            <input style="width: 30%" type="submit" value="Add Grade %">
+                                        </form>
+                                    <% } %>
+
+                            <%} else {%>
+                                Grades unavailable
                             <%}
                             }%>
                         </td>
@@ -174,46 +171,59 @@
                     <%}
                     }%>
 
-
-
-
-
-
-
-
-
                 <%--Single module Students table--%>
                 <%if(session.getAttribute("singleEnrollmentToReturn") != null && session.getAttribute("singleMarkBean") != null){
                     List<EnrollmentBean> enrollBeans = (List<EnrollmentBean>) session.getAttribute("singleEnrollmentToReturn");
                     List<MarkBean> markBeans = (List<MarkBean>) session.getAttribute("singleMarkBean");
+
+                    int moduleCount = 0;
                     for (EnrollmentBean enrollBean : enrollBeans)
-                    {%>
+                    {
+                    	String moduleCode;
+                    	String[] splitModules = enrollBean.getModuleSelections().split(",");
+                    	if(moduleCount < splitModules.length)
+                    	{
+                    		moduleCode = splitModules[moduleCount];
+                        }
+                    	else
+                        {
+                    	    moduleCount = 0;
+                    	    moduleCode = splitModules[moduleCount];
+                        }
+                    	moduleCount++;
+                    %>
+
                         <tr>
                             <td><%=enrollBean.getStudentEmail()%></td>
-                            <td><%=enrollBean.getModuleSelections()%></td>
+                            <td><%=moduleCode%></td>
                             <td>
                                 <%if (markBeans != null)
+                                {
+                                    if(markBeans.size() != 0)
                                     {
-                                        if(markBeans.size() != 0){
-                                            for (MarkBean myMark : markBeans)
+                                        int finalMark = 0;
+                                        for (MarkBean myMark : markBeans)
+                                        {
+                                            if(myMark != null && myMark.getModuleCode().equalsIgnoreCase(moduleCode) &&
+                                                    enrollBean.getStudentEmail().equalsIgnoreCase(myMark.getStudentEmail()))
                                             {
-                                            	String finalMark = null;
-                                            	if(myMark != null)
-                                            	{
-                                            		finalMark = myMark.getModuleCode();
-                                                }
-                                                if(finalMark != null && finalMark.equalsIgnoreCase(enrollBean.getCourseCode()))
-                                                {%>
-                                Grade Given: <%=myMark.getFinalMark()%>
+                                                finalMark =  myMark.getFinalMark();
+                                            }
+                                        }
+                                        if(finalMark != 0)
+                                        {%>
+                                Grade given: <%=finalMark%>%
+                                <%} else { %>
+                                <%--Add Marks form--%>
+                                <form style="width:100%" action="${pageContext.request.contextPath}/servlets/mark/MarkAddition?studentEmail=<%=enrollBean.getStudentEmail()%>&courseTutor=<%=session.getAttribute("email").toString()%>&moduleCode=<%=moduleCode%>" method="POST">
+                                    <label for="singleGrades"></label><input style="width: 50%" type="text" name="singleGrades" id="singleGrades" />
+                                    <input style="width: 30%" type="submit" value="Add Grade %">
+                                </form>
+                                <% } %>
                                 <%} else {%>
-                                N/A
-                                <%}%>
+                                Grades unavailable
                                 <%}
-                                } else{%>
-                                Grades Unavailable
-                                <%}
-                                }
-                                %>
+                                }%>
                             </td>
                         </tr>
                     <%}%>
