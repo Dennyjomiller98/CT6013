@@ -19,34 +19,70 @@ public class HomeToCourseEdit extends HttpServlet
 	{
 		//Get course details passed through params (HomeToCourseEdit?value=courseCode)
 		String courseCode = request.getParameter("courseCode");
-		CourseConnections courseConn = new CourseConnections();
-		CourseBean beanToEdit = courseConn.retrieveSingleCourse(courseCode);
-		if (beanToEdit != null)
+		if(request.getSession(true).getAttribute("DBSELECTION") != null)
 		{
-			request.getSession(true).removeAttribute("allCourses");
-			request.getSession(true).setAttribute("courseCode", courseCode);
-			request.getSession(true).setAttribute("courseName", beanToEdit.getCourseName());
-			request.getSession(true).setAttribute("courseTutor", beanToEdit.getCourseTutor());
-			request.getSession(true).setAttribute("courseStart", beanToEdit.getCourseStart());
-			request.getSession(true).setAttribute("courseEnd", beanToEdit.getCourseEnd());
+			String dbSelection = request.getSession(true).getAttribute("DBSELECTION").toString();
+			CourseBean beanToEdit = null;
+			if(dbSelection.equalsIgnoreCase("MONGODB"))
+			{
+				CourseConnections courseConn = new CourseConnections();
+				beanToEdit = courseConn.retrieveSingleCourse(courseCode);
+			}
+			else if (dbSelection.equalsIgnoreCase("ORACLE"))
+			{
+				oracle.CourseConnections courseConn = new oracle.CourseConnections();
+				beanToEdit = courseConn.retrieveSingleCourse(courseCode);
+			}
+			else
+			{
+				//No DB selection
+				LOG.error("Unknown database choice, returning to DB select page.");
+				redirectToDBSelect(request, response);
+			}
+
+			if (beanToEdit != null)
+			{
+				request.getSession(true).removeAttribute("allCourses");
+				request.getSession(true).setAttribute("courseCode", courseCode);
+				request.getSession(true).setAttribute("courseName", beanToEdit.getCourseName());
+				request.getSession(true).setAttribute("courseTutor", beanToEdit.getCourseTutor());
+				request.getSession(true).setAttribute("courseStart", beanToEdit.getCourseStart());
+				request.getSession(true).setAttribute("courseEnd", beanToEdit.getCourseEnd());
+			}
+			else
+			{
+				request.getSession(true).removeAttribute("allCourses");
+				request.getSession(true).removeAttribute("courseCode");
+				request.getSession(true).removeAttribute("courseName");
+				request.getSession(true).removeAttribute("courseTutor");
+				request.getSession(true).removeAttribute("courseStart");
+				request.getSession(true).removeAttribute("courseEnd");
+			}
+			//Just A Redirect
+			try
+			{
+				response.sendRedirect(request.getContextPath() + "/jsp/courses/courseedit.jsp");
+			}
+			catch (IOException e)
+			{
+				LOG.error("Unable to redirect to course edit page.",e);
+			}
 		}
 		else
 		{
-			request.getSession(true).removeAttribute("allCourses");
-			request.getSession(true).removeAttribute("courseCode");
-			request.getSession(true).removeAttribute("courseName");
-			request.getSession(true).removeAttribute("courseTutor");
-			request.getSession(true).removeAttribute("courseStart");
-			request.getSession(true).removeAttribute("courseEnd");
+			//No DB selection
+			LOG.error("Unknown database choice, returning to DB select page.");
+			redirectToDBSelect(request, response);
 		}
-		//Just A Redirect
+	}
+
+	private void redirectToDBSelect(HttpServletRequest request, HttpServletResponse response)
+	{
 		try
 		{
-			response.sendRedirect(request.getContextPath() + "/jsp/courses/courseedit.jsp");
-		}
-		catch (IOException e)
-		{
-			LOG.error("Unable to redirect to course edit page.",e);
+			response.sendRedirect(request.getContextPath() + "/jsp/databaseselection.jsp");
+		} catch (IOException e) {
+			LOG.error("Failure to redirect after course edit redirect failure", e);
 		}
 	}
 }

@@ -38,38 +38,7 @@ public class EnrollmentCourseView extends HttpServlet
 			else
 			{
 				//Get module details linked to selected course
-				List<ModuleBean> allModules = new ArrayList<>();
-				LOG.debug("attempting to retrieve related modules ");
-				List<ModuleBean> allModuleBeans = new ArrayList<>();
-				if(dbSelection.equalsIgnoreCase("MONGODB"))
-				{
-					ModuleConnections moduleConn = new ModuleConnections();
-					allModuleBeans = moduleConn.retrieveAllModules();
-				}
-				else if (dbSelection.equalsIgnoreCase("ORACLE"))
-				{
-					oracle.ModuleConnections moduleConn = new oracle.ModuleConnections();
-					allModuleBeans = moduleConn.retrieveAllModules();
-				}
-				else
-				{
-					//No DB selection
-					LOG.error("Unknown database choice, returning to DB select page.");
-					redirectToDBSelect(request, response);
-				}
-
-				for (ModuleBean moduleBean : allModuleBeans)
-				{
-					if (moduleBean.getRelatedCourse().equalsIgnoreCase(courseBean.getCourseCode()))
-					{
-						allModules.add(moduleBean);
-					}
-				}
-				//set session attributes
-				request.getSession(true).removeAttribute("enrollErrors");
-				request.getSession(true).setAttribute("enrollSuccess", "Modules for course " + courseBean.getCourseCode() + " retrieved.");
-				request.getSession(true).setAttribute("allModules", allModules);
-				request.getSession(true).setAttribute("selectedCourse", courseBean.getCourseCode());
+				viewModules(request, response, dbSelection, courseBean);
 			}
 
 			//Redirect to Enrollment page
@@ -88,6 +57,42 @@ public class EnrollmentCourseView extends HttpServlet
 			LOG.error("No DB selected");
 			redirectToDBSelect(request, response);
 		}
+	}
+
+	private void viewModules(HttpServletRequest request, HttpServletResponse response, String dbSelection, CourseBean courseBean)
+	{
+		List<ModuleBean> allModules = new ArrayList<>();
+		LOG.debug("attempting to retrieve related modules ");
+		List<ModuleBean> allModuleBeans = new ArrayList<>();
+		if(dbSelection.equalsIgnoreCase("MONGODB"))
+		{
+			ModuleConnections moduleConn = new ModuleConnections();
+			allModuleBeans = moduleConn.retrieveAllModules();
+		}
+		else if (dbSelection.equalsIgnoreCase("ORACLE"))
+		{
+			oracle.ModuleConnections moduleConn = new oracle.ModuleConnections();
+			allModuleBeans = moduleConn.retrieveAllModules();
+		}
+		else
+		{
+			//No DB selection
+			LOG.error("Unknown database choice, returning to DB select page.");
+			redirectToDBSelect(request, response);
+		}
+
+		for (ModuleBean moduleBean : allModuleBeans)
+		{
+			if (moduleBean.getRelatedCourse().equalsIgnoreCase(courseBean.getCourseCode()))
+			{
+				allModules.add(moduleBean);
+			}
+		}
+		//set session attributes
+		request.getSession(true).removeAttribute("enrollErrors");
+		request.getSession(true).setAttribute("enrollSuccess", "Modules for course " + courseBean.getCourseCode() + " retrieved.");
+		request.getSession(true).setAttribute("allModules", allModules);
+		request.getSession(true).setAttribute("selectedCourse", courseBean.getCourseCode());
 	}
 
 	private void redirectToDBSelect(HttpServletRequest request, HttpServletResponse response)

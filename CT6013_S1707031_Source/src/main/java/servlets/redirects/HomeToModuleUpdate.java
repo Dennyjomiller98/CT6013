@@ -1,12 +1,12 @@
 package servlets.redirects;
 
+import beans.ModuleBean;
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import mongodb.ModuleConnections;
-import beans.ModuleBean;
 import org.apache.log4j.Logger;
 
 @WebServlet(name = "homeToModuleUpdate")
@@ -19,8 +19,49 @@ public class HomeToModuleUpdate extends HttpServlet
 	{
 		//Get module details passed through params (HomeToModuleUpdate?value=moduleCode)
 		String moduleCode = request.getParameter("moduleCode");
-		ModuleConnections moduleConn = new ModuleConnections();
-		ModuleBean beanToEdit = moduleConn.retrieveSingleModule(moduleCode);
+		if(request.getSession(true).getAttribute("DBSELECTION") != null)
+		{
+			ModuleBean beanToEdit = null;
+			String dbSelection = request.getSession(true).getAttribute("DBSELECTION").toString();
+			editModuleSessionAttributes(request, response, moduleCode, beanToEdit, dbSelection);
+
+			//Just A Redirect
+			try
+			{
+				response.sendRedirect(request.getContextPath() + "/jsp/modules/moduleedit.jsp");
+			}
+			catch (IOException e)
+			{
+				LOG.error("Unable to redirect to module edit page.",e);
+			}
+		}
+		else
+		{
+			//No DB selection
+			LOG.error("Unknown database choice, returning to DB select page.");
+			redirectToDBSelect(request, response);
+		}
+	}
+
+	private void editModuleSessionAttributes(HttpServletRequest request, HttpServletResponse response, String moduleCode, ModuleBean beanToEdit, String dbSelection)
+	{
+		if(dbSelection.equalsIgnoreCase("MONGODB"))
+		{
+			ModuleConnections moduleConn = new ModuleConnections();
+			beanToEdit = moduleConn.retrieveSingleModule(moduleCode);
+		}
+		else if (dbSelection.equalsIgnoreCase("ORACLE"))
+		{
+			oracle.ModuleConnections moduleConn = new oracle.ModuleConnections();
+			beanToEdit = moduleConn.retrieveSingleModule(moduleCode);
+		}
+		else
+		{
+			//No DB selection
+			LOG.error("Unknown database choice, returning to DB select page.");
+			redirectToDBSelect(request, response);
+		}
+
 		if (beanToEdit != null)
 		{
 			request.getSession(true).removeAttribute("moduleErrors");
@@ -47,14 +88,15 @@ public class HomeToModuleUpdate extends HttpServlet
 			request.getSession(true).removeAttribute("moduleStart");
 			request.getSession(true).removeAttribute("moduleEnd");
 		}
-		//Just A Redirect
+	}
+
+	private void redirectToDBSelect(HttpServletRequest request, HttpServletResponse response)
+	{
 		try
 		{
-			response.sendRedirect(request.getContextPath() + "/jsp/modules/moduleedit.jsp");
-		}
-		catch (IOException e)
-		{
-			LOG.error("Unable to redirect to module edit page.",e);
+			response.sendRedirect(request.getContextPath() + "/jsp/databaseselection.jsp");
+		} catch (IOException e) {
+			LOG.error("Failure to redirect after module edit redirect failure", e);
 		}
 	}
 }

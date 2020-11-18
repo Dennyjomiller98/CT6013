@@ -1,12 +1,12 @@
 package servlets.redirects;
 
+import beans.EnrollmentBean;
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import mongodb.EnrollmentConnections;
-import beans.EnrollmentBean;
 import org.apache.log4j.Logger;
 
 @WebServlet(name = "homeToCourseEnrollment")
@@ -26,25 +26,51 @@ public class HomeToCourseEnrollment extends HttpServlet
 			{
 				LOG.debug("student email passed through, establishing EnrollmentConnection");
 				//Logged in, enrolled. Retrieve enrollment details.
-				EnrollmentConnections enrollConn = new EnrollmentConnections();
-				EnrollmentBean enrollmentBean = enrollConn.retrieveSingleEnrollment(studentEmail);
-				if (enrollmentBean != null)
+				if(request.getSession(true).getAttribute("DBSELECTION") != null)
 				{
-					request.getSession(true).setAttribute("enrollStudent", enrollmentBean.getStudentEmail() );
-					request.getSession(true).setAttribute("enrollCourse", enrollmentBean.getCourseCode() );
-					request.getSession(true).setAttribute("enrollModules", enrollmentBean.getModuleSelections() );
-					request.getSession(true).removeAttribute("enrollErrors");
-					request.getSession(true).setAttribute("enrollSuccess", "Enrollment details retrieved successfully" );
+					String dbSelection = request.getSession(true).getAttribute("DBSELECTION").toString();
+					EnrollmentBean enrollmentBean = null;
+					if(dbSelection.equalsIgnoreCase("MONGODB"))
+					{
+						EnrollmentConnections enrollConn = new EnrollmentConnections();
+						enrollmentBean = enrollConn.retrieveSingleEnrollment(studentEmail);
+					}
+					else if (dbSelection.equalsIgnoreCase("ORACLE"))
+					{
+						oracle.EnrollmentConnections enrollConn = new oracle.EnrollmentConnections();
+						enrollmentBean = enrollConn.retrieveSingleEnrollment(studentEmail);
+					}
+					else
+					{
+						//No DB selection
+						LOG.error("Unknown database choice, returning to DB select page.");
+						redirectToDBSelect(request, response);
+					}
+
+					if (enrollmentBean != null)
+					{
+						request.getSession(true).setAttribute("enrollStudent", enrollmentBean.getStudentEmail() );
+						request.getSession(true).setAttribute("enrollCourse", enrollmentBean.getCourseCode() );
+						request.getSession(true).setAttribute("enrollModules", enrollmentBean.getModuleSelections() );
+						request.getSession(true).removeAttribute("enrollErrors");
+						request.getSession(true).setAttribute("enrollSuccess", "Enrollment details retrieved successfully" );
+					}
+					else
+					{
+						LOG.error("No enrollment data found in DB for student email: " + studentEmail);
+						//Remove session attributes
+						request.getSession(true).removeAttribute("enrollStudent");
+						request.getSession(true).removeAttribute("enrollCourse");
+						request.getSession(true).removeAttribute("enrollModules");
+						request.getSession(true).setAttribute("enrollErrors", "Please try selecting a course.");
+						request.getSession(true).removeAttribute("enrollSuccess");
+					}
 				}
 				else
 				{
-					LOG.error("No enrollment data found in DB for student email: " + studentEmail);
-					//Remove session attributes
-					request.getSession(true).removeAttribute("enrollStudent");
-					request.getSession(true).removeAttribute("enrollCourse");
-					request.getSession(true).removeAttribute("enrollModules");
-					request.getSession(true).setAttribute("enrollErrors", "Please try selecting a course.");
-					request.getSession(true).removeAttribute("enrollSuccess");
+					//No DB selection
+					LOG.error("Unknown database choice, returning to DB select page.");
+					redirectToDBSelect(request, response);
 				}
 			}
 			else
@@ -64,6 +90,16 @@ public class HomeToCourseEnrollment extends HttpServlet
 		catch (IOException e)
 		{
 			LOG.error("Unable to redirect to enrollment page.",e);
+		}
+	}
+
+	private void redirectToDBSelect(HttpServletRequest request, HttpServletResponse response)
+	{
+		try
+		{
+			response.sendRedirect(request.getContextPath() + "/jsp/databaseselection.jsp");
+		} catch (IOException e) {
+			LOG.error("Failure to redirect after enrollment redirect failure", e);
 		}
 	}
 }
