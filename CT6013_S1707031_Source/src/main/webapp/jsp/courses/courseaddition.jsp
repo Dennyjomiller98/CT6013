@@ -60,45 +60,62 @@
 
         <%--Main Content--%>
         <div class="mainBody">
-            <p>
-                To add a course, please fill out the following fields.
-            </p>
-            <form action="${pageContext.request.contextPath}/servlets/course/CourseAddition" method="POST">
-                <label for="courseCode">Course Code:</label>
-                <input type="text" name="courseCode" id="courseCode" required/>
+            <%if(amITeacher){ %>
+                <p>
+                    To add a course, please fill out the following fields.
+                </p>
+                <form action="${pageContext.request.contextPath}/servlets/course/CourseAddition" method="POST">
+                    <label for="courseCode">Course Code:</label>
+                    <input type="text" name="courseCode" id="courseCode" required/>
+                    <br/>
+                    <label for="courseName">Course Name:</label>
+                    <input type="text" name="courseName" id="courseName" required/>
+                    <br/>
+                    <label for="courseTutor">Course Tutor Email:</label>
+                    <input type="email" name="courseTutor" id="courseTutor" required/>
+                    <br/>
+                    <label for="courseStart">Course Start Date:</label>
+                    <input type="date" name="courseStart" id="courseStart" required/>
+                    <br/>
+                    <label for="courseEnd">Course End Date</label>
+                    <input type="date" name="courseEnd" id="courseEnd" required/>
+                    <br/>
+                    <input type="reset" value="Clear">
+                    <input type="submit" value="Submit">
+                </form>
                 <br/>
-                <label for="courseName">Course Name:</label>
-                <input type="text" name="courseName" id="courseName" required/>
-                <br/>
-                <label for="courseTutor">Course Tutor Email:</label>
-                <input type="email" name="courseTutor" id="courseTutor" required/>
-                <br/>
-                <label for="courseStart">Course Start Date:</label>
-                <input type="date" name="courseStart" id="courseStart" required/>
-                <br/>
-                <label for="courseEnd">Course End Date</label>
-                <input type="date" name="courseEnd" id="courseEnd" required/>
-                <br/>
-                <input type="reset" value="Clear">
-                <input type="submit" value="Submit">
-            </form>
-            <br/>
 
-            <% String success = (String) session.getAttribute("courseSuccess");
-                if(success != null){%>
-            <p class="success-div" id="successDiv"><%=success%></p>
-            <%}%>
+                <% String success = (String) session.getAttribute("courseSuccess");
+                    if(success != null){%>
+                <p class="success-div" id="successDiv"><%=success%></p>
+                <%}%>
 
-            <% String errors = (String) session.getAttribute("courseErrors");
-                if(errors != null){%>
-            <p class="error-div" id="errorDiv"><%=errors%></p>
-            <%}%>
+                <% String errors = (String) session.getAttribute("courseErrors");
+                    if(errors != null){%>
+                <p class="error-div" id="errorDiv"><%=errors%></p>
+                <%}%>
+                <br/>
 
-            <ul>
-                <li><a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToCourseEnrollmentView>&nbsp;View Courses&nbsp;</a></li>
-                <li><a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToModuleAddition>&nbsp;Add Modules&nbsp;</a></li>
-                <li><a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToModuleView>&nbsp;View Modules&nbsp;</a></li>
-            </ul>
+                <a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToCourseEnrollmentView>&nbsp;View Courses&nbsp;</a>
+                <a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToModuleAddition>&nbsp;Add Modules&nbsp;</a>
+                <a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToModuleView>&nbsp;View Modules&nbsp;</a>
+            <% } else {
+                String email = null;
+                if(session.getAttribute("email") != null)
+                {
+                    email = session.getAttribute("email").toString();
+                }
+                if(email != null) {%>
+                    <p>
+                        You do not have access to view this page. <a class="bodyA" style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToStudentIndex>&nbsp;<u>Return to Student Portal.</u>&nbsp;</a> <br/>
+                    </p>
+                <% } else {%>
+                    <p>
+                        You are not logged in. <a class="bodyA" style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToDatabaseLogout>&nbsp;<u>Return to Main Page.</u>&nbsp;</a> <br/>
+                    </p>
+                <% } %>
+            <% } %>
+
         </div>
     </body>
 </html>

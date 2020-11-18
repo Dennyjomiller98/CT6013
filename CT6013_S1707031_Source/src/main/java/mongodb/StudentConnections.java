@@ -10,6 +10,7 @@ import java.util.List;
 import beans.StudentBean;
 import org.bson.Document;
 import org.bson.conversions.Bson;
+import servlets.users.PasswordEncryptDecrypt;
 
 public class StudentConnections extends AbstractMongoDBConnections
 {
@@ -80,7 +81,8 @@ public class StudentConnections extends AbstractMongoDBConnections
 
         StudentBean potentialStudent = retrieveSingleStudent(email);
         //Email will match at this point, only need to assert Password value to email to authenticate login
-        if (potentialStudent != null && password.equals(potentialStudent.getPassword()))
+        String hashedPassword = PasswordEncryptDecrypt.encryptPasswordToStore(password);
+        if (potentialStudent != null && hashedPassword.equals(potentialStudent.getPassword()))
         {
             isCorrectCredentials = true;
         }

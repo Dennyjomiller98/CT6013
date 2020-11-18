@@ -31,11 +31,10 @@
                     String isTeacher = session.getAttribute("isTeacher").toString();
                     amITeacher = isTeacher.equals("true");
                 }
-                boolean amIEnrolled=false;
-                if(session.getAttribute("isEnrolled") != null)
+                String email=null;
+                if(session.getAttribute("email") != null)
                 {
-                    String isEnrolled = session.getAttribute("isEnrolled").toString();
-                    amIEnrolled = isEnrolled.equals("true");
+                    email = session.getAttribute("email").toString();
                 }
                 if(firstname != null){%>
             <div class="topnavdiv">
@@ -66,21 +65,30 @@
 
         <%--Login Form--%>
         <div class="mainBody">
-            <form action="${pageContext.request.contextPath}/servlets/StudentLogin" method="GET">
-                <label for="email">Email:</label>
-                <input type="text" name="email" id="email" required/>
+            <%if(email != null){
+                if(amITeacher){ %>
+                    You are already logged in.  <a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToTeacherIndex>&nbsp;Return to Teacher Portal&nbsp;</a>
+                <% } else { %>
+                    You are already logged in.  <a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToStudentIndex>&nbsp;Return to Student Portal&nbsp;</a>
+                <% } %>
+            <% } else { %>
+                <form action="${pageContext.request.contextPath}/servlets/StudentLogin" method="GET">
+                    <label for="email">Email:</label>
+                    <input type="text" name="email" id="email" required/>
+                    <br/>
+                    <label for="pword">Password:</label>
+                    <input type="password" name="pword" id="pword" minlength="8" required/>
+                    <br/>
+                    <input type="reset" value="Clear">
+                    <input type="submit" value="Submit">
+                </form>
                 <br/>
-                <label for="pword">Password:</label>
-                <input type="text" name="pword" id="pword" required/>
-                <br/>
-                <input type="reset" value="Clear">
-                <input type="submit" value="Submit">
-            </form>
 
-            <% String errors = (String) session.getAttribute("loginErrors");
-                if(errors != null){%>
-            <p class="error-div" id="errorDiv"><%=errors%></p>
-            <%}%>
+                <% String errors = (String) session.getAttribute("loginErrors");
+                    if(errors != null){%>
+                <p class="error-div" id="errorDiv"><%=errors%></p>
+                <%}%>
+            <% } %>
         </div>
     </body>
 </html>

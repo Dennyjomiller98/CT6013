@@ -60,60 +60,76 @@
 
         <%--Main content--%>
         <div class="mainBody">
-            <p>
-                To add a module, please fill in the following form.
-            </p>
+            <%if(amITeacher){ %>
+                <p>
+                    To add a module, please fill in the following form.
+                </p>
 
-            <form action="${pageContext.request.contextPath}/servlets/module/ModuleAddition" method="POST">
-                <label for="moduleCode">Module Code:</label>
-                <input type="text" name="moduleCode" id="moduleCode" required/>
+                <form action="${pageContext.request.contextPath}/servlets/module/ModuleAddition" method="POST">
+                    <label for="moduleCode">Module Code:</label>
+                    <input type="text" name="moduleCode" id="moduleCode" required/>
+                    <br/>
+                    <label for="moduleName">Module Name:</label>
+                    <input type="text" name="moduleName" id="moduleName" required/>
+                    <br/>
+                    <label for="moduleTutor">Module Tutor Email:</label>
+                    <input type="email" name="moduleTutor" id="moduleTutor" required/>
+                    <br/>
+                    <label for="relatedCourse">Related Course:</label>
+                    <input type="text" name="relatedCourse" id="relatedCourse" required/>
+                    <br/>
+                    <label for="isCompulsory">Compulsory Module:</label>
+                    <input type="checkbox" name="isCompulsory" id="isCompulsory" />
+                    <br/><br/>
+                    <label for="semester">Semester:</label>
+                    <select class="select-css" style="width: 50%; display: inline-block" name="semester" id="semester">
+                        <option value="1">Semester 1</option>
+                        <option value="2">Semester 2</option>
+                        <option value="-1">Semester 1 and 2</option>
+                        <option value="-2">Placement</option>
+                    </select>
+                    <br/>
+                    <label for="moduleStart">Course Start:</label>
+                    <input type="date" name="moduleStart" id="moduleStart" required/>
+                    <br/>
+                    <label for="moduleEnd">Course End:</label>
+                    <input type="date" name="moduleEnd" id="moduleEnd" required/>
+                    <br/>
+                    <input type="reset" value="Clear">
+                    <input type="submit" value="Submit">
+                </form>
                 <br/>
-                <label for="moduleName">Module Name:</label>
-                <input type="text" name="moduleName" id="moduleName" required/>
-                <br/>
-                <label for="moduleTutor">Module Tutor Email:</label>
-                <input type="email" name="moduleTutor" id="moduleTutor" required/>
-                <br/>
-                <label for="relatedCourse">Related Course:</label>
-                <input type="text" name="relatedCourse" id="relatedCourse" required/>
-                <br/>
-                <label for="isCompulsory">Compulsory Module:</label>
-                <input type="checkbox" name="isCompulsory" id="isCompulsory" />
-                <br/><br/>
-                <label for="semester">Semester:</label>
-                <select class="select-css" style="width: 50%; display: inline-block" name="semester" id="semester">
-                    <option value="1">Semester 1</option>
-                    <option value="2">Semester 2</option>
-                    <option value="-1">Semester 1 and 2</option>
-                    <option value="-2">Placement</option>
-                </select>
-                <br/>
-                <label for="moduleStart">Course Start:</label>
-                <input type="date" name="moduleStart" id="moduleStart" required/>
-                <br/>
-                <label for="moduleEnd">Course End:</label>
-                <input type="date" name="moduleEnd" id="moduleEnd" required/>
-                <br/>
-                <input type="reset" value="Clear">
-                <input type="submit" value="Submit">
-            </form>
-            <br/>
 
-            <% String success = (String) session.getAttribute("moduleSuccess");
-                if(success != null){%>
-            <p class="success-div" id="successDiv"><%=success%></p>
-            <%}%>
+                <% String success = (String) session.getAttribute("moduleSuccess");
+                    if(success != null){%>
+                <p class="success-div" id="successDiv"><%=success%></p>
+                <%}%>
 
-            <% String errors = (String) session.getAttribute("moduleErrors");
-                if(errors != null){%>
-            <p class="error-div" id="errorDiv"><%=errors%></p>
-            <%}%>
+                <% String errors = (String) session.getAttribute("moduleErrors");
+                    if(errors != null){%>
+                <p class="error-div" id="errorDiv"><%=errors%></p>
+                <%}%>
+                <br/>
 
-            <ul>
-                <li><a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToModuleView>&nbsp;View Modules&nbsp;</a></li>
-                <li><a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToCourseAddition>&nbsp;Add Courses&nbsp;</a></li>
-                <li><a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToCourseEnrollmentView>&nbsp;View Courses&nbsp;</a></li>
-            </ul>
+                <a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToModuleView>&nbsp;View Modules&nbsp;</a>
+                <a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToCourseAddition>&nbsp;Add Courses&nbsp;</a>
+                <a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToCourseEnrollmentView>&nbsp;View Courses&nbsp;</a>
+                <% } else {
+                    String email = null;
+                    if(session.getAttribute("email") != null)
+                    {
+                        email = session.getAttribute("email").toString();
+                    }
+                    if(email != null) {%>
+                <p>
+                    You do not have access to view this page. <a class="bodyA" style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToStudentIndex>&nbsp;<u>Return to Student Portal.</u>&nbsp;</a> <br/>
+                </p>
+                <% } else {%>
+                <p>
+                    You are not logged in. <a class="bodyA" style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToDatabaseLogout>&nbsp;<u>Return to Main Page.</u>&nbsp;</a> <br/>
+                </p>
+                <% } %>
+            <% } %>
         </div>
     </body>
 </html>

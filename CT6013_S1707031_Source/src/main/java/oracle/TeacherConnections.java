@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import org.bson.Document;
+import servlets.users.PasswordEncryptDecrypt;
 
 public class TeacherConnections extends AbstractOracleConnections
 {
@@ -147,8 +148,9 @@ public class TeacherConnections extends AbstractOracleConnections
 		boolean isCorrectCredentials = false;
 		String email = teacherBean.getEmail();
 		String password = teacherBean.getPassword();
+		String hashedPassword = PasswordEncryptDecrypt.encryptPasswordToStore(password);
 		TeacherBean potentialTeacher = retrieveSingleTeacher(email);
-		if(potentialTeacher != null && password.equals(potentialTeacher.getPassword()))
+		if(potentialTeacher != null && hashedPassword.equals(potentialTeacher.getPassword()))
 		{
 			isCorrectCredentials = true;
 		}

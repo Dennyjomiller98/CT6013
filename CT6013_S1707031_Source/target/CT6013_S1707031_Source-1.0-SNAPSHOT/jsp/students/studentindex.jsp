@@ -70,60 +70,47 @@
         <%if(amITeacher){%>
             <p>
                 Teachers should not access the student portal.<br/>
+
+                <a class="bodyA" style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToTeacherIndex>&nbsp;<u>Return to teacher portal.</u>&nbsp;</a> <br/>
+
+                <a class="bodyA" style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToCourseEnrollmentView>&nbsp;<u>View courses.</u>&nbsp;</a> <br/>
+
+                <a class="bodyA" style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToModuleView>&nbsp;<u>View available modules.</u>&nbsp;</a> <br/>
             </p>
-            <ul>
-                <li>
-                    <a class="bodyA" style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToTeacherIndex>&nbsp;<u>Return to teacher portal.</u>&nbsp;</a> <br/>
-                </li>
-                <li>
-                    <a class="bodyA" style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToCourseEnrollmentView>&nbsp;<u>View courses.</u>&nbsp;</a> <br/>
-                </li>
-                <li>
-                    <a class="bodyA" style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToModuleView>&nbsp;<u>View available modules.</u>&nbsp;</a> <br/>
-                </li>
-            </ul>
         <%}
-        if(!amITeacher && !amIEnrolled)
-        {
-        	String email = null;
-        	if(session.getAttribute("email") != null)
-            {
-            	email = session.getAttribute("email").toString();
-            }
-        %>
-            <p>
-                You are currently not enrolled. <br/>
-            </p>
-            <ul>
-                <li>
-                    <a class="bodyA" style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToCourseEnrollment?studentEmail=<%=email%>>&nbsp;<u>Enroll in a course.</u>&nbsp;</a> <br/>
-                </li>
-                <li>
-                    <a class="bodyA" style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToCourseEnrollmentView>&nbsp;<u>View available courses.</u>&nbsp;</a> <br/>
-                </li>
-                <li>
-                    <a class="bodyA" style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToModuleView>&nbsp;<u>View available modules.</u>&nbsp;</a> <br/>
-                </li>
-            </ul>
-        <%}else if(!amITeacher){
             String email = null;
             if(session.getAttribute("email") != null)
             {
                 email = session.getAttribute("email").toString();
+            }
+            if(!amITeacher && !amIEnrolled && email == null)
+            {%>
+                <p>
+                    You are currently not logged in. <a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToDatabaseLogout>&nbsp;Return To Home Page&nbsp;</a>
+                </p>
+            <%}else if(!amITeacher && !amIEnrolled){%>
+            <p>
+                You are currently not enrolled. <br/>
+
+                <a class="bodyA" style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToCourseEnrollment?studentEmail=<%=email%>>&nbsp;<u>Enroll in a course.</u>&nbsp;</a> <br/>
+
+                <a class="bodyA" style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToCourseEnrollmentView>&nbsp;<u>View available courses.</u>&nbsp;</a> <br/>
+
+                <a class="bodyA" style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToModuleView>&nbsp;<u>View available modules.</u>&nbsp;</a> <br/>
+            </p>
+        <%} else {
+            email = null;
+            if(session.getAttribute("email") != null)
+            {
+            email = session.getAttribute("email").toString();
             }%>
             <p>
+                <a class="bodyA" style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToMarksView?studentEmail=<%=email%>>&nbsp;<u>View your enrollment and marks.</u>&nbsp;</a> <br/>
+
+                <a class="bodyA" style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToCourseEnrollmentView>&nbsp;<u>View courses.</u>&nbsp;</a> <br/>
+
+                <a class="bodyA" style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToModuleView>&nbsp;<u>View available modules.</u>&nbsp;</a> <br/>
             </p>
-            <ul>
-                <li>
-                    <a class="bodyA" style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToMarksView?studentEmail=<%=email%>>&nbsp;<u>View your enrollment and marks.</u>&nbsp;</a> <br/>
-                </li>
-                <li>
-                    <a class="bodyA" style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToCourseEnrollmentView>&nbsp;<u>View courses.</u>&nbsp;</a> <br/>
-                </li>
-                <li>
-                    <a class="bodyA" style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToModuleView>&nbsp;<u>View available modules.</u>&nbsp;</a> <br/>
-                </li>
-            </ul>
         <%}%>
     </div>
 </body>

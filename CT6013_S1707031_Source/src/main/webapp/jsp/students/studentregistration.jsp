@@ -86,7 +86,10 @@
                 <input type="text" name="postcode" id="postcode" required/>
                 <br/>
                 <label for="pword">Password</label>
-                <input type="text" name="pword" id="pword" required/>
+                <input type="password" name="pword" id="pword" minlength="8" required/>
+                <br/>
+                <label for="pwordConfirm"> Confirm Password</label>
+                <input type="password" name="pwordConfirm" id="pwordConfirm" minlength="8" required/>
                 <br/>
                 <input type="reset" value="Clear">
                 <input type="submit" value="Submit">

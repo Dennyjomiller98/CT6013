@@ -1,12 +1,12 @@
 package servlets.users;
 
+import beans.TeacherBean;
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import mongodb.TeacherConnections;
-import beans.TeacherBean;
 import org.apache.log4j.Logger;
 import org.bson.Document;
 
@@ -35,9 +35,9 @@ public class TeacherProfile extends HttpServlet
 			teacherToUpdate.append("DOB", request.getParameter("dob"));
 			String fullAddress = request.getParameter("address1") + "," + request.getParameter("address2") + "," + request.getParameter("city") + "," + request.getParameter("postcode");
 			teacherToUpdate.append("Address", fullAddress);
-			teacherToUpdate.append("Password", request.getParameter("pword"));
 			teacherToUpdate.append("Is_Enrolled", request.getParameter("isEnrolled"));
 			teacherToUpdate.append("Is_Teacher", "false");
+			validatePasswords(request, response, dbSelection, teacherToUpdate);
 
 			if(dbSelection.equalsIgnoreCase("MONGODB"))
 			{
@@ -61,6 +61,79 @@ public class TeacherProfile extends HttpServlet
 		{
 			LOG.error("No DB selected");
 			redirectToDBSelect(request, response);
+		}
+	}
+
+	private void validatePasswords(HttpServletRequest request, HttpServletResponse response, String dbSelection, Document teacherToUpdate)
+	{
+		String hashedPassword;
+		String pword = request.getParameter("pword");
+		hashedPassword = PasswordEncryptDecrypt.encryptPasswordToStore(pword);
+		TeacherBean potentialTeacher = null;
+		if(dbSelection.equalsIgnoreCase("MONGODB"))
+		{
+			TeacherConnections teacherConn = new TeacherConnections();
+			potentialTeacher = teacherConn.retrieveSingleTeacher(teacherToUpdate.getString("Email"));
+		}
+		else if (dbSelection.equalsIgnoreCase("ORACLE"))
+		{
+			oracle.TeacherConnections teacherConn = new oracle.TeacherConnections();
+			potentialTeacher = teacherConn.retrieveSingleTeacher(teacherToUpdate.getString("Email"));
+		}
+		if (potentialTeacher != null)
+		{
+			if(hashedPassword != null && !hashedPassword.equals(potentialTeacher.getPassword()))
+			{
+				//Doesn't match, error teacher out.
+				request.getSession(true).removeAttribute("updateSuccess");
+				request.getSession(true).setAttribute("editErrors", "An Error has occurred, the changes were unable to be saved.");
+				try
+				{
+					response.sendRedirect(request.getContextPath() + "/jsp/teachers/teacherprofile.jsp");
+				}
+				catch (IOException e)
+				{
+					LOG.error("Unable to redirect back to Profile page after teacher update failure.",e);
+				}
+			}
+			else
+			{
+				//Add user
+				teacherToUpdate.append("Password", hashedPassword);
+			}
+		}
+
+		//Check if new passwords were given
+		if(!request.getParameter("newPword").equals("") && request.getParameter("newPword") != null && request.getParameter("newPword2") != null )
+		{
+			validateNewPasswords(request, response, teacherToUpdate);
+		}
+	}
+
+	private void validateNewPasswords(HttpServletRequest request, HttpServletResponse response, Document teacherToUpdate)
+	{
+		String hashedPassword;
+		//Assert they are equal
+		if(!request.getParameter("newPword").equals("") && !request.getParameter("newPword").equals(request.getParameter("newPword2")))
+		{
+			//Dont match, error user out
+			request.getSession(true).removeAttribute("updateSuccess");
+			request.getSession(true).setAttribute("editErrors", "An Error has occurred, the changes were unable to be saved.");
+			try
+			{
+				response.sendRedirect(request.getContextPath() + "/jsp/teachers/teacherprofile.jsp");
+			}
+			catch (IOException e)
+			{
+				LOG.error("Unable to redirect back to Teacher Profile page after student update failure.",e);
+			}
+		}
+		else
+		{
+			//Hash pword and Add new pword
+			String pword = request.getParameter("newPword");
+			hashedPassword = PasswordEncryptDecrypt.encryptPasswordToStore(pword);
+			teacherToUpdate.append("Password", hashedPassword);
 		}
 	}
 
@@ -145,7 +218,6 @@ public class TeacherProfile extends HttpServlet
 		request.getSession(true).setAttribute("address2", request.getParameter("address2"));
 		request.getSession(true).setAttribute("city", request.getParameter("city"));
 		request.getSession(true).setAttribute("postcode", request.getParameter("postcode"));
-		request.getSession(true).setAttribute("pword", request.getParameter("pword"));
 		request.getSession(true).setAttribute("isEnrolled", request.getParameter("isEnrolled"));
 		request.getSession(true).setAttribute("isTeacher", "false");
 	}

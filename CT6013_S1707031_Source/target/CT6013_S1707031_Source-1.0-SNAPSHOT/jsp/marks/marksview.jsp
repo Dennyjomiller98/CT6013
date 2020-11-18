@@ -72,8 +72,8 @@
         <%--Main content--%>
         <div class="mainBody">
             <% if (amIEnrolled) {%>
-            <%--Enrolled student, view enrolment table and table of marks--%>
-            <h3>My Enrolment</h3>
+            <%--Enrolled student, view enrollment table and table of marks--%>
+            <h3>My Enrollment</h3>
             <p>
                 You are currently enrolled. Please see your enrollment details below.
             </p>
@@ -83,8 +83,20 @@
                     courseEnrolled = session.getAttribute("enrollCourse").toString();
                     if (courseEnrolled != null)
                     {
-                        CourseConnections courseConn = new CourseConnections();
-                        courseBean = courseConn.retrieveSingleCourse(courseEnrolled);
+                        if(request.getSession(true).getAttribute("DBSELECTION") != null)
+                        {
+                            String dbSelection = request.getSession(true).getAttribute("DBSELECTION").toString();
+                            if(dbSelection.equalsIgnoreCase("MONGODB"))
+                            {
+                                CourseConnections conn = new CourseConnections();
+                                courseBean = conn.retrieveSingleCourse(courseEnrolled);
+                            }
+                            else if(dbSelection.equalsIgnoreCase("ORACLE"))
+                            {
+                                oracle.CourseConnections conn = new oracle.CourseConnections();
+                                courseBean = conn.retrieveSingleCourse(courseEnrolled);
+                            }
+                        }
                     }
                 }
 
@@ -121,8 +133,21 @@
                 String[] split = allModules.split(",");
                 for (String module : split)
                 {
-                    ModuleConnections modConn = new ModuleConnections();
-                    ModuleBean moduleBean = modConn.retrieveSingleModule(module);%>
+                    ModuleBean moduleBean = null;
+                    if(request.getSession(true).getAttribute("DBSELECTION") != null)
+                    {
+                        String dbSelection = request.getSession(true).getAttribute("DBSELECTION").toString();
+                        if(dbSelection.equalsIgnoreCase("MONGODB"))
+                        {
+                            ModuleConnections conn = new ModuleConnections();
+                            moduleBean = conn.retrieveSingleModule(module);
+                        }
+                        else if(dbSelection.equalsIgnoreCase("ORACLE"))
+                        {
+                            oracle.ModuleConnections conn = new oracle.ModuleConnections();
+                            moduleBean = conn.retrieveSingleModule(module);
+                        }
+                    }
 
                 <%--MODULE/MARKS Table--%>
                 <table id="moduleAndMarks">
@@ -136,53 +161,55 @@
                         <th id="marksGrade">Marks (If provided)</th>
                     </tr>
                     <tr>
-                        <td><%=moduleBean.getModuleCode()%></td>
-                        <td><%=moduleBean.getModuleName()%></td>
-                        <td><%=moduleBean.getModuleTutor()%></td>
-                        <td><%=moduleBean.getModuleStart()%></td>
-                        <td><%=moduleBean.getModuleEnd()%></td>
-                        <td>
-                        <%  List<MarkBean> myMarks = null;
-                            if (session.getAttribute("allMarks") != null)
-                            {
-                                myMarks = (List<MarkBean>) session.getAttribute("allMarks");
-                            }
-                            if (myMarks != null)
-                            {
-                                if(myMarks.size() != 0){
-                                    for (MarkBean myMark : myMarks)
+                        <%if(moduleBean != null){%>
+                            <td><%=moduleBean.getModuleCode()%></td>
+                            <td><%=moduleBean.getModuleName()%></td>
+                            <td><%=moduleBean.getModuleTutor()%></td>
+                            <td><%=moduleBean.getModuleStart()%></td>
+                            <td><%=moduleBean.getModuleEnd()%></td>
+                            <td>
+                                <%  List<MarkBean> myMarks = null;
+                                    if (session.getAttribute("allMarks") != null)
                                     {
-                                        if(myMark.getModuleCode().equalsIgnoreCase(moduleBean.getModuleCode()))
-                                        {
-                                            String letterGrade = "Unknown";
-                                            if(myMark.getFinalMark() >= 70)
-                                            {
-                                                letterGrade = "A";
-                                            }
-                                            else if(myMark.getFinalMark() >= 60)
-                                            {
-                                                letterGrade = "B";
-                                            }
-                                            else if(myMark.getFinalMark() >= 50)
-                                            {
-                                                letterGrade = "C";
-                                            }
-                                            else if(myMark.getFinalMark() >= 40)
-                                            {
-                                                letterGrade = "D";
-                                            }
-                                            else if(myMark.getFinalMark() > 0)
-                                            {
-                                                letterGrade = "U";
-                                            }%>
-                                            Grade: <%=myMark.getFinalMark()%>% (<%=letterGrade%>)
-                                        <%}
+                                        myMarks = (List<MarkBean>) session.getAttribute("allMarks");
                                     }
-                                } else{%>
-                                    Grades Unavailable
+                                    if (myMarks != null)
+                                    {
+                                        if(myMarks.size() != 0){
+                                            for (MarkBean myMark : myMarks)
+                                            {
+                                                if(myMark.getModuleCode().equalsIgnoreCase(moduleBean.getModuleCode()))
+                                                {
+                                                    String letterGrade = "Unknown";
+                                                    if(myMark.getFinalMark() >= 70)
+                                                    {
+                                                        letterGrade = "A";
+                                                    }
+                                                    else if(myMark.getFinalMark() >= 60)
+                                                    {
+                                                        letterGrade = "B";
+                                                    }
+                                                    else if(myMark.getFinalMark() >= 50)
+                                                    {
+                                                        letterGrade = "C";
+                                                    }
+                                                    else if(myMark.getFinalMark() >= 40)
+                                                    {
+                                                        letterGrade = "D";
+                                                    }
+                                                    else if(myMark.getFinalMark() > 0)
+                                                    {
+                                                        letterGrade = "U";
+                                                    }%>
+                                Grade: <%=myMark.getFinalMark()%>% (<%=letterGrade%>)
                                 <%}
-                            }%>
-                        </td>
+                                }
+                                } else{%>
+                                Grades Unavailable
+                                <%}
+                                }%>
+                            </td>
+                        <% } %>
                     </tr>
                 </table>
             <% }

@@ -75,8 +75,7 @@ public class StudentProfile extends HttpServlet
 		}
 		if (potentialStudent != null)
 		{
-			String decryptedPassword = PasswordEncryptDecrypt.decryptPasswordFromDB(pword);
-			if(hashedPassword != null && !hashedPassword.equals(decryptedPassword))
+			if(hashedPassword != null && !hashedPassword.equals(potentialStudent.getPassword()))
 			{
 				//Doesn't match, error user out.
 				request.getSession(true).removeAttribute("updateSuccess");
@@ -98,7 +97,7 @@ public class StudentProfile extends HttpServlet
 		}
 
 		//Check if new passwords were given
-		if(request.getParameter("newPword") != null && request.getParameter("newPword2") != null )
+		if(!request.getParameter("newPword").equals("") && request.getParameter("newPword") != null && request.getParameter("newPword2") != null )
 		{
 			validateNewPasswords(request, response, studentToUpdate);
 		}
@@ -108,7 +107,7 @@ public class StudentProfile extends HttpServlet
 	{
 		String hashedPassword;
 		//Assert they are equal
-		if(!request.getParameter("newPword").equals(request.getParameter("newPword2")))
+		if(!request.getParameter("newPword").equals("") && !request.getParameter("newPword").equals(request.getParameter("newPword2")))
 		{
 			//Dont match, error user out
 			request.getSession(true).removeAttribute("updateSuccess");
@@ -208,7 +207,6 @@ public class StudentProfile extends HttpServlet
 		request.getSession(true).setAttribute("address2", request.getParameter("address2"));
 		request.getSession(true).setAttribute("city", request.getParameter("city"));
 		request.getSession(true).setAttribute("postcode", request.getParameter("postcode"));
-		request.getSession(true).setAttribute("pword", request.getParameter("pword"));
 		request.getSession(true).setAttribute("isEnrolled", request.getParameter("isEnrolled"));
 		request.getSession(true).setAttribute("isTeacher", "false");
 	}

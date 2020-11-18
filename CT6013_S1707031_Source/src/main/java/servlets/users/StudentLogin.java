@@ -141,7 +141,6 @@ public class StudentLogin extends HttpServlet
 			request.getSession(true).setAttribute("city", split[2]);
 			request.getSession(true).setAttribute("postcode", split[3]);
 		}
-		request.getSession(true).setAttribute("pword", retrievedStudent.getPassword());
 		request.getSession(true).setAttribute("isEnrolled", retrievedStudent.isEnrolled());
 		request.getSession(true).setAttribute("isTeacher", retrievedStudent.isTeacher());
 	}

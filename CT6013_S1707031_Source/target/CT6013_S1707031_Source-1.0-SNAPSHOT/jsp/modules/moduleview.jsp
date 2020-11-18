@@ -1,6 +1,7 @@
 <%@ page import="mongodb.ModuleConnections" %>
 <%@ page import="java.util.List" %>
-<%@ page import="beans.ModuleBean" %><%--
+<%@ page import="beans.ModuleBean" %>
+<%@ page import="java.util.ArrayList" %><%--
   Created by IntelliJ IDEA.
   User: Denny-Jo
   Date: 14/11/2020
@@ -70,8 +71,21 @@
                 <select class="select-css" style="width: 50%; display: inline-block" name="moduleSelect" id="moduleSelect">
                     <option value="*">Show ALL modules</option>
                     <%
-                        ModuleConnections moduleConn = new ModuleConnections();
-                        List<ModuleBean> moduleBeans = moduleConn.retrieveAllModules();
+                        List<ModuleBean> moduleBeans = new ArrayList<>();
+                        if(request.getSession(true).getAttribute("DBSELECTION") != null)
+                        {
+                            String dbSelection = request.getSession(true).getAttribute("DBSELECTION").toString();
+                            if(dbSelection.equalsIgnoreCase("MONGODB"))
+                            {
+                                ModuleConnections conn = new ModuleConnections();
+                                moduleBeans = conn.retrieveAllModules();
+                            }
+                            else if(dbSelection.equalsIgnoreCase("ORACLE"))
+                            {
+                                oracle.ModuleConnections conn = new oracle.ModuleConnections();
+                                moduleBeans = conn.retrieveAllModules();
+                            }
+                        }
                         if (moduleBeans != null)
                         {
                             for (ModuleBean moduleBean : moduleBeans)
@@ -94,6 +108,7 @@
                 String moduleSuccess = session.getAttribute("moduleSuccess").toString(); %>
             <p class="success-div" id="successDiv"><%=moduleSuccess%></p>
             <% } %>
+            <br/>
 
             <%--All module details--%>
             <%if(session.getAttribute("allModules") != null){ %>

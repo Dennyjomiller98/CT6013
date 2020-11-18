@@ -1,7 +1,8 @@
 <%@ page import="mongodb.CourseConnections" %>
 <%@ page import="beans.CourseBean" %>
 <%@ page import="java.util.List" %>
-<%@ page import="beans.ModuleBean" %><%--
+<%@ page import="beans.ModuleBean" %>
+<%@ page import="java.util.ArrayList" %><%--
   Created by IntelliJ IDEA.
   User: Denny-Jo
   Date: 13/11/2020
@@ -79,8 +80,22 @@
                 <label for="courseSelect">Select a Course:</label>
                 <select class="select-css" style="width: 50%; display: inline-block" name="courseSelect" id="courseSelect">
                     <option value="-">-</option>
-                    <%CourseConnections conn = new CourseConnections();
-                        List<CourseBean> courseBeans = conn.retrieveAllCourses();
+                    <%
+                        List<CourseBean> courseBeans = new ArrayList<>();
+                        if(request.getSession(true).getAttribute("DBSELECTION") != null)
+                        {
+                            String dbSelection = request.getSession(true).getAttribute("DBSELECTION").toString();
+                            if(dbSelection.equalsIgnoreCase("MONGODB"))
+                            {
+                                CourseConnections conn = new CourseConnections();
+                                courseBeans = conn.retrieveAllCourses();
+                            }
+                            else if(dbSelection.equalsIgnoreCase("ORACLE"))
+                            {
+                            	oracle.CourseConnections conn = new oracle.CourseConnections();
+                                courseBeans = conn.retrieveAllCourses();
+                            }
+                        }
                         if (courseBeans != null)
                         {
                             for (CourseBean courseBean : courseBeans)

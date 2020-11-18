@@ -10,6 +10,7 @@ import java.util.List;
 import beans.TeacherBean;
 import org.bson.Document;
 import org.bson.conversions.Bson;
+import servlets.users.PasswordEncryptDecrypt;
 
 public class TeacherConnections extends AbstractMongoDBConnections
 {
@@ -77,7 +78,8 @@ public class TeacherConnections extends AbstractMongoDBConnections
 
 		TeacherBean potentialTeacher = retrieveSingleTeacher(email);
 		//Email will match at this point, only need to assert Password value to email to authenticate login
-		if (potentialTeacher != null && password.equals(potentialTeacher.getPassword()))
+		String hashedPassword = PasswordEncryptDecrypt.encryptPasswordToStore(password);
+		if (potentialTeacher != null && hashedPassword.equals(potentialTeacher.getPassword()))
 		{
 			isCorrectCredentials = true;
 		}

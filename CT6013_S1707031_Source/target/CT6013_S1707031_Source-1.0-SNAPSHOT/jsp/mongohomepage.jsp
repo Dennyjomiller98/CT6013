@@ -87,7 +87,8 @@
                     To login as a Teacher, please click <a class="bodyA" style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToTeacherLogin>&nbsp;<u>here.</u>&nbsp;</a> <br/><br/>
                     To view available Courses, please click <a class="bodyA" style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToCourseEnrollmentView>&nbsp;<u>here.</u>&nbsp;</a> <br/>
                     To view available Modules, please click <a class="bodyA" style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToModuleView>&nbsp;<u>here.</u>&nbsp;</a> <br/><br/>
-                    <strong>Please Note:</strong> Teacher Registration can only be performed by teachers. As this project is not in production, please view the related README to gain Teacher access in order to test Teacher features.
+                    <strong>Please Note:</strong> Teacher Registration can only be performed by teachers. <br/>
+                    As this project is not in production, please view the related README to gain Teacher access in order to test Teacher features.
                 </p>
             <%}%>
         </div>

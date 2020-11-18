@@ -28,9 +28,9 @@ public class StudentRegistration extends HttpServlet
             studentToRegister.append("DOB", request.getParameter("dob"));
             String fullAddress = request.getParameter("address1") + "," + request.getParameter("address2") + "," + request.getParameter("city") + "," + request.getParameter("postcode");
             studentToRegister.append("Address", fullAddress);
-            studentToRegister.append("Password", request.getParameter("pword"));
             studentToRegister.append("Is_Enrolled", "false");
             studentToRegister.append("Is_Teacher", "false");
+            validatePassword(request, response, studentToRegister);
 
             if(dbSelection.equalsIgnoreCase("MONGODB"))
             {
@@ -54,6 +54,32 @@ public class StudentRegistration extends HttpServlet
             //No attribute found, go back to DB Select page
             LOG.error("Unknown database choice, returning to DB select page.");
             redirectToDBSelect(request, response);
+        }
+    }
+
+    private void validatePassword(HttpServletRequest request, HttpServletResponse response, Document studentToRegister)
+    {
+        LOG.debug("Validating Passwords");
+        String pword = request.getParameter("pword");
+        String pwordConfirm = request.getParameter("pwordConfirm");
+        if(pword.equals(pwordConfirm))
+        {
+            String hashedPassword = PasswordEncryptDecrypt.encryptPasswordToStore(pword);
+            studentToRegister.append("Password", hashedPassword);
+        }
+        else
+        {
+            //Doesn't match, error student out.
+            request.getSession(true).removeAttribute("registrationSuccess");
+            request.getSession(true).setAttribute("registrationErrors", "An Error has occurred, the passwords do not match.");
+            try
+            {
+                response.sendRedirect(request.getContextPath() + "/jsp/teachers/teacherprofile.jsp");
+            }
+            catch (IOException e)
+            {
+                LOG.error("Unable to redirect back to Profile page after teacher update failure.",e);
+            }
         }
     }
 

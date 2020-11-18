@@ -29,9 +29,9 @@ public class TeacherRegistration extends HttpServlet
 			teacherToRegister.append("DOB", request.getParameter("dob"));
 			String fullAddress = request.getParameter("address1") + "," + request.getParameter("address2") + "," + request.getParameter("city") + "," + request.getParameter("postcode");
 			teacherToRegister.append("Address", fullAddress);
-			teacherToRegister.append("Password", request.getParameter("pword"));
 			teacherToRegister.append("Is_Teacher", "true");
 			teacherToRegister.append("Is_Enrolled", "false");
+			validatePassword(request, response, teacherToRegister);
 
 			if(dbSelection.equalsIgnoreCase("MONGODB"))
 			{
@@ -55,6 +55,32 @@ public class TeacherRegistration extends HttpServlet
 			//No attribute found, go back to DB Select page
 			LOG.error("Unknown database choice, returning to DB select page.");
 			redirectToDBSelect(request, response);
+		}
+	}
+
+	private void validatePassword(HttpServletRequest request, HttpServletResponse response, Document teacherToRegister)
+	{
+		LOG.debug("Validating Passwords");
+		String pword = request.getParameter("pword");
+		String pwordConfirm = request.getParameter("pwordConfirm");
+		if(pword.equals(pwordConfirm))
+		{
+			String hashedPassword = PasswordEncryptDecrypt.encryptPasswordToStore(pword);
+			teacherToRegister.append("Password", hashedPassword);
+		}
+		else
+		{
+			//Doesn't match, error teacher out.
+			request.getSession(true).removeAttribute("registrationSuccess");
+			request.getSession(true).setAttribute("registrationErrors", "An Error has occurred, the passwords do not match.");
+			try
+			{
+				response.sendRedirect(request.getContextPath() + "/jsp/teachers/teacherprofile.jsp");
+			}
+			catch (IOException e)
+			{
+				LOG.error("Unable to redirect back to Profile page after teacher update failure.",e);
+			}
 		}
 	}
 

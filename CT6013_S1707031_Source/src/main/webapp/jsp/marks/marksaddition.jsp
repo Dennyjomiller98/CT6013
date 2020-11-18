@@ -102,7 +102,7 @@
                     String markSuccess = session.getAttribute("markSuccess").toString(); %>
                 <p class="success-div" id="successDiv"><%=markSuccess%></p>
                 <% } %>
-
+                <br/>
                 <%--All Students in modules table--%>
             <%if((session.getAttribute("allEnrollmentToReturn") != null && session.getAttribute("allMarkBeans") != null) ||
                     (session.getAttribute("singleEnrollmentToReturn") != null && session.getAttribute("singleMarkBean") != null)){%>

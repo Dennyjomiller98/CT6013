@@ -63,70 +63,93 @@
             </div>
             <% } %>
         </div>
+
         <%--Edit Profile Form--%>
         <div class="mainBody">
-            <p>
-                If you would like to edit your details, please do so below.
-            </p>
+            <%  String email = null;
+                if(session.getAttribute("email") != null)
+                {
+                    email = session.getAttribute("email").toString();
+                }
+                if(amITeacher && email != null){%>
+                    <p>
+                        If you would like to edit your details, please do so below.
+                    </p>
 
-            <form action="${pageContext.request.contextPath}/servlets/TeacherProfile" method="POST">
-                <label for="isEnrolled"></label><input style="display: none" type="text" name="isEnrolled" id="isEnrolled" value="<%=amIEnrolled%>" />
-                <label for="isTeacher"></label><input style="display: none" type="text" name="isTeacher" id="isTeacher" value="<%=amITeacher%>" />
+                    <form action="${pageContext.request.contextPath}/servlets/TeacherProfile" method="POST">
+                        <label for="isEnrolled"></label><input style="display: none" type="text" name="isEnrolled" id="isEnrolled" value="<%=amIEnrolled%>" />
+                        <label for="isTeacher"></label><input style="display: none" type="text" name="isTeacher" id="isTeacher" value="<%=amITeacher%>" />
 
-                <label for="firstname">Firstname:</label>
-                <% firstname = session.getAttribute("firstname").toString();%>
-                <input type="text" name="firstname" id="firstname" required value="<%=firstname%>" />
-                <br/>
-                <label for="surname">Surname:</label>
-                <% String surname = session.getAttribute("surname").toString();%>
-                <input type="text" name="surname" id="surname" required value="<%=surname%>" />
-                <br/>
-                <label for="email">Email:</label>
-                <% String email = session.getAttribute("email").toString();%>
-                <input readonly type="email" name="email" id="email" required value="<%=email%>" />
-                <br/>
-                <label for="dob">Date of Birth</label>
-                <% String dob = session.getAttribute("dob").toString();%>
-                <input type="date" name="dob" id="dob" required value="<%=dob%>" />
-                <br/>
-                <label for="address1">Address Line 1</label>
-                <% String address1 = session.getAttribute("address1").toString();%>
-                <input type="text" name="address1" id="address1" required value="<%=address1%>" />
-                <br/>
-                <label for="address2">Address Line 2</label>
-                <% String address2 = session.getAttribute("address2").toString();%>
-                <input type="text" name="address2" id="address2" required value="<%=address2%>" />
-                <br/>
-                <label for="city">City</label>
-                <% String city = session.getAttribute("city").toString();%>
-                <input type="text" name="city" id="city" required value="<%=city%>" />
-                <br/>
-                <label for="postcode">Postcode</label>
-                <% String postcode = session.getAttribute("postcode").toString();%>
-                <input type="text" name="postcode" id="postcode" required value="<%=postcode%>" />
-                <br/>
-                <label for="pword">Password</label>
-                <% String pword = session.getAttribute("pword").toString();%>
-                <input type="text" name="pword" id="pword" required value="<%=pword%>" />
-                <br/>
-                <input type="submit" value="Submit">
-            </form>
-            <br/>
+                        <label for="firstname">Firstname:</label>
+                        <% firstname = session.getAttribute("firstname").toString();%>
+                        <input type="text" name="firstname" id="firstname" required value="<%=firstname%>" />
+                        <br/>
+                        <label for="surname">Surname:</label>
+                        <% String surname = session.getAttribute("surname").toString();%>
+                        <input type="text" name="surname" id="surname" required value="<%=surname%>" />
+                        <br/>
+                        <label for="email">Email:</label>
+                        <% email = session.getAttribute("email").toString();%>
+                        <input readonly type="email" name="email" id="email" required value="<%=email%>" />
+                        <br/>
+                        <label for="dob">Date of Birth</label>
+                        <% String dob = session.getAttribute("dob").toString();%>
+                        <input type="date" name="dob" id="dob" required value="<%=dob%>" />
+                        <br/>
+                        <label for="address1">Address Line 1</label>
+                        <% String address1 = session.getAttribute("address1").toString();%>
+                        <input type="text" name="address1" id="address1" required value="<%=address1%>" />
+                        <br/>
+                        <label for="address2">Address Line 2</label>
+                        <% String address2 = session.getAttribute("address2").toString();%>
+                        <input type="text" name="address2" id="address2" required value="<%=address2%>" />
+                        <br/>
+                        <label for="city">City</label>
+                        <% String city = session.getAttribute("city").toString();%>
+                        <input type="text" name="city" id="city" required value="<%=city%>" />
+                        <br/>
+                        <label for="postcode">Postcode</label>
+                        <% String postcode = session.getAttribute("postcode").toString();%>
+                        <input type="text" name="postcode" id="postcode" required value="<%=postcode%>" />
+                        <br/>
+                        <label for="newPword">New Password (If changing)</label>
+                        <input type="password" name="newPword" id="newPword" minlength="8" />
+                        <br/>
+                        <label for="newPword2">Re-Enter New Password (If changing)</label>
+                        <input type="password" name="newPword2" id="newPword2" minlength="8"  />
+                        <br/>
+                        <label for="pword">Password</label>
+                        <input type="password" name="pword" id="pword" required minlength="8" />
+                        <br/>
+                        <input type="submit" value="Submit">
+                    </form>
+                    <br/>
 
-            <% String editErrors = (String) session.getAttribute("editErrors");
-                if(editErrors != null){%>
-            <p class="error-div" id="errorDiv"><%=editErrors%></p>
+                    <% String editErrors = (String) session.getAttribute("editErrors");
+                        if(editErrors != null){%>
+                    <p class="error-div" id="errorDiv"><%=editErrors%></p>
+                    <%}%>
+                    <% String success = (String) session.getAttribute("updateSuccess");
+                        if(success != null){%>
+                    <p class="success-div" id="successDiv"><%=success%></p>
+                    <%}%>
+                    <br/>
+
+                    <a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToTeacherIndex>&nbsp;Teacher Portal&nbsp;</a>
+                    <a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToCourseEnrollmentView>&nbsp;View Courses&nbsp;</a>
+                    <a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToModuleView>&nbsp;View Modules&nbsp;</a>
+            <%}else {
+                if (email != null)
+                {%>
+                    <p>
+                        Students do not have access to this page. <a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToStudentIndex>&nbsp;Return to Student Portal&nbsp;</a>
+                    </p>
+                <%} else {%>
+                    <p>
+                        You are not currently logged in. <a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToDatabaseLogout>&nbsp;Return To Home Page&nbsp;</a>
+                    </p>
+                <% } %>
             <%}%>
-            <% String success = (String) session.getAttribute("updateSuccess");
-                if(success != null){%>
-            <p class="success-div" id="successDiv"><%=success%></p>
-            <%}%>
-
-            <ul>
-                <li><a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToTeacherIndex>&nbsp;Teacher Portal&nbsp;</a></li>
-                <li><a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToCourseEnrollmentView>&nbsp;View Courses&nbsp;</a></li>
-                <li><a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToModuleView>&nbsp;View Modules&nbsp;</a></li>
-            </ul>
         </div>
     </body>
 </html>

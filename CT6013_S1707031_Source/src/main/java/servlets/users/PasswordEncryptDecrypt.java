@@ -31,21 +31,4 @@ public class PasswordEncryptDecrypt
 		}
 		return hashedPassword;
 	}
-
-	public static String decryptPasswordFromDB(String pword)
-	{
-		String hashedPassword = null;
-		try
-		{
-			SecretKeySpec secretKeySpec=new SecretKeySpec(KEY.getBytes(),"Blowfish");
-			Cipher cipher=Cipher.getInstance("Blowfish");
-			cipher.init(Cipher.DECRYPT_MODE, secretKeySpec);
-			byte[] decrypted=cipher.doFinal(pword.getBytes());
-			hashedPassword=new String(decrypted);
-		}
-		catch (Exception e) {
-			LOG.error("Error decrypting password");
-		}
-		return hashedPassword;
-	}
 }

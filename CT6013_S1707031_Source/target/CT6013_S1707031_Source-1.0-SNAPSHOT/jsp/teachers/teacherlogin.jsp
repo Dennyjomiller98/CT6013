@@ -31,6 +31,11 @@
                     String isTeacher = session.getAttribute("isTeacher").toString();
                     amITeacher = isTeacher.equals("true");
                 }
+                String email=null;
+                if(session.getAttribute("email") != null)
+                {
+                    email = session.getAttribute("email").toString();
+                }
                 if(firstname != null){%>
             <div class="topnavdiv">
                 <strong>Logged in as: <%=firstname%></strong><br/>
@@ -60,28 +65,40 @@
 
         <%--Main Content--%>
         <div class="mainBody">
-            <form action="${pageContext.request.contextPath}/servlets/TeacherLogin" method="GET">
-                <label for="email">Email:</label>
-                <input type="text" name="email" id="email" required/>
-                <br/>
-                <label for="pword">Password:</label>
-                <input type="text" name="pword" id="pword" required/>
-                <br/>
-                <input type="reset" value="Clear">
-                <input type="submit" value="Submit">
-            </form>
-            <br/>
-
-            <%  String errors;
-                if(session.getAttribute("loginErrors") != null){
-                errors = session.getAttribute("loginErrors").toString();%>
-            <p class="error-div" id="errorDiv"><%=errors%></p>
-            <%}%>
-            <%if(amITeacher){%>
+            <%if(email != null){
+                if(amITeacher){ %>
                 <p>
                     If you have been sent here after registering a new Teacher, you can return to portal<a class="bodyA" style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToTeacherIndex>&nbsp;here.&nbsp;</a>
                 </p>
-            <% }%>
+                You are already logged in.  <a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToTeacherIndex>&nbsp;Return to Teacher Portal&nbsp;</a>
+                <% } else { %>
+                You are already logged in.  <a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToStudentIndex>&nbsp;Return to Student Portal&nbsp;</a>
+                <% } %>
+            <% } else { %>
+                <form action="${pageContext.request.contextPath}/servlets/TeacherLogin" method="GET">
+                    <label for="email">Email:</label>
+                    <input type="text" name="email" id="email" required/>
+                    <br/>
+                    <label for="pword">Password:</label>
+                    <input type="password" name="pword" id="pword" minlength="8" required/>
+                    <br/>
+                    <input type="reset" value="Clear">
+                    <input type="submit" value="Submit">
+                </form>
+                <br/>
+
+                <%  String errors;
+                    if(session.getAttribute("loginErrors") != null){
+                    errors = session.getAttribute("loginErrors").toString();%>
+                <p class="error-div" id="errorDiv"><%=errors%></p>
+                <%}%>
+
+                <%if(amITeacher){%>
+                    <p>
+                        If you have been sent here after registering a new Teacher, you can return to portal<a class="bodyA" style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToTeacherIndex>&nbsp;here.&nbsp;</a>
+                    </p>
+                <% }%>
+            <% } %>
         </div>
     </body>
 </html>

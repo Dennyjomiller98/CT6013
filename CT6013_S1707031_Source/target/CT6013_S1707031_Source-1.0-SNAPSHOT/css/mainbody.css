@@ -82,6 +82,24 @@ input[type=text], select {
     text-align: center;
 }
 
+ul{
+    text-align: center;
+}
+li{
+    text-align: center;
+}
+
+input[type=password], select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
 input[type=date], select {
     width: 100%;
     padding: 12px 20px;

@@ -31,11 +31,10 @@
                     String isTeacher = session.getAttribute("isTeacher").toString();
                     amITeacher = isTeacher.equals("true");
                 }
-                boolean amIEnrolled=false;
-                if(session.getAttribute("isEnrolled") != null)
+                String email = null;
+                if(session.getAttribute("email") != null)
                 {
-                    String isEnrolled = session.getAttribute("isEnrolled").toString();
-                    amIEnrolled = isEnrolled.equals("true");
+                    email = session.getAttribute("email").toString();
                 }
                 if(firstname != null){%>
             <div class="topnavdiv">
@@ -66,26 +65,25 @@
 
         <%--Content--%>
         <div class="mainBody">
-
-            <%
-                if (amITeacher)
-                {
-
-                    String email = null;
-                    if(session.getAttribute("email") != null){
-                        email = session.getAttribute("email").toString();
-                    }%>
-            <ul>
-                <li><a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToCourseAddition>&nbsp;Add Courses&nbsp;</a></li>
-                <li><a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToCourseEnrollmentView>&nbsp;View and Edit Courses&nbsp;</a></li>
-                <li><a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToModuleAddition>&nbsp;Add Modules&nbsp;</a></li>
-                <li><a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToModuleView>&nbsp;View and Edit Modules&nbsp;</a></li>
-                <li><a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToMarksAddition?email=<%=email%>>&nbsp;Add Assignment Marks&nbsp;</a></li>
-            </ul>
-            <%} else {%>
-            <p>
-                You do not have access to view this page.
-            </p>
+            <%if (amITeacher)
+            {
+                email = null;
+                if(session.getAttribute("email") != null){
+                    email = session.getAttribute("email").toString();
+                }%>
+            <a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToCourseAddition>&nbsp;Add Courses&nbsp;</a>
+            <a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToCourseEnrollmentView>&nbsp;View and Edit Courses&nbsp;</a>
+            <a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToModuleAddition>&nbsp;Add Modules&nbsp;</a>
+            <a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToModuleView>&nbsp;View and Edit Modules&nbsp;</a>
+            <a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToMarksAddition?email=<%=email%>>&nbsp;Add Assignment Marks&nbsp;</a>
+            <%} else {
+                if(email != null){ %>
+                    <p>
+                        Students do not have access to view this page. <a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToStudentIndex>&nbsp;Return To Student Portal&nbsp;</a>
+                    </p>
+                <% }else{%>
+                    You are not logged in. <a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToDatabaseLogout>&nbsp;Return To Home Page&nbsp;</a>
+                <%}%>
             <%}%>
         </div>
     </body>

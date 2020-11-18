@@ -132,7 +132,6 @@ public class TeacherLogin extends HttpServlet
 			request.getSession(true).setAttribute("postcode", split[3]);
 		}
 
-		request.getSession(true).setAttribute("pword", teacherBean.getPassword());
 		request.getSession(true).setAttribute("isTeacher", teacherBean.isTeacher());
 		request.getSession(true).setAttribute("isEnrolled", teacherBean.isEnrolled());
 	}

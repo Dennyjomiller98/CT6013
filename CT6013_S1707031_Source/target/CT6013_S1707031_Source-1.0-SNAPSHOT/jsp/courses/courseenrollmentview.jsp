@@ -1,6 +1,7 @@
 <%@ page import="mongodb.CourseConnections" %>
 <%@ page import="beans.CourseBean" %>
 <%@ page import="java.util.List" %>
+<%@ page import="java.util.ArrayList" %>
 <%--
   Created by IntelliJ IDEA.
   User: Denny-Jo
@@ -70,15 +71,29 @@
                 <label for="courseSelect">Select a Course:</label>
                 <select class="select-css" style="width: 50%; display: inline-block" name="courseSelect" id="courseSelect">
                     <option value="*">Show ALL courses</option>
-                        <%CourseConnections conn = new CourseConnections();
-                        List<CourseBean> courseBeans = conn.retrieveAllCourses();
+                    <%
+                        List<CourseBean> courseBeans = new ArrayList<>();
+                        if(request.getSession(true).getAttribute("DBSELECTION") != null)
+                        {
+                            String dbSelection = request.getSession(true).getAttribute("DBSELECTION").toString();
+                            if(dbSelection.equalsIgnoreCase("MONGODB"))
+                            {
+                                CourseConnections conn = new CourseConnections();
+                                courseBeans = conn.retrieveAllCourses();
+                            }
+                            else if(dbSelection.equalsIgnoreCase("ORACLE"))
+                            {
+                                oracle.CourseConnections conn = new oracle.CourseConnections();
+                                courseBeans = conn.retrieveAllCourses();
+                            }
+                        }
                         if (courseBeans != null)
                         {
                             for (CourseBean courseBean : courseBeans)
                             { %>
-                                <option value="<%=courseBean.getCourseCode()%>"><%=courseBean.getCourseCode()%> : <%=courseBean.getCourseName()%></option>
-                            <%}
-                        }%>
+                    <option value="<%=courseBean.getCourseCode()%>"><%=courseBean.getCourseCode()%> : <%=courseBean.getCourseName()%></option>
+                    <%}
+                    }%>
                 </select>
                 <input type="submit" value="Search">
             </form>
@@ -86,48 +101,49 @@
 
             <%if(session.getAttribute("courseErrors") != null)
             {
-            String courseErrors = session.getAttribute("courseErrors").toString(); %>
+                String courseErrors = session.getAttribute("courseErrors").toString(); %>
             <p class="error-div" id="errorDiv"><%=courseErrors%></p>
             <% } %>
             <%if(session.getAttribute("courseSuccess") != null)
-                {
+            {
                 String courseSuccess = session.getAttribute("courseSuccess").toString(); %>
             <p class="success-div" id="successDiv"><%=courseSuccess%></p>
             <% } %>
+            <br/>
 
             <%--All course details--%>
             <%if(session.getAttribute("allCourses") != null){ %>
-                <table id="AllCourse">
-                    <caption></caption>
-                    <tr>
-                        <th id="allTblCourseCode">Course Code</th>
-                        <th id="allTblCourseName">Name</th>
-                        <th id="allTblCourseTutor">Course Leader</th>
-                        <th id="allTblCourseStart">Start Date</th>
-                        <th id="allTblCourseEnd">End Date</th>
-                        <th id="allTblActions">Actions</th>
-                    </tr>
+            <table id="AllCourse">
+                <caption></caption>
+                <tr>
+                    <th id="allTblCourseCode">Course Code</th>
+                    <th id="allTblCourseName">Name</th>
+                    <th id="allTblCourseTutor">Course Leader</th>
+                    <th id="allTblCourseStart">Start Date</th>
+                    <th id="allTblCourseEnd">End Date</th>
+                    <th id="allTblActions">Actions</th>
+                </tr>
                 <%--Guaranteed to be null (out of scope here) or List<CourseBean>--%>
-            	<%for (CourseBean courseBean : (List<CourseBean>) session.getAttribute("allCourses")) {
-                        String courseCode = courseBean.getCourseCode();
-                        String courseName = courseBean.getCourseName();
-                        String courseTutor = courseBean.getCourseTutor();
-                        String courseStart = courseBean.getCourseStart();
-                        String courseEnd = courseBean.getCourseEnd();
+                <%for (CourseBean courseBean : (List<CourseBean>) session.getAttribute("allCourses")) {
+                    String courseCode = courseBean.getCourseCode();
+                    String courseName = courseBean.getCourseName();
+                    String courseTutor = courseBean.getCourseTutor();
+                    String courseStart = courseBean.getCourseStart();
+                    String courseEnd = courseBean.getCourseEnd();
                 %>
-                    <tr>
-                        <td><%=courseCode%></td>
-                        <td><%=courseName%></td>
-                        <td><%=courseTutor%></td>
-                        <td><%=courseStart%></td>
-                        <td><%=courseEnd%></td>
-                        <td>
-                            <a class="bodyA" style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToModuleView?courseCode=<%=courseCode%>>&nbsp;<u>Modules</u>&nbsp;</a>
-                            <%if(amITeacher){%> &verbar; <a class="bodyA" style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToCourseEdit?courseCode=<%=courseCode%>>&nbsp;<u>Edit</u>&nbsp;</a> <%}%>
-                        </td>
-                    </tr>
+                <tr>
+                    <td><%=courseCode%></td>
+                    <td><%=courseName%></td>
+                    <td><%=courseTutor%></td>
+                    <td><%=courseStart%></td>
+                    <td><%=courseEnd%></td>
+                    <td>
+                        <a class="bodyA" style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToModuleView?courseCode=<%=courseCode%>>&nbsp;<u>Modules</u>&nbsp;</a>
+                        <%if(amITeacher){%> &verbar; <a class="bodyA" style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToCourseEdit?courseCode=<%=courseCode%>>&nbsp;<u>Edit</u>&nbsp;</a> <%}%>
+                    </td>
+                </tr>
                 <% } %>
-                </table>
+            </table>
             <%}%>
 
             <%--Single Course Details--%>

@@ -31,12 +31,6 @@
                     String isTeacher = session.getAttribute("isTeacher").toString();
                     amITeacher = isTeacher.equals("true");
                 }
-                boolean amIEnrolled=false;
-                if(session.getAttribute("isEnrolled") != null)
-                {
-                    String isEnrolled = session.getAttribute("isEnrolled").toString();
-                    amIEnrolled = isEnrolled.equals("true");
-                }
                 if(firstname != null){%>
             <div class="topnavdiv">
                 <strong>Logged in as: <%=firstname%></strong><br/>
@@ -66,38 +60,61 @@
 
         <%--Main Content--%>
         <div class="mainBody">
-            <form action="${pageContext.request.contextPath}/servlets/TeacherRegistration" method="POST">
-                <label for="firstname">Firstname:</label>
-                <input type="text" name="firstname" id="firstname" required/>
+            <% if(amITeacher)
+            {%>
+                <form action="${pageContext.request.contextPath}/servlets/TeacherRegistration" method="POST">
+                    <label for="firstname">Firstname:</label>
+                    <input type="text" name="firstname" id="firstname" required/>
+                    <br/>
+                    <label for="surname">Surname:</label>
+                    <input type="text" name="surname" id="surname" required/>
+                    <br/>
+                    <label for="email">Email:</label>
+                    <input type="email" name="email" id="email" required/>
+                    <br/>
+                    <label for="dob">Date of Birth</label>
+                    <input type="date" name="dob" id="dob" required/>
+                    <br/>
+                    <label for="address1">Address Line 1</label>
+                    <input type="text" name="address1" id="address1" required/>
+                    <br/>
+                    <label for="address2">Address Line 2</label>
+                    <input type="text" name="address2" id="address2" required/>
+                    <br/>
+                    <label for="city">City</label>
+                    <input type="text" name="city" id="city" required/>
+                    <br/>
+                    <label for="postcode">Postcode</label>
+                    <input type="text" name="postcode" id="postcode" required/>
+                    <br/>
+                    <label for="pword">Password</label>
+                    <input type="password" name="pword" id="pword" minlength="8" required/>
+                    <br/>
+                    <label for="pwordConfirm"> Confirm Password</label>
+                    <input type="password" name="pwordConfirm" id="pwordConfirm" minlength="8" required/>
+                    <br/>
+                    <input type="reset" value="Clear">
+                    <input type="submit" value="Submit">
+                </form>
                 <br/>
-                <label for="surname">Surname:</label>
-                <input type="text" name="surname" id="surname" required/>
-                <br/>
-                <label for="email">Email:</label>
-                <input type="email" name="email" id="email" required/>
-                <br/>
-                <label for="dob">Date of Birth</label>
-                <input type="date" name="dob" id="dob" required/>
-                <br/>
-                <label for="address1">Address Line 1</label>
-                <input type="text" name="address1" id="address1" required/>
-                <br/>
-                <label for="address2">Address Line 2</label>
-                <input type="text" name="address2" id="address2" required/>
-                <br/>
-                <label for="city">City</label>
-                <input type="text" name="city" id="city" required/>
-                <br/>
-                <label for="postcode">Postcode</label>
-                <input type="text" name="postcode" id="postcode" required/>
-                <br/>
-                <label for="pword">Password</label>
-                <input type="text" name="pword" id="pword" required/>
-                <br/>
-                <input type="reset" value="Clear">
-                <input type="submit" value="Submit">
-            </form>
+                <p class="error-div" id="errorDiv"><%session.getAttribute("registrationErrors");%></p>
+            <%}else{
+                String email=null;
+                if(session.getAttribute("email") != null)
+                {
+                    email = session.getAttribute("email").toString();
+                }
+            	if(email != null)
+            	{%>
+                    <p>
+                        Students do not have access to this page. <a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToStudentIndex>&nbsp;Return to Student Portal&nbsp;</a>
+                    </p>
+                <%}else{%>
+                    <p>
+                        You are not logged in. <a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToDatabaseLogout>&nbsp;Return to Home Page&nbsp;</a>
+                    </p>
+                <% } %>
+            <% } %>
         </div>
-        <p class="error-div" id="errorDiv"><%session.getAttribute("registrationErrors");%></p>
     </body>
 </html>
