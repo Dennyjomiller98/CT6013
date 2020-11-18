@@ -142,4 +142,29 @@ public class MarkConnections extends AbstractOracleConnections
 		}
 		return beansToReturn;
 	}
+
+	public void deleteMarksForStudent(String studentEmail)
+	{
+		LOG.debug("Attempting to delete Marks");
+		setOracleDriver();
+		try
+		{
+			AbstractOracleConnections conn = new AbstractOracleConnections();
+			Connection oracleClient = conn.getOracleClient();
+			if (oracleClient != null)
+			{
+				String query = "DELETE FROM " + MARKS_COLLECTION
+						+ " WHERE Student_Email='" + studentEmail + "';";
+				executeMarkUpdateQuery(oracleClient, query);
+			}
+			else
+			{
+				LOG.error("connection failure");
+			}
+		}
+		catch(Exception e)
+		{
+			LOG.error("Unable to delete Marks in oracle DB");
+		}
+	}
 }

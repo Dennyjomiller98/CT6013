@@ -32,7 +32,8 @@
             <p>
                 Welcome. From here, please select your database choice (Oracle or MongoDB). <br/>
                 <strong>Note:</strong> Data is not persistent between each Database (Registering a student account in MongoDB will NOT register a student in Oracle) <br/>
-                To swap databases, you must first log out of the Student/Teacher account, taking you back to the relevant database homepage (OracleHomePage/MongoHomePage). In the top left of the page you can exit the database. <br>
+                To swap databases, you must first log out of the Student/Teacher account, taking you back to the relevant database homepage (OracleHomePage/MongoHomePage). <br/>
+                In the top left of the page you can exit the database. <br>
             </p>
 
             <form style="display:inline-block; float: left" action="${pageContext.request.contextPath}/servlets/DatabaseSelection" method="POST">

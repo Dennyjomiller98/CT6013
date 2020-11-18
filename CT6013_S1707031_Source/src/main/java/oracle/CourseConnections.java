@@ -163,4 +163,28 @@ public class CourseConnections extends AbstractOracleConnections
 			LOG.error("Unable to update course information in oracle DB");
 		}
 	}
+	public void deleteCourse(String courseCode)
+	{
+		LOG.debug("Attempting to delete Course");
+		setOracleDriver();
+		try
+		{
+			AbstractOracleConnections conn = new AbstractOracleConnections();
+			Connection oracleClient = conn.getOracleClient();
+			if (oracleClient != null)
+			{
+				String query = "DELETE FROM " + COURSES_COLLECTION
+						+ " WHERE Course_Code='" + courseCode + "';";
+				executeCourseUpdateQuery(oracleClient, query);
+			}
+			else
+			{
+				LOG.error("connection failure");
+			}
+		}
+		catch(Exception e)
+		{
+			LOG.error("Unable to delete course in oracle DB");
+		}
+	}
 }

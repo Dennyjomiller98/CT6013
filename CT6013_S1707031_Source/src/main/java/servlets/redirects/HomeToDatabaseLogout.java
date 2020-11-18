@@ -80,6 +80,7 @@ public class HomeToDatabaseLogout extends HttpServlet
 		request.getSession(true).removeAttribute("allEnrollmentToReturn");
 		request.getSession(true).removeAttribute("singleMarkBean");
 		request.getSession(true).removeAttribute("singleEnrollmentToReturn");
+		request.getSession(true).removeAttribute("deleteSuccess");
 
 		request.getSession(true).removeAttribute("DBSELECTION");
 	}

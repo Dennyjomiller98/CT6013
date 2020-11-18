@@ -101,4 +101,19 @@ public class TeacherConnections extends AbstractMongoDBConnections
 			LOG.error("Error Occurred during Teacher Update", e);
 		}
 	}
+
+	public void deleteTeacher(String teacherEmail)
+	{
+		LOG.debug("attempting to delete teacher details of teacher email: " + teacherEmail);
+		try (MongoClient mongo = new MongoClient(MONGO_HOST, MONGO_PORT))
+		{
+			MongoDatabase db = mongo.getDatabase(DBNAME);
+			MongoCollection<Document> collection = db.getCollection(TEACHERS_COLLECTION);
+			Bson bson = Filters.eq("Email", teacherEmail);
+			collection.findOneAndDelete(bson);
+		} catch (Exception e)
+		{
+			LOG.error("Error Occurred during teacher Deletion", e);
+		}
+	}
 }

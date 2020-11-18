@@ -91,6 +91,12 @@
                     As this project is not in production, please view the related README to gain Teacher access in order to test Teacher features.
                 </p>
             <%}%>
+            <br/>
+            <% String success = (String) session.getAttribute("deleteSuccess");
+                if(success != null){%>
+            <p class="success-div" id="successDiv"><%=success%></p>
+            <%}%>
+            <br/>
         </div>
     </body>
 </html>

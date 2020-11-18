@@ -71,11 +71,10 @@
                 <label for="courseSelect">Select a Course:</label>
                 <select class="select-css" style="width: 50%; display: inline-block" name="courseSelect" id="courseSelect">
                     <option value="*">Show ALL courses</option>
-                    <%
-                        List<CourseBean> courseBeans = new ArrayList<>();
-                        if(request.getSession(true).getAttribute("DBSELECTION") != null)
+                    <%List<CourseBean> courseBeans = new ArrayList<CourseBean>();
+                        if(session.getAttribute("DBSELECTION") != null)
                         {
-                            String dbSelection = request.getSession(true).getAttribute("DBSELECTION").toString();
+                            String dbSelection = session.getAttribute("DBSELECTION").toString();
                             if(dbSelection.equalsIgnoreCase("MONGODB"))
                             {
                                 CourseConnections conn = new CourseConnections();

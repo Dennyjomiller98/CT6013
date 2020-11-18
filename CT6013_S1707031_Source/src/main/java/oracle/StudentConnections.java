@@ -212,4 +212,29 @@ public class StudentConnections extends AbstractOracleConnections
 			LOG.error("Unable to change student Enrollment information");
 		}
 	}
+
+	public void deleteStudent(String studentEmail)
+	{
+		LOG.debug("Attempting to delete student");
+		setOracleDriver();
+		try
+		{
+			AbstractOracleConnections conn = new AbstractOracleConnections();
+			Connection oracleClient = conn.getOracleClient();
+			if (oracleClient != null)
+			{
+				String query = "DELETE FROM " + STUDENTS_COLLECTION
+						+ " WHERE Email='" + studentEmail + "';";
+				executeStudentUpdateQuery(oracleClient, query);
+			}
+			else
+			{
+				LOG.error("connection failure");
+			}
+		}
+		catch(Exception e)
+		{
+			LOG.error("Unable to delete student in oracle DB");
+		}
+	}
 }

@@ -4,10 +4,12 @@ import com.mongodb.MongoClient;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
 import java.util.ArrayList;
 import java.util.List;
 import beans.EnrollmentBean;
 import org.bson.Document;
+import org.bson.conversions.Bson;
 
 public class EnrollmentConnections extends AbstractMongoDBConnections
 {
@@ -68,5 +70,20 @@ public class EnrollmentConnections extends AbstractMongoDBConnections
 			}
 		}
 		return beanToReturn;
+	}
+
+	public void deleteEnrollmentForStudent(String studentEmail)
+	{
+		LOG.debug("attempting to delete student details of student: " + studentEmail);
+		try (MongoClient mongo = new MongoClient(MONGO_HOST, MONGO_PORT))
+		{
+			MongoDatabase db = mongo.getDatabase(DBNAME);
+			MongoCollection<Document> collection = db.getCollection(ENROLLMENTS_COLLECTION);
+			Bson bson = Filters.eq("Email", studentEmail);
+			collection.findOneAndDelete(bson);
+		} catch (Exception e)
+		{
+			LOG.error("Error Occurred during Student Deletion", e);
+		}
 	}
 }

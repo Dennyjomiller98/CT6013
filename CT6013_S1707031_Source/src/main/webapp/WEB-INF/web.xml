@@ -320,4 +320,36 @@
         <servlet-name>homeToMarksAddition</servlet-name>
         <url-pattern>/servlets/redirects/HomeToMarksAddition</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>homeToDeleteStudent</servlet-name>
+        <servlet-class>servlets.redirects.HomeToDeleteStudent</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>homeToDeleteStudent</servlet-name>
+        <url-pattern>/servlets/redirects/HomeToDeleteStudent</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>homeToDeleteTeacher</servlet-name>
+        <servlet-class>servlets.redirects.HomeToDeleteTeacher</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>homeToDeleteTeacher</servlet-name>
+        <url-pattern>/servlets/redirects/HomeToDeleteTeacher</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>homeToDeleteModule</servlet-name>
+        <servlet-class>servlets.redirects.HomeToDeleteModule</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>homeToDeleteModule</servlet-name>
+        <url-pattern>/servlets/redirects/HomeToDeleteModule</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>homeToDeleteCourse</servlet-name>
+        <servlet-class>servlets.redirects.HomeToDeleteCourse</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>homeToDeleteCourse</servlet-name>
+        <url-pattern>/servlets/redirects/HomeToDeleteCourse</url-pattern>
+    </servlet-mapping>
 </web-app>

@@ -83,9 +83,9 @@
                     courseEnrolled = session.getAttribute("enrollCourse").toString();
                     if (courseEnrolled != null)
                     {
-                        if(request.getSession(true).getAttribute("DBSELECTION") != null)
+                        if(session.getAttribute("DBSELECTION") != null)
                         {
-                            String dbSelection = request.getSession(true).getAttribute("DBSELECTION").toString();
+                            String dbSelection = session.getAttribute("DBSELECTION").toString();
                             if(dbSelection.equalsIgnoreCase("MONGODB"))
                             {
                                 CourseConnections conn = new CourseConnections();
@@ -134,9 +134,9 @@
                 for (String module : split)
                 {
                     ModuleBean moduleBean = null;
-                    if(request.getSession(true).getAttribute("DBSELECTION") != null)
+                    if(session.getAttribute("DBSELECTION") != null)
                     {
-                        String dbSelection = request.getSession(true).getAttribute("DBSELECTION").toString();
+                        String dbSelection = session.getAttribute("DBSELECTION").toString();
                         if(dbSelection.equalsIgnoreCase("MONGODB"))
                         {
                             ModuleConnections conn = new ModuleConnections();
@@ -147,7 +147,7 @@
                             oracle.ModuleConnections conn = new oracle.ModuleConnections();
                             moduleBean = conn.retrieveSingleModule(module);
                         }
-                    }
+                    }%>
 
                 <%--MODULE/MARKS Table--%>
                 <table id="moduleAndMarks">

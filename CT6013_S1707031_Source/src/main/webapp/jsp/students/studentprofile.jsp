@@ -138,6 +138,7 @@
                 <a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToStudentIndex>&nbsp;Student Portal&nbsp;</a>
                 <a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToCourseEnrollmentView>&nbsp;View Courses&nbsp;</a>
                 <a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToModuleView>&nbsp;View Modules&nbsp;</a>
+                <a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToDeleteStudent?studentEmail=<%=email%>>&nbsp;Delete Account&nbsp;</a>
 
             <%}else {
                 if (email != null)

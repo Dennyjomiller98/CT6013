@@ -124,6 +124,7 @@
                 <a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToCourseEnrollmentView>&nbsp;View Courses&nbsp;</a>
                 <a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToModuleAddition>&nbsp;Add Modules&nbsp;</a>
                 <a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToModuleView>&nbsp;View Modules&nbsp;</a>
+                <a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToDeleteCourse?courseCode=<%=courseCode%>>&nbsp;Delete Course &nbsp;</a>
             <% } else {
                 String email = null;
                 if(session.getAttribute("email") != null)

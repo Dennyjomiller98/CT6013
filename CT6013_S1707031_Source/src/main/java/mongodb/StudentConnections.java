@@ -137,4 +137,19 @@ public class StudentConnections extends AbstractMongoDBConnections
             LOG.error("Error Occurred during Student Update", e);
         }
     }
+
+    public void deleteStudent(String studentEmail)
+    {
+        LOG.debug("attempting to delete student details of student: " + studentEmail);
+        try (MongoClient mongo = new MongoClient(MONGO_HOST, MONGO_PORT))
+        {
+            MongoDatabase db = mongo.getDatabase(DBNAME);
+            MongoCollection<Document> collection = db.getCollection(STUDENTS_COLLECTION);
+            Bson bson = Filters.eq("Email", studentEmail);
+            collection.findOneAndDelete(bson);
+        } catch (Exception e)
+        {
+            LOG.error("Error Occurred during Student Deletion", e);
+        }
+    }
 }

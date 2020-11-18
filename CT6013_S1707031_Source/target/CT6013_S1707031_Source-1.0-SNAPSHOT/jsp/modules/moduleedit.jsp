@@ -151,9 +151,10 @@
                 <%}%>
                 <br/>
 
-                <a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToModuleView>&nbsp;View Modules&nbsp;</a>
-                <a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToModuleAddition>&nbsp;Add Modules&nbsp;</a>
-                <a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToCourseEnrollmentView>&nbsp;View Courses&nbsp;</a>
+            <a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToModuleView>&nbsp;View Modules&nbsp;</a>
+            <a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToModuleAddition>&nbsp;Add Modules&nbsp;</a>
+            <a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToCourseEnrollmentView>&nbsp;View Courses&nbsp;</a>
+            <a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToDeleteModule?moduleCode=<%=moduleCode%>>&nbsp;Delete Module&nbsp;</a>
             <% } else {
                 String email = null;
                 if(session.getAttribute("email") != null)

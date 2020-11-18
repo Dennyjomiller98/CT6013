@@ -86,4 +86,19 @@ public class CourseConnections extends AbstractMongoDBConnections
 			LOG.error("Error Occurred during Course Update", e);
 		}
 	}
+
+	public void deleteCourse(String courseCode)
+	{
+		LOG.debug("attempting to delete course details of courseCode: " + courseCode);
+		try (MongoClient mongo = new MongoClient(MONGO_HOST, MONGO_PORT))
+		{
+			MongoDatabase db = mongo.getDatabase(DBNAME);
+			MongoCollection<Document> collection = db.getCollection(COURSES_COLLECTION);
+			Bson bson = Filters.eq("Course_Code", courseCode);
+			collection.findOneAndDelete(bson);
+		} catch (Exception e)
+		{
+			LOG.error("Error Occurred during Course Deletion", e);
+		}
+	}
 }

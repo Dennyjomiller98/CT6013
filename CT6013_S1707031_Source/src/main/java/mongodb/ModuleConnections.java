@@ -104,4 +104,19 @@ public class ModuleConnections extends AbstractMongoDBConnections
 		}
 		return modulesToReturn;
 	}
+
+	public void deleteModule(String moduleCode)
+	{
+		LOG.debug("attempting to delete moduel details of moduleCode: " + moduleCode);
+		try (MongoClient mongo = new MongoClient(MONGO_HOST, MONGO_PORT))
+		{
+			MongoDatabase db = mongo.getDatabase(DBNAME);
+			MongoCollection<Document> collection = db.getCollection(MODULES_COLLECTION);
+			Bson bson = Filters.eq("Course_Code", moduleCode);
+			collection.findOneAndDelete(bson);
+		} catch (Exception e)
+		{
+			LOG.error("Error Occurred during Course Deletion", e);
+		}
+	}
 }

@@ -71,10 +71,10 @@
                 <select class="select-css" style="width: 50%; display: inline-block" name="moduleSelect" id="moduleSelect">
                     <option value="*">Show ALL modules</option>
                     <%
-                        List<ModuleBean> moduleBeans = new ArrayList<>();
-                        if(request.getSession(true).getAttribute("DBSELECTION") != null)
+                        List<ModuleBean> moduleBeans = new ArrayList<ModuleBean>();
+                        if(session.getAttribute("DBSELECTION") != null)
                         {
-                            String dbSelection = request.getSession(true).getAttribute("DBSELECTION").toString();
+                            String dbSelection = session.getAttribute("DBSELECTION").toString();
                             if(dbSelection.equalsIgnoreCase("MONGODB"))
                             {
                                 ModuleConnections conn = new ModuleConnections();

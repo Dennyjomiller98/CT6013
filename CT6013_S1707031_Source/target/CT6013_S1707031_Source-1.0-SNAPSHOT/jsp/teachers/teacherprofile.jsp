@@ -138,6 +138,7 @@
                     <a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToTeacherIndex>&nbsp;Teacher Portal&nbsp;</a>
                     <a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToCourseEnrollmentView>&nbsp;View Courses&nbsp;</a>
                     <a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToModuleView>&nbsp;View Modules&nbsp;</a>
+                    <a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToDeleteTeacher?teacherEmail=<%=email%>>&nbsp;Delete Account&nbsp;</a>
             <%}else {
                 if (email != null)
                 {%>

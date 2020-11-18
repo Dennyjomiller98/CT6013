@@ -189,4 +189,29 @@ public class TeacherConnections extends AbstractOracleConnections
 			LOG.error("Unable to update Teacher information");
 		}
 	}
+
+	public void deleteTeacher(String teacherEmail)
+	{
+		LOG.debug("Attempting to delete Teacher");
+		setOracleDriver();
+		try
+		{
+			AbstractOracleConnections conn = new AbstractOracleConnections();
+			Connection oracleClient = conn.getOracleClient();
+			if (oracleClient != null)
+			{
+				String query = "DELETE FROM " + TEACHERS_COLLECTION
+						+ " WHERE Email='" + teacherEmail + "';";
+				executeTeacherUpdateQuery(oracleClient, query);
+			}
+			else
+			{
+				LOG.error("connection failure");
+			}
+		}
+		catch(Exception e)
+		{
+			LOG.error("Unable to delete Teacher in oracle DB");
+		}
+	}
 }

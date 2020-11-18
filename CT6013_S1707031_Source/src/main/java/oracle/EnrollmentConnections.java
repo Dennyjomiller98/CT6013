@@ -127,4 +127,29 @@ public class EnrollmentConnections extends AbstractOracleConnections
 		}
 		return beanToReturn;
 	}
+
+	public void deleteEnrollmentForStudent(String studentEmail)
+	{
+		LOG.debug("Attempting to delete Enrollment");
+		setOracleDriver();
+		try
+		{
+			AbstractOracleConnections conn = new AbstractOracleConnections();
+			Connection oracleClient = conn.getOracleClient();
+			if (oracleClient != null)
+			{
+				String query = "DELETE FROM " + ENROLLMENTS_COLLECTION
+						+ " WHERE Student_Email='" + studentEmail + "';";
+				executeEnrollmentUpdateQuery(oracleClient, query);
+			}
+			else
+			{
+				LOG.error("connection failure");
+			}
+		}
+		catch(Exception e)
+		{
+			LOG.error("Unable to delete Enrollment in oracle DB");
+		}
+	}
 }

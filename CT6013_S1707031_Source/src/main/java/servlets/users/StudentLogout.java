@@ -111,6 +111,7 @@ public class StudentLogout extends HttpServlet
 		request.getSession(true).removeAttribute("allEnrollmentToReturn");
 		request.getSession(true).removeAttribute("singleMarkBean");
 		request.getSession(true).removeAttribute("singleEnrollmentToReturn");
+		request.getSession(true).removeAttribute("deleteSuccess");
 	}
 
 	private void redirectToDBSelect(HttpServletRequest request, HttpServletResponse response)

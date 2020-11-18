@@ -4,10 +4,12 @@ import com.mongodb.MongoClient;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
 import java.util.ArrayList;
 import java.util.List;
 import beans.MarkBean;
 import org.bson.Document;
+import org.bson.conversions.Bson;
 
 public class MarkConnections extends AbstractMongoDBConnections
 {
@@ -84,5 +86,20 @@ public class MarkConnections extends AbstractMongoDBConnections
 			}
 		}
 		return beansToReturn;
+	}
+
+	public void deleteMarksForStudent(String studentEmail)
+	{
+		LOG.debug("attempting to delete Mark details of student: " + studentEmail);
+		try (MongoClient mongo = new MongoClient(MONGO_HOST, MONGO_PORT))
+		{
+			MongoDatabase db = mongo.getDatabase(DBNAME);
+			MongoCollection<Document> collection = db.getCollection(MARKS_COLLECTION);
+			Bson bson = Filters.eq("Student_Email", studentEmail);
+			collection.findOneAndDelete(bson);
+		} catch (Exception e)
+		{
+			LOG.error("Error Occurred during Mark Deletion", e);
+		}
 	}
 }

@@ -185,4 +185,29 @@ public class ModuleConnections extends AbstractOracleConnections
 		}
 		return allModules;
 	}
+
+	public void deleteModule(String moduleCode)
+	{
+		LOG.debug("Attempting to delete Module");
+		setOracleDriver();
+		try
+		{
+			AbstractOracleConnections conn = new AbstractOracleConnections();
+			Connection oracleClient = conn.getOracleClient();
+			if (oracleClient != null)
+			{
+				String query = "DELETE FROM " + MODULES_COLLECTION
+						+ " WHERE Module_Code='" + moduleCode + "';";
+				executeModuleUpdateQuery(oracleClient, query);
+			}
+			else
+			{
+				LOG.error("connection failure");
+			}
+		}
+		catch(Exception e)
+		{
+			LOG.error("Unable to delete Module in oracle DB");
+		}
+	}
 }
