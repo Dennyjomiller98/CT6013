@@ -153,8 +153,29 @@
                                     for (MarkBean myMark : myMarks)
                                     {
                                         if(myMark.getModuleCode().equalsIgnoreCase(moduleBean.getModuleCode()))
-                                        {%>
-                                            Grade: <%=myMark.getFinalMark()%>%
+                                        {
+                                            String letterGrade = "Unknown";
+                                            if(myMark.getFinalMark() >= 70)
+                                            {
+                                                letterGrade = "A";
+                                            }
+                                            else if(myMark.getFinalMark() >= 60)
+                                            {
+                                                letterGrade = "B";
+                                            }
+                                            else if(myMark.getFinalMark() >= 50)
+                                            {
+                                                letterGrade = "C";
+                                            }
+                                            else if(myMark.getFinalMark() >= 40)
+                                            {
+                                                letterGrade = "D";
+                                            }
+                                            else if(myMark.getFinalMark() > 0)
+                                            {
+                                                letterGrade = "U";
+                                            }%>
+                                            Grade: <%=myMark.getFinalMark()%>% (<%=letterGrade%>)
                                         <%}
                                     }
                                 } else{%>

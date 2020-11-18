@@ -1,12 +1,12 @@
 package servlets.users;
 
+import beans.StudentBean;
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import mongodb.StudentConnections;
-import beans.StudentBean;
 import org.apache.log4j.Logger;
 import org.bson.Document;
 
@@ -30,9 +30,9 @@ public class StudentProfile extends HttpServlet
 			studentToUpdate.append("DOB", request.getParameter("dob"));
 			String fullAddress = request.getParameter("address1") + "," + request.getParameter("address2") + "," + request.getParameter("city") + "," + request.getParameter("postcode");
 			studentToUpdate.append("Address", fullAddress);
-			studentToUpdate.append("Password", request.getParameter("pword"));
 			studentToUpdate.append("Is_Enrolled", request.getParameter("isEnrolled"));
 			studentToUpdate.append("Is_Teacher", "false");
+			validatePasswords(request, response, dbSelection, studentToUpdate);
 
 			if(dbSelection.equalsIgnoreCase("MONGODB"))
 			{
@@ -54,6 +54,80 @@ public class StudentProfile extends HttpServlet
 		{
 			LOG.error("No DB selected");
 			redirectToDBSelect(request, response);
+		}
+	}
+
+	private void validatePasswords(HttpServletRequest request, HttpServletResponse response, String dbSelection, Document studentToUpdate)
+	{
+		String hashedPassword;
+		String pword = request.getParameter("pword");
+		hashedPassword = PasswordEncryptDecrypt.encryptPasswordToStore(pword);
+		StudentBean potentialStudent = null;
+		if(dbSelection.equalsIgnoreCase("MONGODB"))
+		{
+			StudentConnections studentConn = new StudentConnections();
+			potentialStudent = studentConn.retrieveSingleStudent(studentToUpdate.getString("Email"));
+		}
+		else if (dbSelection.equalsIgnoreCase("ORACLE"))
+		{
+			oracle.StudentConnections studentConn = new oracle.StudentConnections();
+			potentialStudent = studentConn.retrieveSingleStudent(studentToUpdate.getString("Email"));
+		}
+		if (potentialStudent != null)
+		{
+			String decryptedPassword = PasswordEncryptDecrypt.decryptPasswordFromDB(pword);
+			if(hashedPassword != null && !hashedPassword.equals(decryptedPassword))
+			{
+				//Doesn't match, error user out.
+				request.getSession(true).removeAttribute("updateSuccess");
+				request.getSession(true).setAttribute("editErrors", "An Error has occurred, the changes were unable to be saved.");
+				try
+				{
+					response.sendRedirect(request.getContextPath() + "/jsp/students/studentprofile.jsp");
+				}
+				catch (IOException e)
+				{
+					LOG.error("Unable to redirect back to Profile page after student update failure.",e);
+				}
+			}
+			else
+			{
+				//Add user
+				studentToUpdate.append("Password", hashedPassword);
+			}
+		}
+
+		//Check if new passwords were given
+		if(request.getParameter("newPword") != null && request.getParameter("newPword2") != null )
+		{
+			validateNewPasswords(request, response, studentToUpdate);
+		}
+	}
+
+	private void validateNewPasswords(HttpServletRequest request, HttpServletResponse response, Document studentToUpdate)
+	{
+		String hashedPassword;
+		//Assert they are equal
+		if(!request.getParameter("newPword").equals(request.getParameter("newPword2")))
+		{
+			//Dont match, error user out
+			request.getSession(true).removeAttribute("updateSuccess");
+			request.getSession(true).setAttribute("editErrors", "An Error has occurred, the changes were unable to be saved.");
+			try
+			{
+				response.sendRedirect(request.getContextPath() + "/jsp/students/studentprofile.jsp");
+			}
+			catch (IOException e)
+			{
+				LOG.error("Unable to redirect back to Profile page after student update failure.",e);
+			}
+		}
+		else
+		{
+			//Hash pword and Add new pword
+			String pword = request.getParameter("newPword");
+			hashedPassword = PasswordEncryptDecrypt.encryptPasswordToStore(pword);
+			studentToUpdate.append("Password", hashedPassword);
 		}
 	}
 

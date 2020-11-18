@@ -27,6 +27,11 @@
                 if(session.getAttribute("firstname") != null){
                     firstname = session.getAttribute("firstname").toString();
                 }
+                String email = null;
+                if(session.getAttribute("email") != null)
+                {
+                    email = session.getAttribute("email").toString();
+                }
                 boolean amITeacher = false;
                 if(session.getAttribute("isTeacher") != null)
                 {
@@ -62,7 +67,30 @@
 
         <%--Main Content--%>
         <div class="mainBody">
-
+            <%--If logged in--%>
+            <%  if(firstname != null){%>
+            <p>
+                You are already logged in as <%=firstname%>. <br/>
+                <%if(amITeacher){%>
+                To edit your profile, please click <a class="bodyA" style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToTeacherProfile>&nbsp;<u>here.</u>&nbsp;</a><br/>
+                <% } else { %>
+                To edit your profile, please click <a class="bodyA" style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToStudentProfile>&nbsp;<u>here.</u>&nbsp;</a><br/>
+                For Course Enrollment, please click <a class="bodyA" style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToCourseEnrollment?studentEmail=<%=email%>>&nbsp;<u>here.</u>&nbsp;</a><br/>
+                To view Course Details, including Assignment Marks, please click <a class="bodyA" style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToCourseEnrollmentView>&nbsp;<u>here.</u>&nbsp;</a><br/>
+                <%}%>
+            </p>
+            <%} else {%>
+            <%--not logged in--%>
+            <p>
+                Welcome. To progress further, you must first be logged in. Please select the appropriate action. <br/><br/>
+                To register as a student, please click <a class="bodyA" style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToStudentRegistration>&nbsp;<u>here.</u>&nbsp;</a> <br/>
+                To login as a student, please click <a class="bodyA" style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToStudentLogin>&nbsp;<u>here.</u>&nbsp;</a> <br/>
+                To login as a Teacher, please click <a class="bodyA" style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToTeacherLogin>&nbsp;<u>here.</u>&nbsp;</a> <br/><br/>
+                To view available Courses, please click <a class="bodyA" style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToCourseEnrollmentView>&nbsp;<u>here.</u>&nbsp;</a> <br/>
+                To view available Modules, please click <a class="bodyA" style="display: inline" href=${pageContext.request.contextPath}/servlets/redirects/HomeToModuleView>&nbsp;<u>here.</u>&nbsp;</a> <br/><br/>
+                <strong>Please Note:</strong> Teacher Registration can only be performed by teachers. As this project is not in production, please view the related README to gain Teacher access in order to test Teacher features.
+            </p>
+            <%}%>
         </div>
     </body>
 </html>

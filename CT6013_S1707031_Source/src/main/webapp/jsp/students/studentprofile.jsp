@@ -106,9 +106,14 @@
                 <% String postcode = session.getAttribute("postcode").toString();%>
                 <input type="text" name="postcode" id="postcode" required value="<%=postcode%>" />
                 <br/>
-                <label for="pword">Password</label>
-                <% String pword = session.getAttribute("pword").toString();%>
-                    <input type="text" name="pword" id="pword" required value="<%=pword%>" />
+                <label for="newPword">New Password (If changing)</label>
+                <input type="password" name="newPword" id="newPword" minlength="8" />
+                <br/>
+                <label for="newPword2">Re-Enter New Password (If changing)</label>
+                <input type="password" name="newPword2" id="newPword2" minlength="8"  />
+                <br/>
+                <label for="pword">Re-Enter Password to Save Changes</label>
+                    <input type="password" name="pword" id="pword" required minlength="8" />
                 <br/>
                 <input type="submit" value="Submit">
             </form>

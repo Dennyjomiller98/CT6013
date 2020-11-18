@@ -152,8 +152,30 @@
                                         }
                                     }
                                     if(finalMark != 0)
-                                    {%>
-                                        Grade given: <%=finalMark%>%
+                                    {
+                                    	String letterGrade = "Unknown";
+                                    	if(finalMark >= 70)
+                                        {
+                                        	letterGrade = "A";
+                                        }
+                                    	else if(finalMark >= 60)
+                                        {
+                                        	letterGrade = "B";
+                                        }
+                                    	else if(finalMark >= 50)
+                                        {
+                                        	letterGrade = "C";
+                                        }
+                                    	else if(finalMark >= 40)
+                                        {
+                                        	letterGrade = "D";
+                                        }
+                                    	else if(finalMark > 0)
+                                        {
+                                        	letterGrade = "U";
+                                        }
+                                    %>
+                                        Grade given: <%=finalMark%>% (<%=letterGrade%>)
                                     <%} else { %>
                                         <%--Add Marks form--%>
                                         <form style="width:100%" action="${pageContext.request.contextPath}/servlets/mark/MarkAddition?studentEmail=<%=enrollBean.getStudentEmail()%>&courseTutor=<%=session.getAttribute("email").toString()%>&moduleCode=<%=moduleCode%>" method="POST">
