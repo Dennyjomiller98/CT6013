@@ -6,7 +6,7 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import java.util.ArrayList;
 import java.util.List;
-import mongodbbeans.MarkBean;
+import beans.MarkBean;
 import org.bson.Document;
 
 public class MarkConnections extends AbstractMongoDBConnections

@@ -16,20 +16,50 @@ public class TeacherLogout extends HttpServlet
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 	{
 		removeSessionAttributes(request);
-		//Redirect to MongoDB Homepage
-		try
+		if(request.getSession(true).getAttribute("DBSELECTION") != null)
 		{
-			response.sendRedirect(request.getContextPath() + "/jsp/mongohomepage.jsp");
+			String dbSelection = request.getSession(true).getAttribute("DBSELECTION").toString();
+			if(dbSelection.equalsIgnoreCase("MONGODB"))
+			{
+				//Redirect to MongoDB Homepage
+				try
+				{
+					response.sendRedirect(request.getContextPath() + "/jsp/mongohomepage.jsp");
+				}
+				catch (IOException e)
+				{
+					LOG.error("Unable to redirect after Logout", e);
+				}
+			}
+			else if(dbSelection.equalsIgnoreCase("ORACLE"))
+			{
+				//Redirect to OracleDB Homepage
+				try
+				{
+					response.sendRedirect(request.getContextPath() + "/jsp/oraclehomepage.jsp");
+				}
+				catch (IOException e)
+				{
+					LOG.error("Unable to redirect after Logout",e);
+				}
+			}
+			else
+			{
+				//No DB selection
+				LOG.error("Unknown database choice, returning to DB select page.");
+				redirectToDBSelect(request, response);
+			}
 		}
-		catch (IOException e)
+		else
 		{
-			LOG.error("Unable to redirect after Logout", e);
+			LOG.error("No DB selected");
+			redirectToDBSelect(request, response);
 		}
 	}
 
 	private void removeSessionAttributes(HttpServletRequest request)
 	{
-		//Remove Session Atributes/Logout
+		//Remove Session Attributes/Logout
 		request.getSession(true).removeAttribute("registrationErrors");
 		request.getSession(true).removeAttribute("loginErrors");
 		request.getSession(true).removeAttribute("firstname");
@@ -81,5 +111,15 @@ public class TeacherLogout extends HttpServlet
 		request.getSession(true).removeAttribute("allEnrollmentToReturn");
 		request.getSession(true).removeAttribute("singleMarkBean");
 		request.getSession(true).removeAttribute("singleEnrollmentToReturn");
+	}
+
+	private void redirectToDBSelect(HttpServletRequest request, HttpServletResponse response)
+	{
+		try
+		{
+			response.sendRedirect(request.getContextPath() + "/jsp/databaseselection.jsp");
+		} catch (IOException e) {
+			LOG.error("Failure to redirect after student Login failure", e);
+		}
 	}
 }

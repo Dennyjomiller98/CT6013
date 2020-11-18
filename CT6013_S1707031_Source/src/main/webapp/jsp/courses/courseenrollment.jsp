@@ -1,7 +1,7 @@
 <%@ page import="mongodb.CourseConnections" %>
-<%@ page import="mongodbbeans.CourseBean" %>
+<%@ page import="beans.CourseBean" %>
 <%@ page import="java.util.List" %>
-<%@ page import="mongodbbeans.ModuleBean" %><%--
+<%@ page import="beans.ModuleBean" %><%--
   Created by IntelliJ IDEA.
   User: Denny-Jo
   Date: 13/11/2020

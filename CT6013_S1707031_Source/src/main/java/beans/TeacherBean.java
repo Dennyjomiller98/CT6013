@@ -1,11 +1,9 @@
-package mongodbbeans;
+package beans;
 
 import javax.ejb.ConcurrencyManagement;
 import javax.ejb.ConcurrencyManagementType;
-import javax.ejb.Singleton;
 import org.bson.Document;
 
-@Singleton(name = "MongoClientProviderEJB")
 @ConcurrencyManagement(ConcurrencyManagementType.CONTAINER)
 public class TeacherBean
 {

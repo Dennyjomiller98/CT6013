@@ -1,12 +1,10 @@
-package mongodbbeans;
+package beans;
 
 import java.io.Serializable;
 import javax.ejb.ConcurrencyManagement;
 import javax.ejb.ConcurrencyManagementType;
-import javax.ejb.Singleton;
 import org.bson.Document;
 
-@Singleton(name = "MongoClientProviderEJB")
 @ConcurrencyManagement(ConcurrencyManagementType.CONTAINER)
 public class CourseBean implements Serializable
 {

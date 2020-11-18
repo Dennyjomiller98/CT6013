@@ -7,7 +7,7 @@ import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 import java.util.ArrayList;
 import java.util.List;
-import mongodbbeans.TeacherBean;
+import beans.TeacherBean;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 
@@ -18,7 +18,8 @@ public class TeacherConnections extends AbstractMongoDBConnections
 		//Empty Constructor
 	}
 
-	public void registerTeacherToDB(Document teacher) {
+	public void registerTeacherToDB(Document teacher)
+	{
 		LOG.debug("Beginning Teacher Registration");
 		//Create Mongo Client, access DB and Retrieve Collection to insert new teacher Document into
 		try (MongoClient mongo = new MongoClient(MONGO_HOST, MONGO_PORT))

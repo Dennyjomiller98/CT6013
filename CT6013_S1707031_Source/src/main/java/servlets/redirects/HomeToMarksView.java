@@ -8,8 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import mongodb.EnrollmentConnections;
 import mongodb.MarkConnections;
-import mongodbbeans.EnrollmentBean;
-import mongodbbeans.MarkBean;
+import beans.EnrollmentBean;
+import beans.MarkBean;
 import org.apache.log4j.Logger;
 
 @WebServlet(name = "homeToMarksView")

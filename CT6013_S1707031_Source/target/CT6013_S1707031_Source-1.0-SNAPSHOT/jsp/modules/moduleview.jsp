@@ -1,6 +1,6 @@
 <%@ page import="mongodb.ModuleConnections" %>
 <%@ page import="java.util.List" %>
-<%@ page import="mongodbbeans.ModuleBean" %><%--
+<%@ page import="beans.ModuleBean" %><%--
   Created by IntelliJ IDEA.
   User: Denny-Jo
   Date: 14/11/2020

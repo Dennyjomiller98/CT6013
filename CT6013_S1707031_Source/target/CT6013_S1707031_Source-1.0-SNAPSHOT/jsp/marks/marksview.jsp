@@ -1,9 +1,9 @@
-<%@ page import="mongodbbeans.MarkBean" %>
+<%@ page import="beans.MarkBean" %>
 <%@ page import="java.util.List" %>
-<%@ page import="mongodbbeans.ModuleBean" %>
+<%@ page import="beans.ModuleBean" %>
 <%@ page import="mongodb.ModuleConnections" %>
 <%@ page import="mongodb.CourseConnections" %>
-<%@ page import="mongodbbeans.CourseBean" %><%--
+<%@ page import="beans.CourseBean" %><%--
   Created by IntelliJ IDEA.
   User: Denny-Jo
   Date: 14/11/2020

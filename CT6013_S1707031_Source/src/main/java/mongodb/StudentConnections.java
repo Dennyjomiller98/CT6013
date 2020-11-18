@@ -7,7 +7,7 @@ import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 import java.util.ArrayList;
 import java.util.List;
-import mongodbbeans.StudentBean;
+import beans.StudentBean;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 

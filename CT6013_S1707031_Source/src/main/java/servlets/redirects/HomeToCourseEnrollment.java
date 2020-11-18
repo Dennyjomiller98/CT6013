@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import mongodb.EnrollmentConnections;
-import mongodbbeans.EnrollmentBean;
+import beans.EnrollmentBean;
 import org.apache.log4j.Logger;
 
 @WebServlet(name = "homeToCourseEnrollment")

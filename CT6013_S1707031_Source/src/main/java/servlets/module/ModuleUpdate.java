@@ -8,9 +8,9 @@ import javax.servlet.http.HttpServletResponse;
 import mongodb.CourseConnections;
 import mongodb.ModuleConnections;
 import mongodb.TeacherConnections;
-import mongodbbeans.CourseBean;
-import mongodbbeans.ModuleBean;
-import mongodbbeans.TeacherBean;
+import beans.CourseBean;
+import beans.ModuleBean;
+import beans.TeacherBean;
 import org.apache.log4j.Logger;
 import org.bson.Document;
 
@@ -35,58 +35,123 @@ public class ModuleUpdate extends HttpServlet
 		moduleToUpdate.append("Module_End", request.getParameter("moduleEnd"));
 
 		//Connect to DB, check module still exists
-		ModuleConnections moduleConn = new ModuleConnections();
-		ModuleBean moduleBean = moduleConn.retrieveSingleModule(moduleToUpdate.getString("Module_Code"));
-		if (moduleBean != null)
+		if(request.getSession(true).getAttribute("DBSELECTION") != null)
 		{
-			//Check relatedCourse exists
-			CourseConnections courseConn = new CourseConnections();
-			CourseBean courseBean = courseConn.retrieveSingleCourse(moduleToUpdate.getString("Related_Course"));
-			if (courseBean != null)
+			String dbSelection = request.getSession(true).getAttribute("DBSELECTION").toString();
+			ModuleBean moduleBean = null;
+			if(dbSelection.equalsIgnoreCase("MONGODB"))
 			{
-				//Check Module Tutor exists as teacher
-				TeacherConnections teacherConn = new TeacherConnections();
-				TeacherBean moduleTutor = teacherConn.retrieveSingleTeacher(moduleToUpdate.getString("Module_Tutor"));
-				if (moduleTutor != null)
-				{
-					//Update DB
-					moduleConn.updateModule(moduleToUpdate, moduleBean.getModuleCode());
-					LOG.debug("Module successfully added");
-					request.getSession(true).removeAttribute("moduleErrors");
-					request.getSession(true).setAttribute("moduleSuccess", "Details Updated Successfully");
-					//Set session attributes with updated values
-					addUpdatedSessionAttributes(request);
-				}
-				else
-				{
-					LOG.error("Tutor email is not linked to an actual tutor, can not add module with tutor: " + moduleToUpdate.getString("Module_Tutor"));
-					request.getSession(true).removeAttribute("moduleSuccess");
-					request.getSession(true).setAttribute("moduleErrors", "Tutor Email is not linked to a stored teacher");
-				}
+				ModuleConnections moduleConn = new ModuleConnections();
+				moduleBean = moduleConn.retrieveSingleModule(moduleToUpdate.getString("Module_Code"));
+
+			}
+			else if (dbSelection.equalsIgnoreCase("ORACLE"))
+			{
+				oracle.ModuleConnections moduleConn = new oracle.ModuleConnections();
+				moduleBean = moduleConn.retrieveSingleModule(moduleToUpdate.getString("Module_Code"));
 			}
 			else
 			{
-				LOG.error("Course selected does not exist, can not add module without related course");
+				//No DB selection
+				LOG.error("Unknown database choice, returning to DB select page.");
+				redirectToDBSelect(request, response);
+			}
+
+			if (moduleBean != null)
+			{
+				validateCourse(request, moduleToUpdate, moduleBean, dbSelection);
+			}
+			else
+			{
+				//Unable to update as module can't be found in DB
+				LOG.error("Module does not exist in database");
 				request.getSession(true).removeAttribute("moduleSuccess");
-				request.getSession(true).setAttribute("moduleErrors", "Selected Course does not exist in database");
+				request.getSession(true).setAttribute("moduleErrors", "Selected Module was not found in database, unable to update");
+			}
+
+			//Redirect to module edit page regardless of outcome
+			try
+			{
+				response.sendRedirect(request.getContextPath() + "/jsp/modules/moduleedit.jsp");
+			}
+			catch (IOException e)
+			{
+				LOG.error("Unable to redirect back to Edit Course page after course update failure.", e);
 			}
 		}
 		else
 		{
-			//Unable to update as module can't be found in DB
-			LOG.error("Module does not exist in database");
-			request.getSession(true).removeAttribute("moduleSuccess");
-			request.getSession(true).setAttribute("moduleErrors", "Selected Module was not found in database, unable to update");
+			LOG.error("No DB selected");
+			redirectToDBSelect(request, response);
+		}
+	}
+
+	private void validateCourse(HttpServletRequest request, Document moduleToUpdate, ModuleBean moduleBean, String dbSelection)
+	{
+		//Check relatedCourse exists
+		CourseBean courseBean = null;
+		if(dbSelection.equalsIgnoreCase("MONGODB"))
+		{
+			CourseConnections courseConn = new CourseConnections();
+			courseBean = courseConn.retrieveSingleCourse(moduleToUpdate.getString("Related_Course"));
+		}
+		else if (dbSelection.equalsIgnoreCase("ORACLE"))
+		{
+			oracle.CourseConnections courseConn = new oracle.CourseConnections();
+			courseBean = courseConn.retrieveSingleCourse(moduleToUpdate.getString("Related_Course"));
 		}
 
-		//Redirect to module edit page regardless of outcome
-		try
+		if (courseBean != null)
 		{
-			response.sendRedirect(request.getContextPath() + "/jsp/modules/moduleedit.jsp");
+			//Check Module Tutor exists as teacher
+			validateTeacher(request, moduleToUpdate, moduleBean, dbSelection);
 		}
-		catch (IOException e)
+		else
 		{
-			LOG.error("Unable to redirect back to Edit Course page after course update failure.",e);
+			LOG.error("Course selected does not exist, can not add module without related course");
+			request.getSession(true).removeAttribute("moduleSuccess");
+			request.getSession(true).setAttribute("moduleErrors", "Selected Course does not exist in database");
+		}
+	}
+
+	private void validateTeacher(HttpServletRequest request, Document moduleToUpdate, ModuleBean moduleBean, String dbSelection)
+	{
+		TeacherBean moduleTutor = null;
+		if(dbSelection.equalsIgnoreCase("MONGODB"))
+		{
+			TeacherConnections teacherConn = new TeacherConnections();
+			moduleTutor = teacherConn.retrieveSingleTeacher(moduleToUpdate.getString("Module_Tutor"));
+		}
+		else if (dbSelection.equalsIgnoreCase("ORACLE"))
+		{
+			oracle.TeacherConnections teacherConn = new oracle.TeacherConnections();
+			moduleTutor = teacherConn.retrieveSingleTeacher(moduleToUpdate.getString("Module_Tutor"));
+		}
+
+		if (moduleTutor != null)
+		{
+			//Update DB
+			if(dbSelection.equalsIgnoreCase("MONGODB"))
+			{
+				ModuleConnections moduleConn = new ModuleConnections();
+				moduleConn.updateModule(moduleToUpdate, moduleBean.getModuleCode());
+			}
+			else if (dbSelection.equalsIgnoreCase("ORACLE"))
+			{
+				oracle.ModuleConnections moduleConn = new oracle.ModuleConnections();
+				moduleConn.updateModule(moduleToUpdate, moduleBean.getModuleCode());
+			}
+			LOG.debug("Module successfully added");
+			request.getSession(true).removeAttribute("moduleErrors");
+			request.getSession(true).setAttribute("moduleSuccess", "Details Updated Successfully");
+			//Set session attributes with updated values
+			addUpdatedSessionAttributes(request);
+		}
+		else
+		{
+			LOG.error("Tutor email is not linked to an actual tutor, can not add module with tutor: " + moduleToUpdate.getString("Module_Tutor"));
+			request.getSession(true).removeAttribute("moduleSuccess");
+			request.getSession(true).setAttribute("moduleErrors", "Tutor Email is not linked to a stored teacher");
 		}
 	}
 
@@ -110,5 +175,15 @@ public class ModuleUpdate extends HttpServlet
 		}
 		request.getSession(true).setAttribute("moduleStart", request.getParameter("moduleStart"));
 		request.getSession(true).setAttribute("moduleEnd", request.getParameter("moduleEnd"));
+	}
+
+	private void redirectToDBSelect(HttpServletRequest request, HttpServletResponse response)
+	{
+		try
+		{
+			response.sendRedirect(request.getContextPath() + "/jsp/databaseselection.jsp");
+		} catch (IOException e) {
+			LOG.error("Failure to redirect after Teacher Login failure", e);
+		}
 	}
 }

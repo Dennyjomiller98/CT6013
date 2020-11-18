@@ -1,5 +1,5 @@
 <%@ page import="mongodb.CourseConnections" %>
-<%@ page import="mongodbbeans.CourseBean" %>
+<%@ page import="beans.CourseBean" %>
 <%@ page import="java.util.List" %>
 <%--
   Created by IntelliJ IDEA.

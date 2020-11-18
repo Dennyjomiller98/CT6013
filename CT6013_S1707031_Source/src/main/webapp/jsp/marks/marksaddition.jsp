@@ -1,7 +1,7 @@
-<%@ page import="mongodbbeans.ModuleBean" %>
+<%@ page import="beans.ModuleBean" %>
 <%@ page import="java.util.List" %>
-<%@ page import="mongodbbeans.EnrollmentBean" %>
-<%@ page import="mongodbbeans.MarkBean" %><%--
+<%@ page import="beans.EnrollmentBean" %>
+<%@ page import="beans.MarkBean" %><%--
   Created by IntelliJ IDEA.
   User: Denny-Jo
   Date: 15/11/2020

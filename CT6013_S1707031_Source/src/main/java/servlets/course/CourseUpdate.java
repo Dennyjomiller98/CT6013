@@ -7,8 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import mongodb.CourseConnections;
 import mongodb.TeacherConnections;
-import mongodbbeans.CourseBean;
-import mongodbbeans.TeacherBean;
+import beans.CourseBean;
+import beans.TeacherBean;
 import org.apache.log4j.Logger;
 import org.bson.Document;
 
@@ -21,27 +21,85 @@ public class CourseUpdate extends HttpServlet
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 	{
 		//Get Form Submission
-		Document courseToUpdate = new Document();
-		courseToUpdate.append("Course_Code", request.getParameter("courseCode"));
-		courseToUpdate.append("Course_Name", request.getParameter("courseName"));
-		courseToUpdate.append("Course_Tutor", request.getParameter("courseTutor"));
-		courseToUpdate.append("Course_Start", request.getParameter("courseStart"));
-		courseToUpdate.append("Course_End", request.getParameter("courseEnd"));
+		if(request.getSession(true).getAttribute("DBSELECTION") != null)
+		{
+			String dbSelection = request.getSession(true).getAttribute("DBSELECTION").toString();
 
-		//Connect to DB and Store updated values
-		CourseConnections courseConn = new CourseConnections();
+			Document courseToUpdate = new Document();
+			courseToUpdate.append("Course_Code", request.getParameter("courseCode"));
+			courseToUpdate.append("Course_Name", request.getParameter("courseName"));
+			courseToUpdate.append("Course_Tutor", request.getParameter("courseTutor"));
+			courseToUpdate.append("Course_Start", request.getParameter("courseStart"));
+			courseToUpdate.append("Course_End", request.getParameter("courseEnd"));
 
-		//Check course still exists.
-		CourseBean courseBean = courseConn.retrieveSingleCourse(courseToUpdate.getString("Course_Code"));
-		if(courseBean != null)
+			//Connect to DB and Store updated values
+			//Check course still exists.
+			CourseBean courseBean = null;
+			if(dbSelection.equalsIgnoreCase("MONGODB"))
+			{
+				CourseConnections courseConn = new CourseConnections();
+				courseBean = courseConn.retrieveSingleCourse(courseToUpdate.getString("Course_Code"));
+			}
+			else if (dbSelection.equalsIgnoreCase("ORACLE"))
+			{
+				oracle.CourseConnections courseConnections = new oracle.CourseConnections();
+				courseBean = courseConnections.retrieveSingleCourse(courseToUpdate.getString("Course_Code"));
+			}
+			else
+			{
+				//No DB selection
+				LOG.error("Unknown database choice, returning to DB select page.");
+				redirectToDBSelect(request, response);
+			}
+
+			updateCourseAfterValidation(request, dbSelection, courseToUpdate, courseBean);
+
+			//Return to Course Edit page regardless of outcome, required attributes are already set.
+			try
+			{
+				response.sendRedirect(request.getContextPath() + "/jsp/courses/courseedit.jsp");
+			}
+			catch (IOException e)
+			{
+				LOG.error("Unable to redirect back to Edit Course page after course update failure.", e);
+			}
+		}
+		else
+		{
+			LOG.error("No DB selected");
+			redirectToDBSelect(request, response);
+		}
+	}
+
+	private void updateCourseAfterValidation(HttpServletRequest request, String dbSelection, Document courseToUpdate, CourseBean courseBean)
+	{
+		if (courseBean != null)
 		{
 			//Assert Tutor stored actually exists
-			TeacherConnections teacherConn = new TeacherConnections();
-			TeacherBean existingTeacher = teacherConn.retrieveSingleTeacher(courseToUpdate.getString("Course_Tutor"));
+			TeacherBean existingTeacher = null;
+			if(dbSelection.equalsIgnoreCase("MONGODB"))
+			{
+				TeacherConnections teacherConn = new TeacherConnections();
+				existingTeacher = teacherConn.retrieveSingleTeacher(courseToUpdate.getString("Course_Tutor"));
+			}
+			else if (dbSelection.equalsIgnoreCase("ORACLE"))
+			{
+				oracle.TeacherConnections teacherConn = new oracle.TeacherConnections();
+				existingTeacher = teacherConn.retrieveSingleTeacher(courseToUpdate.getString("Course_Tutor"));
+			}
 			if (existingTeacher != null)
 			{
 				//Update DB
-				courseConn.updateCourse(courseToUpdate, courseBean.getCourseCode());
+				if(dbSelection.equalsIgnoreCase("MONGODB"))
+				{
+					CourseConnections courseConn = new CourseConnections();
+					courseConn.updateCourse(courseToUpdate, courseBean.getCourseCode());
+				}
+				else if (dbSelection.equalsIgnoreCase("ORACLE"))
+				{
+					oracle.CourseConnections courseConn = new oracle.CourseConnections();
+					courseConn.updateCourse(courseToUpdate, courseBean.getCourseCode());
+				}
 				LOG.debug("Course Update completed successfully");
 				request.getSession(true).removeAttribute("courseErrors");
 				request.getSession(true).setAttribute("courseSuccess", "Details Updated Successfully.");
@@ -55,16 +113,6 @@ public class CourseUpdate extends HttpServlet
 			request.getSession(true).removeAttribute("courseSuccess");
 			request.getSession(true).setAttribute("courseErrors", "An Error has occurred, the changes were unable to be saved.");
 		}
-
-		//Return to Course Edit page regardless of outcome, required attributes are already set.
-		try
-		{
-			response.sendRedirect(request.getContextPath() + "/jsp/courses/courseedit.jsp");
-		}
-		catch (IOException e)
-		{
-			LOG.error("Unable to redirect back to Edit Course page after course update failure.",e);
-		}
 	}
 
 	private void addUpdatedSessionAttributes(HttpServletRequest request)
@@ -76,5 +124,15 @@ public class CourseUpdate extends HttpServlet
 		request.getSession(true).setAttribute("courseStart", request.getParameter("courseStart"));
 		request.getSession(true).setAttribute("courseEnd", request.getParameter("courseEnd"));
 
+	}
+
+	private void redirectToDBSelect(HttpServletRequest request, HttpServletResponse response)
+	{
+		try
+		{
+			response.sendRedirect(request.getContextPath() + "/jsp/databaseselection.jsp");
+		} catch (IOException e) {
+			LOG.error("Failure to redirect after Course update failure", e);
+		}
 	}
 }

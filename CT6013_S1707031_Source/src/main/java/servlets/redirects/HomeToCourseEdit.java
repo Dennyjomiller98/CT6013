@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import mongodb.CourseConnections;
-import mongodbbeans.CourseBean;
+import beans.CourseBean;
 import org.apache.log4j.Logger;
 
 @WebServlet(name = "homeToCourseEdit")

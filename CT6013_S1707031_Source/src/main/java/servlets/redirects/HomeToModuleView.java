@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import mongodb.ModuleConnections;
-import mongodbbeans.ModuleBean;
+import beans.ModuleBean;
 import org.apache.log4j.Logger;
 
 @WebServlet(name = "homeToModuleView")

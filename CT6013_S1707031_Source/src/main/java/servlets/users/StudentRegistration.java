@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import mongodb.StudentConnections;
-import mongodbbeans.StudentBean;
+import beans.StudentBean;
 import org.apache.log4j.Logger;
 import org.bson.Document;
 
@@ -18,17 +18,76 @@ public class StudentRegistration extends HttpServlet
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) {
         //Retrieve form values for Student
-        Document studentToRegister = new Document();
-        studentToRegister.append("First_Name", request.getParameter("firstname"));
-        studentToRegister.append("Surname", request.getParameter("surname"));
-        studentToRegister.append("Email", request.getParameter("email"));
-        studentToRegister.append("DOB", request.getParameter("dob"));
-        String fullAddress = request.getParameter("address1") + "," + request.getParameter("address2") + "," + request.getParameter("city") + "," + request.getParameter("postcode");
-        studentToRegister.append("Address", fullAddress);
-        studentToRegister.append("Password", request.getParameter("pword"));
-        studentToRegister.append("Is_Enrolled", "false");
-        studentToRegister.append("Is_Teacher", "false");
+        if(request.getSession(true).getAttribute("DBSELECTION") != null)
+        {
+            String dbSelection = request.getSession(true).getAttribute("DBSELECTION").toString();
+            Document studentToRegister = new Document();
+            studentToRegister.append("First_Name", request.getParameter("firstname"));
+            studentToRegister.append("Surname", request.getParameter("surname"));
+            studentToRegister.append("Email", request.getParameter("email"));
+            studentToRegister.append("DOB", request.getParameter("dob"));
+            String fullAddress = request.getParameter("address1") + "," + request.getParameter("address2") + "," + request.getParameter("city") + "," + request.getParameter("postcode");
+            studentToRegister.append("Address", fullAddress);
+            studentToRegister.append("Password", request.getParameter("pword"));
+            studentToRegister.append("Is_Enrolled", "false");
+            studentToRegister.append("Is_Teacher", "false");
 
+            if(dbSelection.equalsIgnoreCase("MONGODB"))
+            {
+                //MongoDB Selection
+                mongoRegisterStudent(request, response, studentToRegister);
+            }
+            else if (dbSelection.equalsIgnoreCase("ORACLE"))
+            {
+                //Oracle DB
+                oracleRegisterStudent(request, response, studentToRegister);
+            }
+            else
+            {
+                //No DB selection
+                LOG.error("Unknown database choice, returning to DB select page.");
+                redirectToDBSelect(request, response);
+            }
+        }
+        else
+        {
+            //No attribute found, go back to DB Select page
+            LOG.error("Unknown database choice, returning to DB select page.");
+            redirectToDBSelect(request, response);
+        }
+    }
+
+    private void oracleRegisterStudent(HttpServletRequest request, HttpServletResponse response, Document studentToRegister)
+    {
+        //Access Oracle Connection and add student to DB
+        LOG.debug("Oracle connection for student creation");
+        oracle.StudentConnections conn = new oracle.StudentConnections();
+        StudentBean email = conn.retrieveSingleStudent(studentToRegister.getString("Email"));
+        if (email == null)
+        {
+            //Add Student
+            conn.registerStudentToDB(studentToRegister);
+            request.getSession(true).removeAttribute("registrationErrors");
+            redirectMe(request, response);
+        }
+        else
+        {
+            //Reg failure, student exists
+            LOG.debug("Student already exists: " + studentToRegister.getString("Email"));
+            request.getSession(true).setAttribute("registrationErrors", "Unable to register student, the email already exists.");
+            try
+            {
+                response.sendRedirect(request.getContextPath() + "/jsp/students/studentregistration.jsp");
+            }
+            catch (IOException e)
+            {
+                LOG.error("Unable to redirect after Student Registration Failure", e);
+            }
+        }
+    }
+
+    private void mongoRegisterStudent(HttpServletRequest request, HttpServletResponse response, Document studentToRegister)
+    {
         StudentConnections studentConn = new StudentConnections();
 
         //Check student is not already registered.
@@ -63,6 +122,16 @@ public class StudentRegistration extends HttpServlet
             response.sendRedirect(request.getContextPath() + "/jsp/students/studentlogin.jsp");
         } catch (IOException e) {
             LOG.error("Failure to redirect after student successfully registered", e);
+        }
+    }
+
+    private void redirectToDBSelect(HttpServletRequest request, HttpServletResponse response)
+    {
+        try
+        {
+            response.sendRedirect(request.getContextPath() + "/jsp/databaseselection.jsp");
+        } catch (IOException e) {
+            LOG.error("Failure to redirect after student register failure", e);
         }
     }
 }

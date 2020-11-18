@@ -6,7 +6,7 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import java.util.ArrayList;
 import java.util.List;
-import mongodbbeans.EnrollmentBean;
+import beans.EnrollmentBean;
 import org.bson.Document;
 
 public class EnrollmentConnections extends AbstractMongoDBConnections
