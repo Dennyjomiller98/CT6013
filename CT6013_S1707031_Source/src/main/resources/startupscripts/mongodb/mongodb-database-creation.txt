@@ -1,5 +1,38 @@
 db=db.getSiblingDB('db_ct6013_s1707031');
-cust1 = {"First_Name":"test", "Surname":"test2", "Email":"test@test.com", "Password":"pword"};
-db.students.insert(cust1);
-cursor = db.students.find();
-cursor.forEach(printjson);
+db.students.drop();
+db.getCollection("students");
+student1 = {"First_Name":"Student", "Surname":"StudentSurname", "Email":"Student@Student.com", "DOB":"1998-12-12", "Address":"AddressLine1,Line2,city,postcode", "Password":"ŽÞAæÃ$åó%pÄ¼a", "Is_Enrolled":"false", "Is_Teacher":"false"}
+student2 = {"First_Name":"EnrolledStudent", "Surname":"EnrolledStudentSurname", "Email":"Enrolled@Enrolled.com", "DOB":"1998-10-10", "Address":"AddressLine1,Line2,city,postcode", "Password":"ŽÞAæÃ$åó%pÄ¼a", "Is_Enrolled":"true", "Is_Teacher":"false"}
+db.students.insert(student1);
+db.students.insert(student2);
+
+db.teachers.drop();
+db.getCollection("teachers");
+teacher1 = {"First_Name":"Teacher", "Surname":"TeacherSurname", "Email":"Teacher@Teacher.com", "DOB":"1998-11-11", "Address":"AddressLine1,Line2,city,postcode", "Password":"UàW8±°ó%pÄ¼a", "Is_Enrolled":"false", "Is_Teacher":"true"}
+db.teachers.insert(teacher1);
+
+db.courses.drop();
+db.getCollection("courses");
+course1 = {"Course_Code":"BscCom", "Course_Name":"Computing", "Course_Tutor":"Teacher@Teacher.com", "Course_Start":"2018-11-11", "Course_End":"2021-11-11"}
+db.courses.insert(course1);
+
+db.marks.drop();
+db.getCollection("marks");
+marks1 = {"Module_Code":"CT6013", "Student_Email":"Enrolled@Enrolled.com", "Marker_Email":"Teacher@Teacher.com", "Final_Mark":"40"}
+db.marks.insert(marks1);
+
+db.modules.drop();
+db.getCollection("modules");
+module1 = {"Module_Code":"CT6013", "Module_Name":"Advanced Databases", "Module_Tutor":"Teacher@Teacher.com", "Related_Course":"BscCom", "Semester":"-1", "Module_Start":"2018-11-11", "Module_End":"2019-11-11", "Is_Compulsory":"true"}
+module2 = {"Module_Code":"CT6042", "Module_Name":"Secure Coding", "Module_Tutor":"Teacher@Teacher.com", "Related_Course":"BscCom", "Semester":"-1", "Module_Start":"2018-11-11", "Module_End":"2019-11-11", "Is_Compulsory":"true"}
+module3 = {"Module_Code":"CT6038", "Module_Name":"Dissertation", "Module_Tutor":"Teacher@Teacher.com", "Related_Course":"BscCom", "Semester":"-1", "Module_Start":"2018-11-11", "Module_End":"2019-11-11", "Is_Compulsory":"false"}
+module4 = {"Module_Code":"CT6028", "Module_Name":"Agile Methods", "Module_Tutor":"Teacher@Teacher.com", "Related_Course":"BscCom", "Semester":"-1", "Module_Start":"2018-11-11", "Module_End":"2019-11-11", "Is_Compulsory":"false"}
+db.modules.insert(module1);
+db.modules.insert(module2);
+db.modules.insert(module3);
+db.modules.insert(module4);
+
+db.enrollments.drop();
+db.getCollection("enrollments");
+enrollment1 = {"Student_Email":"Enrolled@Enrolled.com", "Course_Code":"BscCom", "Module_Selections":"CT6013,CT6028,CT6042,CT6038"}
+db.enrollments.insert(enrollment1);
