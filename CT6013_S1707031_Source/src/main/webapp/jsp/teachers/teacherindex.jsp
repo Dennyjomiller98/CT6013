@@ -71,11 +71,11 @@
                 if(session.getAttribute("email") != null){
                     email = session.getAttribute("email").toString();
                 }%>
-            <a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToCourseAddition>&nbsp;Add Courses&nbsp;</a>
-            <a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToCourseEnrollmentView>&nbsp;View and Edit Courses&nbsp;</a>
-            <a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToModuleAddition>&nbsp;Add Modules&nbsp;</a>
-            <a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToModuleView>&nbsp;View and Edit Modules&nbsp;</a>
-            <a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToMarksAddition?email=<%=email%>>&nbsp;Add Assignment Marks&nbsp;</a>
+            <a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToCourseAddition>&nbsp;Add Courses&nbsp;</a> <br/>
+            <a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToCourseEnrollmentView>&nbsp;View and Edit Courses&nbsp;</a> <br/>
+            <a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToModuleAddition>&nbsp;Add Modules&nbsp;</a> <br/>
+            <a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToModuleView>&nbsp;View and Edit Modules&nbsp;</a> <br/>
+            <a class="bodyA" href=${pageContext.request.contextPath}/servlets/redirects/HomeToMarksAddition?email=<%=email%>>&nbsp;Add Assignment Marks&nbsp;</a> <br/>
             <%} else {
                 if(email != null){ %>
                     <p>
