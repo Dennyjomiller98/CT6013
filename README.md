@@ -15,8 +15,12 @@ For Teacher Access, one is created upon startup. Both databases have the same cr
 Email: Teacher@teacher.com <br/>
 Password: Teacher123 <br/><br/>
 
-A Student has also been created: <br/>
+Two Students have also been created: <br/>
 Email: Student@student.com <br/>
+Password: Student123 <br/><br/>
+
+and: <br/>
+Email: Enrolled@Enrolled.com <br/>
 Password: Student123 <br/><br/>
 
 Students can register from the start, but only teachers have access to register new teachers (to prevent students gaining teacher prvivileges). <br/><br/>
