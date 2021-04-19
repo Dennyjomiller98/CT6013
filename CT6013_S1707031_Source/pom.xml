@@ -55,6 +55,11 @@
             <artifactId>ojdbc7</artifactId>
             <version>12.2.0.1</version>
         </dependency>
+        <dependency>
+            <groupId>com.sun.mail</groupId>
+            <artifactId>javax.mail</artifactId>
+            <version>1.6.2</version>
+        </dependency>
     </dependencies>
 
     <build>

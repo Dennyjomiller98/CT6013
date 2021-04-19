@@ -4,15 +4,96 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
 
-    <!--Database Selection Servlet-->
+    <!--Homepage Selection Servlet-->
     <servlet>
-        <servlet-name>DatabaseSelection</servlet-name>
-        <servlet-class>servlets.DatabaseSelection</servlet-class>
+        <servlet-name>HomepageServlet</servlet-name>
+        <servlet-class>servlets.HomepageServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>DatabaseSelection</servlet-name>
-        <url-pattern>/servlets/DatabaseSelection</url-pattern>
+        <servlet-name>HomepageServlet</servlet-name>
+        <url-pattern>/servlets/HomepageServlet</url-pattern>
     </servlet-mapping>
+
+    <!--ETL Update-->
+    <servlet>
+        <servlet-name>Extract</servlet-name>
+        <servlet-class>servlets.etl.Extract</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Extract</servlet-name>
+        <url-pattern>/servlets/etl/Extract</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>Transform</servlet-name>
+        <servlet-class>servlets.etl.Transform</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Transform</servlet-name>
+        <url-pattern>/servlets/etl/Transform</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>Load</servlet-name>
+        <servlet-class>servlets.etl.Load</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Load</servlet-name>
+        <url-pattern>/servlets/etl/Load</url-pattern>
+    </servlet-mapping>
+
+    <!--Redirects-->
+    <servlet>
+        <servlet-name>redirects</servlet-name>
+        <servlet-class>servlets.redirects.Redirects</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>redirects</servlet-name>
+        <url-pattern>/servlets/redirects/Redirects</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Login</servlet-name>
+        <servlet-class>servlets.Login</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Login</servlet-name>
+        <url-pattern>/servlets/Login</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>Register</servlet-name>
+        <servlet-class>servlets.Register</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Register</servlet-name>
+        <url-pattern>/servlets/Register</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>Logout</servlet-name>
+        <servlet-class>servlets.Logout</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Logout</servlet-name>
+        <url-pattern>/servlets/Logout</url-pattern>
+    </servlet-mapping>
+
+    <!--2FA-->
+    <servlet>
+        <servlet-name>Authentication2Factor</servlet-name>
+        <servlet-class>servlets.Authentication2Factor</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Authentication2Factor</servlet-name>
+        <url-pattern>/servlets/Authentication2Factor</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>AuthenticateLogin</servlet-name>
+        <servlet-class>servlets.AuthenticateLogin</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AuthenticateLogin</servlet-name>
+        <url-pattern>/servlets/AuthenticateLogin</url-pattern>
+    </servlet-mapping>
+
+
 
     <!--Non-DB Specific Servlets-->
     <!--Students-->
@@ -49,7 +130,6 @@
         <url-pattern>/servlets/StudentProfile</url-pattern>
     </servlet-mapping>
 
-
     <!--Teachers-->
     <servlet>
         <servlet-name>teacherRegistration</servlet-name>
@@ -82,274 +162,5 @@
     <servlet-mapping>
         <servlet-name>teacherProfile</servlet-name>
         <url-pattern>/servlets/TeacherProfile</url-pattern>
-    </servlet-mapping>
-
-
-    <!--Course Servlets-->
-    <servlet>
-        <servlet-name>courseEnrollment</servlet-name>
-        <servlet-class>servlets.course.CourseEnrollment</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>courseEnrollment</servlet-name>
-        <url-pattern>/servlets/course/CourseEnrollment</url-pattern>
-    </servlet-mapping>
-    <servlet>
-        <servlet-name>courseEnrollmentView</servlet-name>
-        <servlet-class>servlets.course.CourseView</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>courseEnrollmentView</servlet-name>
-        <url-pattern>/servlets/course/CourseEnrollmentView</url-pattern>
-    </servlet-mapping>
-    <servlet>
-        <servlet-name>courseAddition</servlet-name>
-        <servlet-class>servlets.course.CourseAddition</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>courseAddition</servlet-name>
-        <url-pattern>/servlets/course/CourseAddition</url-pattern>
-    </servlet-mapping>
-    <servlet>
-        <servlet-name>courseUpdate</servlet-name>
-        <servlet-class>servlets.course.CourseUpdate</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>courseUpdate</servlet-name>
-        <url-pattern>/servlets/course/CourseUpdate</url-pattern>
-    </servlet-mapping>
-
-
-    <!--Module Servlets-->
-    <servlet>
-        <servlet-name>moduleUpdate</servlet-name>
-        <servlet-class>servlets.module.ModuleUpdate</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>moduleUpdate</servlet-name>
-        <url-pattern>/servlets/module/ModuleUpdate</url-pattern>
-    </servlet-mapping>
-    <servlet>
-        <servlet-name>moduleView</servlet-name>
-        <servlet-class>servlets.module.ModuleView</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>moduleView</servlet-name>
-        <url-pattern>/servlets/module/ModuleView</url-pattern>
-    </servlet-mapping>
-    <servlet>
-        <servlet-name>moduleAddition</servlet-name>
-        <servlet-class>servlets.module.ModuleAddition</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>moduleAddition</servlet-name>
-        <url-pattern>/servlets/module/ModuleAddition</url-pattern>
-    </servlet-mapping>
-
-
-    <!--Marks Servlets-->
-    <servlet>
-        <servlet-name>markAddition</servlet-name>
-        <servlet-class>servlets.mark.MarkAddition</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>markAddition</servlet-name>
-        <url-pattern>/servlets/mark/MarkAddition</url-pattern>
-    </servlet-mapping>
-    <servlet>
-        <servlet-name>markView</servlet-name>
-        <servlet-class>servlets.mark.MarkView</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>markView</servlet-name>
-        <url-pattern>/servlets/mark/MarkView</url-pattern>
-    </servlet-mapping>
-
-    <!--Enrollment Servlets-->
-    <servlet>
-        <servlet-name>enrollmentCourseView</servlet-name>
-        <servlet-class>servlets.enrollment.EnrollmentCourseView</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>enrollmentCourseView</servlet-name>
-        <url-pattern>/servlets/enrollment/EnrollmentCourseView</url-pattern>
-    </servlet-mapping>
-
-    <!--Redirects-->
-    <servlet>
-        <servlet-name>homeToStudentLogin</servlet-name>
-        <servlet-class>servlets.redirects.HomeToStudentLogin</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>homeToStudentLogin</servlet-name>
-        <url-pattern>/servlets/redirects/HomeToStudentLogin</url-pattern>
-    </servlet-mapping>
-    <servlet>
-        <servlet-name>homeToStudentRegistration</servlet-name>
-        <servlet-class>servlets.redirects.HomeToStudentRegistration</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>homeToStudentRegistration</servlet-name>
-        <url-pattern>/servlets/redirects/HomeToStudentRegistration</url-pattern>
-    </servlet-mapping>
-    <servlet>
-        <servlet-name>homeToTeacherLogin</servlet-name>
-        <servlet-class>servlets.redirects.HomeToTeacherLogin</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>homeToTeacherLogin</servlet-name>
-        <url-pattern>/servlets/redirects/HomeToTeacherLogin</url-pattern>
-    </servlet-mapping>
-    <servlet>
-        <servlet-name>homeToTeacherRegistration</servlet-name>
-        <servlet-class>servlets.redirects.HomeToTeacherRegistration</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>homeToTeacherRegistration</servlet-name>
-        <url-pattern>/servlets/redirects/HomeToTeacherRegistration</url-pattern>
-    </servlet-mapping>
-    <servlet>
-        <servlet-name>homeToStudentProfile</servlet-name>
-        <servlet-class>servlets.redirects.HomeToStudentProfile</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>homeToStudentProfile</servlet-name>
-        <url-pattern>/servlets/redirects/HomeToStudentProfile</url-pattern>
-    </servlet-mapping>
-    <servlet>
-        <servlet-name>homeToTeacherProfile</servlet-name>
-        <servlet-class>servlets.redirects.HomeToTeacherProfile</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>homeToTeacherProfile</servlet-name>
-        <url-pattern>/servlets/redirects/HomeToTeacherProfile</url-pattern>
-    </servlet-mapping>
-    <servlet>
-        <servlet-name>homeToTeacherIndex</servlet-name>
-        <servlet-class>servlets.redirects.HomeToTeacherIndex</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>homeToTeacherIndex</servlet-name>
-        <url-pattern>/servlets/redirects/HomeToTeacherIndex</url-pattern>
-    </servlet-mapping>
-    <servlet>
-        <servlet-name>homeToStudentIndex</servlet-name>
-        <servlet-class>servlets.redirects.HomeToStudentIndex</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>homeToStudentIndex</servlet-name>
-        <url-pattern>/servlets/redirects/HomeToStudentIndex</url-pattern>
-    </servlet-mapping>
-    <servlet>
-        <servlet-name>homeToCourseEnrollment</servlet-name>
-        <servlet-class>servlets.redirects.HomeToCourseEnrollment</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>homeToCourseEnrollment</servlet-name>
-        <url-pattern>/servlets/redirects/HomeToCourseEnrollment</url-pattern>
-    </servlet-mapping>
-    <servlet>
-        <servlet-name>homeToCourseEnrollmentView</servlet-name>
-        <servlet-class>servlets.redirects.HomeToCourseEnrollmentView</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>homeToCourseEnrollmentView</servlet-name>
-        <url-pattern>/servlets/redirects/HomeToCourseEnrollmentView</url-pattern>
-    </servlet-mapping>
-    <servlet>
-        <servlet-name>homeToModuleAddition</servlet-name>
-        <servlet-class>servlets.redirects.HomeToModuleAddition</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>homeToModuleAddition</servlet-name>
-        <url-pattern>/servlets/redirects/HomeToModuleAddition</url-pattern>
-    </servlet-mapping>
-    <servlet>
-        <servlet-name>homeToModuleView</servlet-name>
-        <servlet-class>servlets.redirects.HomeToModuleView</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>homeToModuleView</servlet-name>
-        <url-pattern>/servlets/redirects/HomeToModuleView</url-pattern>
-    </servlet-mapping>
-    <servlet>
-        <servlet-name>homeToModuleUpdate</servlet-name>
-        <servlet-class>servlets.redirects.HomeToModuleUpdate</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>homeToModuleUpdate</servlet-name>
-        <url-pattern>/servlets/redirects/HomeToModuleUpdate</url-pattern>
-    </servlet-mapping>
-    <servlet>
-        <servlet-name>homeToDatabaseLogout</servlet-name>
-        <servlet-class>servlets.redirects.HomeToDatabaseLogout</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>homeToDatabaseLogout</servlet-name>
-        <url-pattern>/servlets/redirects/HomeToDatabaseLogout</url-pattern>
-    </servlet-mapping>
-    <servlet>
-        <servlet-name>homeToCourseEdit</servlet-name>
-        <servlet-class>servlets.redirects.HomeToCourseEdit</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>homeToCourseEdit</servlet-name>
-        <url-pattern>/servlets/redirects/HomeToCourseEdit</url-pattern>
-    </servlet-mapping>
-    <servlet>
-        <servlet-name>homeToCourseAddition</servlet-name>
-        <servlet-class>servlets.redirects.HomeToCourseAddition</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>homeToCourseAddition</servlet-name>
-        <url-pattern>/servlets/redirects/HomeToCourseAddition</url-pattern>
-    </servlet-mapping>
-    <servlet>
-        <servlet-name>homeToMarksView</servlet-name>
-        <servlet-class>servlets.redirects.HomeToMarksView</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>homeToMarksView</servlet-name>
-        <url-pattern>/servlets/redirects/HomeToMarksView</url-pattern>
-    </servlet-mapping>
-    <servlet>
-        <servlet-name>homeToMarksAddition</servlet-name>
-        <servlet-class>servlets.redirects.HomeToMarksAddition</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>homeToMarksAddition</servlet-name>
-        <url-pattern>/servlets/redirects/HomeToMarksAddition</url-pattern>
-    </servlet-mapping>
-    <servlet>
-        <servlet-name>homeToDeleteStudent</servlet-name>
-        <servlet-class>servlets.redirects.HomeToDeleteStudent</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>homeToDeleteStudent</servlet-name>
-        <url-pattern>/servlets/redirects/HomeToDeleteStudent</url-pattern>
-    </servlet-mapping>
-    <servlet>
-        <servlet-name>homeToDeleteTeacher</servlet-name>
-        <servlet-class>servlets.redirects.HomeToDeleteTeacher</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>homeToDeleteTeacher</servlet-name>
-        <url-pattern>/servlets/redirects/HomeToDeleteTeacher</url-pattern>
-    </servlet-mapping>
-    <servlet>
-        <servlet-name>homeToDeleteModule</servlet-name>
-        <servlet-class>servlets.redirects.HomeToDeleteModule</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>homeToDeleteModule</servlet-name>
-        <url-pattern>/servlets/redirects/HomeToDeleteModule</url-pattern>
-    </servlet-mapping>
-    <servlet>
-        <servlet-name>homeToDeleteCourse</servlet-name>
-        <servlet-class>servlets.redirects.HomeToDeleteCourse</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>homeToDeleteCourse</servlet-name>
-        <url-pattern>/servlets/redirects/HomeToDeleteCourse</url-pattern>
     </servlet-mapping>
 </web-app>

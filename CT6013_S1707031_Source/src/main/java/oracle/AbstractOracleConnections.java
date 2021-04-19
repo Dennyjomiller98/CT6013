@@ -13,13 +13,13 @@ public class AbstractOracleConnections implements IOracleConnections
 	public static final String ORACLE_DRIVER = "oracle.jdbc.driver.OracleDriver";
 	public static final String ORACLE_DRIVER_URL = "jdbc:oracle:thin:@//oracle.glos.ac.uk:1521/orclpdb.chelt.local";
 	public static final String ORACLE_PASSWORD = "ct6013s1707031";
+	public static final String ORACLE_DW_USERNAME = "s1707031_DW";
+	public static final String ORACLE_DW_PASSWORD = "s1707031_DW!";
 
 	public static final String STUDENTS_COLLECTION = "students";
-	public static final String TEACHERS_COLLECTION = "teachers";
-	public static final String COURSES_COLLECTION = "courses";
-	public static final String MODULES_COLLECTION = "modules";
-	public static final String MARKS_COLLECTION = "marks";
-	public static final String ENROLLMENTS_COLLECTION = "enrollments";
+
+	public static final String AUTH_COLLECTION = "dw_auth";
+	public static final String USERS_COLLECTION = "dw_users";
 	private Connection oracleClient;
 
 	protected AbstractOracleConnections()
@@ -31,6 +31,24 @@ public class AbstractOracleConnections implements IOracleConnections
 	{
 		init();
 		return oracleClient;
+	}
+
+	public Connection getDWClient()
+	{
+		initDW();
+		return oracleClient;
+	}
+
+	public void initDW()
+	{
+		try
+		{
+			oracleClient = DriverManager.getConnection(ORACLE_DRIVER_URL, ORACLE_DW_USERNAME, ORACLE_DW_PASSWORD);
+		}
+		catch (SQLException throwables)
+		{
+			LOG.error(throwables);
+		}
 	}
 
 	public void init()
