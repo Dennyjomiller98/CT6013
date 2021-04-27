@@ -55,9 +55,14 @@ public class UserConnections extends AbstractOracleConnections
 		List<UserBean> userBeans = retrieveAllUsers();
 		for (UserBean userBean : userBeans)
 		{
-			if(userBean.getUsername().equalsIgnoreCase(username) && hasher.decrypt(userBean.getPword()).equals(pword))
+			//TODO - remove (should check DB reg values)
+			String encrypt = hasher.encrypt(pword);
+			if(hasher.encrypt(pword).equals(encrypt))
 			{
-				beanToReturn = userBean;
+				if(userBean.getUsername().equalsIgnoreCase(username) && userBean.getPword().equals(hasher.encrypt(pword)))
+				{
+					beanToReturn = userBean;
+				}
 			}
 		}
 		return beanToReturn;
