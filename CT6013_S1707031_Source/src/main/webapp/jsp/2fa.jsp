@@ -23,6 +23,11 @@
             <div class="topnavdiv"></div>
         </div>
 
+        <% String errors = (String) session.getAttribute("errors");
+            if(errors != null) { %>
+        <div class="alert alert-danger myalert" role="alert" id="formErrors"><%=errors%></div>
+        <%}%>
+
         <%  String email = null;
             if(session.getAttribute("email") != null)
             {
@@ -39,8 +44,6 @@
                 You should have just received an email containing your secure authentication pin. Enter the code below to gain access. <br/><br/>
                 If you do not receive your authentication pin within a few minutes, <strong><a href=${pageContext.request.contextPath}/servlets/Authentication2Factor?user=<%=email%>>&nbsp;request a new pin here.&nbsp;</a></strong>
             </p>
-
-
 
             <form action="${pageContext.request.contextPath}/servlets/AuthenticateLogin" method="GET">
                 <label for="email"></label>

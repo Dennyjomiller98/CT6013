@@ -8,7 +8,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import javax.servlet.http.HttpServletRequest;
 
 public class UserConnections extends AbstractOracleConnections
 {
@@ -17,14 +16,13 @@ public class UserConnections extends AbstractOracleConnections
 		//Empty Constructor
 	}
 
-	public UserBean retrieveSingleUser(String username, String pword, HttpServletRequest request)
+	public UserBean retrieveSingleUser(String username, String pword)
 	{
 		PasswordHasher hasher = new PasswordHasher();
 		UserBean beanToReturn = null;
 		List<UserBean> userBeans = retrieveAllUsers();
 		for (UserBean userBean : userBeans)
 		{
-			request.getSession(true).setAttribute("errors", "Pword:" + userBean.getPword() + " and hashed pword given: " + hasher.encrypt(pword));
 			if(userBean.getUsername().equalsIgnoreCase(username) && userBean.getPword().equals(hasher.encrypt(pword)))
 			{
 				beanToReturn = userBean;
@@ -100,31 +98,18 @@ public class UserConnections extends AbstractOracleConnections
 		oracleClient.close();
 	}
 
-	public boolean attemptLogin(UserBean userBean, HttpServletRequest request)
+	public boolean attemptLogin(UserBean userBean)
 	{
 		LOG.debug("Attempting User Login Oracle");
 		//Find the associated email in DB and check login credentials are correct
 		boolean isCorrectCredentials = false;
 		String email = userBean.getUsername();
 		String password = userBean.getPword();
-		UserBean potentialUser = retrieveSingleUser(email, password, request);
+		UserBean potentialUser = retrieveSingleUser(email, password);
 		if(potentialUser != null)
 		{
 			isCorrectCredentials = true;
 		}
 		return isCorrectCredentials;
-	}
-
-	private void executeUserUpdateQuery(Connection oracleClient, String query) throws SQLException
-	{
-		try (Statement statement = oracleClient.createStatement())
-		{
-			statement.executeUpdate(query);
-		}
-		catch(Exception e)
-		{
-			LOG.error("Query failure, using query: " + query, e);
-		}
-		oracleClient.close();
 	}
 }

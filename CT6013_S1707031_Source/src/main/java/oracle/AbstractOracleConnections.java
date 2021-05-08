@@ -16,7 +16,7 @@ public class AbstractOracleConnections implements IOracleConnections
 	public static final String ORACLE_DW_USERNAME = "s1707031_DW";
 	public static final String ORACLE_DW_PASSWORD = "s1707031_DW!";
 
-	public static final String STUDENTS_COLLECTION = "students";
+	public static final String TBL_ASSIGNMENTS = "CT6013_ASSIGNMENTS";
 
 	public static final String AUTH_COLLECTION = "dw_auth";
 	public static final String USERS_COLLECTION = "dw_users";

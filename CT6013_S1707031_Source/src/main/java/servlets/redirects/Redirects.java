@@ -21,10 +21,6 @@ public class Redirects extends HttpServlet
 			{
 				response.sendRedirect(request.getContextPath() + "/jsp/login.jsp");
 			}
-			else if(action.equals("register"))
-			{
-				response.sendRedirect(request.getContextPath() + "/jsp/register.jsp");
-			}
 		}
 		catch (IOException e)
 		{

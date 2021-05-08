@@ -40,6 +40,11 @@
             </div>
         </div>
 
+        <% String errors = (String) session.getAttribute("errors");
+            if(errors != null) { %>
+        <div class="alert alert-danger myalert" role="alert" id="formErrors"><%=errors%></div>
+        <%}%>
+
         <div class="mainBody">
             <div id="data-selection">
                 <p>
