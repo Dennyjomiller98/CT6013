@@ -1,16 +1,9 @@
 # CT6013
 CT6013 S1707031 ('main' BRANCH SEMESTER 2)
 
-/* Below information is not relevant for Sem2, as Operational DB should not be able to be altered, only alter it through scripts etc. We want the users to access GUI for Database Warehouse (ETL process takes operational DB data) */
-MongoDB Database Creation Scripts can be found: <b>*SourceCodeDirectory*/src/main/resources/startupscripts/mongodb/</b> <br/>
-Oracle Database Creation Scripts can be found: <b>*SourceCodeDirectory*/src/main/resources/startupscripts/oracle/</b>
+The heroku live deployed Application can be found at: 
+https://s1707031-ct6013.herokuapp.com/jsp/homepage.jsp
 
-<b>NOTE:</b><br>
-Custom Logging is available, and is currently located under your glassfish configuration (domain1 in our example): <br><br>
-<i><b>(glassfish location) \glassfish\domains\domain1\config </b></i><br><br>
-and is located as "logOutput.log" <br><br>
-
-The main page is SNAPSHOTDIR/jsp/databaseselection.jsp (e.g. http://localhost:8080/CT6013_S1707031_Source-1.0-SNAPSHOT/jsp/databaseselection.jsp when running on local glassfish server) <br><br>
-
+Custom User Accounts have been created with seperate roles to imitate a production setup (instead of having the option to register an account, as this type of system would typically not allow new account creation from non-admin authorization).
 
 
