@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 
 public class UserConnections extends AbstractOracleConnections
 {
@@ -16,53 +17,17 @@ public class UserConnections extends AbstractOracleConnections
 		//Empty Constructor
 	}
 
-	public void registerUser(UserBean bean)
-	{
-		LOG.debug("Beginning User Registration");
-		setOracleDriver();
-		try
-		{
-			AbstractOracleConnections conn = new AbstractOracleConnections();
-			Connection oracleClient = conn.getDWClient();
-			if(oracleClient != null)
-			{
-				PasswordHasher hasher = new PasswordHasher();
-				//Add User to DB
-				String values = "'" +bean.getUsername()
-						+ "','" + hasher.encrypt(bean.getPword())
-						+ "','" + bean.getRole() + "'";
-				String query = "INSERT INTO " + USERS_COLLECTION +
-						"(Username, Pword, Role)" + " VALUES (" + values + ")";
-
-				//Execute query
-				executeUserUpdateQuery(oracleClient, query);
-			}
-			else
-			{
-				LOG.error("connection failure");
-			}
-		}
-		catch(Exception e)
-		{
-			LOG.error("Unable to register User to Oracle", e);
-		}
-	}
-
-	public UserBean retrieveSingleUser(String username, String pword)
+	public UserBean retrieveSingleUser(String username, String pword, HttpServletRequest request)
 	{
 		PasswordHasher hasher = new PasswordHasher();
 		UserBean beanToReturn = null;
 		List<UserBean> userBeans = retrieveAllUsers();
 		for (UserBean userBean : userBeans)
 		{
-			//TODO - remove (should check DB reg values)
-			String encrypt = hasher.encrypt(pword);
-			if(hasher.encrypt(pword).equals(encrypt))
+			request.getSession(true).setAttribute("errors", "Pword:" + userBean.getPword() + " and hashed pword given: " + hasher.encrypt(pword));
+			if(userBean.getUsername().equalsIgnoreCase(username) && userBean.getPword().equals(hasher.encrypt(pword)))
 			{
-				if(userBean.getUsername().equalsIgnoreCase(username) && userBean.getPword().equals(hasher.encrypt(pword)))
-				{
-					beanToReturn = userBean;
-				}
+				beanToReturn = userBean;
 			}
 		}
 		return beanToReturn;
@@ -135,14 +100,14 @@ public class UserConnections extends AbstractOracleConnections
 		oracleClient.close();
 	}
 
-	public boolean attemptLogin(UserBean userBean)
+	public boolean attemptLogin(UserBean userBean, HttpServletRequest request)
 	{
 		LOG.debug("Attempting User Login Oracle");
 		//Find the associated email in DB and check login credentials are correct
 		boolean isCorrectCredentials = false;
 		String email = userBean.getUsername();
 		String password = userBean.getPword();
-		UserBean potentialUser = retrieveSingleUser(email, password);
+		UserBean potentialUser = retrieveSingleUser(email, password, request);
 		if(potentialUser != null)
 		{
 			isCorrectCredentials = true;

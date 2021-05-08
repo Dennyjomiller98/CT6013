@@ -22,7 +22,7 @@ public class Login extends HttpServlet
 		userBean.setPword(request.getParameter("pword"));
 
 		//User login
-		boolean userFound = oracleLogin(userBean);
+		boolean userFound = oracleLogin(userBean, request);
 		if(userFound)
 		{
 			String pin = generateAuthentication2FA(userBean);
@@ -33,16 +33,16 @@ public class Login extends HttpServlet
 			request.getSession(true).setAttribute("email", userBean.getUsername());
 			try
 			{
-				request.getSession(true).setAttribute("errors", "Successfull Login - 2FA time");
+				//request.getSession(true).setAttribute("errors", "Successfull Login - 2FA time");
 				response.sendRedirect(request.getContextPath() + "/jsp/2fa.jsp");
 			} catch (IOException e) {
-				request.getSession(true).setAttribute("errors", "excep thrown");
+				//request.getSession(true).setAttribute("errors", "excep thrown");
 				LOG.error("Failure to redirect after 2FA key sent", e);
 			}
 		}
 		else
 		{
-			request.getSession(true).setAttribute("errors", "no user found");
+			//request.getSession(true).setAttribute("errors", "no user found");
 			try
 			{
 				response.sendRedirect(request.getContextPath() + "/jsp/login.jsp");
@@ -60,11 +60,11 @@ public class Login extends HttpServlet
 		return pin;
 	}
 
-	private boolean oracleLogin(UserBean userBean)
+	private boolean oracleLogin(UserBean userBean, HttpServletRequest request)
 	{
 		boolean ret;
 		UserConnections conn = new UserConnections();
-		ret = conn.attemptLogin(userBean);
+		ret = conn.attemptLogin(userBean, request);
 		return ret;
 	}
 }
