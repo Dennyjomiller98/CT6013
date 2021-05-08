@@ -1,0 +1,69 @@
+DROP TABLE students CASCADE CONSTRAINTS;
+CREATE TABLE students(
+    First_Name varchar(25) NOT NULL,
+    Surname varchar(25) NOT NULL,
+    Email varchar2(50) NOT NULL primary key,
+    DOB varchar(25) NOT NULL,
+    Address varchar(255) NOT NULL,
+    Password varchar(25) NOT NULL,
+    Is_Enrolled varchar(10) NOT NULL,
+    Is_Teacher varchar(10) NOT NULL
+);
+INSERT INTO students(First_Name, Surname, Email, DOB, Address, Password, Is_Enrolled, Is_Teacher) VALUES ('Student', 'StudentSurname', 'Student@student.com', '1998-12-12', 'AddressLine1,Line2,city,postcode','ŽÞAæÃ$åó%pÄ¼a', 'false', 'false');
+INSERT INTO students(First_Name, Surname, Email, DOB, Address, Password, Is_Enrolled, Is_Teacher) VALUES ('EnrolledStudent', 'EnrolledStudentSurname', 'Enrolled@Enrolled.com', '1998-10-10', 'AddressLine1,Line2,city,postcode','ŽÞAæÃ$åó%pÄ¼a', 'true', 'false');
+
+DROP TABLE teachers CASCADE CONSTRAINTS;
+CREATE TABLE teachers(
+ First_Name varchar(25) NOT NULL,
+ Surname varchar(25) NOT NULL,
+ Email varchar2(50) NOT NULL primary key,
+ DOB varchar(25) NOT NULL,
+ Address varchar(255) NOT NULL,
+ Password varchar(25) NOT NULL,
+ Is_Enrolled varchar(10) NOT NULL,
+ Is_Teacher varchar(10) NOT NULL
+);
+INSERT INTO teachers(First_Name, Surname, Email, DOB, Address, Password, Is_Enrolled, Is_Teacher) VALUES ('Teacher', 'TeacherSurname', 'Teacher@Teacher.com', '1998-11-11', 'AddressLine1,Line2,city,postcode','UàW8±°ó%pÄ¼a', 'false', 'true');
+
+DROP TABLE courses CASCADE CONSTRAINTS;
+CREATE TABLE courses(
+    Course_Code varchar(20) NOT NULL primary key,
+    Course_Name varchar(50) NOT NULL,
+    Course_Tutor varchar(50) NOT NULL,
+    Course_Start varchar(25) NOT NULL,
+    Course_End varchar(25) NOT NULL
+);
+INSERT INTO courses(Course_Code, Course_Name, Course_Tutor, Course_Start, Course_End) VALUES('BscCom', 'Computing', 'Teacher@Teacher.com', '2018-11-11', '2021-11-11');
+
+DROP TABLE marks CASCADE CONSTRAINTS;
+CREATE TABLE marks(
+    Module_Code varchar(20) NOT NULL,
+    Student_Email varchar(50) NOT NULL,
+    Marker_Email varchar(50) NOT NULL,
+    Final_Mark number(3) NOT NULL
+);
+INSERT INTO marks(Module_Code, Student_Email, Marker_Email, Final_Mark) VALUES('CT6013', 'Enrolled@Enrolled.com', 'Teacher@Teacher.com', '40');
+
+DROP TABLE modules CASCADE CONSTRAINTS;
+CREATE TABLE modules(
+    Module_Code varchar(20) NOT NULL primary key,
+    Module_Name varchar(50) NOT NULL,
+    Module_Tutor varchar(50) NOT NULL,
+    Related_Course varchar(20) NOT NULL,
+    Semester number(1) NOT NULL,
+    Module_Start varchar(25) NOT NULL,
+    Module_End varchar(25) NOT NULL,
+    Is_Compulsory varchar(10) NOT NULL
+);
+INSERT INTO modules(Module_Code, Module_Name, Module_Tutor, Related_Course, Semester, Module_Start, Module_End, Is_Compulsory) VALUES ('CT6013', 'Advanced Databases', 'Teacher@Teacher.com','BscCom', '-1','2018-11-11', '2019-11-11', 'true');
+INSERT INTO modules(Module_Code, Module_Name, Module_Tutor, Related_Course, Semester, Module_Start, Module_End, Is_Compulsory) VALUES ('CT6042', 'Secure Coding', 'Teacher@Teacher.com','BscCom', '-1','2018-11-11', '2019-11-11', 'true');
+INSERT INTO modules(Module_Code, Module_Name, Module_Tutor, Related_Course, Semester, Module_Start, Module_End, Is_Compulsory) VALUES ('CT6038', 'Dissertation', 'Teacher@Teacher.com','BscCom', '-1','2018-11-11', '2019-11-11', 'false');
+INSERT INTO modules(Module_Code, Module_Name, Module_Tutor, Related_Course, Semester, Module_Start, Module_End, Is_Compulsory) VALUES ('CT6028', 'Agile Methods', 'Teacher@Teacher.com','BscCom', '-1','2018-11-11', '2019-11-11', 'false');
+
+DROP TABLE enrollments CASCADE CONSTRAINTS;
+CREATE TABLE enrollments(
+    Student_Email varchar(50) NOT NULL,
+    Course_Code varchar(20) NOT NULL,
+    Module_Selections varchar(255) NOT NULL
+);
+INSERT INTO enrollments(Student_Email, Course_Code, Module_Selections) VALUES('Enrolled@Enrolled.com', 'BscCom', 'CT6013,CT6028,CT6042,CT6038');
