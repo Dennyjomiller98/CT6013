@@ -23,10 +23,14 @@
             <div class="topnavdiv"></div>
         </div>
 
+        <% String errors = (String) session.getAttribute("errors");
+            if(errors != null) { %>
+        <div class="alert alert-danger myalert" role="alert" id="formErrors"><%=errors%></div>
+        <%}%>
+
         <div class="mainBody">
             <p>
                 Welcome. From here, please login to your account. <br/><br/>
-                If you do not have an account, <strong><a href=${pageContext.request.contextPath}/servlets/redirects/Redirects?action=register>&nbsp;register an account here.&nbsp;</a></strong> (This is only available for testing procedures)
             </p>
             <form action="${pageContext.request.contextPath}/servlets/Login" method="GET">
                 <label for="email">Email:</label>

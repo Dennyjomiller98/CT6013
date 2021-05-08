@@ -59,14 +59,6 @@
         <url-pattern>/servlets/Login</url-pattern>
     </servlet-mapping>
     <servlet>
-        <servlet-name>Register</servlet-name>
-        <servlet-class>servlets.Register</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>Register</servlet-name>
-        <url-pattern>/servlets/Register</url-pattern>
-    </servlet-mapping>
-    <servlet>
         <servlet-name>Logout</servlet-name>
         <servlet-class>servlets.Logout</servlet-class>
     </servlet>
@@ -91,76 +83,5 @@
     <servlet-mapping>
         <servlet-name>AuthenticateLogin</servlet-name>
         <url-pattern>/servlets/AuthenticateLogin</url-pattern>
-    </servlet-mapping>
-
-
-
-    <!--Non-DB Specific Servlets-->
-    <!--Students-->
-    <servlet>
-        <servlet-name>studentRegistration</servlet-name>
-        <servlet-class>servlets.users.StudentRegistration</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>studentRegistration</servlet-name>
-        <url-pattern>/servlets/StudentRegistration</url-pattern>
-    </servlet-mapping>
-    <servlet>
-        <servlet-name>studentLogin</servlet-name>
-        <servlet-class>servlets.users.StudentLogin</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>studentLogin</servlet-name>
-        <url-pattern>/servlets/StudentLogin</url-pattern>
-    </servlet-mapping>
-    <servlet>
-        <servlet-name>studentLogout</servlet-name>
-        <servlet-class>servlets.users.StudentLogout</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>studentLogout</servlet-name>
-        <url-pattern>/servlets/StudentLogout</url-pattern>
-    </servlet-mapping>
-    <servlet>
-        <servlet-name>studentProfile</servlet-name>
-        <servlet-class>servlets.users.StudentProfile</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>studentProfile</servlet-name>
-        <url-pattern>/servlets/StudentProfile</url-pattern>
-    </servlet-mapping>
-
-    <!--Teachers-->
-    <servlet>
-        <servlet-name>teacherRegistration</servlet-name>
-        <servlet-class>servlets.users.TeacherRegistration</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>teacherRegistration</servlet-name>
-        <url-pattern>/servlets/TeacherRegistration</url-pattern>
-    </servlet-mapping>
-    <servlet>
-        <servlet-name>teacherLogin</servlet-name>
-        <servlet-class>servlets.users.TeacherLogin</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>teacherLogin</servlet-name>
-        <url-pattern>/servlets/TeacherLogin</url-pattern>
-    </servlet-mapping>
-    <servlet>
-        <servlet-name>teacherLogout</servlet-name>
-        <servlet-class>servlets.users.TeacherLogout</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>teacherLogout</servlet-name>
-        <url-pattern>/servlets/TeacherLogout</url-pattern>
-    </servlet-mapping>
-    <servlet>
-        <servlet-name>teacherProfile</servlet-name>
-        <servlet-class>servlets.users.TeacherProfile</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>teacherProfile</servlet-name>
-        <url-pattern>/servlets/TeacherProfile</url-pattern>
     </servlet-mapping>
 </web-app>

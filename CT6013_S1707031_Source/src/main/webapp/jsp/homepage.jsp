@@ -45,16 +45,6 @@
                 <input style="display: none" type="text"  name="login" id="login" value="login" hidden>
                 <input type="submit" value="Login">
             </form>
-            <form style="display:inline;" action="${pageContext.request.contextPath}/servlets/HomepageServlet" method="POST">
-                <label for="register"></label>
-                <input style="display: none" type="text"  name="register" id="register" value="register" hidden>
-                <input type="submit" value="Register">
-            </form>
-
-            <p>
-                <strong>'Register' is only available for testing purposes. In production, accounts and roles would be created separately for Stakeholders and decision makers </strong><br/>
-                (It is purely used to create an account with the desired conditions to test against)
-            </p>
         </div>
     </body>
 </html>
