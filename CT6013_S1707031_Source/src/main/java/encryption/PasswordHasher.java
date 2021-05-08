@@ -2,7 +2,7 @@ package encryption;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
+import java.util.Base64;
 import org.apache.log4j.Logger;
 
 public class PasswordHasher
@@ -20,7 +20,7 @@ public class PasswordHasher
 		{
 			MessageDigest md5 = MessageDigest.getInstance("MD5");
 			byte[] digest = md5.digest(dataToEncrypt.getBytes());
-			ret = Arrays.toString(digest);
+			ret = Base64.getEncoder().encodeToString(digest);
 		}
 		catch (NoSuchAlgorithmException e)
 		{
