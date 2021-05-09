@@ -8,7 +8,8 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <!DOCTYPE html>
 <html lang="en-GB">
-<link href=${pageContext.request.contextPath}/css/main.css rel="stylesheet" type="text/css">
+<jsp:include page="required.jsp"/>
+<link rel="stylesheet" href="../css/main.css">
     <head>
         <title>Login</title>
     </head>
