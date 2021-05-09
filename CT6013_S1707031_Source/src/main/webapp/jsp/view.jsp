@@ -45,6 +45,10 @@
             if(errors != null) { %>
         <div class="alert alert-danger myalert" role="alert" id="formErrors"><%=errors%></div>
         <%}%>
+        <% String success = (String) session.getAttribute("success");
+            if(success != null) { %>
+        <div class="alert alert-success mysuccess" role="alert" id="formSuccess"><%=success%></div>
+        <%}%>
 
         <div class="mainBody">
             <div id="data-selection">
