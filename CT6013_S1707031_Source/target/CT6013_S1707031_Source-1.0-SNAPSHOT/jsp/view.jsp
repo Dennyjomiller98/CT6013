@@ -8,8 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <!DOCTYPE html>
 <html lang="en-GB">
-<link href=${pageContext.request.contextPath}/css/navbar.css rel="stylesheet" type="text/css">
-<link href=${pageContext.request.contextPath}/css/mainbody.css rel="stylesheet" type="text/css">
+<link href=${pageContext.request.contextPath}/css/main.css rel="stylesheet" type="text/css">
     <head>
         <title>View Data</title>
     </head>

@@ -21,7 +21,7 @@ public class ExtractConnections extends AbstractOracleConnections
 		try
 		{
 			AbstractOracleConnections conn = new AbstractOracleConnections();
-			Connection oracleClient = conn.getOracleClient();
+			Connection oracleClient = conn.getOPClient();
 			if(oracleClient != null)
 			{
 				//Select Query

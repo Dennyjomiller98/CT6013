@@ -8,8 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <!DOCTYPE html>
 <html lang="en-GB">
-<link href=${pageContext.request.contextPath}/css/navbar.css rel="stylesheet" type="text/css">
-<link href=${pageContext.request.contextPath}/css/mainbody.css rel="stylesheet" type="text/css">
+<link href=${pageContext.request.contextPath}/css/main.css rel="stylesheet" type="text/css">
     <head>
         <title>Home</title>
     </head>
@@ -40,10 +39,10 @@
                 <strong>Note:</strong> Data is automatically updated daily at midnight. You can also manually update data below.<br/>
             </p>
 
-            <form style="display:inline;" action="${pageContext.request.contextPath}/servlets/etl/Extract" method="POST">
+            <form style="display:inline;" action="${pageContext.request.contextPath}/servlets/etl/Extract" method="GET">
                 <label for="update"></label>
                 <input style="display: none" type="text" name="update" id="update" value="update" hidden>
-                <input type="submit" value="Update Data">
+                <input type="submit" value="Update DataBase Warehouse">
             </form>
             <form style="display:inline;" action="${pageContext.request.contextPath}/servlets/HomepageServlet" method="POST">
                 <label for="login"></label>
