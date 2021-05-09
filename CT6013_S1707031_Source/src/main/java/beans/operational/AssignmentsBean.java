@@ -8,14 +8,14 @@ public class AssignmentsBean
 {
 	static final Logger LOG = Logger.getLogger(AssignmentsBean.class);
 
-	private int fAssignmentId;
+	private String fAssignmentId;
 	private String fStudentId;
-	private int fAcademicYear;
-	private int fModule;
-	private int fSemester;
-	private int fGrade;
+	private String fAcademicYear;
+	private String fModule;
+	private String fSemester;
+	private String fGrade;
 	private String fResit;
-	private int fResitGrade;
+	private String fResitGrade;
 
 	public AssignmentsBean()
 	{
@@ -26,14 +26,14 @@ public class AssignmentsBean
 	{
 		try
 		{
-			fAssignmentId = Integer.parseInt(resultSet.getString("Assignment_Id"));
+			fAssignmentId = String.valueOf(resultSet.getString("Assignment_Id"));
 			fStudentId = String.valueOf(resultSet.getString("Student_Id"));
-			fAcademicYear = Integer.parseInt(resultSet.getString("Academic_Year"));
-			fModule = Integer.parseInt(resultSet.getString("Module"));
-			fSemester = Integer.parseInt(resultSet.getString("Semester"));
-			fGrade = Integer.parseInt(resultSet.getString("Grade"));
+			fAcademicYear = String.valueOf(resultSet.getString("Academic_Year"));
+			fModule = String.valueOf(resultSet.getString("Module"));
+			fSemester = String.valueOf(resultSet.getString("Semester"));
+			fGrade = String.valueOf(resultSet.getString("Grade"));
 			fResit = String.valueOf(resultSet.getString("Resit"));
-			fResitGrade = Integer.parseInt(resultSet.getString("Resit_Grade"));
+			fResitGrade = String.valueOf(resultSet.getString("Resit_Grade"));
 		}
 		catch (SQLException e)
 		{
@@ -41,11 +41,11 @@ public class AssignmentsBean
 		}
 	}
 
-	public void setAssignmentId(int id)
+	public void setAssignmentId(String id)
 	{
 		fAssignmentId = id;
 	}
-	public int getAssignmentId()
+	public String getAssignmentId()
 	{
 		return fAssignmentId;
 	}
@@ -59,39 +59,39 @@ public class AssignmentsBean
 		return fStudentId;
 	}
 
-	public void setAcademicYear(int year)
+	public void setAcademicYear(String year)
 	{
 		fAcademicYear = year;
 	}
-	public int getAcademicYear()
+	public String getAcademicYear()
 	{
 		return fAcademicYear;
 	}
 
-	public void setModule(int moduleId)
+	public void setModule(String moduleId)
 	{
 		fModule = moduleId;
 	}
 
-	public int getModule()
+	public String getModule()
 	{
 		return fModule;
 	}
 
-	public void setSemester(int semester)
+	public void setSemester(String semester)
 	{
 		fSemester = semester;
 	}
-	public int getSemester()
+	public String getSemester()
 	{
 		return fSemester;
 	}
 
-	public void setGrade(int grade)
+	public void setGrade(String grade)
 	{
 		fGrade = grade;
 	}
-	public int getGrade()
+	public String getGrade()
 	{
 		return fGrade;
 	}
@@ -105,11 +105,11 @@ public class AssignmentsBean
 		return fResit;
 	}
 
-	public void setResitGrade(int resitGrade)
+	public void setResitGrade(String resitGrade)
 	{
 		fResitGrade = resitGrade;
 	}
-	public int getResitGrade()
+	public String getResitGrade()
 	{
 		return fResitGrade;
 	}

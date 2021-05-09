@@ -72,6 +72,7 @@
                     <br/>
                     <br/>
 
+                    <%--TODO - radio buttons select one?-->
                     <label for="3months">Last 3 months</label><input type="checkbox" name="3months" id="3months">
                     <label for="6months">Last 6 months</label><input type="checkbox" name="6months" id="6months">
                     <label for="12months">Last 12 months</label><input type="checkbox" name="12months" id="12months">

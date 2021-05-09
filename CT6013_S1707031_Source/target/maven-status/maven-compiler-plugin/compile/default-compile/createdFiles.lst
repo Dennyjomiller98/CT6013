@@ -6,6 +6,7 @@ etl\ExtractHelper.class
 beans\operational\EnrollmentsBean.class
 servlets\etl\Extract.class
 servlets\Logout.class
+oracle\LoadConnections.class
 beans\operational\dimensions\DimTutorsBean.class
 etl\LoadHelper.class
 oracle\AbstractOracleConnections.class
@@ -29,6 +30,7 @@ servlets\redirects\Redirects.class
 beans\operational\dimensions\DimStudentsBean.class
 beans\operational\dimensions\DimCoursesBean.class
 servlets\DataUpdate.class
+etl\DWDataParser.class
 oracle\UserConnections.class
 oracle\AuthenticationConnections.class
 oracle\IOracleConnections.class

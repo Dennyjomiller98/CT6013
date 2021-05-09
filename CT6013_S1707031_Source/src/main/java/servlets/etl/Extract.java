@@ -1,5 +1,6 @@
 package servlets.etl;
 
+import beans.dw.DWResultsBean;
 import beans.operational.AssignmentsBean;
 import etl.ExtractHelper;
 import etl.LoadHelper;
@@ -31,14 +32,29 @@ public class Extract extends HttpServlet
 
 			//Data has been Transformed, so now we can Load
 			LoadHelper etlLoadHelper = new LoadHelper();
-			boolean loadSuccess = etlLoadHelper.loadData(assignmentsBeans);
-			if(loadSuccess)
+			DWResultsBean loadBean = new DWResultsBean();
+
+			//Prepare Data
+			etlLoadHelper.prepareAssignmentData(assignmentsBeans, loadBean);
+
+			//Purge old DW data
+			boolean wasPurged = etlLoadHelper.emptyDW();
+			if(wasPurged)
 			{
-				request.getSession(true).setAttribute("success", "Database Warehouse ETL Process Complete" );
+				//Load Data
+				boolean loadSuccess = etlLoadHelper.updateDW(loadBean);
+				if(loadSuccess)
+				{
+					request.getSession(true).setAttribute("success", "Database Warehouse ETL Process Complete" );
+				}
+				else
+				{
+					request.getSession(true).setAttribute("errors", "An error has occurred whilst Loading Data for the Database Warehouse" );
+				}
 			}
 			else
 			{
-				request.getSession(true).setAttribute("errors", "An error has occurred whilst Loading Data for the Database Warehouse" );
+				request.getSession(true).setAttribute("errors", "An error has occurred whilst Purging the old data for the Database Warehouse" );
 			}
 			attemptRedirect(request, response);
 		}
@@ -52,13 +68,30 @@ public class Extract extends HttpServlet
 
 	private void attemptRedirect(HttpServletRequest request, HttpServletResponse response)
 	{
-		try
+		String userEmail = (String) request.getSession(true).getAttribute("email");
+		if (userEmail != null)
 		{
-			response.sendRedirect(request.getContextPath() + "/jsp/login.jsp");
+			//Take logged in user to view data page
+			try
+			{
+				response.sendRedirect(request.getContextPath() + "/jsp/view.jsp");
+			}
+			catch (IOException e)
+			{
+				LOG.error("Unable to redirect.",e);
+			}
 		}
-		catch (IOException e)
+		else
 		{
-			LOG.error("Unable to redirect.",e);
+			//Take unlogged in user to homepage
+			try
+			{
+				response.sendRedirect(request.getContextPath() + "/jsp/homepage.jsp");
+			}
+			catch (IOException e)
+			{
+				LOG.error("Unable to redirect.",e);
+			}
 		}
 	}
 }
