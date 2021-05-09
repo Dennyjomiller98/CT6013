@@ -8,12 +8,13 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <!DOCTYPE html>
 <html lang="en-GB">
-<jsp:include page="required.jsp"/>
-<link rel="stylesheet" href="../css/main.css">
     <head>
         <title>Login</title>
+        <link rel="icon" type="image/gif" href="${pageContext.request.contextPath}/imgs/favicon.ico">
     </head>
         <body>
+        <jsp:include page="required.jsp"/>
+        <link rel="stylesheet" href="../css/main.css">
         <%--Navbar--%>
         <div class="navbar">
             <div class="bottomnavdiv"></div>

@@ -8,12 +8,13 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <!DOCTYPE html>
 <html lang="en-GB">
-<jsp:include page="required.jsp"/>
-<link rel="stylesheet" href="../css/main.css">
     <head>
         <title>View Data</title>
+        <link rel="icon" type="image/gif" href="${pageContext.request.contextPath}/imgs/favicon.ico">
     </head>
     <body>
+        <jsp:include page="required.jsp"/>
+        <link rel="stylesheet" href="../css/main.css">
         <%  String email = null;
             if(session.getAttribute("email") != null)
             {
