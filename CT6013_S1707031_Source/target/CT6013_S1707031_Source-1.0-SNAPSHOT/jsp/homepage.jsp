@@ -15,6 +15,7 @@
     <body>
     <jsp:include page="required.jsp"/>
     <link rel="stylesheet" href="../css/main.css">
+    <div class="content">
         <%--Navbar--%>
         <div class="navbar">
             <div class="bottomnavdiv"></div>
@@ -56,6 +57,7 @@
                 <input type="submit" value="Login">
             </form>
         </div>
+    </div>
     </body>
 </html>
 

@@ -1,7 +1,8 @@
 package etl;
 
 import beans.dw.DWResultsBean;
-import beans.operational.AssignmentsBean;
+import beans.operational.*;
+import beans.operational.dimensions.*;
 import java.sql.SQLException;
 import java.util.List;
 import oracle.LoadConnections;
@@ -74,5 +75,55 @@ public class LoadHelper
 				}
 			}
 		}
+	}
+
+	public void prepareCourseData(List<CoursesBean> coursesBeans, DWResultsBean loadBean)
+	{
+		
+	}
+
+	public void prepareEnrollmentData(List<EnrollmentsBean> enrollmentsBeans, DWResultsBean loadBean)
+	{
+		
+	}
+
+	public void prepareModuleData(List<ModulesBean> modulesBeans, DWResultsBean loadBean)
+	{
+	}
+
+	public void prepareStudentData(List<StudentsBean> studentsBeans, DWResultsBean loadBean)
+	{
+	}
+
+	public void prepareSubjectData(List<SubjectsBean> subjectsBeans, DWResultsBean loadBean)
+	{
+	}
+
+	public void prepareTutorData(List<TutorsBean> tutorsBeans, DWResultsBean loadBean)
+	{
+	}
+
+	public void prepareDimCourseData(List<DimCoursesBean> dimCoursesBeans, DWResultsBean loadBean)
+	{
+	}
+
+	public void prepareDimEnrollmentData(List<DimEnrollmentsBean> dimEnrollmentsBeans, DWResultsBean loadBean)
+	{
+	}
+
+	public void prepareDimModuleData(List<DimModulesBean> dimModulesBeans, DWResultsBean loadBean)
+	{
+	}
+
+	public void prepareDimStudentData(List<DimStudentsBean> dimStudentsBeans, DWResultsBean loadBean)
+	{
+	}
+
+	public void prepareDimSubjectData(List<DimSubjectsBean> dimSubjectsBeans, DWResultsBean loadBean)
+	{
+	}
+
+	public void prepareDimTutorData(List<DimTutorsBean> dimTutorsBeans, DWResultsBean loadBean)
+	{
 	}
 }

@@ -16,11 +16,25 @@ public class AbstractOracleConnections implements IOracleConnections
 	public static final String ORACLE_DW_USERNAME = "s1707031_DW";
 	public static final String ORACLE_DW_PASSWORD = "s1707031_DW!";
 
-	public static final String TBL_DW_RESULTS = "DW_RESULTS";
 	public static final String TBL_ASSIGNMENTS = "CT6013_ASSIGNMENTS";
+	public static final String TBL_COURSES = "CT6013_COURSES";
+	public static final String TBL_ENROLLMENTS = "CT6013_ENROLLMENTS";
+	public static final String TBL_MODULES = "CT6013_MODULES";
+	public static final String TBL_STUDENTS = "CT6013_STUDENTS";
+	public static final String TBL_SUBJECTS = "CT6013_SUBJECTS";
+	public static final String TBL_TUTORS = "CT6013_TUTORS";
 
+	public static final String TBL_DIM_COURSES = "CT6013_DIM_COURSES";
+	public static final String TBL_DIM_ENROLLMENTS = "CT6013_DIM_ENROLLMENTS";
+	public static final String TBL_DIM_MODULES = "CT6013_DIM_MODULES";
+	public static final String TBL_DIM_STUDENTS = "CT6013_DIM_STUDENTS";
+	public static final String TBL_DIM_SUBJECTS = "CT6013_DIM_SUBJECTS";
+	public static final String TBL_DIM_TUTORS = "CT6013_DIM_TUTORS";
+
+	public static final String TBL_DW_RESULTS = "DW_RESULTS";
 	public static final String AUTH_COLLECTION = "dw_auth";
 	public static final String USERS_COLLECTION = "dw_users";
+
 	private Connection oracleClient;
 
 	protected AbstractOracleConnections()

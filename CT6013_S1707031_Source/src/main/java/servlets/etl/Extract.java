@@ -1,7 +1,8 @@
 package servlets.etl;
 
 import beans.dw.DWResultsBean;
-import beans.operational.AssignmentsBean;
+import beans.operational.*;
+import beans.operational.dimensions.*;
 import etl.ExtractHelper;
 import etl.LoadHelper;
 import etl.TransformHelper;
@@ -22,27 +23,66 @@ public class Extract extends HttpServlet
 		//Retrieve ALL Operational Database Data, and store in Beans ready for Transform Process
 		try
 		{
-			//TODO - complete this for all beans/tables, AssignmentsBean has been used as proof of concept
-			ExtractHelper etlExtractHelper = new ExtractHelper();
-			List<AssignmentsBean> assignmentsBeans = etlExtractHelper.retrieveAssignmentsTable();
+			ExtractHelper extractHelper = new ExtractHelper();
+			List<AssignmentsBean> assignmentsBeans = extractHelper.retrieveAssignmentsTable();
+			List<CoursesBean> coursesBeans = extractHelper.retrieveCoursesTable();
+			List<EnrollmentsBean> enrollmentsBeans = extractHelper.retrieveEnrollmentsTable();
+			List<ModulesBean> modulesBeans = extractHelper.retrieveModulesTable();
+			List<StudentsBean> studentsBeans = extractHelper.retrieveStudentsTable();
+			List<SubjectsBean> subjectsBeans = extractHelper.retrieveSubjectsTable();
+			List<TutorsBean> tutorsBeans = extractHelper.retrieveTutorsTable();
+
+			List<DimCoursesBean> dimCoursesBeans = extractHelper.retrieveDimCoursesTable();
+			List<DimEnrollmentsBean> dimEnrollmentsBeans = extractHelper.retrieveDimEnrollmentsTable();
+			List<DimModulesBean> dimModulesBeans = extractHelper.retrieveDimModulesTable();
+			List<DimStudentsBean> dimStudentsBeans = extractHelper.retrieveDimStudentsTable();
+			List<DimSubjectsBean> dimSubjectsBeans = extractHelper.retrieveDimSubjectsTable();
+			List<DimTutorsBean> dimTutorsBeans = extractHelper.retrieveDimTutorsTable();
 
 			//Now we need to Transform the data, sanitize information for each bit of data before placing in the DW
-			TransformHelper etlTransformHelper = new TransformHelper();
-			assignmentsBeans = etlTransformHelper.transformAssignmentsData(assignmentsBeans);
+			TransformHelper transformHelper = new TransformHelper();
+			assignmentsBeans = transformHelper.transformAssignmentsData(assignmentsBeans);
+			coursesBeans = transformHelper.transformCoursesData(coursesBeans);
+			enrollmentsBeans = transformHelper.transformEnrollmentsData(enrollmentsBeans);
+			modulesBeans = transformHelper.transformModulesData(modulesBeans);
+			studentsBeans = transformHelper.transformStudentsData(studentsBeans);
+			subjectsBeans = transformHelper.transformSubjectsData(subjectsBeans);
+			tutorsBeans = transformHelper.transformTutorsData(tutorsBeans);
+
+			dimCoursesBeans = transformHelper.transformDimCoursesData(dimCoursesBeans);
+			dimEnrollmentsBeans = transformHelper.transformDimEnrollmentsData(dimEnrollmentsBeans);
+			dimModulesBeans = transformHelper.transformDimModulesData(dimModulesBeans);
+			dimStudentsBeans = transformHelper.transformDimStudentsData(dimStudentsBeans);
+			dimSubjectsBeans = transformHelper.transformDimSubjectsData(dimSubjectsBeans);
+			dimTutorsBeans = transformHelper.transformDimTutorsData(dimTutorsBeans);
 
 			//Data has been Transformed, so now we can Load
-			LoadHelper etlLoadHelper = new LoadHelper();
+			LoadHelper loadHelper = new LoadHelper();
 			DWResultsBean loadBean = new DWResultsBean();
 
 			//Prepare Data
-			etlLoadHelper.prepareAssignmentData(assignmentsBeans, loadBean);
+			loadHelper.prepareAssignmentData(assignmentsBeans, loadBean);
+			loadHelper.prepareCourseData(coursesBeans, loadBean);
+			loadHelper.prepareEnrollmentData(enrollmentsBeans, loadBean);
+			loadHelper.prepareModuleData(modulesBeans, loadBean);
+			loadHelper.prepareStudentData(studentsBeans, loadBean);
+			loadHelper.prepareSubjectData(subjectsBeans, loadBean);
+			loadHelper.prepareTutorData(tutorsBeans, loadBean);
 
+			loadHelper.prepareDimCourseData(dimCoursesBeans, loadBean);
+			loadHelper.prepareDimEnrollmentData(dimEnrollmentsBeans, loadBean);
+			loadHelper.prepareDimModuleData(dimModulesBeans, loadBean);
+			loadHelper.prepareDimStudentData(dimStudentsBeans, loadBean);
+			loadHelper.prepareDimSubjectData(dimSubjectsBeans, loadBean);
+			loadHelper.prepareDimTutorData(dimTutorsBeans, loadBean);
+
+			//TODO - delete all Tables/dimensions etc (For DW ONLY)
 			//Purge old DW data
-			boolean wasPurged = etlLoadHelper.emptyDW();
+			boolean wasPurged = loadHelper.emptyDW();
 			if(wasPurged)
 			{
 				//Load Data
-				boolean loadSuccess = etlLoadHelper.updateDW(loadBean);
+				boolean loadSuccess = loadHelper.updateDW(loadBean);
 				if(loadSuccess)
 				{
 					request.getSession(true).setAttribute("success", "Database Warehouse ETL Process Complete" );
@@ -83,7 +123,7 @@ public class Extract extends HttpServlet
 		}
 		else
 		{
-			//Take unlogged in user to homepage
+			//Take not logged in user to homepage
 			try
 			{
 				response.sendRedirect(request.getContextPath() + "/jsp/homepage.jsp");
