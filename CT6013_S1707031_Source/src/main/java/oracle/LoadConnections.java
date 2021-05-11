@@ -108,42 +108,45 @@ public class LoadConnections extends AbstractOracleConnections
 	{
 		boolean successfulLoad = false;
 		List<DimStudentsBean> studentBeans = loadBean.getDimStudents();
-		for (DimStudentsBean bean : studentBeans)
+		if(studentBeans != null && !studentBeans.isEmpty())
 		{
-			AbstractOracleConnections conn = new AbstractOracleConnections();
-			Connection oracleClient = conn.getDWClient();
-			if(oracleClient != null)
+			for (DimStudentsBean bean : studentBeans)
 			{
-				try
+				AbstractOracleConnections conn = new AbstractOracleConnections();
+				Connection oracleClient = conn.getDWClient();
+				if(oracleClient != null)
 				{
-					String values = "'" + bean.getDimensionId()
-							+ "','" + bean.getStudentId()
-							+ "','" + bean.getEffectiveDate()
-							+ "','" + bean.getExpiredDate()
-							+ "','" + bean.getIsCurrent()
-							+ "','" + bean.getEmail()
-							+ "','" + bean.getPword()
-							+ "','" + bean.getFirstname()
-							+ "','" + bean.getSurname()
-							+ "','" + bean.getDob()
-							+ "','" + bean.getAddress() + "'";
-					String query = "INSERT INTO " + TBL_DW_DIM_STUDENT +
-							"(Dimension_Id, Student_Id, Date_Effective, Date_Expired, Is_Current, Email, Pword, Firstname, Surname, Dob, Address)" + " VALUES (" + values + ")";
-					//Execute query
-					executeAdditionQuery(oracleClient, query);
-					successfulLoad = true;
+					try
+					{
+						String values = "'" + bean.getDimensionId()
+								+ "','" + bean.getStudentId()
+								+ "','" + bean.getEffectiveDate()
+								+ "','" + bean.getExpiredDate()
+								+ "','" + bean.getIsCurrent()
+								+ "','" + bean.getEmail()
+								+ "','" + bean.getPword()
+								+ "','" + bean.getFirstname()
+								+ "','" + bean.getSurname()
+								+ "','" + bean.getDob()
+								+ "','" + bean.getAddress() + "'";
+						String query = "INSERT INTO " + TBL_DW_DIM_STUDENT +
+								"(Dimension_Id, Student_Id, Date_Effective, Date_Expired, Is_Current, Email, Pword, Firstname, Surname, Dob, Address)" + " VALUES (" + values + ")";
+						//Execute query
+						executeAdditionQuery(oracleClient, query);
+						successfulLoad = true;
+					}
+					catch (SQLException e)
+					{
+						LOG.error("Error adding entry to DW", e);
+						successfulLoad = false;
+						break;
+					}
 				}
-				catch (SQLException e)
+				else
 				{
-					LOG.error("Error adding entry to DW", e);
+					LOG.error("connection failure");
 					successfulLoad = false;
-					break;
 				}
-			}
-			else
-			{
-				LOG.error("connection failure");
-				successfulLoad = false;
 			}
 		}
 		return successfulLoad;
@@ -153,42 +156,45 @@ public class LoadConnections extends AbstractOracleConnections
 	{
 		boolean successfulLoad = false;
 		List<DimTutorsBean> tutorBeans = loadBean.getDimTutors();
-		for (DimTutorsBean bean : tutorBeans)
+		if(tutorBeans != null && !tutorBeans.isEmpty())
 		{
-			AbstractOracleConnections conn = new AbstractOracleConnections();
-			Connection oracleClient = conn.getDWClient();
-			if(oracleClient != null)
+			for (DimTutorsBean bean : tutorBeans)
 			{
-				try
+				AbstractOracleConnections conn = new AbstractOracleConnections();
+				Connection oracleClient = conn.getDWClient();
+				if(oracleClient != null)
 				{
-					String values = "'" + bean.getDimensionId()
-							+ "','" + bean.getTutorId()
-							+ "','" + bean.getEffectiveDate()
-							+ "','" + bean.getExpiredDate()
-							+ "','" + bean.getIsCurrent()
-							+ "','" + bean.getEmail()
-							+ "','" + bean.getPword()
-							+ "','" + bean.getFirstname()
-							+ "','" + bean.getSurname()
-							+ "','" + bean.getDob()
-							+ "','" + bean.getAddress() + "'";
-					String query = "INSERT INTO " + TBL_DW_DIM_TUTOR +
-							"(Dimension_Id, Tutor_Id, Date_Effective, Date_Expired, Is_Current, Email, Pword, Firstname, Surname, Dob, Address)" + " VALUES (" + values + ")";
-					//Execute query
-					executeAdditionQuery(oracleClient, query);
-					successfulLoad = true;
+					try
+					{
+						String values = "'" + bean.getDimensionId()
+								+ "','" + bean.getTutorId()
+								+ "','" + bean.getEffectiveDate()
+								+ "','" + bean.getExpiredDate()
+								+ "','" + bean.getIsCurrent()
+								+ "','" + bean.getEmail()
+								+ "','" + bean.getPword()
+								+ "','" + bean.getFirstname()
+								+ "','" + bean.getSurname()
+								+ "','" + bean.getDob()
+								+ "','" + bean.getAddress() + "'";
+						String query = "INSERT INTO " + TBL_DW_DIM_TUTOR +
+								"(Dimension_Id, Tutor_Id, Date_Effective, Date_Expired, Is_Current, Email, Pword, Firstname, Surname, Dob, Address)" + " VALUES (" + values + ")";
+						//Execute query
+						executeAdditionQuery(oracleClient, query);
+						successfulLoad = true;
+					}
+					catch (SQLException e)
+					{
+						LOG.error("Error adding entry to DW", e);
+						successfulLoad = false;
+						break;
+					}
 				}
-				catch (SQLException e)
+				else
 				{
-					LOG.error("Error adding entry to DW", e);
+					LOG.error("connection failure");
 					successfulLoad = false;
-					break;
 				}
-			}
-			else
-			{
-				LOG.error("connection failure");
-				successfulLoad = false;
 			}
 		}
 		return successfulLoad;
@@ -198,41 +204,44 @@ public class LoadConnections extends AbstractOracleConnections
 	{
 		boolean successfulLoad = false;
 		List<DimModulesBean> modulesBeans = loadBean.getDimModules();
-		for (DimModulesBean bean : modulesBeans)
+		if(modulesBeans != null && !modulesBeans.isEmpty())
 		{
-			AbstractOracleConnections conn = new AbstractOracleConnections();
-			Connection oracleClient = conn.getDWClient();
-			if(oracleClient != null)
+			for (DimModulesBean bean : modulesBeans)
 			{
-				try
+				AbstractOracleConnections conn = new AbstractOracleConnections();
+				Connection oracleClient = conn.getDWClient();
+				if(oracleClient != null)
 				{
-					String values = "'" + bean.getDimensionId()
-							+ "','" + bean.getModuleId()
-							+ "','" + bean.getEffectiveDate()
-							+ "','" + bean.getExpiredDate()
-							+ "','" + bean.getIsCurrent()
-							+ "','" + bean.getModuleName()
-							+ "','" + bean.getModuleTutor()
-							+ "','" + bean.getSemesterLength()
-							+ "','" + bean.getSemester()
-							+ "','" + bean.getCats() + "'";
-					String query = "INSERT INTO " + TBL_DW_DIM_MODULE +
-							"(Dimension_Id, Module_Id, Date_Effective, Date_Expired, Is_Current, Module_Name, Module_Tutor, Semester_Length, Semester, Cats)" + " VALUES (" + values + ")";
-					//Execute query
-					executeAdditionQuery(oracleClient, query);
-					successfulLoad = true;
+					try
+					{
+						String values = "'" + bean.getDimensionId()
+								+ "','" + bean.getModuleId()
+								+ "','" + bean.getEffectiveDate()
+								+ "','" + bean.getExpiredDate()
+								+ "','" + bean.getIsCurrent()
+								+ "','" + bean.getModuleName()
+								+ "','" + bean.getModuleTutor()
+								+ "','" + bean.getSemesterLength()
+								+ "','" + bean.getSemester()
+								+ "','" + bean.getCats() + "'";
+						String query = "INSERT INTO " + TBL_DW_DIM_MODULE +
+								"(Dimension_Id, Module_Id, Date_Effective, Date_Expired, Is_Current, Module_Name, Module_Tutor, Semester_Length, Semester, Cats)" + " VALUES (" + values + ")";
+						//Execute query
+						executeAdditionQuery(oracleClient, query);
+						successfulLoad = true;
+					}
+					catch (SQLException e)
+					{
+						LOG.error("Error adding entry to DW", e);
+						successfulLoad = false;
+						break;
+					}
 				}
-				catch (SQLException e)
+				else
 				{
-					LOG.error("Error adding entry to DW", e);
+					LOG.error("connection failure");
 					successfulLoad = false;
-					break;
 				}
-			}
-			else
-			{
-				LOG.error("connection failure");
-				successfulLoad = false;
 			}
 		}
 		return successfulLoad;
@@ -242,40 +251,43 @@ public class LoadConnections extends AbstractOracleConnections
 	{
 		boolean successfulLoad = false;
 		List<DimCoursesBean> coursesBeans = loadBean.getDimCourses();
-		for (DimCoursesBean bean : coursesBeans)
+		if(coursesBeans != null && !coursesBeans.isEmpty())
 		{
-			AbstractOracleConnections conn = new AbstractOracleConnections();
-			Connection oracleClient = conn.getDWClient();
-			if(oracleClient != null)
+			for (DimCoursesBean bean : coursesBeans)
 			{
-				try
+				AbstractOracleConnections conn = new AbstractOracleConnections();
+				Connection oracleClient = conn.getDWClient();
+				if(oracleClient != null)
 				{
-					String values = "'" + bean.getDimensionId()
-							+ "','" + bean.getCourseId()
-							+ "','" + bean.getEffectiveDate()
-							+ "','" + bean.getExpiredDate()
-							+ "','" + bean.getIsCurrent()
-							+ "','" + bean.getCourseName()
-							+ "','" + bean.getModuleIds()
-							+ "','" + bean.getTutor()
-							+ "','" + bean.getSubjectId() + "'";
-					String query = "INSERT INTO " + TBL_DW_DIM_COURSE +
-							"(Dimension_Id, Course_Id, Date_Effective, Date_Expired, Is_Current, Course_Name, Module_Ids, Course_Tutor, Subject_Id)" + " VALUES (" + values + ")";
-					//Execute query
-					executeAdditionQuery(oracleClient, query);
-					successfulLoad = true;
+					try
+					{
+						String values = "'" + bean.getDimensionId()
+								+ "','" + bean.getCourseId()
+								+ "','" + bean.getEffectiveDate()
+								+ "','" + bean.getExpiredDate()
+								+ "','" + bean.getIsCurrent()
+								+ "','" + bean.getCourseName()
+								+ "','" + bean.getModuleIds()
+								+ "','" + bean.getTutor()
+								+ "','" + bean.getSubjectId() + "'";
+						String query = "INSERT INTO " + TBL_DW_DIM_COURSE +
+								"(Dimension_Id, Course_Id, Date_Effective, Date_Expired, Is_Current, Course_Name, Module_Ids, Course_Tutor, Subject_Id)" + " VALUES (" + values + ")";
+						//Execute query
+						executeAdditionQuery(oracleClient, query);
+						successfulLoad = true;
+					}
+					catch (SQLException e)
+					{
+						LOG.error("Error adding entry to DW", e);
+						successfulLoad = false;
+						break;
+					}
 				}
-				catch (SQLException e)
+				else
 				{
-					LOG.error("Error adding entry to DW", e);
+					LOG.error("connection failure");
 					successfulLoad = false;
-					break;
 				}
-			}
-			else
-			{
-				LOG.error("connection failure");
-				successfulLoad = false;
 			}
 		}
 		return successfulLoad;
@@ -285,38 +297,41 @@ public class LoadConnections extends AbstractOracleConnections
 	{
 		boolean successfulLoad = false;
 		List<DimSubjectsBean> subjectsBeans = loadBean.getDimSubjects();
-		for (DimSubjectsBean bean : subjectsBeans)
+		if(subjectsBeans != null && !subjectsBeans.isEmpty())
 		{
-			AbstractOracleConnections conn = new AbstractOracleConnections();
-			Connection oracleClient = conn.getDWClient();
-			if(oracleClient != null)
+			for (DimSubjectsBean bean : subjectsBeans)
 			{
-				try
+				AbstractOracleConnections conn = new AbstractOracleConnections();
+				Connection oracleClient = conn.getDWClient();
+				if(oracleClient != null)
 				{
-					String values = "'" + bean.getDimensionId()
-							+ "','" + bean.getSubjectId()
-							+ "','" + bean.getEffectiveDate()
-							+ "','" + bean.getExpiredDate()
-							+ "','" + bean.getIsCurrent()
-							+ "','" + bean.getName()
-							+ "','" + bean.getCourses() + "'";
-					String query = "INSERT INTO " + TBL_DW_DIM_SUBJECT +
-							"(Dimension_Id, Subject_Id, Date_Effective, Date_Expired, Is_Current, Subject_Name, Subject_Courses)" + " VALUES (" + values + ")";
-					//Execute query
-					executeAdditionQuery(oracleClient, query);
-					successfulLoad = true;
+					try
+					{
+						String values = "'" + bean.getDimensionId()
+								+ "','" + bean.getSubjectId()
+								+ "','" + bean.getEffectiveDate()
+								+ "','" + bean.getExpiredDate()
+								+ "','" + bean.getIsCurrent()
+								+ "','" + bean.getName()
+								+ "','" + bean.getCourses() + "'";
+						String query = "INSERT INTO " + TBL_DW_DIM_SUBJECT +
+								"(Dimension_Id, Subject_Id, Date_Effective, Date_Expired, Is_Current, Subject_Name, Subject_Courses)" + " VALUES (" + values + ")";
+						//Execute query
+						executeAdditionQuery(oracleClient, query);
+						successfulLoad = true;
+					}
+					catch (SQLException e)
+					{
+						LOG.error("Error adding entry to DW", e);
+						successfulLoad = false;
+						break;
+					}
 				}
-				catch (SQLException e)
+				else
 				{
-					LOG.error("Error adding entry to DW", e);
+					LOG.error("connection failure");
 					successfulLoad = false;
-					break;
 				}
-			}
-			else
-			{
-				LOG.error("connection failure");
-				successfulLoad = false;
 			}
 		}
 		return successfulLoad;
@@ -326,40 +341,43 @@ public class LoadConnections extends AbstractOracleConnections
 	{
 		boolean successfulLoad = false;
 		List<DimEnrollmentsBean> enrollmentsBeans = loadBean.getDimEnrollments();
-		for (DimEnrollmentsBean bean : enrollmentsBeans)
+		if(enrollmentsBeans != null && !enrollmentsBeans.isEmpty())
 		{
-			AbstractOracleConnections conn = new AbstractOracleConnections();
-			Connection oracleClient = conn.getDWClient();
-			if(oracleClient != null)
+			for (DimEnrollmentsBean bean : enrollmentsBeans)
 			{
-				try
+				AbstractOracleConnections conn = new AbstractOracleConnections();
+				Connection oracleClient = conn.getDWClient();
+				if(oracleClient != null)
 				{
-					String values = "'" + bean.getDimensionId()
-							+ "','" + bean.getEnrollmentId()
-							+ "','" + bean.getEffectiveDate()
-							+ "','" + bean.getExpiredDate()
-							+ "','" + bean.getIsCurrent()
-							+ "','" + bean.getStudentId()
-							+ "','" + bean.getCourseId()
-							+ "','" + bean.getEnrollmentDate()
-							+ "','" + bean.getHasDropped() + "'";
-					String query = "INSERT INTO " + TBL_DW_DIM_ENROLLMENT +
-							"(Dimension_Id, Enrollment_Id, Date_Effective, Date_Expired, Is_Current, Student_Id, Is_Enrolled, Course_Id, Enrollment_Date, Has_Dropped)" + " VALUES (" + values + ")";
-					//Execute query
-					executeAdditionQuery(oracleClient, query);
-					successfulLoad = true;
+					try
+					{
+						String values = "'" + bean.getDimensionId()
+								+ "','" + bean.getEnrollmentId()
+								+ "','" + bean.getEffectiveDate()
+								+ "','" + bean.getExpiredDate()
+								+ "','" + bean.getIsCurrent()
+								+ "','" + bean.getStudentId()
+								+ "','" + bean.getCourseId()
+								+ "','" + bean.getEnrollmentDate()
+								+ "','" + bean.getHasDropped() + "'";
+						String query = "INSERT INTO " + TBL_DW_DIM_ENROLLMENT +
+								"(Dimension_Id, Enrollment_Id, Date_Effective, Date_Expired, Is_Current, Student_Id, Is_Enrolled, Course_Id, Enrollment_Date, Has_Dropped)" + " VALUES (" + values + ")";
+						//Execute query
+						executeAdditionQuery(oracleClient, query);
+						successfulLoad = true;
+					}
+					catch (SQLException e)
+					{
+						LOG.error("Error adding entry to DW", e);
+						successfulLoad = false;
+						break;
+					}
 				}
-				catch (SQLException e)
+				else
 				{
-					LOG.error("Error adding entry to DW", e);
+					LOG.error("connection failure");
 					successfulLoad = false;
-					break;
 				}
-			}
-			else
-			{
-				LOG.error("connection failure");
-				successfulLoad = false;
 			}
 		}
 		return successfulLoad;
