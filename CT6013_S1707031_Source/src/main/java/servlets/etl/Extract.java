@@ -77,7 +77,7 @@ public class Extract extends HttpServlet
 			loadHelper.prepareDimSubjectData(dimSubjectsBeans, loadBean);
 			loadHelper.prepareDimTutorData(dimTutorsBeans, loadBean);
 
-			//check data, ensure that all ID's are present, or we will get errors retrieving data from the DW once laoded
+			//check data, ensure that all ID's are present, or we will get errors retrieving data from the DW once loaded
 			DataTransformer transformer = new DataTransformer();
 			loadBean = transformer.validateAndTransformData(loadBean);
 
@@ -111,7 +111,7 @@ public class Extract extends HttpServlet
 		}
 		catch(Exception e)
 		{
-			request.getSession(true).setAttribute("errors", "An error has occurred during the Database Warehouse ETL Process" + e );
+			request.getSession(true).setAttribute("errors", "An error has occurred during the Database Warehouse ETL Process: " + e.getMessage() + e.getLocalizedMessage() );
 			LOG.error("An error has occurred during the Database Warehouse ETL Process", e);
 			attemptRedirect(request, response);
 		}
