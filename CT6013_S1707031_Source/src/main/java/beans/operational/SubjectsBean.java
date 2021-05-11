@@ -4,6 +4,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import org.apache.log4j.Logger;
 
+/**
+ * @author Denny-Jo
+ * SubjectsBean JavaBean - Assists with storing DB data for the Subject Table
+ * */
 public class SubjectsBean
 {
 	static final Logger LOG = Logger.getLogger(SubjectsBean.class);

@@ -9,6 +9,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Denny-Jo
+ * ExtractConnections - Provides Extended connectivity For Operational Data Extraction of the ETL Process
+ * */
 public class ExtractConnections extends AbstractOracleConnections
 {
 	public ExtractConnections()

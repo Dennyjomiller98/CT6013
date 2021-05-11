@@ -4,6 +4,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import org.apache.log4j.Logger;
 
+/**
+ * @author Denny-Jo
+ * DimTutorsBean JavaBean - Assists with storing DB data for the Tutors SlowChangingDimension Table
+ * */
 public class DimTutorsBean
 {
 	static final Logger LOG = Logger.getLogger(DimTutorsBean.class);
@@ -51,7 +55,7 @@ public class DimTutorsBean
 	{
 		fDimId = id;
 	}
-	public String setDimensionId()
+	public String getDimensionId()
 	{
 		return fDimId;
 	}

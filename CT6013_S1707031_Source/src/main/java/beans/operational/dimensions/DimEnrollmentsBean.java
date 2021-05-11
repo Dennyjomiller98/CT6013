@@ -4,6 +4,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import org.apache.log4j.Logger;
 
+/**
+ * @author Denny-Jo
+ * DimEnrollmentsBean JavaBean - Assists with storing DB data for the Enrollments SlowChangingDimension Table
+ * */
 public class DimEnrollmentsBean
 {
 	static final Logger LOG = Logger.getLogger(DimEnrollmentsBean.class);
@@ -49,7 +53,7 @@ public class DimEnrollmentsBean
 	{
 		fDimId = id;
 	}
-	public String setDimensionId()
+	public String getDimensionId()
 	{
 		return fDimId;
 	}

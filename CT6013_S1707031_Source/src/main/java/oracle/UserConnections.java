@@ -9,6 +9,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Denny-Jo
+ * UserConnections - Provides Extended connectivity For User Login Access to the DW System
+ * */
 public class UserConnections extends AbstractOracleConnections
 {
 	public UserConnections()

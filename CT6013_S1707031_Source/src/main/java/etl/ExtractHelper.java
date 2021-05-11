@@ -6,6 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 import oracle.ExtractConnections;
 
+/**
+ * @author Denny-Jo
+ * ExtractHelper - Helper Class that creates Connections to Operational Database(s), retrieving required data, generating Lists of Beans
+ *
+ * Helper Class has been extracted so it can be expanded to extract different types of Data Sources (in the event of new features requiring this use)
+ * */
 public class ExtractHelper
 {
 	public ExtractHelper()

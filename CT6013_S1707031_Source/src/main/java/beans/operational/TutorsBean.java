@@ -4,6 +4,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import org.apache.log4j.Logger;
 
+/**
+ * @author Denny-Jo
+ * TutorsBean JavaBean - Assists with storing DB data for the Tutors Table
+ * */
 public class TutorsBean
 {
 	static final Logger LOG = Logger.getLogger(TutorsBean.class);

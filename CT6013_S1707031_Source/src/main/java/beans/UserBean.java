@@ -1,5 +1,9 @@
 package beans;
 
+/**
+ * @author Denny-Jo
+ * UserBean JavaBean - Assists with storing DB data for a logged in User
+ * */
 public class UserBean
 {
 	private String fUsername;

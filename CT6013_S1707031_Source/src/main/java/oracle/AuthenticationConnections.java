@@ -8,6 +8,10 @@ import java.util.List;
 import java.util.Random;
 import oracle.sql.DATE;
 
+/**
+ * @author Denny-Jo
+ * AuthenticationConnections - Provides Extended connectivity For 2FA Access to the DW System
+ * */
 public class AuthenticationConnections extends AbstractOracleConnections
 {
 	private int digit1;

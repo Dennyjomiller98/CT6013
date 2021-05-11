@@ -4,6 +4,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import org.apache.log4j.Logger;
 
+/**
+ * @author Denny-Jo
+ * ModulesBean JavaBean - Assists with storing DB data for the Modules Table
+ * */
 public class ModulesBean
 {
 	static final Logger LOG = Logger.getLogger(ModulesBean.class);

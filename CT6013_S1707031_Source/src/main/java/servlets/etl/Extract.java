@@ -3,6 +3,7 @@ package servlets.etl;
 import beans.dw.DWResultsBean;
 import beans.operational.*;
 import beans.operational.dimensions.*;
+import etl.DataTransformer;
 import etl.ExtractHelper;
 import etl.LoadHelper;
 import etl.TransformHelper;
@@ -56,18 +57,18 @@ public class Extract extends HttpServlet
 			dimSubjectsBeans = transformHelper.transformDimSubjectsData(dimSubjectsBeans);
 			dimTutorsBeans = transformHelper.transformDimTutorsData(dimTutorsBeans);
 
-			//Data has been Transformed, so now we can Load
+			//Data has been null-safe checked, so now we can Transform Dates/Check ID's before Load
 			LoadHelper loadHelper = new LoadHelper();
 			DWResultsBean loadBean = new DWResultsBean();
 
 			//Prepare Data
-			loadHelper.prepareAssignmentData(assignmentsBeans, loadBean);
 			loadHelper.prepareCourseData(coursesBeans, loadBean);
 			loadHelper.prepareEnrollmentData(enrollmentsBeans, loadBean);
 			loadHelper.prepareModuleData(modulesBeans, loadBean);
 			loadHelper.prepareStudentData(studentsBeans, loadBean);
 			loadHelper.prepareSubjectData(subjectsBeans, loadBean);
 			loadHelper.prepareTutorData(tutorsBeans, loadBean);
+			loadHelper.prepareAssignmentData(assignmentsBeans, loadBean);
 
 			loadHelper.prepareDimCourseData(dimCoursesBeans, loadBean);
 			loadHelper.prepareDimEnrollmentData(dimEnrollmentsBeans, loadBean);
@@ -76,10 +77,20 @@ public class Extract extends HttpServlet
 			loadHelper.prepareDimSubjectData(dimSubjectsBeans, loadBean);
 			loadHelper.prepareDimTutorData(dimTutorsBeans, loadBean);
 
-			//TODO - delete all Tables/dimensions etc (For DW ONLY)
+			//check data, ensure that all ID's are present, or we will get errors retrieving data from the DW once laoded
+			DataTransformer transformer = new DataTransformer();
+			loadBean = transformer.validateAndTransformData(loadBean);
+
 			//Purge old DW data
 			boolean wasPurged = loadHelper.emptyDW();
-			if(wasPurged)
+			boolean wasDimCoursePurged = loadHelper.emptyDimCourse();
+			boolean wasDimEnrollmentPurged = loadHelper.emptyDimEnrollment();
+			boolean wasDimModulePurged = loadHelper.emptyDimModule();
+			boolean wasDimSubjectPurged = loadHelper.emptyDimSubject();
+			boolean wasDimStudentPurged = loadHelper.emptyDimStudent();
+			boolean wasDimTutorPurged = loadHelper.emptyDimTutor();
+			if(wasPurged && wasDimCoursePurged && wasDimEnrollmentPurged && wasDimModulePurged
+			&& wasDimSubjectPurged && wasDimStudentPurged && wasDimTutorPurged)
 			{
 				//Load Data
 				boolean loadSuccess = loadHelper.updateDW(loadBean);

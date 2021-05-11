@@ -4,6 +4,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import org.apache.log4j.Logger;
 
+/**
+ * @author Denny-Jo
+ * DimSubjectsBean JavaBean - Assists with storing DB data for the Subjects SlowChangingDimension Table
+ * */
 public class DimSubjectsBean
 {
 	static final Logger LOG = Logger.getLogger(DimSubjectsBean.class);
@@ -43,7 +47,7 @@ public class DimSubjectsBean
 	{
 		fDimId = id;
 	}
-	public String setDimensionId()
+	public String getDimensionId()
 	{
 		return fDimId;
 	}

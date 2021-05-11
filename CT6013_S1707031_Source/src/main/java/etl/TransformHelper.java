@@ -14,6 +14,8 @@ import java.util.List;
  * Note: If a value can't be Nullable (E.g. ID's) and does not have a value from the Operational data, it's Transformed value will be "Unknown".
  *
  * TransformHelper is called after ExtractHelper retrieves the OP data, and before LoadHelper prepares the data for DW load.
+ *
+ * Method Complexity can be Ignored as seperating the Transform methods will cause confusion on what data is being transformed (Each incoming DB Table/Bean must be handled seperately)
  * */
 public class TransformHelper
 {
@@ -415,7 +417,78 @@ public class TransformHelper
 		if(bean != null)
 		{
 			transformedBean = new EnrollmentsBean();
-			//TODO -
+			String enrollmentId = bean.getEnrollmentId();
+			if(enrollmentId != null)
+			{
+				transformedBean.setEnrollmentId(enrollmentId);
+			}
+			else
+			{
+				transformedBean.setEnrollmentId("Unknown");
+			}
+			String studentId = bean.getStudentId();
+			if(studentId != null)
+			{
+				transformedBean.setStudentId(studentId);
+			}
+			else
+			{
+				transformedBean.setStudentId("Unknown");
+			}
+			String isEnrolled = bean.getIsEnrolled();
+			if(isEnrolled != null)
+			{
+				if(isEnrolled.equalsIgnoreCase("true"))
+				{
+					transformedBean.setIsEnrolled("Enrolled");
+				}
+				else
+				{
+					transformedBean.setIsEnrolled("Not Enrolled");
+				}
+			}
+			else
+			{
+				transformedBean.setIsEnrolled("Unknown");
+			}
+			String courseId = bean.getCourseId();
+			if(courseId != null)
+			{
+				transformedBean.setCourseId(courseId);
+			}
+			else
+			{
+				transformedBean.setCourseId("Unknown");
+			}
+			String enrollDate = bean.getEnrollmentDate();
+			if(enrollDate != null)
+			{
+				if(transformedBean.getIsEnrolled().equalsIgnoreCase("Enrolled"))
+				{
+					transformedBean.setEnrollmentDate(enrollDate);
+				}
+				else
+				{
+					transformedBean.setEnrollmentDate("None");
+				}
+			}
+			else
+			{
+				transformedBean.setEnrollmentDate("Unknown");
+			}
+			String dropout = bean.getHasDropped();
+			if(dropout != null)
+			{
+				//Can't drop out unless they originally enrolled
+				if (transformedBean.getIsEnrolled().equalsIgnoreCase("Enrolled") && dropout.equalsIgnoreCase("true"))
+				{
+					transformedBean.setHasDropped("Dropped Out");
+				}
+			}
+			else
+			{
+				transformedBean.setHasDropped("None");
+			}
 		}
 		else
 		{
@@ -430,7 +503,60 @@ public class TransformHelper
 		if(bean != null)
 		{
 			transformedBean = new ModulesBean();
-			//TODO -
+			String moduleId = bean.getModuleId();
+			if(moduleId != null)
+			{
+				transformedBean.setModuleId(moduleId);
+			}
+			else
+			{
+				transformedBean.setModuleId("Unknown");
+			}
+			String moduleName = bean.getModuleName();
+			if(moduleName != null)
+			{
+				transformedBean.setModuleName(moduleName);
+			}
+			else
+			{
+				transformedBean.setModuleName("Unknown");
+			}
+			String tutor = bean.getModuleTutor();
+			if(tutor != null)
+			{
+				transformedBean.setModuleTutor(tutor);
+			}
+			else
+			{
+				transformedBean.setModuleTutor("Unknown");
+			}
+			String semesterLength = bean.getSemesterLength();
+			if(semesterLength != null)
+			{
+				transformedBean.setSemesterLength(semesterLength);
+			}
+			else
+			{
+				transformedBean.setSemesterLength("Unknown");
+			}
+			String semester = bean.getSemester();
+			if(semester != null)
+			{
+				transformedBean.setSemester(semester);
+			}
+			else
+			{
+				transformedBean.setSemester("Unknown");
+			}
+			String cats = bean.getCats();
+			if(cats != null)
+			{
+				transformedBean.setCats(cats);
+			}
+			else
+			{
+				transformedBean.setCats("Unknown");
+			}
 		}
 		else
 		{
@@ -445,7 +571,69 @@ public class TransformHelper
 		if(bean != null)
 		{
 			transformedBean = new StudentsBean();
-			//TODO -
+			String studentId = bean.getStudentId();
+			if(studentId != null)
+			{
+				transformedBean.setStudentId(studentId);
+			}
+			else
+			{
+				transformedBean.setStudentId("Unknown");
+			}
+			String email = bean.getEmail();
+			if(email != null)
+			{
+				transformedBean.setEmail(email);
+			}
+			else
+			{
+				transformedBean.setEmail("Unknown");
+			}
+			String pword = bean.getPword();
+			if(pword != null)
+			{
+				transformedBean.setPword(pword);
+			}
+			else
+			{
+				transformedBean.setPword("Unknown");
+			}
+			String firstname = bean.getFirstname();
+			if(firstname != null)
+			{
+				transformedBean.setFirstname(firstname);
+			}
+			else
+			{
+				transformedBean.setFirstname("Unknown");
+			}
+			String surname = bean.getSurname();
+			if(surname != null)
+			{
+				transformedBean.setSurname(surname);
+			}
+			else
+			{
+				transformedBean.setSurname("Unknown");
+			}
+			String dob = bean.getDob();
+			if(dob != null)
+			{
+				transformedBean.setDob(dob);
+			}
+			else
+			{
+				transformedBean.setDob("Unknown");
+			}
+			String address = bean.getAddress();
+			if(address != null)
+			{
+				transformedBean.setAddress(address);
+			}
+			else
+			{
+				transformedBean.setAddress("Unknown");
+			}
 		}
 		else
 		{
@@ -460,7 +648,33 @@ public class TransformHelper
 		if(bean != null)
 		{
 			transformedBean = new SubjectsBean();
-			//TODO -
+			String subjectId = bean.getSubjectId();
+			if(subjectId != null)
+			{
+				transformedBean.setSubjectId(subjectId);
+			}
+			else
+			{
+				transformedBean.setSubjectId("Unknown");
+			}
+			String name = bean.getName();
+			if(name != null)
+			{
+				transformedBean.setName(name);
+			}
+			else
+			{
+				transformedBean.setName("Unknown");
+			}
+			String coursesCsv = bean.getCourses();
+			if(coursesCsv != null)
+			{
+				transformedBean.setCourses(coursesCsv);
+			}
+			else
+			{
+				transformedBean.setCourses("Unknown");
+			}
 		}
 		else
 		{
@@ -475,7 +689,69 @@ public class TransformHelper
 		if(bean != null)
 		{
 			transformedBean = new TutorsBean();
-			//TODO -
+			String tutorId = bean.getTutorId();
+			if(tutorId != null)
+			{
+				transformedBean.setTutorId(tutorId);
+			}
+			else
+			{
+				transformedBean.setTutorId("Unknown");
+			}
+			String email = bean.getEmail();
+			if(email != null)
+			{
+				transformedBean.setEmail(email);
+			}
+			else
+			{
+				transformedBean.setEmail("Unknown");
+			}
+			String pword = bean.getPword();
+			if(pword != null)
+			{
+				transformedBean.setPword(pword);
+			}
+			else
+			{
+				transformedBean.setPword("Unknown");
+			}
+			String firstname = bean.getFirstname();
+			if(firstname != null)
+			{
+				transformedBean.setFirstname(firstname);
+			}
+			else
+			{
+				transformedBean.setFirstname("Unknown");
+			}
+			String surname = bean.getSurname();
+			if(surname != null)
+			{
+				transformedBean.setSurname(surname);
+			}
+			else
+			{
+				transformedBean.setSurname("Unknown");
+			}
+			String dob = bean.getDob();
+			if(dob != null)
+			{
+				transformedBean.setDob(dob);
+			}
+			else
+			{
+				transformedBean.setDob("Unknown");
+			}
+			String address = bean.getAddress();
+			if(address != null)
+			{
+				transformedBean.setAddress(address);
+			}
+			else
+			{
+				transformedBean.setAddress("Unknown");
+			}
 		}
 		else
 		{
@@ -490,7 +766,87 @@ public class TransformHelper
 		if(bean != null)
 		{
 			transformedBean = new DimCoursesBean();
-			//TODO -
+			String dimId = bean.getDimensionId();
+			if(dimId != null)
+			{
+				transformedBean.setDimensionId(dimId);
+			}
+			else
+			{
+				transformedBean.setDimensionId("Unknown");
+			}
+			String dateEffective = bean.getEffectiveDate();
+			if(dateEffective != null)
+			{
+				transformedBean.setEffectiveDate(dateEffective);
+			}
+			else
+			{
+				transformedBean.setEffectiveDate("Unknown");
+			}
+			String dateExpired = bean.getExpiredDate();
+			if(dateExpired != null)
+			{
+				transformedBean.setExpiredDate(dateExpired);
+			}
+			else
+			{
+				transformedBean.setExpiredDate("Unknown");
+			}
+			String isCurrentData = bean.getIsCurrent();
+			if(isCurrentData != null)
+			{
+				transformedBean.setIsCurrent(isCurrentData);
+			}
+			else
+			{
+				transformedBean.setIsCurrent("Unknown");
+			}
+			String courseId = bean.getCourseId();
+			if(courseId != null)
+			{
+				transformedBean.setCourseId(courseId);
+			}
+			else
+			{
+				transformedBean.setCourseId("Unknown");
+			}
+			String subjectId = bean.getSubjectId();
+			if(subjectId != null)
+			{
+				transformedBean.setSubjectId(subjectId);
+			}
+			else
+			{
+				transformedBean.setSubjectId("Unknown");
+			}
+			String courseName = bean.getCourseName();
+			if(courseName != null)
+			{
+				transformedBean.setCourseName(courseName);
+			}
+			else
+			{
+				transformedBean.setCourseName("Unknown");
+			}
+			String moduleIdsCsv = bean.getModuleIds();
+			if(moduleIdsCsv != null)
+			{
+				transformedBean.setModuleIds(moduleIdsCsv);
+			}
+			else
+			{
+				transformedBean.setModuleIds("None");
+			}
+			String tutor = bean.getTutor();
+			if(tutor != null)
+			{
+				transformedBean.setTutor(tutor);
+			}
+			else
+			{
+				transformedBean.setTutor("Unknown");
+			}
 		}
 		else
 		{
@@ -505,7 +861,114 @@ public class TransformHelper
 		if(bean != null)
 		{
 			transformedBean = new DimEnrollmentsBean();
-			//TODO -
+			String dimId = bean.getDimensionId();
+			if(dimId != null)
+			{
+				transformedBean.setDimensionId(dimId);
+			}
+			else
+			{
+				transformedBean.setDimensionId("Unknown");
+			}
+			String dateEffective = bean.getEffectiveDate();
+			if(dateEffective != null)
+			{
+				transformedBean.setEffectiveDate(dateEffective);
+			}
+			else
+			{
+				transformedBean.setEffectiveDate("Unknown");
+			}
+			String dateExpired = bean.getExpiredDate();
+			if(dateExpired != null)
+			{
+				transformedBean.setExpiredDate(dateExpired);
+			}
+			else
+			{
+				transformedBean.setExpiredDate("Unknown");
+			}
+			String isCurrentData = bean.getIsCurrent();
+			if(isCurrentData != null)
+			{
+				transformedBean.setIsCurrent(isCurrentData);
+			}
+			else
+			{
+				transformedBean.setIsCurrent("Unknown");
+			}
+			String enrollmentId = bean.getEnrollmentId();
+			if(enrollmentId != null)
+			{
+				transformedBean.setEnrollmentId(enrollmentId);
+			}
+			else
+			{
+				transformedBean.setEnrollmentId("Unknown");
+			}
+			String studentId = bean.getStudentId();
+			if(studentId != null)
+			{
+				transformedBean.setStudentId(studentId);
+			}
+			else
+			{
+				transformedBean.setStudentId("Unknown");
+			}
+			String isEnrolled = bean.getIsEnrolled();
+			if(isEnrolled != null)
+			{
+				if(isEnrolled.equalsIgnoreCase("true"))
+				{
+					transformedBean.setIsEnrolled("Enrolled");
+				}
+				else
+				{
+					transformedBean.setIsEnrolled("Not Enrolled");
+				}
+			}
+			else
+			{
+				transformedBean.setIsEnrolled("Unknown");
+			}
+			String courseId = bean.getCourseId();
+			if(courseId != null)
+			{
+				transformedBean.setCourseId(courseId);
+			}
+			else
+			{
+				transformedBean.setCourseId("Unknown");
+			}
+			String enrollDate = bean.getEnrollmentDate();
+			if(enrollDate != null)
+			{
+				if(transformedBean.getIsEnrolled().equalsIgnoreCase("Enrolled"))
+				{
+					transformedBean.setEnrollmentDate(enrollDate);
+				}
+				else
+				{
+					transformedBean.setEnrollmentDate("None");
+				}
+			}
+			else
+			{
+				transformedBean.setEnrollmentDate("Unknown");
+			}
+			String dropout = bean.getHasDropped();
+			if(dropout != null)
+			{
+				//Can't drop out unless they originally enrolled
+				if (transformedBean.getIsEnrolled().equalsIgnoreCase("Enrolled") && dropout.equalsIgnoreCase("true"))
+				{
+					transformedBean.setHasDropped("Dropped Out");
+				}
+			}
+			else
+			{
+				transformedBean.setHasDropped("None");
+			}
 		}
 		else
 		{
@@ -520,7 +983,96 @@ public class TransformHelper
 		if(bean != null)
 		{
 			transformedBean = new DimModulesBean();
-			//TODO -
+			String dimId = bean.getDimensionId();
+			if(dimId != null)
+			{
+				transformedBean.setDimensionId(dimId);
+			}
+			else
+			{
+				transformedBean.setDimensionId("Unknown");
+			}
+			String dateEffective = bean.getEffectiveDate();
+			if(dateEffective != null)
+			{
+				transformedBean.setEffectiveDate(dateEffective);
+			}
+			else
+			{
+				transformedBean.setEffectiveDate("Unknown");
+			}
+			String dateExpired = bean.getExpiredDate();
+			if(dateExpired != null)
+			{
+				transformedBean.setExpiredDate(dateExpired);
+			}
+			else
+			{
+				transformedBean.setExpiredDate("Unknown");
+			}
+			String isCurrentData = bean.getIsCurrent();
+			if(isCurrentData != null)
+			{
+				transformedBean.setIsCurrent(isCurrentData);
+			}
+			else
+			{
+				transformedBean.setIsCurrent("Unknown");
+			}
+			String moduleId = bean.getModuleId();
+			if(moduleId != null)
+			{
+				transformedBean.setModuleId(moduleId);
+			}
+			else
+			{
+				transformedBean.setModuleId("Unknown");
+			}
+			String moduleName = bean.getModuleName();
+			if(moduleName != null)
+			{
+				transformedBean.setModuleName(moduleName);
+			}
+			else
+			{
+				transformedBean.setModuleName("Unknown");
+			}
+			String tutor = bean.getModuleTutor();
+			if(tutor != null)
+			{
+				transformedBean.setModuleTutor(tutor);
+			}
+			else
+			{
+				transformedBean.setModuleTutor("Unknown");
+			}
+			String semesterLength = bean.getSemesterLength();
+			if(semesterLength != null)
+			{
+				transformedBean.setSemesterLength(semesterLength);
+			}
+			else
+			{
+				transformedBean.setSemesterLength("Unknown");
+			}
+			String semester = bean.getSemester();
+			if(semester != null)
+			{
+				transformedBean.setSemester(semester);
+			}
+			else
+			{
+				transformedBean.setSemester("Unknown");
+			}
+			String cats = bean.getCats();
+			if(cats != null)
+			{
+				transformedBean.setCats(cats);
+			}
+			else
+			{
+				transformedBean.setCats("Unknown");
+			}
 		}
 		else
 		{
@@ -535,7 +1087,105 @@ public class TransformHelper
 		if(bean != null)
 		{
 			transformedBean = new DimStudentsBean();
-			//TODO -
+			String dimId = bean.getDimensionId();
+			if(dimId != null)
+			{
+				transformedBean.setDimensionId(dimId);
+			}
+			else
+			{
+				transformedBean.setDimensionId("Unknown");
+			}
+			String dateEffective = bean.getEffectiveDate();
+			if(dateEffective != null)
+			{
+				transformedBean.setEffectiveDate(dateEffective);
+			}
+			else
+			{
+				transformedBean.setEffectiveDate("Unknown");
+			}
+			String dateExpired = bean.getExpiredDate();
+			if(dateExpired != null)
+			{
+				transformedBean.setExpiredDate(dateExpired);
+			}
+			else
+			{
+				transformedBean.setExpiredDate("Unknown");
+			}
+			String isCurrentData = bean.getIsCurrent();
+			if(isCurrentData != null)
+			{
+				transformedBean.setIsCurrent(isCurrentData);
+			}
+			else
+			{
+				transformedBean.setIsCurrent("Unknown");
+			}
+			String studentId = bean.getStudentId();
+			if(studentId != null)
+			{
+				transformedBean.setStudentId(studentId);
+			}
+			else
+			{
+				transformedBean.setStudentId("Unknown");
+			}
+			String email = bean.getEmail();
+			if(email != null)
+			{
+				transformedBean.setEmail(email);
+			}
+			else
+			{
+				transformedBean.setEmail("Unknown");
+			}
+			String pword = bean.getPword();
+			if(pword != null)
+			{
+				transformedBean.setPword(pword);
+			}
+			else
+			{
+				transformedBean.setPword("Unknown");
+			}
+			String firstname = bean.getFirstname();
+			if(firstname != null)
+			{
+				transformedBean.setFirstname(firstname);
+			}
+			else
+			{
+				transformedBean.setFirstname("Unknown");
+			}
+			String surname = bean.getSurname();
+			if(surname != null)
+			{
+				transformedBean.setSurname(surname);
+			}
+			else
+			{
+				transformedBean.setSurname("Unknown");
+			}
+			String dob = bean.getDob();
+			if(dob != null)
+			{
+				transformedBean.setDob(dob);
+			}
+			else
+			{
+				transformedBean.setDob("Unknown");
+			}
+			String address = bean.getAddress();
+			if(address != null)
+			{
+				transformedBean.setAddress(address);
+			}
+			else
+			{
+				transformedBean.setAddress("Unknown");
+			}
 		}
 		else
 		{
@@ -550,7 +1200,69 @@ public class TransformHelper
 		if(bean != null)
 		{
 			transformedBean = new DimSubjectsBean();
-			//TODO -
+			String dimId = bean.getDimensionId();
+			if(dimId != null)
+			{
+				transformedBean.setDimensionId(dimId);
+			}
+			else
+			{
+				transformedBean.setDimensionId("Unknown");
+			}
+			String dateEffective = bean.getEffectiveDate();
+			if(dateEffective != null)
+			{
+				transformedBean.setEffectiveDate(dateEffective);
+			}
+			else
+			{
+				transformedBean.setEffectiveDate("Unknown");
+			}
+			String dateExpired = bean.getExpiredDate();
+			if(dateExpired != null)
+			{
+				transformedBean.setExpiredDate(dateExpired);
+			}
+			else
+			{
+				transformedBean.setExpiredDate("Unknown");
+			}
+			String isCurrentData = bean.getIsCurrent();
+			if(isCurrentData != null)
+			{
+				transformedBean.setIsCurrent(isCurrentData);
+			}
+			else
+			{
+				transformedBean.setIsCurrent("Unknown");
+			}
+			String subjectId = bean.getSubjectId();
+			if(subjectId != null)
+			{
+				transformedBean.setSubjectId(subjectId);
+			}
+			else
+			{
+				transformedBean.setSubjectId("Unknown");
+			}
+			String name = bean.getName();
+			if(name != null)
+			{
+				transformedBean.setName(name);
+			}
+			else
+			{
+				transformedBean.setName("Unknown");
+			}
+			String coursesCsv = bean.getCourses();
+			if(coursesCsv != null)
+			{
+				transformedBean.setCourses(coursesCsv);
+			}
+			else
+			{
+				transformedBean.setCourses("Unknown");
+			}
 		}
 		else
 		{
@@ -565,7 +1277,105 @@ public class TransformHelper
 		if(bean != null)
 		{
 			transformedBean = new DimTutorsBean();
-			//TODO -
+			String dimId = bean.getDimensionId();
+			if(dimId != null)
+			{
+				transformedBean.setDimensionId(dimId);
+			}
+			else
+			{
+				transformedBean.setDimensionId("Unknown");
+			}
+			String dateEffective = bean.getEffectiveDate();
+			if(dateEffective != null)
+			{
+				transformedBean.setEffectiveDate(dateEffective);
+			}
+			else
+			{
+				transformedBean.setEffectiveDate("Unknown");
+			}
+			String dateExpired = bean.getExpiredDate();
+			if(dateExpired != null)
+			{
+				transformedBean.setExpiredDate(dateExpired);
+			}
+			else
+			{
+				transformedBean.setExpiredDate("Unknown");
+			}
+			String isCurrentData = bean.getIsCurrent();
+			if(isCurrentData != null)
+			{
+				transformedBean.setIsCurrent(isCurrentData);
+			}
+			else
+			{
+				transformedBean.setIsCurrent("Unknown");
+			}
+			String tutorId = bean.getTutorId();
+			if(tutorId != null)
+			{
+				transformedBean.setTutorId(tutorId);
+			}
+			else
+			{
+				transformedBean.setTutorId("Unknown");
+			}
+			String email = bean.getEmail();
+			if(email != null)
+			{
+				transformedBean.setEmail(email);
+			}
+			else
+			{
+				transformedBean.setEmail("Unknown");
+			}
+			String pword = bean.getPword();
+			if(pword != null)
+			{
+				transformedBean.setPword(pword);
+			}
+			else
+			{
+				transformedBean.setPword("Unknown");
+			}
+			String firstname = bean.getFirstname();
+			if(firstname != null)
+			{
+				transformedBean.setFirstname(firstname);
+			}
+			else
+			{
+				transformedBean.setFirstname("Unknown");
+			}
+			String surname = bean.getSurname();
+			if(surname != null)
+			{
+				transformedBean.setSurname(surname);
+			}
+			else
+			{
+				transformedBean.setSurname("Unknown");
+			}
+			String dob = bean.getDob();
+			if(dob != null)
+			{
+				transformedBean.setDob(dob);
+			}
+			else
+			{
+				transformedBean.setDob("Unknown");
+			}
+			String address = bean.getAddress();
+			if(address != null)
+			{
+				transformedBean.setAddress(address);
+			}
+			else
+			{
+				transformedBean.setAddress("Unknown");
+			}
 		}
 		else
 		{

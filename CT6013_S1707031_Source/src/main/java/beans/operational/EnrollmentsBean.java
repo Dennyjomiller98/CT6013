@@ -4,6 +4,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import org.apache.log4j.Logger;
 
+/**
+ * @author Denny-Jo
+ * EnrollmentsBean JavaBean - Assists with storing DB data for the Enrollments Table
+ * */
 public class EnrollmentsBean
 {
 	static final Logger LOG = Logger.getLogger(EnrollmentsBean.class);

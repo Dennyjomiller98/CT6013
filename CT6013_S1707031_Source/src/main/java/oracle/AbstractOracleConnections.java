@@ -5,10 +5,15 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import org.apache.log4j.Logger;
 
+/**
+ * @author Denny-Jo
+ * AbstractOracleConnections - Class provides use for Oracle DB Connectivity, for both the Operational and DW Connections
+ * */
 public class AbstractOracleConnections implements IOracleConnections
 {
 	static final Logger LOG = Logger.getLogger(AbstractOracleConnections.class);
 
+	//TODO - Remove these static final variables, in exchange for a properties file containing TBL name information
 	public static final String ORACLE_DRIVER = "oracle.jdbc.driver.OracleDriver";
 	public static final String ORACLE_DRIVER_URL = "jdbc:oracle:thin:@//oracle.glos.ac.uk:1521/orclpdb.chelt.local";
 	public static final String ORACLE_OP_USERNAME = "s1707031_OP";
@@ -32,6 +37,12 @@ public class AbstractOracleConnections implements IOracleConnections
 	public static final String TBL_DIM_TUTORS = "CT6013_DIM_TUTORS";
 
 	public static final String TBL_DW_RESULTS = "DW_RESULTS";
+	public static final String TBL_DW_DIM_COURSE = "DW_DIM_COURSE";
+	public static final String TBL_DW_DIM_ENROLLMENT = "DW_DIM_ENROLLMENT";
+	public static final String TBL_DW_DIM_SUBJECT = "DW_DIM_SUBJECT";
+	public static final String TBL_DW_DIM_MODULE = "DW_DIM_MODULE";
+	public static final String TBL_DW_DIM_STUDENT = "DW_DIM_STUDENT";
+	public static final String TBL_DW_DIM_TUTOR = "DW_DIM_TUTOR";
 	public static final String AUTH_COLLECTION = "dw_auth";
 	public static final String USERS_COLLECTION = "dw_users";
 

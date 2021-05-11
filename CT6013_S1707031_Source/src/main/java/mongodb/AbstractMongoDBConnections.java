@@ -2,6 +2,11 @@ package mongodb;
 
 import org.apache.log4j.Logger;
 
+/**
+ * @author Denny-Jo
+ * @deprecated - We do not have MongoDB datasource in Semester 2, so AbstractMongoDBConnections no longer provides use.
+ * */
+@Deprecated
 public abstract class AbstractMongoDBConnections implements IMongoDBConnections{
     static final Logger LOG = Logger.getLogger(AbstractMongoDBConnections.class);
 

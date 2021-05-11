@@ -10,6 +10,12 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import org.apache.log4j.Logger;
 
+/**
+ * @author Denny-Jo
+ * Emailer - Class Constructor will retrieve hidden properties for basic SMTP Connection.
+ *
+ * This Class is used for sending Users their 2FA Authorization Pin when they attempt a Login to the system.
+ * */
 public class Emailer
 {
 	static final Logger LOG = Logger.getLogger(Emailer.class);

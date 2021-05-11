@@ -4,6 +4,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import org.apache.log4j.Logger;
 
+/**
+ * @author Denny-Jo
+ * AssignmentsBean JavaBean - Assists with storing DB data for the Assignments Table
+ * */
 public class AssignmentsBean
 {
 	static final Logger LOG = Logger.getLogger(AssignmentsBean.class);
