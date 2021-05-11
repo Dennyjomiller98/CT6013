@@ -111,8 +111,8 @@ public class Extract extends HttpServlet
 		}
 		catch(Exception e)
 		{
-			request.getSession(true).setAttribute("errors", "An error has occurred whilst Extracting Data for the Database Warehouse" );
-			LOG.error("An error has occurred whilst Extracting Data for the Database Warehouse", e);
+			request.getSession(true).setAttribute("errors", "An error has occurred during the Database Warehouse ETL Process" + e );
+			LOG.error("An error has occurred during the Database Warehouse ETL Process", e);
 			attemptRedirect(request, response);
 		}
 	}
