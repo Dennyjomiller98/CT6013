@@ -102,7 +102,6 @@ public class Extract extends HttpServlet
 				else
 				{
 					request.getSession(true).setAttribute("errors", "An error has occurred whilst Loading Data for the Database Warehouse" );
-					//request.getSession(true).setAttribute("errors", "Bean Student info:" + loadBean.getDimStudents());
 				}
 			}
 			else

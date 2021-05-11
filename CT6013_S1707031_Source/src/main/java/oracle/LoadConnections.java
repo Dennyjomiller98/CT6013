@@ -155,6 +155,7 @@ public class LoadConnections extends AbstractOracleConnections
 		}
 		else
 		{
+			request.getSession(true).setAttribute("exception", "No data to add? Bean:" + studentBeans);
 			//No Bean data to add, so the load (that never happened) did not fail
 			successfulLoad = true;
 		}
