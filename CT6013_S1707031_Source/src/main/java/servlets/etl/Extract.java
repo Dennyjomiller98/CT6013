@@ -37,7 +37,7 @@ public class Extract extends HttpServlet
 			List<DimCoursesBean> dimCoursesBeans = extractHelper.retrieveDimCoursesTable();
 			List<DimEnrollmentsBean> dimEnrollmentsBeans = extractHelper.retrieveDimEnrollmentsTable();
 			List<DimModulesBean> dimModulesBeans = extractHelper.retrieveDimModulesTable();
-			List<DimStudentsBean> dimStudentsBeans = extractHelper.retrieveDimStudentsTable();
+			List<DimStudentsBean> dimStudentsBeans = extractHelper.retrieveDimStudentsTable(request);
 			List<DimSubjectsBean> dimSubjectsBeans = extractHelper.retrieveDimSubjectsTable();
 			List<DimTutorsBean> dimTutorsBeans = extractHelper.retrieveDimTutorsTable();
 
@@ -54,7 +54,6 @@ public class Extract extends HttpServlet
 			dimCoursesBeans = transformHelper.transformDimCoursesData(dimCoursesBeans);
 			dimEnrollmentsBeans = transformHelper.transformDimEnrollmentsData(dimEnrollmentsBeans);
 			dimModulesBeans = transformHelper.transformDimModulesData(dimModulesBeans);
-			request.getSession(true).setAttribute("success", "StudentBeans size before transform:" + dimStudentsBeans.size());
 			dimStudentsBeans = transformHelper.transformDimStudentsData(dimStudentsBeans);
 			dimSubjectsBeans = transformHelper.transformDimSubjectsData(dimSubjectsBeans);
 			dimTutorsBeans = transformHelper.transformDimTutorsData(dimTutorsBeans);

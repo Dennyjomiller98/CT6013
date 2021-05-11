@@ -7,7 +7,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Denny-Jo
@@ -428,7 +430,7 @@ public class ExtractConnections extends AbstractOracleConnections
 		return allBeans;
 	}
 
-	public List<DimStudentsBean> retrieveDimStudentsTable()
+	public List<DimStudentsBean> retrieveDimStudentsTable(HttpServletRequest request)
 	{
 		List<DimStudentsBean> ret = new ArrayList<>();
 		try
@@ -463,6 +465,7 @@ public class ExtractConnections extends AbstractOracleConnections
 		catch(Exception e)
 		{
 			LOG.error("Error, could not retrieve data from table", e);
+			request.getSession(true).setAttribute("exception", "exception: " + e + Arrays.toString(e.getStackTrace()));
 		}
 		return ret;
 	}

@@ -4,6 +4,7 @@ import beans.operational.*;
 import beans.operational.dimensions.*;
 import java.util.ArrayList;
 import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 import oracle.ExtractConnections;
 
 /**
@@ -111,14 +112,15 @@ public class ExtractHelper
 		}
 		return allStudents;
 	}
-	public List<DimStudentsBean> retrieveDimStudentsTable()
+	public List<DimStudentsBean> retrieveDimStudentsTable(HttpServletRequest request)
 	{
 		List<DimStudentsBean> allStudents = new ArrayList<>();
 		ExtractConnections conn = new ExtractConnections();
-		List<DimStudentsBean> studentsBeans = conn.retrieveDimStudentsTable();
+		List<DimStudentsBean> studentsBeans = conn.retrieveDimStudentsTable(request);
 		if(studentsBeans != null && !studentsBeans.isEmpty())
 		{
 			allStudents.addAll(studentsBeans);
+			request.getSession(true).setAttribute("success", "StudentBeans not null" + allStudents.size());
 		}
 		return allStudents;
 	}
