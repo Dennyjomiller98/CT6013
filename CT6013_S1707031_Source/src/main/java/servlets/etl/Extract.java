@@ -74,6 +74,8 @@ public class Extract extends HttpServlet
 			loadHelper.prepareDimCourseData(dimCoursesBeans, loadBean);
 			loadHelper.prepareDimEnrollmentData(dimEnrollmentsBeans, loadBean);
 			loadHelper.prepareDimModuleData(dimModulesBeans, loadBean);
+
+			request.getSession(true).setAttribute("success", "StudentBeans size:" + dimStudentsBeans.size());
 			loadHelper.prepareDimStudentData(dimStudentsBeans, loadBean);
 			loadHelper.prepareDimSubjectData(dimSubjectsBeans, loadBean);
 			loadHelper.prepareDimTutorData(dimTutorsBeans, loadBean);
