@@ -440,7 +440,7 @@ public class LoadConnections extends AbstractOracleConnections
 		}
 		catch(Exception e)
 		{
-			request.getSession(true).setAttribute("query", "Load Query Except:" + e + Arrays.toString(e.getStackTrace()));
+			request.getSession(true).setAttribute("query", "Load Query Exception, Query is:" + query);
 			LOG.error("Query failure, using query: " + query, e);
 		}
 		oracleClient.close();
