@@ -34,19 +34,10 @@ public class ExtractConnections extends AbstractOracleConnections
 				//Select Query
 				String query = "SELECT * FROM " + TBL_ASSIGNMENTS;
 				//Execute query
-				ResultSet resultSet = executeQuery(oracleClient, query);
-				List<AssignmentsBean> assignmentsBeans;
-				if(resultSet != null)
+				List<AssignmentsBean> assignmentsBeans = executeAssignmentsQuery(oracleClient, query);
+				if(!assignmentsBeans.isEmpty())
 				{
-					assignmentsBeans = assigmentsBeansCreation(resultSet);
-					if(!assignmentsBeans.isEmpty())
-					{
-						ret = assignmentsBeans;
-					}
-					else
-					{
-						LOG.debug("No Assignments Found.");
-					}
+					ret = assignmentsBeans;
 				}
 			}
 			else
@@ -59,18 +50,6 @@ public class ExtractConnections extends AbstractOracleConnections
 			LOG.error("Error, could not retrieve data from table", e);
 		}
 		return ret;
-	}
-
-	private List<AssignmentsBean> assigmentsBeansCreation(ResultSet resultSet) throws SQLException
-	{
-		List<AssignmentsBean> allBeans = new ArrayList<>();
-		while (resultSet.next())
-		{
-			AssignmentsBean bean = new AssignmentsBean(resultSet);
-			//Add bean to list
-			allBeans.add(bean);
-		}
-		return allBeans;
 	}
 
 	public List<CoursesBean> retrieveCoursesTable()
@@ -85,19 +64,10 @@ public class ExtractConnections extends AbstractOracleConnections
 				//Select Query
 				String query = "SELECT * FROM " + TBL_COURSES;
 				//Execute query
-				ResultSet resultSet = executeQuery(oracleClient, query);
-				List<CoursesBean> coursesBeans;
-				if(resultSet != null)
+				List<CoursesBean> coursesBeans = executeCoursesQuery(oracleClient, query);
+				if(!coursesBeans.isEmpty())
 				{
-					coursesBeans = coursesBeansCreation(resultSet);
-					if(!coursesBeans.isEmpty())
-					{
-						ret = coursesBeans;
-					}
-					else
-					{
-						LOG.debug("No Courses Found.");
-					}
+					ret = coursesBeans;
 				}
 			}
 			else
@@ -110,18 +80,6 @@ public class ExtractConnections extends AbstractOracleConnections
 			LOG.error("Error, could not retrieve data from table", e);
 		}
 		return ret;
-	}
-
-	private List<CoursesBean> coursesBeansCreation(ResultSet resultSet) throws SQLException
-	{
-		List<CoursesBean> allBeans = new ArrayList<>();
-		while (resultSet.next())
-		{
-			CoursesBean bean = new CoursesBean(resultSet);
-			//Add bean to list
-			allBeans.add(bean);
-		}
-		return allBeans;
 	}
 
 	public List<DimCoursesBean> retrieveDimCoursesTable()
@@ -136,19 +94,10 @@ public class ExtractConnections extends AbstractOracleConnections
 				//Select Query
 				String query = "SELECT * FROM " + TBL_DIM_COURSES;
 				//Execute query
-				ResultSet resultSet = executeQuery(oracleClient, query);
-				List<DimCoursesBean> coursesBeans;
-				if(resultSet != null)
+				List<DimCoursesBean> coursesBeans = executeDimCoursesQuery(oracleClient, query);
+				if(!coursesBeans.isEmpty())
 				{
-					coursesBeans = dimCoursesBeansCreation(resultSet);
-					if(!coursesBeans.isEmpty())
-					{
-						ret = coursesBeans;
-					}
-					else
-					{
-						LOG.debug("No Courses Found.");
-					}
+					ret = coursesBeans;
 				}
 			}
 			else
@@ -161,18 +110,6 @@ public class ExtractConnections extends AbstractOracleConnections
 			LOG.error("Error, could not retrieve data from table", e);
 		}
 		return ret;
-	}
-
-	private List<DimCoursesBean> dimCoursesBeansCreation(ResultSet resultSet) throws SQLException
-	{
-		List<DimCoursesBean> allBeans = new ArrayList<>();
-		while (resultSet.next())
-		{
-			DimCoursesBean bean = new DimCoursesBean(resultSet);
-			//Add bean to list
-			allBeans.add(bean);
-		}
-		return allBeans;
 	}
 
 	public List<EnrollmentsBean> retrieveEnrollmentsTable()
@@ -187,19 +124,10 @@ public class ExtractConnections extends AbstractOracleConnections
 				//Select Query
 				String query = "SELECT * FROM " + TBL_ENROLLMENTS;
 				//Execute query
-				ResultSet resultSet = executeQuery(oracleClient, query);
-				List<EnrollmentsBean> enrollmentsBeans;
-				if(resultSet != null)
+				List<EnrollmentsBean> enrollmentsBeans = executeEnrollmentsQuery(oracleClient, query);
+				if(!enrollmentsBeans.isEmpty())
 				{
-					enrollmentsBeans = enrollmentsBeansCreation(resultSet);
-					if(!enrollmentsBeans.isEmpty())
-					{
-						ret = enrollmentsBeans;
-					}
-					else
-					{
-						LOG.debug("No Enrollments Found.");
-					}
+					ret = enrollmentsBeans;
 				}
 			}
 			else
@@ -212,18 +140,6 @@ public class ExtractConnections extends AbstractOracleConnections
 			LOG.error("Error, could not retrieve data from table", e);
 		}
 		return ret;
-	}
-
-	private List<EnrollmentsBean> enrollmentsBeansCreation(ResultSet resultSet) throws SQLException
-	{
-		List<EnrollmentsBean> allBeans = new ArrayList<>();
-		while (resultSet.next())
-		{
-			EnrollmentsBean bean = new EnrollmentsBean(resultSet);
-			//Add bean to list
-			allBeans.add(bean);
-		}
-		return allBeans;
 	}
 
 	public List<DimEnrollmentsBean> retrieveDimEnrollmentsTable()
@@ -238,19 +154,10 @@ public class ExtractConnections extends AbstractOracleConnections
 				//Select Query
 				String query = "SELECT * FROM " + TBL_DIM_ENROLLMENTS;
 				//Execute query
-				ResultSet resultSet = executeQuery(oracleClient, query);
-				List<DimEnrollmentsBean> enrollmentsBeans;
-				if(resultSet != null)
+				List<DimEnrollmentsBean> enrollmentsBeans = executeDimEnrollmentsQuery(oracleClient, query);
+				if(!enrollmentsBeans.isEmpty())
 				{
-					enrollmentsBeans = dimEnrollmentsBeansCreation(resultSet);
-					if(!enrollmentsBeans.isEmpty())
-					{
-						ret = enrollmentsBeans;
-					}
-					else
-					{
-						LOG.debug("No Enrollments Found.");
-					}
+					ret = enrollmentsBeans;
 				}
 			}
 			else
@@ -263,18 +170,6 @@ public class ExtractConnections extends AbstractOracleConnections
 			LOG.error("Error, could not retrieve data from table", e);
 		}
 		return ret;
-	}
-
-	private List<DimEnrollmentsBean> dimEnrollmentsBeansCreation(ResultSet resultSet) throws SQLException
-	{
-		List<DimEnrollmentsBean> allBeans = new ArrayList<>();
-		while (resultSet.next())
-		{
-			DimEnrollmentsBean bean = new DimEnrollmentsBean(resultSet);
-			//Add bean to list
-			allBeans.add(bean);
-		}
-		return allBeans;
 	}
 
 	public List<ModulesBean> retrieveModulesTable()
@@ -289,19 +184,10 @@ public class ExtractConnections extends AbstractOracleConnections
 				//Select Query
 				String query = "SELECT * FROM " + TBL_MODULES;
 				//Execute query
-				ResultSet resultSet = executeQuery(oracleClient, query);
-				List<ModulesBean> modulesBeans;
-				if(resultSet != null)
+				List<ModulesBean> modulesBeans = executeModulesQuery(oracleClient, query);
+				if(!modulesBeans.isEmpty())
 				{
-					modulesBeans = modulesBeansCreation(resultSet);
-					if(!modulesBeans.isEmpty())
-					{
-						ret = modulesBeans;
-					}
-					else
-					{
-						LOG.debug("No Modules Found.");
-					}
+					ret = modulesBeans;
 				}
 			}
 			else
@@ -314,18 +200,6 @@ public class ExtractConnections extends AbstractOracleConnections
 			LOG.error("Error, could not retrieve data from table", e);
 		}
 		return ret;
-	}
-
-	private List<ModulesBean> modulesBeansCreation(ResultSet resultSet) throws SQLException
-	{
-		List<ModulesBean> allBeans = new ArrayList<>();
-		while (resultSet.next())
-		{
-			ModulesBean bean = new ModulesBean(resultSet);
-			//Add bean to list
-			allBeans.add(bean);
-		}
-		return allBeans;
 	}
 
 	public List<DimModulesBean> retrieveDimModulesTable()
@@ -340,19 +214,10 @@ public class ExtractConnections extends AbstractOracleConnections
 				//Select Query
 				String query = "SELECT * FROM " + TBL_DIM_MODULES;
 				//Execute query
-				ResultSet resultSet = executeQuery(oracleClient, query);
-				List<DimModulesBean> modulesBeans;
-				if(resultSet != null)
+				List<DimModulesBean> modulesBeans = executeDimModulesQuery(oracleClient, query);
+				if(!modulesBeans.isEmpty())
 				{
-					modulesBeans = dimModulesBeansCreation(resultSet);
-					if(!modulesBeans.isEmpty())
-					{
-						ret = modulesBeans;
-					}
-					else
-					{
-						LOG.debug("No Modules Found.");
-					}
+					ret = modulesBeans;
 				}
 			}
 			else
@@ -365,18 +230,6 @@ public class ExtractConnections extends AbstractOracleConnections
 			LOG.error("Error, could not retrieve data from table", e);
 		}
 		return ret;
-	}
-
-	private List<DimModulesBean> dimModulesBeansCreation(ResultSet resultSet) throws SQLException
-	{
-		List<DimModulesBean> allBeans = new ArrayList<>();
-		while (resultSet.next())
-		{
-			DimModulesBean bean = new DimModulesBean(resultSet);
-			//Add bean to list
-			allBeans.add(bean);
-		}
-		return allBeans;
 	}
 
 	public List<StudentsBean> retrieveStudentsTable()
@@ -391,19 +244,10 @@ public class ExtractConnections extends AbstractOracleConnections
 				//Select Query
 				String query = "SELECT * FROM " + TBL_STUDENTS;
 				//Execute query
-				ResultSet resultSet = executeQuery(oracleClient, query);
-				List<StudentsBean> studentsBeans;
-				if(resultSet != null)
+				List<StudentsBean> studentsBeans = executeStudentsQuery(oracleClient, query);
+				if(!studentsBeans.isEmpty())
 				{
-					studentsBeans = studentsBeansCreation(resultSet);
-					if(!studentsBeans.isEmpty())
-					{
-						ret = studentsBeans;
-					}
-					else
-					{
-						LOG.debug("No Students Found.");
-					}
+					ret = studentsBeans;
 				}
 			}
 			else
@@ -418,18 +262,6 @@ public class ExtractConnections extends AbstractOracleConnections
 		return ret;
 	}
 
-	private List<StudentsBean> studentsBeansCreation(ResultSet resultSet) throws SQLException
-	{
-		List<StudentsBean> allBeans = new ArrayList<>();
-		while (resultSet.next())
-		{
-			StudentsBean bean = new StudentsBean(resultSet);
-			//Add bean to list
-			allBeans.add(bean);
-		}
-		return allBeans;
-	}
-
 	public List<DimStudentsBean> retrieveDimStudentsTable(HttpServletRequest request)
 	{
 		List<DimStudentsBean> ret = new ArrayList<>();
@@ -442,19 +274,10 @@ public class ExtractConnections extends AbstractOracleConnections
 				//Select Query
 				String query = "SELECT * FROM " + TBL_DIM_STUDENTS;
 				//Execute query
-				ResultSet resultSet = executeQuery(oracleClient, query);
-				List<DimStudentsBean> studentsBeans;
-				if(resultSet != null)
+				List<DimStudentsBean> studentsBeans = executeDimStudentsQuery(oracleClient, query);
+				if(!studentsBeans.isEmpty())
 				{
-					studentsBeans = dimStudentsBeansCreation(resultSet);
-					if(!studentsBeans.isEmpty())
-					{
-						ret = studentsBeans;
-					}
-					else
-					{
-						LOG.debug("No Students Found.");
-					}
+					ret = studentsBeans;
 				}
 			}
 			else
@@ -470,18 +293,6 @@ public class ExtractConnections extends AbstractOracleConnections
 		return ret;
 	}
 
-	private List<DimStudentsBean> dimStudentsBeansCreation(ResultSet resultSet) throws SQLException
-	{
-		List<DimStudentsBean> allBeans = new ArrayList<>();
-		while (resultSet.next())
-		{
-			DimStudentsBean bean = new DimStudentsBean(resultSet);
-			//Add bean to list
-			allBeans.add(bean);
-		}
-		return allBeans;
-	}
-
 	public List<SubjectsBean> retrieveSubjectsTable()
 	{
 		List<SubjectsBean> ret = new ArrayList<>();
@@ -494,19 +305,10 @@ public class ExtractConnections extends AbstractOracleConnections
 				//Select Query
 				String query = "SELECT * FROM " + TBL_SUBJECTS;
 				//Execute query
-				ResultSet resultSet = executeQuery(oracleClient, query);
-				List<SubjectsBean> subjectsBeans;
-				if(resultSet != null)
+				List<SubjectsBean> subjectsBeans = executeSubjectsQuery(oracleClient, query);
+				if(!subjectsBeans.isEmpty())
 				{
-					subjectsBeans = subjectsBeansCreation(resultSet);
-					if(!subjectsBeans.isEmpty())
-					{
-						ret = subjectsBeans;
-					}
-					else
-					{
-						LOG.debug("No Subjects Found.");
-					}
+					ret = subjectsBeans;
 				}
 			}
 			else
@@ -519,18 +321,6 @@ public class ExtractConnections extends AbstractOracleConnections
 			LOG.error("Error, could not retrieve data from table", e);
 		}
 		return ret;
-	}
-
-	private List<SubjectsBean> subjectsBeansCreation(ResultSet resultSet) throws SQLException
-	{
-		List<SubjectsBean> allBeans = new ArrayList<>();
-		while (resultSet.next())
-		{
-			SubjectsBean bean = new SubjectsBean(resultSet);
-			//Add bean to list
-			allBeans.add(bean);
-		}
-		return allBeans;
 	}
 
 	public List<DimSubjectsBean> retrieveDimSubjectsTable()
@@ -545,19 +335,10 @@ public class ExtractConnections extends AbstractOracleConnections
 				//Select Query
 				String query = "SELECT * FROM " + TBL_DIM_SUBJECTS;
 				//Execute query
-				ResultSet resultSet = executeQuery(oracleClient, query);
-				List<DimSubjectsBean> subjectsBeans;
-				if(resultSet != null)
+				List<DimSubjectsBean> subjectsBeans = executeDimSubjectsQuery(oracleClient, query);
+				if(!subjectsBeans.isEmpty())
 				{
-					subjectsBeans = dimSubjectsBeansCreation(resultSet);
-					if(!subjectsBeans.isEmpty())
-					{
-						ret = subjectsBeans;
-					}
-					else
-					{
-						LOG.debug("No Subjects Found.");
-					}
+					ret = subjectsBeans;
 				}
 			}
 			else
@@ -570,18 +351,6 @@ public class ExtractConnections extends AbstractOracleConnections
 			LOG.error("Error, could not retrieve data from table", e);
 		}
 		return ret;
-	}
-
-	private List<DimSubjectsBean> dimSubjectsBeansCreation(ResultSet resultSet) throws SQLException
-	{
-		List<DimSubjectsBean> allBeans = new ArrayList<>();
-		while (resultSet.next())
-		{
-			DimSubjectsBean bean = new DimSubjectsBean(resultSet);
-			//Add bean to list
-			allBeans.add(bean);
-		}
-		return allBeans;
 	}
 
 	public List<TutorsBean> retrieveTutorsTable()
@@ -596,19 +365,10 @@ public class ExtractConnections extends AbstractOracleConnections
 				//Select Query
 				String query = "SELECT * FROM " + TBL_TUTORS;
 				//Execute query
-				ResultSet resultSet = executeQuery(oracleClient, query);
-				List<TutorsBean> tutorsBeans;
-				if(resultSet != null)
+				List<TutorsBean> tutorsBeans = executeTutorsQuery(oracleClient, query);
+				if(!tutorsBeans.isEmpty())
 				{
-					tutorsBeans = tutorsBeansCreation(resultSet);
-					if(!tutorsBeans.isEmpty())
-					{
-						ret = tutorsBeans;
-					}
-					else
-					{
-						LOG.debug("No Tutors Found.");
-					}
+					ret = tutorsBeans;
 				}
 			}
 			else
@@ -621,18 +381,6 @@ public class ExtractConnections extends AbstractOracleConnections
 			LOG.error("Error, could not retrieve data from table", e);
 		}
 		return ret;
-	}
-
-	private List<TutorsBean> tutorsBeansCreation(ResultSet resultSet) throws SQLException
-	{
-		List<TutorsBean> allBeans = new ArrayList<>();
-		while (resultSet.next())
-		{
-			TutorsBean bean = new TutorsBean(resultSet);
-			//Add bean to list
-			allBeans.add(bean);
-		}
-		return allBeans;
 	}
 
 	public List<DimTutorsBean> retrieveDimTutorsTable()
@@ -647,19 +395,10 @@ public class ExtractConnections extends AbstractOracleConnections
 				//Select Query
 				String query = "SELECT * FROM " + TBL_DIM_TUTORS;
 				//Execute query
-				ResultSet resultSet = executeQuery(oracleClient, query);
-				List<DimTutorsBean> tutorsBeans;
-				if(resultSet != null)
+				List<DimTutorsBean> tutorsBeans = executeDimTutorsQuery(oracleClient, query);
+				if(!tutorsBeans.isEmpty())
 				{
-					tutorsBeans = dimTutorsBeansCreation(resultSet);
-					if(!tutorsBeans.isEmpty())
-					{
-						ret = tutorsBeans;
-					}
-					else
-					{
-						LOG.debug("No Tutors Found.");
-					}
+					ret = tutorsBeans;
 				}
 			}
 			else
@@ -674,28 +413,17 @@ public class ExtractConnections extends AbstractOracleConnections
 		return ret;
 	}
 
-	private List<DimTutorsBean> dimTutorsBeansCreation(ResultSet resultSet) throws SQLException
+	private List<DimStudentsBean> executeDimStudentsQuery(Connection oracleClient, String query) throws SQLException
 	{
-		List<DimTutorsBean> allBeans = new ArrayList<>();
-		while (resultSet.next())
-		{
-			DimTutorsBean bean = new DimTutorsBean(resultSet);
-			//Add bean to list
-			allBeans.add(bean);
-		}
-		return allBeans;
-	}
-
-	private ResultSet executeQuery(Connection oracleClient, String query) throws SQLException
-	{
-		ResultSet ret = null;
 		//Executes SQL Query
+		List<DimStudentsBean> allBeans = new ArrayList<>();
 		try (PreparedStatement preparedStatement = oracleClient.prepareStatement(query))
 		{
 			ResultSet resultSet = preparedStatement.executeQuery(query);
-			if(resultSet != null)
+			while (resultSet.next())
 			{
-				ret = resultSet;
+				DimStudentsBean bean = new DimStudentsBean(resultSet);
+				allBeans.add(bean);
 			}
 		}
 		catch(Exception e)
@@ -703,7 +431,258 @@ public class ExtractConnections extends AbstractOracleConnections
 			LOG.error("Query failure, using query: " + query, e);
 		}
 		oracleClient.close();
+		return allBeans;
+	}
 
-		return ret;
+	private List<StudentsBean> executeStudentsQuery(Connection oracleClient, String query) throws SQLException
+	{
+		//Executes SQL Query
+		List<StudentsBean> allBeans = new ArrayList<>();
+		try (PreparedStatement preparedStatement = oracleClient.prepareStatement(query))
+		{
+			ResultSet resultSet = preparedStatement.executeQuery(query);
+			while (resultSet.next())
+			{
+				StudentsBean bean = new StudentsBean(resultSet);
+				allBeans.add(bean);
+			}
+		}
+		catch(Exception e)
+		{
+			LOG.error("Query failure, using query: " + query, e);
+		}
+		oracleClient.close();
+		return allBeans;
+	}
+
+	private List<DimSubjectsBean> executeDimSubjectsQuery(Connection oracleClient, String query) throws SQLException
+	{
+		//Executes SQL Query
+		List<DimSubjectsBean> allBeans = new ArrayList<>();
+		try (PreparedStatement preparedStatement = oracleClient.prepareStatement(query))
+		{
+			ResultSet resultSet = preparedStatement.executeQuery(query);
+			while (resultSet.next())
+			{
+				DimSubjectsBean bean = new DimSubjectsBean(resultSet);
+				allBeans.add(bean);
+			}
+		}
+		catch(Exception e)
+		{
+			LOG.error("Query failure, using query: " + query, e);
+		}
+		oracleClient.close();
+		return allBeans;
+	}
+
+	private List<SubjectsBean> executeSubjectsQuery(Connection oracleClient, String query) throws SQLException
+	{
+		//Executes SQL Query
+		List<SubjectsBean> allBeans = new ArrayList<>();
+		try (PreparedStatement preparedStatement = oracleClient.prepareStatement(query))
+		{
+			ResultSet resultSet = preparedStatement.executeQuery(query);
+			while (resultSet.next())
+			{
+				SubjectsBean bean = new SubjectsBean(resultSet);
+				allBeans.add(bean);
+			}
+		}
+		catch(Exception e)
+		{
+			LOG.error("Query failure, using query: " + query, e);
+		}
+		oracleClient.close();
+		return allBeans;
+	}
+
+	private List<DimEnrollmentsBean> executeDimEnrollmentsQuery(Connection oracleClient, String query) throws SQLException
+	{
+		//Executes SQL Query
+		List<DimEnrollmentsBean> allBeans = new ArrayList<>();
+		try (PreparedStatement preparedStatement = oracleClient.prepareStatement(query))
+		{
+			ResultSet resultSet = preparedStatement.executeQuery(query);
+			while (resultSet.next())
+			{
+				DimEnrollmentsBean bean = new DimEnrollmentsBean(resultSet);
+				allBeans.add(bean);
+			}
+		}
+		catch(Exception e)
+		{
+			LOG.error("Query failure, using query: " + query, e);
+		}
+		oracleClient.close();
+		return allBeans;
+	}
+
+	private List<EnrollmentsBean> executeEnrollmentsQuery(Connection oracleClient, String query) throws SQLException
+	{
+		//Executes SQL Query
+		List<EnrollmentsBean> allBeans = new ArrayList<>();
+		try (PreparedStatement preparedStatement = oracleClient.prepareStatement(query))
+		{
+			ResultSet resultSet = preparedStatement.executeQuery(query);
+			while (resultSet.next())
+			{
+				EnrollmentsBean bean = new EnrollmentsBean(resultSet);
+				allBeans.add(bean);
+			}
+		}
+		catch(Exception e)
+		{
+			LOG.error("Query failure, using query: " + query, e);
+		}
+		oracleClient.close();
+		return allBeans;
+	}
+
+	private List<DimTutorsBean> executeDimTutorsQuery(Connection oracleClient, String query) throws SQLException
+	{
+		//Executes SQL Query
+		List<DimTutorsBean> allBeans = new ArrayList<>();
+		try (PreparedStatement preparedStatement = oracleClient.prepareStatement(query))
+		{
+			ResultSet resultSet = preparedStatement.executeQuery(query);
+			while (resultSet.next())
+			{
+				DimTutorsBean bean = new DimTutorsBean(resultSet);
+				allBeans.add(bean);
+			}
+		}
+		catch(Exception e)
+		{
+			LOG.error("Query failure, using query: " + query, e);
+		}
+		oracleClient.close();
+		return allBeans;
+	}
+
+	private List<TutorsBean> executeTutorsQuery(Connection oracleClient, String query) throws SQLException
+	{
+		//Executes SQL Query
+		List<TutorsBean> allBeans = new ArrayList<>();
+		try (PreparedStatement preparedStatement = oracleClient.prepareStatement(query))
+		{
+			ResultSet resultSet = preparedStatement.executeQuery(query);
+			while (resultSet.next())
+			{
+				TutorsBean bean = new TutorsBean(resultSet);
+				allBeans.add(bean);
+			}
+		}
+		catch(Exception e)
+		{
+			LOG.error("Query failure, using query: " + query, e);
+		}
+		oracleClient.close();
+		return allBeans;
+	}
+
+	private List<ModulesBean> executeModulesQuery(Connection oracleClient, String query) throws SQLException
+	{
+		//Executes SQL Query
+		List<ModulesBean> allBeans = new ArrayList<>();
+		try (PreparedStatement preparedStatement = oracleClient.prepareStatement(query))
+		{
+			ResultSet resultSet = preparedStatement.executeQuery(query);
+			while (resultSet.next())
+			{
+				ModulesBean bean = new ModulesBean(resultSet);
+				allBeans.add(bean);
+			}
+		}
+		catch(Exception e)
+		{
+			LOG.error("Query failure, using query: " + query, e);
+		}
+		oracleClient.close();
+		return allBeans;
+	}
+
+	private List<DimModulesBean> executeDimModulesQuery(Connection oracleClient, String query) throws SQLException
+	{
+		//Executes SQL Query
+		List<DimModulesBean> allBeans = new ArrayList<>();
+		try (PreparedStatement preparedStatement = oracleClient.prepareStatement(query))
+		{
+			ResultSet resultSet = preparedStatement.executeQuery(query);
+			while (resultSet.next())
+			{
+				DimModulesBean bean = new DimModulesBean(resultSet);
+				allBeans.add(bean);
+			}
+		}
+		catch(Exception e)
+		{
+			LOG.error("Query failure, using query: " + query, e);
+		}
+		oracleClient.close();
+		return allBeans;
+	}
+
+	private List<AssignmentsBean> executeAssignmentsQuery(Connection oracleClient, String query) throws SQLException
+	{
+		//Executes SQL Query
+		List<AssignmentsBean> allBeans = new ArrayList<>();
+		try (PreparedStatement preparedStatement = oracleClient.prepareStatement(query))
+		{
+			ResultSet resultSet = preparedStatement.executeQuery(query);
+			while (resultSet.next())
+			{
+				AssignmentsBean bean = new AssignmentsBean(resultSet);
+				allBeans.add(bean);
+			}
+		}
+		catch(Exception e)
+		{
+			LOG.error("Query failure, using query: " + query, e);
+		}
+		oracleClient.close();
+		return allBeans;
+	}
+
+	private List<DimCoursesBean> executeDimCoursesQuery(Connection oracleClient, String query) throws SQLException
+	{
+		//Executes SQL Query
+		List<DimCoursesBean> allBeans = new ArrayList<>();
+		try (PreparedStatement preparedStatement = oracleClient.prepareStatement(query))
+		{
+			ResultSet resultSet = preparedStatement.executeQuery(query);
+			while (resultSet.next())
+			{
+				DimCoursesBean bean = new DimCoursesBean(resultSet);
+				allBeans.add(bean);
+			}
+		}
+		catch(Exception e)
+		{
+			LOG.error("Query failure, using query: " + query, e);
+		}
+		oracleClient.close();
+		return allBeans;
+	}
+
+	private List<CoursesBean> executeCoursesQuery(Connection oracleClient, String query) throws SQLException
+	{
+		//Executes SQL Query
+		List<CoursesBean> allBeans = new ArrayList<>();
+		try (PreparedStatement preparedStatement = oracleClient.prepareStatement(query))
+		{
+			ResultSet resultSet = preparedStatement.executeQuery(query);
+			while (resultSet.next())
+			{
+				CoursesBean bean = new CoursesBean(resultSet);
+				allBeans.add(bean);
+			}
+		}
+		catch(Exception e)
+		{
+			LOG.error("Query failure, using query: " + query, e);
+		}
+		oracleClient.close();
+		return allBeans;
 	}
 }
