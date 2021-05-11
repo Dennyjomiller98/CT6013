@@ -8,6 +8,7 @@ import etl.ExtractHelper;
 import etl.LoadHelper;
 import etl.TransformHelper;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -111,7 +112,7 @@ public class Extract extends HttpServlet
 		}
 		catch(Exception e)
 		{
-			request.getSession(true).setAttribute("errors", "An error has occurred during the Database Warehouse ETL Process: " + e.getMessage() + e.getLocalizedMessage() );
+			request.getSession(true).setAttribute("errors", "An error has occurred during the Database Warehouse ETL Process" + e + e.getCause() + Arrays.toString(e.getStackTrace()));
 			LOG.error("An error has occurred during the Database Warehouse ETL Process", e);
 			attemptRedirect(request, response);
 		}
