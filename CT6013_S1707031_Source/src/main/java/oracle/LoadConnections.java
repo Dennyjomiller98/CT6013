@@ -149,6 +149,11 @@ public class LoadConnections extends AbstractOracleConnections
 				}
 			}
 		}
+		else
+		{
+			//No Bean data to add, so the load (that never happened) did not fail
+			successfulLoad = true;
+		}
 		return successfulLoad;
 	}
 
@@ -197,6 +202,11 @@ public class LoadConnections extends AbstractOracleConnections
 				}
 			}
 		}
+		else
+		{
+			//No Bean data to add, so the load (that never happened) did not fail
+			successfulLoad = true;
+		}
 		return successfulLoad;
 	}
 
@@ -244,6 +254,11 @@ public class LoadConnections extends AbstractOracleConnections
 				}
 			}
 		}
+		else
+		{
+			//No Bean data to add, so the load (that never happened) did not fail
+			successfulLoad = true;
+		}
 		return successfulLoad;
 	}
 
@@ -290,6 +305,11 @@ public class LoadConnections extends AbstractOracleConnections
 				}
 			}
 		}
+		else
+		{
+			//No Bean data to add, so the load (that never happened) did not fail
+			successfulLoad = true;
+		}
 		return successfulLoad;
 	}
 
@@ -333,6 +353,11 @@ public class LoadConnections extends AbstractOracleConnections
 					successfulLoad = false;
 				}
 			}
+		}
+		else
+		{
+			//No Bean data to add, so the load (that never happened) did not fail
+			successfulLoad = true;
 		}
 		return successfulLoad;
 	}
@@ -379,6 +404,11 @@ public class LoadConnections extends AbstractOracleConnections
 					successfulLoad = false;
 				}
 			}
+		}
+		else
+		{
+			//No Bean data to add, so the load (that never happened) did not fail
+			successfulLoad = true;
 		}
 		return successfulLoad;
 	}
