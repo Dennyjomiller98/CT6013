@@ -6,7 +6,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Arrays;
 import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Denny-Jo
@@ -104,7 +106,7 @@ public class LoadConnections extends AbstractOracleConnections
 		oracleClient.close();
 	}
 
-	public boolean setDimStudentsData(DWResultsBean loadBean)
+	public boolean setDimStudentsData(DWResultsBean loadBean, HttpServletRequest request)
 	{
 		boolean successfulLoad = false;
 		List<DimStudentsBean> studentBeans = loadBean.getDimStudents();
@@ -137,6 +139,7 @@ public class LoadConnections extends AbstractOracleConnections
 					}
 					catch (SQLException e)
 					{
+						request.getSession(true).setAttribute("exception2", "DimStudent Load Catch:" + e + Arrays.toString(e.getStackTrace()));
 						LOG.error("Error adding entry to DW", e);
 						successfulLoad = false;
 						break;
@@ -144,6 +147,7 @@ public class LoadConnections extends AbstractOracleConnections
 				}
 				else
 				{
+					request.getSession(true).setAttribute("exception", "Connection failure");
 					LOG.error("connection failure");
 					successfulLoad = false;
 				}

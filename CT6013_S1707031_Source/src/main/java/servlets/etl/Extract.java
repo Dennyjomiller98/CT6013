@@ -55,7 +55,6 @@ public class Extract extends HttpServlet
 			dimEnrollmentsBeans = transformHelper.transformDimEnrollmentsData(dimEnrollmentsBeans);
 			dimModulesBeans = transformHelper.transformDimModulesData(dimModulesBeans);
 			dimStudentsBeans = transformHelper.transformDimStudentsData(dimStudentsBeans);
-			request.getSession(true).setAttribute("exception", "StudentBeans after transform" + dimStudentsBeans.size());
 			dimSubjectsBeans = transformHelper.transformDimSubjectsData(dimSubjectsBeans);
 			dimTutorsBeans = transformHelper.transformDimTutorsData(dimTutorsBeans);
 

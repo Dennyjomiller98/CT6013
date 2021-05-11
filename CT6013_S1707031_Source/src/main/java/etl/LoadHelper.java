@@ -132,7 +132,7 @@ public class LoadHelper
 	{
 		boolean loadSuccess = false;
 		LoadConnections conn = new LoadConnections();
-		boolean students = conn.setDimStudentsData(loadBean);
+		boolean students = conn.setDimStudentsData(loadBean, request);
 		boolean tutors = conn.setDimTutorsData(loadBean);
 		boolean modules = conn.setDimModulesData(loadBean);
 		boolean courses = conn.setDimCoursesData(loadBean);
@@ -140,7 +140,6 @@ public class LoadHelper
 		boolean enrollments = conn.setDimEnrollmentData(loadBean);
 		if(students && tutors && modules && courses && subjects && enrollments)
 		{
-			request.getSession(true).setAttribute("exception2", "non-main DB tables are fine, problem with setResultsData");
 			//Set main fact table data using current data
 			boolean wasSuccess = conn.setResultsData(loadBean);
 			if(wasSuccess)
