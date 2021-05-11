@@ -54,6 +54,7 @@ public class Extract extends HttpServlet
 			dimCoursesBeans = transformHelper.transformDimCoursesData(dimCoursesBeans);
 			dimEnrollmentsBeans = transformHelper.transformDimEnrollmentsData(dimEnrollmentsBeans);
 			dimModulesBeans = transformHelper.transformDimModulesData(dimModulesBeans);
+			request.getSession(true).setAttribute("success", "StudentBeans size before transform:" + dimStudentsBeans.size());
 			dimStudentsBeans = transformHelper.transformDimStudentsData(dimStudentsBeans);
 			dimSubjectsBeans = transformHelper.transformDimSubjectsData(dimSubjectsBeans);
 			dimTutorsBeans = transformHelper.transformDimTutorsData(dimTutorsBeans);
@@ -74,8 +75,6 @@ public class Extract extends HttpServlet
 			loadHelper.prepareDimCourseData(dimCoursesBeans, loadBean);
 			loadHelper.prepareDimEnrollmentData(dimEnrollmentsBeans, loadBean);
 			loadHelper.prepareDimModuleData(dimModulesBeans, loadBean);
-
-			request.getSession(true).setAttribute("success", "StudentBeans size:" + dimStudentsBeans.size());
 			loadHelper.prepareDimStudentData(dimStudentsBeans, loadBean);
 			loadHelper.prepareDimSubjectData(dimSubjectsBeans, loadBean);
 			loadHelper.prepareDimTutorData(dimTutorsBeans, loadBean);
