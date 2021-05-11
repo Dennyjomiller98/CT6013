@@ -33,10 +33,15 @@
             if(success != null) { %>
         <div class="alert alert-success mysuccess" role="alert" id="formSuccess"><%=success%></div>
         <%}%>
-            <% String exception = (String) session.getAttribute("exception");
-                if(exception != null) { %>
-            <div class="alert alert-success mysuccess" role="alert" id="formSuccess"><%=exception%></div>
+        <% String exception = (String) session.getAttribute("exception");
+            if(exception != null) { %>
+        <div class="alert alert-success mysuccess" role="alert" id="formSuccess"><%=exception%></div>
         <%}%>
+        <% String exception2 = (String) session.getAttribute("exception2");
+            if(exception2 != null) { %>
+        <div class="alert alert-success mysuccess" role="alert" id="formSuccess"><%=exception2%></div>
+        <%}%>
+
         <div class="mainBody">
 
             <span>CT6013</span>

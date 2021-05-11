@@ -262,7 +262,7 @@ public class ExtractConnections extends AbstractOracleConnections
 		return ret;
 	}
 
-	public List<DimStudentsBean> retrieveDimStudentsTable(HttpServletRequest request)
+	public List<DimStudentsBean> retrieveDimStudentsTable()
 	{
 		List<DimStudentsBean> ret = new ArrayList<>();
 		try
@@ -288,7 +288,6 @@ public class ExtractConnections extends AbstractOracleConnections
 		catch(Exception e)
 		{
 			LOG.error("Error, could not retrieve data from table", e);
-			request.getSession(true).setAttribute("exception", "exception: " + e + Arrays.toString(e.getStackTrace()));
 		}
 		return ret;
 	}

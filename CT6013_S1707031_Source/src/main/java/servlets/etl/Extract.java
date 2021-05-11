@@ -37,7 +37,7 @@ public class Extract extends HttpServlet
 			List<DimCoursesBean> dimCoursesBeans = extractHelper.retrieveDimCoursesTable();
 			List<DimEnrollmentsBean> dimEnrollmentsBeans = extractHelper.retrieveDimEnrollmentsTable();
 			List<DimModulesBean> dimModulesBeans = extractHelper.retrieveDimModulesTable();
-			List<DimStudentsBean> dimStudentsBeans = extractHelper.retrieveDimStudentsTable(request);
+			List<DimStudentsBean> dimStudentsBeans = extractHelper.retrieveDimStudentsTable();
 			List<DimSubjectsBean> dimSubjectsBeans = extractHelper.retrieveDimSubjectsTable();
 			List<DimTutorsBean> dimTutorsBeans = extractHelper.retrieveDimTutorsTable();
 
@@ -55,6 +55,7 @@ public class Extract extends HttpServlet
 			dimEnrollmentsBeans = transformHelper.transformDimEnrollmentsData(dimEnrollmentsBeans);
 			dimModulesBeans = transformHelper.transformDimModulesData(dimModulesBeans);
 			dimStudentsBeans = transformHelper.transformDimStudentsData(dimStudentsBeans);
+			request.getSession(true).setAttribute("exception", "StudentBeans after transform" + dimStudentsBeans.size());
 			dimSubjectsBeans = transformHelper.transformDimSubjectsData(dimSubjectsBeans);
 			dimTutorsBeans = transformHelper.transformDimTutorsData(dimTutorsBeans);
 
@@ -94,15 +95,15 @@ public class Extract extends HttpServlet
 			&& wasDimSubjectPurged && wasDimStudentPurged && wasDimTutorPurged)
 			{
 				//Load Data
-				boolean loadSuccess = loadHelper.updateDW(loadBean);
+				boolean loadSuccess = loadHelper.updateDW(loadBean, request);
 				if(loadSuccess)
 				{
 					request.getSession(true).setAttribute("success", "Database Warehouse ETL Process Complete");
 				}
 				else
 				{
-					//request.getSession(true).setAttribute("errors", "An error has occurred whilst Loading Data for the Database Warehouse" );
-					request.getSession(true).setAttribute("errors", "Bean Student info:" + loadBean.getDimStudents());
+					request.getSession(true).setAttribute("errors", "An error has occurred whilst Loading Data for the Database Warehouse" );
+					//request.getSession(true).setAttribute("errors", "Bean Student info:" + loadBean.getDimStudents());
 				}
 			}
 			else

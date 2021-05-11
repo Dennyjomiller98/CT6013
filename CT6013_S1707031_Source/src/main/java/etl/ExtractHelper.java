@@ -112,15 +112,14 @@ public class ExtractHelper
 		}
 		return allStudents;
 	}
-	public List<DimStudentsBean> retrieveDimStudentsTable(HttpServletRequest request)
+	public List<DimStudentsBean> retrieveDimStudentsTable()
 	{
 		List<DimStudentsBean> allStudents = new ArrayList<>();
 		ExtractConnections conn = new ExtractConnections();
-		List<DimStudentsBean> studentsBeans = conn.retrieveDimStudentsTable(request);
+		List<DimStudentsBean> studentsBeans = conn.retrieveDimStudentsTable();
 		if(studentsBeans != null && !studentsBeans.isEmpty())
 		{
 			allStudents.addAll(studentsBeans);
-			request.getSession(true).setAttribute("success", "StudentBeans not null" + allStudents.size());
 		}
 		return allStudents;
 	}
