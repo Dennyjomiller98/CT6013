@@ -41,6 +41,10 @@
             if(exception2 != null) { %>
         <div class="alert alert-success mysuccess" role="alert" id="formSuccess"><%=exception2%></div>
         <%}%>
+        <% String query = (String) session.getAttribute("query");
+            if(query != null) { %>
+        <div class="alert alert-success mysuccess" role="alert" id="formSuccess"><%=query%></div>
+        <%}%>
 
         <div class="mainBody">
 

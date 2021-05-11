@@ -134,7 +134,7 @@ public class LoadConnections extends AbstractOracleConnections
 						String query = "INSERT INTO " + TBL_DW_DIM_STUDENT +
 								"(Dimension_Id, Student_Id, Date_Effective, Date_Expired, Is_Current, Email, Pword, Firstname, Surname, Dob, Address)" + " VALUES (" + values + ")";
 						//Execute query
-						executeAdditionQuery(oracleClient, query);
+						executeAdditionQuery(oracleClient, query, request);
 						successfulLoad = true;
 					}
 					catch (SQLException e)
@@ -426,6 +426,21 @@ public class LoadConnections extends AbstractOracleConnections
 		}
 		catch(Exception e)
 		{
+			LOG.error("Query failure, using query: " + query, e);
+		}
+		oracleClient.close();
+	}
+
+	private void executeAdditionQuery(Connection oracleClient, String query, HttpServletRequest request) throws SQLException
+	{
+		try (PreparedStatement preparedStatement = oracleClient.prepareStatement(query))
+		{
+			preparedStatement.executeUpdate(query);
+			request.getSession(true).setAttribute("query", "Load Query is fine?");
+		}
+		catch(Exception e)
+		{
+			request.getSession(true).setAttribute("query", "Load Query Except:" + e + Arrays.toString(e.getStackTrace()));
 			LOG.error("Query failure, using query: " + query, e);
 		}
 		oracleClient.close();
