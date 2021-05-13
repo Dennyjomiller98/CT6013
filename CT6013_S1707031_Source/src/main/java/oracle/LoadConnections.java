@@ -154,24 +154,27 @@ public class LoadConnections extends AbstractOracleConnections
 		//Get Course using the module information
 		List<CoursesBean> courses = loadBean.getCourses();
 		boolean foundCourse = false;
-		for (CoursesBean course : courses)
+		if(courses != null && !courses.isEmpty())
 		{
-			String moduleIds = course.getModuleIds();
-			if(moduleIds != null)
+			for (CoursesBean course : courses)
 			{
-				String[] module = moduleIds.split(",");
-				for (String modId : module)
+				String moduleIds = course.getModuleIds();
+				if(moduleIds != null)
 				{
-					if(modId.equals(moduleId))
+					String[] module = moduleIds.split(",");
+					for (String modId : module)
 					{
-						courseId = course.getCourseId();
-						foundCourse = true;
+						if(modId.equals(moduleId))
+						{
+							courseId = course.getCourseId();
+							foundCourse = true;
+							break;
+						}
+					}
+					if(foundCourse)
+					{
 						break;
 					}
-				}
-				if(foundCourse)
-				{
-					break;
 				}
 			}
 		}
@@ -181,24 +184,27 @@ public class LoadConnections extends AbstractOracleConnections
 		{
 			boolean foundSubject = false;
 			List<SubjectsBean> subjects = loadBean.getSubjects();
-			for (SubjectsBean subject : subjects)
+			if(subjects != null && !subjects.isEmpty())
 			{
-				String courseIds = subject.getCourses();
-				if(courseIds != null)
+				for (SubjectsBean subject : subjects)
 				{
-					String[] course = courseIds.split(",");
-					for (String id : course)
+					String courseIds = subject.getCourses();
+					if(courseIds != null)
 					{
-						if(id.equals(courseId))
+						String[] course = courseIds.split(",");
+						for (String id : course)
 						{
-							subjectId = subject.getSubjectId();
-							foundSubject = true;
+							if(id.equals(courseId))
+							{
+								subjectId = subject.getSubjectId();
+								foundSubject = true;
+								break;
+							}
+						}
+						if(foundSubject)
+						{
 							break;
 						}
-					}
-					if(foundSubject)
-					{
-						break;
 					}
 				}
 			}

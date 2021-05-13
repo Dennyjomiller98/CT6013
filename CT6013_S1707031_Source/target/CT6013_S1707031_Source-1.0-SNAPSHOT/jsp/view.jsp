@@ -58,7 +58,7 @@
                         Please select the data you wish to view from below
                     </p>
 
-                    <form action="${pageContext.request.contextPath}/servlets/etl/Load" method="POST">
+                    <form action="${pageContext.request.contextPath}/servlets/dwpreview/Load" method="POST">
                         <label for="email"></label>
                         <input style="display: none" type="text" name="email" id="email" value="<%=email%>">
 

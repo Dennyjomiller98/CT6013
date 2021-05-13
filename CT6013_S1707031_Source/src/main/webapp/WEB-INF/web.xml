@@ -68,4 +68,14 @@
         <servlet-name>AuthenticateLogin</servlet-name>
         <url-pattern>/servlets/AuthenticateLogin</url-pattern>
     </servlet-mapping>
+
+    <!--Preview of DW data-->
+    <servlet>
+        <servlet-name>Load</servlet-name>
+        <servlet-class>servlets.dwpreview.Load</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Load</servlet-name>
+        <url-pattern>/servlets/dwpreview/Load</url-pattern>
+    </servlet-mapping>
 </web-app>
