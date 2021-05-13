@@ -211,24 +211,30 @@ public class LoadConnections extends AbstractOracleConnections
 		}
 
 		List<ModulesBean> modules = loadBean.getModules();
-		for (ModulesBean module : modules)
+		if (modules != null && !modules.isEmpty())
 		{
-			if(moduleId.equals(module.getModuleId()))
+			for (ModulesBean module : modules)
 			{
-				tutorId = module.getModuleTutor();
-				break;
+				if(moduleId.equals(module.getModuleId()))
+				{
+					tutorId = module.getModuleTutor();
+					break;
+				}
 			}
 		}
 
 		//Now get extra enrollment information
 		List<EnrollmentsBean> enrollments = loadBean.getEnrollments();
-		for (EnrollmentsBean enrollment : enrollments)
+		if(enrollments != null && !enrollments.isEmpty())
 		{
-			if(enrollment.getStudentId().equals(result.getStudentId()))
+			for (EnrollmentsBean enrollment : enrollments)
 			{
-				hasDropped = enrollment.getHasDropped();
-				isEnrolled = enrollment.getIsEnrolled();
-				break;
+				if(enrollment.getStudentId().equals(result.getStudentId()))
+				{
+					hasDropped = enrollment.getHasDropped();
+					isEnrolled = enrollment.getIsEnrolled();
+					break;
+				}
 			}
 		}
 
