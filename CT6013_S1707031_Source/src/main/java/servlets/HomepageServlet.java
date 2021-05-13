@@ -13,6 +13,9 @@ public class HomepageServlet extends HttpServlet
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 	{
+		request.getSession(true).removeAttribute("success");
+		request.getSession(true).removeAttribute("errors");
+
 		handleHomepageSelection(request, response);
 	}
 

@@ -33,18 +33,6 @@
             if(success != null) { %>
         <div class="alert alert-success mysuccess" role="alert" id="formSuccess"><%=success%></div>
         <%}%>
-        <% String exception = (String) session.getAttribute("exception");
-            if(exception != null) { %>
-        <div class="alert alert-success mysuccess" role="alert" id="formSuccess"><%=exception%></div>
-        <%}%>
-        <% String exception2 = (String) session.getAttribute("exception2");
-            if(exception2 != null) { %>
-        <div class="alert alert-success mysuccess" role="alert" id="formSuccess"><%=exception2%></div>
-        <%}%>
-        <% String query = (String) session.getAttribute("query");
-            if(query != null) { %>
-        <div class="alert alert-success mysuccess" role="alert" id="formSuccess"><%=query%></div>
-        <%}%>
 
         <div class="mainBody">
 
@@ -55,7 +43,7 @@
             <p>
                 Welcome. From here, please select your action. <br/><br/>
 
-                <strong>Note:</strong> Data is automatically updated daily at midnight. You can also manually update data below.<br/>
+                <strong>Note:</strong> Data is automatically updated Sunday at midnight. You can also manually update data below.<br/>
             </p>
 
             <form style="display:inline;" action="${pageContext.request.contextPath}/servlets/etl/Extract" method="GET">

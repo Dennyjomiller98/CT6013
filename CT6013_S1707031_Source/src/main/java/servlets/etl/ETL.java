@@ -15,13 +15,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
-public class Extract extends HttpServlet
+public class ETL extends HttpServlet
 {
-	static final Logger LOG = Logger.getLogger(Extract.class);
+	static final Logger LOG = Logger.getLogger(ETL.class);
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 	{
+		request.getSession(true).removeAttribute("success");
+		request.getSession(true).removeAttribute("errors");
+
 		//Retrieve ALL Operational Database Data, and store in Beans ready for Transform Process
 		try
 		{

@@ -13,6 +13,8 @@ public class Redirects extends HttpServlet
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 	{
+		request.getSession(true).removeAttribute("success");
+		request.getSession(true).removeAttribute("errors");
 		//Just A Redirect
 		try
 		{

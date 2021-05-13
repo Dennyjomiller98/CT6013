@@ -141,10 +141,15 @@ public class DataTransformer
 		boolean found = false;
 		for (CoursesBean course : courses)
 		{
-			if(course.getModuleIds().contains(moduleId))
+			String moduleIds = course.getModuleIds();
+			String[] mod = moduleIds.split(",");
+			for (String modId : mod)
 			{
-				found = true;
-				break;
+				if(modId.equals(moduleId))
+				{
+					found = true;
+					break;
+				}
 			}
 		}
 		if(!found)
@@ -174,10 +179,15 @@ public class DataTransformer
 		boolean found = false;
 		for (SubjectsBean subject : subjects)
 		{
-			if(subject.getCourses().contains(courseId))
+			String courseIds = subject.getCourses();
+			String[] split = courseIds.split(",");
+			for (String id : split)
 			{
-				found = true;
-				break;
+				if(id.equals(courseId))
+				{
+					found = true;
+					break;
+				}
 			}
 		}
 		if(!found)
@@ -207,10 +217,15 @@ public class DataTransformer
 		boolean found = false;
 		for (DimSubjectsBean subject : dimSubjects)
 		{
-			if(subject.getCourses().contains(courseId))
+			String courses = subject.getCourses();
+			String[] split = courses.split(",");
+			for (String id : split)
 			{
-				found = true;
-				break;
+				if(id.equals(courseId))
+				{
+					found = true;
+					break;
+				}
 			}
 		}
 		if(!found)
@@ -240,10 +255,15 @@ public class DataTransformer
 		boolean found = false;
 		for (DimCoursesBean course : dimCourses)
 		{
-			if(course.getModuleIds().contains(moduleId))
+			String moduleIds = course.getModuleIds();
+			String[] split = moduleIds.split(",");
+			for (String id : split)
 			{
-				found = true;
-				break;
+				if(id.equals(moduleId))
+				{
+					found = true;
+					break;
+				}
 			}
 		}
 		if(!found)

@@ -13,10 +13,12 @@ public class Logout extends HttpServlet
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 	{
+		request.getSession(true).removeAttribute("success");
+		request.getSession(true).removeAttribute("errors");
+
 		//Logout session attr's
 		request.getSession(true).removeAttribute("pword");
 		request.getSession(true).removeAttribute("email");
-		request.getSession(true).removeAttribute("error");
 
 		try
 		{

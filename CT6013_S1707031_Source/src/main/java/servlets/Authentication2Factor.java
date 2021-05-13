@@ -16,6 +16,9 @@ public class Authentication2Factor extends HttpServlet
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 	{
+		request.getSession(true).removeAttribute("success");
+		request.getSession(true).removeAttribute("errors");
+
 		String user = request.getParameter("user");
 		AuthenticationConnections connections = new AuthenticationConnections();
 		UserBean userBean = new UserBean();

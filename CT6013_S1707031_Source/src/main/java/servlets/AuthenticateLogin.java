@@ -16,6 +16,9 @@ public class AuthenticateLogin extends HttpServlet
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 	{
+		request.getSession(true).removeAttribute("success");
+		request.getSession(true).removeAttribute("errors");
+
 		UserBean userBean = new UserBean();
 		userBean.setUsername(request.getParameter("email"));
 		userBean.setPin(request.getParameter("pin"));
@@ -27,7 +30,7 @@ public class AuthenticateLogin extends HttpServlet
 			//Correct, log user in
 			UserConnections userConnections = new UserConnections();
 			UserBean loggedInBean = userConnections.retrieveSingleUser(userBean.getUsername());
-			request.getSession(true).removeAttribute("error");
+			request.getSession(true).removeAttribute("errors");
 			request.getSession(true).setAttribute("email", loggedInBean.getUsername());
 			request.getSession(true).setAttribute("pword", loggedInBean.getPword());
 			try
@@ -42,7 +45,7 @@ public class AuthenticateLogin extends HttpServlet
 			//Redirect, wrong pin
 			LOG.error("Incorrect auth pin");
 			request.getSession(true).removeAttribute("pword");
-			request.getSession(true).setAttribute("error", "Incorrect Pin");
+			request.getSession(true).setAttribute("errors", "Incorrect Pin");
 
 			try
 			{

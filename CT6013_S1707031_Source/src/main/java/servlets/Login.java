@@ -17,6 +17,9 @@ public class Login extends HttpServlet
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 	{
+		request.getSession(true).removeAttribute("success");
+		request.getSession(true).removeAttribute("errors");
+
 		UserBean userBean = new UserBean();
 		userBean.setUsername(request.getParameter("email").toLowerCase());
 		userBean.setPword(request.getParameter("pword"));

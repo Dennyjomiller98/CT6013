@@ -16,28 +16,12 @@
 
     <!--ETL Update-->
     <servlet>
-        <servlet-name>Extract</servlet-name>
-        <servlet-class>servlets.etl.Extract</servlet-class>
+        <servlet-name>ETL</servlet-name>
+        <servlet-class>servlets.etl.ETL</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>Extract</servlet-name>
-        <url-pattern>/servlets/etl/Extract</url-pattern>
-    </servlet-mapping>
-    <servlet>
-        <servlet-name>Transform</servlet-name>
-        <servlet-class>servlets.etl.Transform</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>Transform</servlet-name>
-        <url-pattern>/servlets/etl/Transform</url-pattern>
-    </servlet-mapping>
-    <servlet>
-        <servlet-name>Load</servlet-name>
-        <servlet-class>servlets.etl.Load</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>Load</servlet-name>
-        <url-pattern>/servlets/etl/Load</url-pattern>
+        <servlet-name>ETL</servlet-name>
+        <url-pattern>/servlets/etl/ETL</url-pattern>
     </servlet-mapping>
 
     <!--Redirects-->

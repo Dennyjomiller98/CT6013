@@ -1,12 +1,15 @@
 package oracle;
 
 import beans.dw.DWResultsBean;
+import beans.operational.*;
 import beans.operational.dimensions.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import managers.oracle.DataManager;
 import oracle.sql.DATE;
 
@@ -78,19 +81,179 @@ public class LoadConnections extends AbstractOracleConnections
 	public boolean setResultsData(DWResultsBean loadBean)
 	{
 		boolean successfulLoad = false;
-		//TODO - add bean to DW (Main data, dimensions have already been added)
-		AbstractOracleConnections conn = new AbstractOracleConnections();
-		Connection oracleClient = conn.getDWClient();
-		if(oracleClient != null)
+		List<AssignmentsBean> assignments = loadBean.getAssignments();
+		if(assignments != null && !assignments.isEmpty())
 		{
-			//TODO - SQL for adding assignments info into DW_RESULTS
-			successfulLoad = true;
+			for (AssignmentsBean result : assignments)
+			{
+				AbstractOracleConnections conn = new AbstractOracleConnections();
+				Connection oracleClient = conn.getDWClient();
+				if(oracleClient != null)
+				{
+					try
+					{
+						Map<String, String> factTableAdditionalData = initExtraDataForFactTable(loadBean, result);
+						String courseId = factTableAdditionalData.get("courseId");
+						String subjectId = factTableAdditionalData.get("subjectId");
+						String tutorId = factTableAdditionalData.get("tutorId");
+						String isEnrolled = factTableAdditionalData.get("isEnrolled");
+						String hasDropped = factTableAdditionalData.get("hasDropped");
+
+						String values = "'" + result.getAssignmentId()
+								+ "','" + result.getStudentId()
+								+ "','" + courseId
+								+ "','" + subjectId
+								+ "','" + result.getModule()
+								+ "','" + tutorId
+								+ "','" + result.getAcademicYear()
+								+ "','" + result.getSemester()
+								+ "','" + result.getGrade()
+								+ "','" + result.getResit()
+								+ "','" + result.getResitGrade()
+								+ "','" + isEnrolled
+								+ "','" + hasDropped + "'";
+						String query = "INSERT INTO " + TBL_DW_RESULTS +
+								"(Assignment_Id, Student_Id, Course_Id, Subject_Id, Module_Id, Tutor_Id, Academic_Year, Semester, Grade, Resit, Resit_Grade, Enrolled, Dropped)"
+								+ " VALUES (" + values + ")";
+						//Execute query
+						executeAdditionQuery(oracleClient, query);
+						successfulLoad = true;
+					}
+					catch (SQLException e)
+					{
+						LOG.error("Error adding entry to DW", e);
+						successfulLoad = false;
+						break;
+					}
+				}
+				else
+				{
+					LOG.error("connection failure");
+					successfulLoad = false;
+				}
+			}
 		}
 		else
 		{
-			LOG.error("connection failure");
+			//No Bean data to add, so the load (that never happened) did not fail
+			successfulLoad = true;
 		}
 		return successfulLoad;
+	}
+
+	private Map<String, String> initExtraDataForFactTable(DWResultsBean loadBean, AssignmentsBean result)
+	{
+		String tutorId = null;
+		String courseId = null;
+		String subjectId = null;
+		String isEnrolled = null;
+		String hasDropped = null;
+		String moduleId = result.getModule();
+		Map<String, String> additionalParams = new HashMap<>();
+
+		//Get Course using the module information
+		List<CoursesBean> courses = loadBean.getCourses();
+		boolean foundCourse = false;
+		for (CoursesBean course : courses)
+		{
+			String moduleIds = course.getModuleIds();
+			if(moduleIds != null)
+			{
+				String[] module = moduleIds.split(",");
+				for (String modId : module)
+				{
+					if(modId.equals(moduleId))
+					{
+						courseId = course.getCourseId();
+						foundCourse = true;
+						break;
+					}
+				}
+				if(foundCourse)
+				{
+					break;
+				}
+			}
+		}
+
+		//Get Subject using the Course information
+		if(foundCourse)
+		{
+			boolean foundSubject = false;
+			List<SubjectsBean> subjects = loadBean.getSubjects();
+			for (SubjectsBean subject : subjects)
+			{
+				String courseIds = subject.getCourses();
+				if(courseIds != null)
+				{
+					String[] course = courseIds.split(",");
+					for (String id : course)
+					{
+						if(id.equals(courseId))
+						{
+							subjectId = subject.getSubjectId();
+							foundSubject = true;
+							break;
+						}
+					}
+					if(foundSubject)
+					{
+						break;
+					}
+				}
+			}
+		}
+
+		List<ModulesBean> modules = loadBean.getModules();
+		for (ModulesBean module : modules)
+		{
+			if(moduleId.equals(module.getModuleId()))
+			{
+				tutorId = module.getModuleTutor();
+				break;
+			}
+		}
+
+		//Now get extra enrollment information
+		List<EnrollmentsBean> enrollments = loadBean.getEnrollments();
+		for (EnrollmentsBean enrollment : enrollments)
+		{
+			if(enrollment.getStudentId().equals(result.getStudentId()))
+			{
+				hasDropped = enrollment.getHasDropped();
+				isEnrolled = enrollment.getIsEnrolled();
+				break;
+			}
+		}
+
+		if (tutorId == null)
+		{
+			tutorId = "Unknown";
+		}
+		if (courseId == null)
+		{
+			courseId = "Unknown";
+		}
+		if (subjectId == null)
+		{
+			subjectId = "Unknown";
+		}
+		if (isEnrolled == null)
+		{
+			isEnrolled = "Unknown";
+		}
+		if (hasDropped == null)
+		{
+			hasDropped = "Unknown";
+		}
+
+		additionalParams.put("courseId", courseId);
+		additionalParams.put("subjectId", subjectId);
+		additionalParams.put("tutorId", tutorId);
+		additionalParams.put("isEnrolled", isEnrolled);
+		additionalParams.put("hasDropped", hasDropped);
+
+		return additionalParams;
 	}
 
 	private void executeUpdateQuery(Connection oracleClient, String query) throws SQLException

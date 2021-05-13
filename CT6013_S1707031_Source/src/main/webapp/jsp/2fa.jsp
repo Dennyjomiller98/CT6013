@@ -40,9 +40,9 @@
                 email = session.getAttribute("email").toString();
             }
             String pinError = null;
-            if(session.getAttribute("error") != null)
+            if(session.getAttribute("errors") != null)
             {
-                pinError = session.getAttribute("error").toString();
+                pinError = session.getAttribute("errors").toString();
             }
         %>
         <div class="mainBody">
