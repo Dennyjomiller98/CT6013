@@ -12,6 +12,7 @@ C:\Users\Denny-Jo\Desktop\Uni\Level 6\CT6013 Database\ct6013_sem_2_s1707031\CT60
 C:\Users\Denny-Jo\Desktop\Uni\Level 6\CT6013 Database\ct6013_sem_2_s1707031\CT6013\CT6013_S1707031_Source\src\main\java\etl\LoadHelper.java
 C:\Users\Denny-Jo\Desktop\Uni\Level 6\CT6013 Database\ct6013_sem_2_s1707031\CT6013\CT6013_S1707031_Source\src\main\java\beans\operational\TutorsBean.java
 C:\Users\Denny-Jo\Desktop\Uni\Level 6\CT6013 Database\ct6013_sem_2_s1707031\CT6013\CT6013_S1707031_Source\src\main\java\servlets\etl\Load.java
+C:\Users\Denny-Jo\Desktop\Uni\Level 6\CT6013 Database\ct6013_sem_2_s1707031\CT6013\CT6013_S1707031_Source\src\main\java\managers\scheduler\ETLScheduleManager.java
 C:\Users\Denny-Jo\Desktop\Uni\Level 6\CT6013 Database\ct6013_sem_2_s1707031\CT6013\CT6013_S1707031_Source\src\main\java\oracle\LoadConnections.java
 C:\Users\Denny-Jo\Desktop\Uni\Level 6\CT6013 Database\ct6013_sem_2_s1707031\CT6013\CT6013_S1707031_Source\src\main\java\beans\operational\CoursesBean.java
 C:\Users\Denny-Jo\Desktop\Uni\Level 6\CT6013 Database\ct6013_sem_2_s1707031\CT6013\CT6013_S1707031_Source\src\main\java\oracle\AbstractOracleConnections.java

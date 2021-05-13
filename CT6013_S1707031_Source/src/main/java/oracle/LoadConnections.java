@@ -6,9 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Arrays;
 import java.util.List;
-import javax.servlet.http.HttpServletRequest;
 import managers.oracle.DataManager;
 import oracle.sql.DATE;
 
@@ -108,7 +106,7 @@ public class LoadConnections extends AbstractOracleConnections
 		oracleClient.close();
 	}
 
-	public boolean setDimStudentsData(DWResultsBean loadBean, HttpServletRequest request)
+	public boolean setDimStudentsData(DWResultsBean loadBean)
 	{
 		boolean successfulLoad = false;
 		List<DimStudentsBean> studentBeans = loadBean.getDimStudents();
@@ -140,12 +138,11 @@ public class LoadConnections extends AbstractOracleConnections
 						String query = "INSERT INTO " + TBL_DW_DIM_STUDENT +
 								"(Dimension_Id, Student_Id, Date_Effective, Date_Expired, Is_Current, Email, Pword, Firstname, Surname, Dob, Address)" + " VALUES (" + values + ")";
 						//Execute query
-						executeAdditionQuery(oracleClient, query, request);
+						executeAdditionQuery(oracleClient, query);
 						successfulLoad = true;
 					}
 					catch (SQLException e)
 					{
-						request.getSession(true).setAttribute("exception2", "DimStudent Load Catch:" + e + Arrays.toString(e.getStackTrace()));
 						LOG.error("Error adding entry to DW", e);
 						successfulLoad = false;
 						break;
@@ -153,7 +150,6 @@ public class LoadConnections extends AbstractOracleConnections
 				}
 				else
 				{
-					request.getSession(true).setAttribute("exception", "Connection failure");
 					LOG.error("connection failure");
 					successfulLoad = false;
 				}
@@ -161,7 +157,6 @@ public class LoadConnections extends AbstractOracleConnections
 		}
 		else
 		{
-			request.getSession(true).setAttribute("exception", "No data to add? Bean:" + studentBeans);
 			//No Bean data to add, so the load (that never happened) did not fail
 			successfulLoad = true;
 		}
@@ -448,22 +443,6 @@ public class LoadConnections extends AbstractOracleConnections
 		}
 		catch(Exception e)
 		{
-			LOG.error("Query failure, using query: " + query, e);
-			throw new SQLException("Exception Loading data using Query [" + query + "]. Exception:", e);
-		}
-		oracleClient.close();
-	}
-
-	private void executeAdditionQuery(Connection oracleClient, String query, HttpServletRequest request) throws SQLException
-	{
-		try (PreparedStatement preparedStatement = oracleClient.prepareStatement(query))
-		{
-			preparedStatement.executeUpdate(query);
-			request.getSession(true).setAttribute("query", "Load Query is fine?");
-		}
-		catch(Exception e)
-		{
-			request.getSession(true).setAttribute("query", "Load Query Exception, Query is:" + query);
 			LOG.error("Query failure, using query: " + query, e);
 			throw new SQLException("Exception Loading data using Query [" + query + "]. Exception:", e);
 		}

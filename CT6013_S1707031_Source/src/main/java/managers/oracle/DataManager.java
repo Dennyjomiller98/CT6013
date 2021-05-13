@@ -15,6 +15,10 @@ public class DataManager
 		//Empty Constructor
 	}
 
+	/**
+	 * @param dateAsString Extracted Bean Date value from Operational Database
+	 * @return DATE to be loaded into the Database Warehouse
+	 * */
 	public DATE convertValueToDate(String dateAsString)
 	{
 		DATE ret;

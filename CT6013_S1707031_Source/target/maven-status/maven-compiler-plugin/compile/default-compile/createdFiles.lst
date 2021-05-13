@@ -26,8 +26,10 @@ beans\dw\DWResultsBean.class
 servlets\Authentication2Factor.class
 oracle\LoadConnections.class
 etl\DataTransformer.class
+managers\scheduler\ETLScheduleManager.class
 etl\LoadHelper.class
 oracle\AbstractOracleConnections.class
+managers\scheduler\MainApplication.class
 beans\operational\SubjectsBean.class
 servlets\AuthenticateLogin.class
 managers\oracle\DataManager.class

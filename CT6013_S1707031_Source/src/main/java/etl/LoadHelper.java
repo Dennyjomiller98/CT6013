@@ -5,7 +5,6 @@ import beans.operational.*;
 import beans.operational.dimensions.*;
 import java.sql.SQLException;
 import java.util.List;
-import javax.servlet.http.HttpServletRequest;
 import oracle.LoadConnections;
 import org.apache.log4j.Logger;
 
@@ -128,11 +127,11 @@ public class LoadHelper
 		return wasTruncated;
 	}
 
-	public boolean updateDW(DWResultsBean loadBean, HttpServletRequest request)
+	public boolean updateDW(DWResultsBean loadBean)
 	{
 		boolean loadSuccess = false;
 		LoadConnections conn = new LoadConnections();
-		boolean students = conn.setDimStudentsData(loadBean, request);
+		boolean students = conn.setDimStudentsData(loadBean);
 		boolean tutors = conn.setDimTutorsData(loadBean);
 		boolean modules = conn.setDimModulesData(loadBean);
 		boolean courses = conn.setDimCoursesData(loadBean);
@@ -150,7 +149,6 @@ public class LoadHelper
 		else
 		{
 			LOG.error("Data was not prepared in the DW correctly, so could not create results Fact Table");
-			request.getSession(true).setAttribute("exception2", "error during updateDW for the non-main DB tables (students:)" + students + " and the rest:" + tutors + modules + courses + subjects + enrollments);
 		}
 		return loadSuccess;
 	}

@@ -1,4 +1,4 @@
-package servlets.etl;
+package managers.scheduler;
 
 import beans.dw.DWResultsBean;
 import beans.operational.*;
@@ -7,22 +7,15 @@ import etl.DataTransformer;
 import etl.ExtractHelper;
 import etl.LoadHelper;
 import etl.TransformHelper;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import java.util.*;
 import org.apache.log4j.Logger;
 
-public class Extract extends HttpServlet
+public class ETLScheduleManager extends TimerTask
 {
-	static final Logger LOG = Logger.getLogger(Extract.class);
+	static final Logger LOG = Logger.getLogger(ETLScheduleManager.class);
 
-	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-	{
-		//Retrieve ALL Operational Database Data, and store in Beans ready for Transform Process
+	public void run() {
+		LOG.debug("Generating report running ETLScheduleManager");
 		try
 		{
 			ExtractHelper extractHelper = new ExtractHelper();
@@ -91,59 +84,50 @@ public class Extract extends HttpServlet
 			boolean wasDimStudentPurged = loadHelper.emptyDimStudent();
 			boolean wasDimTutorPurged = loadHelper.emptyDimTutor();
 			if(wasPurged && wasDimCoursePurged && wasDimEnrollmentPurged && wasDimModulePurged
-			&& wasDimSubjectPurged && wasDimStudentPurged && wasDimTutorPurged)
+					&& wasDimSubjectPurged && wasDimStudentPurged && wasDimTutorPurged)
 			{
 				//Load Data
 				boolean loadSuccess = loadHelper.updateDW(loadBean);
 				if(loadSuccess)
 				{
-					request.getSession(true).setAttribute("success", "Database Warehouse ETL Process Complete");
+					LOG.debug("Database Warehouse ETL Process Complete");
 				}
 				else
 				{
-					request.getSession(true).setAttribute("errors", "An error has occurred whilst Loading Data for the Database Warehouse" );
+					LOG.error("An error has occurred whilst Loading Data for the Database Warehouse");
 				}
 			}
 			else
 			{
-				request.getSession(true).setAttribute("errors", "An error has occurred whilst Purging the old data for the Database Warehouse" );
+				LOG.error("An error has occurred whilst Purging the old data for the Database Warehouse");
 			}
-			attemptRedirect(request, response);
 		}
 		catch(Exception e)
 		{
-			request.getSession(true).setAttribute("errors", "An error has occurred during the Database Warehouse ETL Process" + e + e.getCause() + Arrays.toString(e.getStackTrace()));
 			LOG.error("An error has occurred during the Database Warehouse ETL Process", e);
-			attemptRedirect(request, response);
 		}
 	}
 
-	private void attemptRedirect(HttpServletRequest request, HttpServletResponse response)
-	{
-		String userEmail = (String) request.getSession(true).getAttribute("email");
-		if (userEmail != null)
-		{
-			//Take logged in user to view data page
-			try
-			{
-				response.sendRedirect(request.getContextPath() + "/jsp/view.jsp");
-			}
-			catch (IOException e)
-			{
-				LOG.error("Unable to redirect.",e);
-			}
-		}
-		else
-		{
-			//Take not logged in user to homepage
-			try
-			{
-				response.sendRedirect(request.getContextPath() + "/jsp/homepage.jsp");
-			}
-			catch (IOException e)
-			{
-				LOG.error("Unable to redirect.",e);
-			}
-		}
-	}
 }
+
+class MainApplication {
+
+	public static void main(String[] args) {
+		Timer timer = new Timer();
+		Calendar date = Calendar.getInstance();
+		date.set(
+				Calendar.DAY_OF_WEEK,
+				Calendar.SUNDAY
+		);
+		date.set(Calendar.HOUR_OF_DAY, 0);
+		date.set(Calendar.MINUTE, 0);
+		date.set(Calendar.SECOND, 0);
+		date.set(Calendar.MILLISECOND, 0);
+		// Schedule to run every Sunday in midnight
+		timer.schedule(
+				new ETLScheduleManager(),
+				date.getTime(),
+				1000 * 60 * 60 * 24 * 7
+		);
+	}//Main method ends
+}//MainApplication ends
