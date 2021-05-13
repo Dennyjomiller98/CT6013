@@ -75,7 +75,7 @@ public class AuthenticationConnections extends AbstractOracleConnections
 				//Add New Key to DB
 				String authenticationPin = makeNewKey();
 
-				String values = "'" + userBean.getUsername()
+				String values = "'" + userBean.getUsername().toLowerCase()
 						+ "','" + authenticationPin
 						+ "','" + startDate
 						+ "','" + endDate + "'";
@@ -219,7 +219,7 @@ public class AuthenticationConnections extends AbstractOracleConnections
 			if (oracleClient != null)
 			{
 				String query = "DELETE FROM " + AUTH_COLLECTION
-						+ " WHERE Username='" + userBean.getUsername() + "'";
+						+ " WHERE Username='" + userBean.getUsername().toLowerCase() + "'";
 				executeUpdateQuery(oracleClient, query);
 			}
 			else

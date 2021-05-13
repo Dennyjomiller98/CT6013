@@ -10,6 +10,13 @@ import etl.TransformHelper;
 import java.util.*;
 import org.apache.log4j.Logger;
 
+/**
+ * @author Denny-Jo
+ * ETLScheduleManager -
+ *
+ * Note: Unsure on the actual functionality of the TimerTask thread
+ * (Due to being deployed to Heroku. This works in a Tomcat Container, Heroku uses
+ * */
 public class ETLScheduleManager extends TimerTask
 {
 	static final Logger LOG = Logger.getLogger(ETLScheduleManager.class);

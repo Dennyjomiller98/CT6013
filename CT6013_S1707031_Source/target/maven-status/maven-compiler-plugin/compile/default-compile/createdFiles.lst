@@ -5,11 +5,9 @@ servlets\etl\Extract.class
 servlets\Logout.class
 beans\operational\dimensions\DimTutorsBean.class
 servlets\etl\Load.class
-mongodb\AbstractMongoDBConnections.class
 mail\Emailer$1.class
 beans\operational\dimensions\DimEnrollmentsBean.class
 mail\Emailer.class
-mongodb\IMongoDBConnections.class
 beans\operational\dimensions\DimModulesBean.class
 servlets\Login.class
 beans\UserBean.class
