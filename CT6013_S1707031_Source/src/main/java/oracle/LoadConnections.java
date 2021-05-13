@@ -9,6 +9,8 @@ import java.sql.Statement;
 import java.util.Arrays;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
+import managers.oracle.DataManager;
+import oracle.sql.DATE;
 
 /**
  * @author Denny-Jo
@@ -120,16 +122,20 @@ public class LoadConnections extends AbstractOracleConnections
 				{
 					try
 					{
+						DataManager dataManager = new DataManager();
+						DATE effectiveDate = dataManager.convertValueToDate(bean.getEffectiveDate());
+						DATE expiredDate = dataManager.convertValueToDate(bean.getExpiredDate());
+						DATE dob = dataManager.convertValueToDate(bean.getDob());
 						String values = "'" + bean.getDimensionId()
 								+ "','" + bean.getStudentId()
-								+ "','" + bean.getEffectiveDate()
-								+ "','" + bean.getExpiredDate()
+								+ "','" + effectiveDate
+								+ "','" + expiredDate
 								+ "','" + bean.getIsCurrent()
 								+ "','" + bean.getEmail()
 								+ "','" + bean.getPword()
 								+ "','" + bean.getFirstname()
 								+ "','" + bean.getSurname()
-								+ "','" + bean.getDob()
+								+ "','" + dob
 								+ "','" + bean.getAddress() + "'";
 						String query = "INSERT INTO " + TBL_DW_DIM_STUDENT +
 								"(Dimension_Id, Student_Id, Date_Effective, Date_Expired, Is_Current, Email, Pword, Firstname, Surname, Dob, Address)" + " VALUES (" + values + ")";
@@ -176,16 +182,20 @@ public class LoadConnections extends AbstractOracleConnections
 				{
 					try
 					{
+						DataManager dataManager = new DataManager();
+						DATE effectiveDate = dataManager.convertValueToDate(bean.getEffectiveDate());
+						DATE expiredDate = dataManager.convertValueToDate(bean.getExpiredDate());
+						DATE dob = dataManager.convertValueToDate(bean.getDob());
 						String values = "'" + bean.getDimensionId()
 								+ "','" + bean.getTutorId()
-								+ "','" + bean.getEffectiveDate()
-								+ "','" + bean.getExpiredDate()
+								+ "','" + effectiveDate
+								+ "','" + expiredDate
 								+ "','" + bean.getIsCurrent()
 								+ "','" + bean.getEmail()
 								+ "','" + bean.getPword()
 								+ "','" + bean.getFirstname()
 								+ "','" + bean.getSurname()
-								+ "','" + bean.getDob()
+								+ "','" + dob
 								+ "','" + bean.getAddress() + "'";
 						String query = "INSERT INTO " + TBL_DW_DIM_TUTOR +
 								"(Dimension_Id, Tutor_Id, Date_Effective, Date_Expired, Is_Current, Email, Pword, Firstname, Surname, Dob, Address)" + " VALUES (" + values + ")";
@@ -229,10 +239,13 @@ public class LoadConnections extends AbstractOracleConnections
 				{
 					try
 					{
+						DataManager dataManager = new DataManager();
+						DATE effectiveDate = dataManager.convertValueToDate(bean.getEffectiveDate());
+						DATE expiredDate = dataManager.convertValueToDate(bean.getExpiredDate());
 						String values = "'" + bean.getDimensionId()
 								+ "','" + bean.getModuleId()
-								+ "','" + bean.getEffectiveDate()
-								+ "','" + bean.getExpiredDate()
+								+ "','" + effectiveDate
+								+ "','" + expiredDate
 								+ "','" + bean.getIsCurrent()
 								+ "','" + bean.getModuleName()
 								+ "','" + bean.getModuleTutor()
@@ -281,10 +294,13 @@ public class LoadConnections extends AbstractOracleConnections
 				{
 					try
 					{
+						DataManager dataManager = new DataManager();
+						DATE effectiveDate = dataManager.convertValueToDate(bean.getEffectiveDate());
+						DATE expiredDate = dataManager.convertValueToDate(bean.getExpiredDate());
 						String values = "'" + bean.getDimensionId()
 								+ "','" + bean.getCourseId()
-								+ "','" + bean.getEffectiveDate()
-								+ "','" + bean.getExpiredDate()
+								+ "','" + effectiveDate
+								+ "','" + expiredDate
 								+ "','" + bean.getIsCurrent()
 								+ "','" + bean.getCourseName()
 								+ "','" + bean.getModuleIds()
@@ -332,10 +348,13 @@ public class LoadConnections extends AbstractOracleConnections
 				{
 					try
 					{
+						DataManager dataManager = new DataManager();
+						DATE effectiveDate = dataManager.convertValueToDate(bean.getEffectiveDate());
+						DATE expiredDate = dataManager.convertValueToDate(bean.getExpiredDate());
 						String values = "'" + bean.getDimensionId()
 								+ "','" + bean.getSubjectId()
-								+ "','" + bean.getEffectiveDate()
-								+ "','" + bean.getExpiredDate()
+								+ "','" + effectiveDate
+								+ "','" + expiredDate
 								+ "','" + bean.getIsCurrent()
 								+ "','" + bean.getName()
 								+ "','" + bean.getCourses() + "'";
@@ -381,10 +400,13 @@ public class LoadConnections extends AbstractOracleConnections
 				{
 					try
 					{
+						DataManager dataManager = new DataManager();
+						DATE effectiveDate = dataManager.convertValueToDate(bean.getEffectiveDate());
+						DATE expiredDate = dataManager.convertValueToDate(bean.getExpiredDate());
 						String values = "'" + bean.getDimensionId()
 								+ "','" + bean.getEnrollmentId()
-								+ "','" + bean.getEffectiveDate()
-								+ "','" + bean.getExpiredDate()
+								+ "','" + effectiveDate
+								+ "','" + expiredDate
 								+ "','" + bean.getIsCurrent()
 								+ "','" + bean.getStudentId()
 								+ "','" + bean.getCourseId()
@@ -427,6 +449,7 @@ public class LoadConnections extends AbstractOracleConnections
 		catch(Exception e)
 		{
 			LOG.error("Query failure, using query: " + query, e);
+			throw new SQLException("Exception Loading data using Query [" + query + "]. Exception:", e);
 		}
 		oracleClient.close();
 	}
@@ -442,6 +465,7 @@ public class LoadConnections extends AbstractOracleConnections
 		{
 			request.getSession(true).setAttribute("query", "Load Query Exception, Query is:" + query);
 			LOG.error("Query failure, using query: " + query, e);
+			throw new SQLException("Exception Loading data using Query [" + query + "]. Exception:", e);
 		}
 		oracleClient.close();
 	}

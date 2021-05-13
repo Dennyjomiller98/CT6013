@@ -30,6 +30,7 @@ etl\LoadHelper.class
 oracle\AbstractOracleConnections.class
 beans\operational\SubjectsBean.class
 servlets\AuthenticateLogin.class
+managers\oracle\DataManager.class
 etl\TransformHelper.class
 beans\operational\ModulesBean.class
 beans\operational\CoursesBean.class
