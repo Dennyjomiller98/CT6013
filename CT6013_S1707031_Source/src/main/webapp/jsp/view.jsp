@@ -30,7 +30,7 @@
             <%--Navbar--%>
             <div class="navbar">
                 <div class="bottomnavdiv">
-                    <strong><a href=${pageContext.request.contextPath}/servlets/etl/Extract>&nbsp;Re-Load DW&nbsp;</a></strong>
+                    <strong><a href=${pageContext.request.contextPath}/servlets/etl/ETL>&nbsp;Re-Load DW&nbsp;</a></strong>
                 </div>
                 <div class="topnav">
                     <h2>View Data</h2>

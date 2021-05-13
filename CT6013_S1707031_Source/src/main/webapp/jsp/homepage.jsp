@@ -46,7 +46,7 @@
                 <strong>Note:</strong> Data is automatically updated Sunday at midnight. You can also manually update data below.<br/>
             </p>
 
-            <form style="display:inline;" action="${pageContext.request.contextPath}/servlets/etl/Extract" method="GET">
+            <form style="display:inline;" action="${pageContext.request.contextPath}/servlets/etl/ETL" method="GET">
                 <label for="update"></label>
                 <input style="display: none" type="text" name="update" id="update" value="update" hidden>
                 <input type="submit" value="Update DataBase Warehouse">
