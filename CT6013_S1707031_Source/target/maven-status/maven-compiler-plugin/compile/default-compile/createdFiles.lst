@@ -6,6 +6,7 @@ beans\operational\dimensions\DimTutorsBean.class
 mail\Emailer$1.class
 beans\operational\dimensions\DimEnrollmentsBean.class
 mail\Emailer.class
+managers\dataview\DecisionMakerDataManager.class
 beans\operational\dimensions\DimModulesBean.class
 servlets\Login.class
 beans\UserBean.class
