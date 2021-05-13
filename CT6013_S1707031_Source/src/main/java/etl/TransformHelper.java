@@ -344,6 +344,16 @@ public class TransformHelper
 			{
 				transformedBean.setResitGrade("Unknown");
 			}
+
+			String international = assignmentRowBean.getInternational();
+			if(international != null)
+			{
+				transformedBean.setInternational(international);
+			}
+			else
+			{
+				transformedBean.setInternational("Unknown");
+			}
 		}
 		else
 		{

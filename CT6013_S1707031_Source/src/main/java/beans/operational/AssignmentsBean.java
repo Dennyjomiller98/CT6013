@@ -20,6 +20,7 @@ public class AssignmentsBean
 	private String fGrade;
 	private String fResit;
 	private String fResitGrade;
+	private String fInternational;
 
 	public AssignmentsBean()
 	{
@@ -38,6 +39,7 @@ public class AssignmentsBean
 			fGrade = String.valueOf(resultSet.getString("Grade"));
 			fResit = String.valueOf(resultSet.getString("Resit"));
 			fResitGrade = String.valueOf(resultSet.getString("Resit_Grade"));
+			fInternational = String.valueOf(resultSet.getString("International"));
 		}
 		catch (SQLException e)
 		{
@@ -116,5 +118,14 @@ public class AssignmentsBean
 	public String getResitGrade()
 	{
 		return fResitGrade;
+	}
+
+	public void setInternational(String isInternational)
+	{
+		fInternational = isInternational;
+	}
+	public String getInternational()
+	{
+		return fInternational;
 	}
 }

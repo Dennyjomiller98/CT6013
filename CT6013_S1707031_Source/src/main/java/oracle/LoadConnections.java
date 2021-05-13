@@ -111,9 +111,10 @@ public class LoadConnections extends AbstractOracleConnections
 								+ "','" + result.getResit()
 								+ "','" + result.getResitGrade()
 								+ "','" + isEnrolled
-								+ "','" + hasDropped + "'";
+								+ "','" + hasDropped
+								+ "','" + result.getInternational() + "'";
 						String query = "INSERT INTO " + TBL_DW_RESULTS +
-								"(Assignment_Id, Student_Id, Course_Id, Subject_Id, Module_Id, Tutor_Id, Academic_Year, Semester, Grade, Resit, Resit_Grade, Enrolled, Dropped)"
+								"(Assignment_Id, Student_Id, Course_Id, Subject_Id, Module_Id, Tutor_Id, Academic_Year, Semester, Grade, Resit, Resit_Grade, Enrolled, Dropped, International)"
 								+ " VALUES (" + values + ")";
 						//Execute query
 						executeAdditionQuery(oracleClient, query);
