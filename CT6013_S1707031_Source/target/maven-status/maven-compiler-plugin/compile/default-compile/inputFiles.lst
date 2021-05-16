@@ -12,7 +12,9 @@ C:\Users\Denny-Jo\Desktop\Uni\Level 6\CT6013 Database\ct6013_sem_2_s1707031\CT60
 C:\Users\Denny-Jo\Desktop\Uni\Level 6\CT6013 Database\ct6013_sem_2_s1707031\CT6013\CT6013_S1707031_Source\src\main\java\beans\operational\TutorsBean.java
 C:\Users\Denny-Jo\Desktop\Uni\Level 6\CT6013 Database\ct6013_sem_2_s1707031\CT6013\CT6013_S1707031_Source\src\main\java\managers\scheduler\ETLScheduleManager.java
 C:\Users\Denny-Jo\Desktop\Uni\Level 6\CT6013 Database\ct6013_sem_2_s1707031\CT6013\CT6013_S1707031_Source\src\main\java\oracle\LoadConnections.java
+C:\Users\Denny-Jo\Desktop\Uni\Level 6\CT6013 Database\ct6013_sem_2_s1707031\CT6013\CT6013_S1707031_Source\src\main\java\beans\dw\ViewBean.java
 C:\Users\Denny-Jo\Desktop\Uni\Level 6\CT6013 Database\ct6013_sem_2_s1707031\CT6013\CT6013_S1707031_Source\src\main\java\beans\operational\CoursesBean.java
+C:\Users\Denny-Jo\Desktop\Uni\Level 6\CT6013 Database\ct6013_sem_2_s1707031\CT6013\CT6013_S1707031_Source\src\main\java\managers\dataview\IQueryManager.java
 C:\Users\Denny-Jo\Desktop\Uni\Level 6\CT6013 Database\ct6013_sem_2_s1707031\CT6013\CT6013_S1707031_Source\src\main\java\oracle\AbstractOracleConnections.java
 C:\Users\Denny-Jo\Desktop\Uni\Level 6\CT6013 Database\ct6013_sem_2_s1707031\CT6013\CT6013_S1707031_Source\src\main\java\beans\operational\dimensions\DimSubjectsBean.java
 C:\Users\Denny-Jo\Desktop\Uni\Level 6\CT6013 Database\ct6013_sem_2_s1707031\CT6013\CT6013_S1707031_Source\src\main\java\etl\DWDataParser.java
@@ -31,6 +33,7 @@ C:\Users\Denny-Jo\Desktop\Uni\Level 6\CT6013 Database\ct6013_sem_2_s1707031\CT60
 C:\Users\Denny-Jo\Desktop\Uni\Level 6\CT6013 Database\ct6013_sem_2_s1707031\CT6013\CT6013_S1707031_Source\src\main\java\beans\dw\DWResultsBean.java
 C:\Users\Denny-Jo\Desktop\Uni\Level 6\CT6013 Database\ct6013_sem_2_s1707031\CT6013\CT6013_S1707031_Source\src\main\java\beans\operational\dimensions\DimModulesBean.java
 C:\Users\Denny-Jo\Desktop\Uni\Level 6\CT6013 Database\ct6013_sem_2_s1707031\CT6013\CT6013_S1707031_Source\src\main\java\beans\operational\dimensions\DimCoursesBean.java
+C:\Users\Denny-Jo\Desktop\Uni\Level 6\CT6013 Database\ct6013_sem_2_s1707031\CT6013\CT6013_S1707031_Source\src\main\java\managers\dataview\ETLQueryManager.java
 C:\Users\Denny-Jo\Desktop\Uni\Level 6\CT6013 Database\ct6013_sem_2_s1707031\CT6013\CT6013_S1707031_Source\src\main\java\oracle\ExtractConnections.java
 C:\Users\Denny-Jo\Desktop\Uni\Level 6\CT6013 Database\ct6013_sem_2_s1707031\CT6013\CT6013_S1707031_Source\src\main\java\oracle\IOracleConnections.java
 C:\Users\Denny-Jo\Desktop\Uni\Level 6\CT6013 Database\ct6013_sem_2_s1707031\CT6013\CT6013_S1707031_Source\src\main\java\managers\dataview\DecisionMakerDataManager.java

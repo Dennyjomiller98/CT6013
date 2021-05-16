@@ -1,6 +1,7 @@
 oracle\ExtractConnections.class
 etl\ExtractHelper.class
 beans\operational\EnrollmentsBean.class
+managers\dataview\IQueryManager.class
 servlets\Logout.class
 beans\operational\dimensions\DimTutorsBean.class
 mail\Emailer$1.class
@@ -17,6 +18,7 @@ oracle\UserConnections.class
 oracle\AuthenticationConnections.class
 oracle\IOracleConnections.class
 beans\operational\TutorsBean.class
+managers\dataview\ETLQueryManager.class
 encryption\PasswordHasher.class
 beans\operational\dimensions\DimSubjectsBean.class
 beans\dw\DWResultsBean.class
@@ -32,6 +34,7 @@ beans\operational\SubjectsBean.class
 servlets\AuthenticateLogin.class
 managers\oracle\DataManager.class
 etl\TransformHelper.class
+beans\dw\ViewBean.class
 beans\operational\ModulesBean.class
 beans\operational\CoursesBean.class
 beans\operational\StudentsBean.class

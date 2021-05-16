@@ -3,7 +3,9 @@ package beans.dw;
 import beans.operational.*;
 import beans.operational.dimensions.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Denny-Jo
@@ -25,6 +27,8 @@ public class DWResultsBean
 	private List<DimStudentsBean> fDimStudents;
 	private List<DimSubjectsBean> fDimSubjects;
 	private List<DimTutorsBean> fDimTutors;
+
+	private Map<String, String> fErrors;
 
 	public DWResultsBean()
 	{
@@ -250,5 +254,18 @@ public class DWResultsBean
 			fDimTutors = new ArrayList<>();
 		}
 		fDimTutors.add(bean);
+	}
+
+	public void addErrors(String name, String error)
+	{
+		if(fErrors == null || fErrors.isEmpty())
+		{
+			fErrors = new HashMap<>();
+		}
+		fErrors.put(name, error);
+	}
+	public Map<String, String> getErrors()
+	{
+		return fErrors;
 	}
 }

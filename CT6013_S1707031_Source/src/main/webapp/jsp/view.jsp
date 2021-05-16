@@ -69,7 +69,7 @@
                             <option value="q7">Has COVID-19 affected our Enrollment intake?</option>
                             <option value="q8">Total Number of International Students on a Specific Course (Select Course Below)</option>
                             <option value="q9">Number of Students That Changed Courses</option>
-                            <option value="q10">Has COVID-19 Affected Enrollment of International Students?</option>
+                            <option value="q10">COVID-19 Affect on Enrollment of International Students</option>
                         </select>
                         <br/>
 
