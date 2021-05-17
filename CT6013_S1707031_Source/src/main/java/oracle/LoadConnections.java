@@ -344,7 +344,7 @@ public class LoadConnections extends AbstractOracleConnections
 						executeAdditionQuery(oracleClient, query);
 						successfulLoad = true;
 					}
-					catch (SQLException e)
+					catch (Exception e)
 					{
 						LOG.error("Error adding entry to DW", e);
 						successfulLoad = false;
@@ -401,7 +401,7 @@ public class LoadConnections extends AbstractOracleConnections
 						executeAdditionQuery(oracleClient, query);
 						successfulLoad = true;
 					}
-					catch (SQLException e)
+					catch (Exception e)
 					{
 						LOG.error("Error adding entry to DW", e);
 						successfulLoad = false;
@@ -456,7 +456,7 @@ public class LoadConnections extends AbstractOracleConnections
 						executeAdditionQuery(oracleClient, query);
 						successfulLoad = true;
 					}
-					catch (SQLException e)
+					catch (Exception e)
 					{
 						LOG.error("Error adding entry to DW", e);
 						successfulLoad = false;
@@ -510,7 +510,7 @@ public class LoadConnections extends AbstractOracleConnections
 						executeAdditionQuery(oracleClient, query);
 						successfulLoad = true;
 					}
-					catch (SQLException e)
+					catch (Exception e)
 					{
 						LOG.error("Error adding entry to DW", e);
 						successfulLoad = false;
@@ -562,7 +562,7 @@ public class LoadConnections extends AbstractOracleConnections
 						executeAdditionQuery(oracleClient, query);
 						successfulLoad = true;
 					}
-					catch (SQLException e)
+					catch (Exception e)
 					{
 						LOG.error("Error adding entry to DW", e);
 						successfulLoad = false;
@@ -616,7 +616,7 @@ public class LoadConnections extends AbstractOracleConnections
 						executeAdditionQuery(oracleClient, query);
 						successfulLoad = true;
 					}
-					catch (SQLException e)
+					catch (Exception e)
 					{
 						LOG.error("Error adding entry to DW", e);
 						successfulLoad = false;

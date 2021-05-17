@@ -3,6 +3,7 @@ package managers.oracle;
 import java.sql.Timestamp;
 import java.util.Date;
 import oracle.sql.DATE;
+import org.apache.log4j.Logger;
 
 /**
  * @author Denny-Jo
@@ -10,6 +11,8 @@ import oracle.sql.DATE;
  * */
 public class DataManager
 {
+	static final Logger LOG = Logger.getLogger(DataManager.class);
+
 	public DataManager()
 	{
 		//Empty Constructor
@@ -19,19 +22,27 @@ public class DataManager
 	 * @param dateAsString Extracted Bean Date value from Operational Database
 	 * @return DATE to be loaded into the Database Warehouse
 	 * */
-	public DATE convertValueToDate(String dateAsString)
+	public DATE convertValueToDate(String dateAsString) throws Exception
 	{
 		DATE ret;
-		if(dateAsString != null && !dateAsString.equalsIgnoreCase("unknown") && !dateAsString.equalsIgnoreCase("none"))
+		try
 		{
-			ret = new DATE(dateAsString);
+			if(dateAsString != null && !dateAsString.equalsIgnoreCase("unknown") && !dateAsString.equalsIgnoreCase("none"))
+			{
+				ret = new DATE(dateAsString);
+			}
+			else
+			{
+				//Not Ideal, but send a new date
+				Date date = new Date();
+				Timestamp t = new Timestamp(date.getTime());
+				ret = new DATE(t);
+			}
 		}
-		else
+		catch (Exception e)
 		{
-			//Not Ideal, but send a new date
-			Date date = new Date();
-			Timestamp t = new Timestamp(date.getTime());
-			ret = new DATE(t);
+			LOG.error("Error using value: " + dateAsString, e);
+			throw new Exception("Error using value:" + dateAsString, e);
 		}
 		return ret;
 	}
