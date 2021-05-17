@@ -282,7 +282,7 @@ public class LoadConnections extends AbstractOracleConnections
 		oracleClient.close();
 	}
 
-	public boolean setDimStudentsData(DWResultsBean loadBean) throws Exception
+	public boolean setDimStudentsData(DWResultsBean loadBean)
 	{
 		boolean successfulLoad = false;
 		List<DimStudentsBean> studentBeans = loadBean.getDimStudents();
@@ -348,8 +348,7 @@ public class LoadConnections extends AbstractOracleConnections
 					{
 						LOG.error("Error adding entry to DW", e);
 						successfulLoad = false;
-						throw new Exception(e);
-						//break;
+						break;
 					}
 				}
 				else
@@ -585,7 +584,7 @@ public class LoadConnections extends AbstractOracleConnections
 		return successfulLoad;
 	}
 
-	public boolean setDimEnrollmentData(DWResultsBean loadBean) throws Exception
+	public boolean setDimEnrollmentData(DWResultsBean loadBean)
 	{
 		boolean successfulLoad = false;
 		List<DimEnrollmentsBean> enrollmentsBeans = loadBean.getDimEnrollments();
@@ -621,8 +620,7 @@ public class LoadConnections extends AbstractOracleConnections
 					{
 						LOG.error("Error adding entry to DW", e);
 						successfulLoad = false;
-						throw new Exception(e);
-						//break;
+						break;
 					}
 				}
 				else

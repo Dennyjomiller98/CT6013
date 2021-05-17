@@ -492,7 +492,11 @@ public class TransformHelper
 				//Can't drop out unless they originally enrolled
 				if (transformedBean.getIsEnrolled().equalsIgnoreCase("Enrolled") && dropout.equalsIgnoreCase("true"))
 				{
-					transformedBean.setHasDropped("Dropped Out");
+					transformedBean.setHasDropped("true");
+				}
+				else
+				{
+					transformedBean.setHasDropped("false");
 				}
 			}
 			else
@@ -972,7 +976,11 @@ public class TransformHelper
 				//Can't drop out unless they originally enrolled
 				if (transformedBean.getIsEnrolled().equalsIgnoreCase("Enrolled") && dropout.equalsIgnoreCase("true"))
 				{
-					transformedBean.setHasDropped("Dropped Out");
+					transformedBean.setHasDropped("true");
+				}
+				else
+				{
+					transformedBean.setHasDropped("false");
 				}
 			}
 			else
