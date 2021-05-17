@@ -22,16 +22,16 @@ public class DataManager
 	 * @param dateAsString Extracted Bean Date value from Operational Database
 	 * @return DATE to be loaded into the Database Warehouse
 	 * */
-	public DATE convertValueToDate(String dateAsString) throws Exception
+	public DATE convertValueToDate(String dateAsString)
 	{
-		DATE ret;
+		DATE ret = null;
 		try
 		{
 			if(dateAsString != null && !dateAsString.equalsIgnoreCase("unknown") && !dateAsString.equalsIgnoreCase("none"))
 			{
 				ret = new DATE(dateAsString);
 			}
-			else
+			else if(dateAsString != null)
 			{
 				//Not Ideal, but send a new date
 				Date date = new Date();
@@ -42,7 +42,6 @@ public class DataManager
 		catch (Exception e)
 		{
 			LOG.error("Error using value: " + dateAsString, e);
-			throw new Exception("Error using value:" + dateAsString, e);
 		}
 		return ret;
 	}
