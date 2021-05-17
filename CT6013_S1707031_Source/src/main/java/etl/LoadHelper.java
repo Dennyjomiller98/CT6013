@@ -5,6 +5,7 @@ import beans.operational.*;
 import beans.operational.dimensions.*;
 import java.sql.SQLException;
 import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 import oracle.LoadConnections;
 import org.apache.log4j.Logger;
 
@@ -127,11 +128,19 @@ public class LoadHelper
 		return wasTruncated;
 	}
 
-	public boolean updateDW(DWResultsBean loadBean)
+	public boolean updateDW(DWResultsBean loadBean, HttpServletRequest request)
 	{
 		boolean loadSuccess = false;
 		LoadConnections conn = new LoadConnections();
-		boolean students = conn.setDimStudentsData(loadBean);
+		boolean students = false;
+		try
+		{
+			students = conn.setDimStudentsData(loadBean);
+		}
+		catch (Exception e)
+		{
+			request.getSession(true).setAttribute("errors", "Error" + e );
+		}
 		boolean tutors = conn.setDimTutorsData(loadBean);
 		boolean modules = conn.setDimModulesData(loadBean);
 		boolean courses = conn.setDimCoursesData(loadBean);
