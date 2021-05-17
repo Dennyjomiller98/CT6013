@@ -711,6 +711,7 @@ public class LoadConnections extends AbstractOracleConnections
 								+ "','" + expiredDate
 								+ "','" + bean.getIsCurrent()
 								+ "','" + bean.getStudentId()
+								+ "','" + bean.getIsEnrolled()
 								+ "','" + bean.getCourseId()
 								+ "','" + bean.getEnrollmentDate()
 								+ "','" + bean.getHasDropped() + "'";
