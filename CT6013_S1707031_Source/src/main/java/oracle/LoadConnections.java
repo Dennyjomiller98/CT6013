@@ -348,7 +348,7 @@ public class LoadConnections extends AbstractOracleConnections
 					{
 						LOG.error("Error adding entry to DW", e);
 						successfulLoad = false;
-						throw e;
+						throw new Exception(e);
 					}
 				}
 				else
