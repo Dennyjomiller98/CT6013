@@ -473,7 +473,7 @@ public class TransformHelper
 			String enrollDate = bean.getEnrollmentDate();
 			if(enrollDate != null)
 			{
-				if(transformedBean.getIsEnrolled().equalsIgnoreCase("Enrolled"))
+				if(transformedBean.getIsEnrolled().equalsIgnoreCase("Enrolled") || transformedBean.getIsEnrolled().equalsIgnoreCase("true"))
 				{
 					transformedBean.setEnrollmentDate(enrollDate);
 				}
@@ -490,7 +490,7 @@ public class TransformHelper
 			if(dropout != null)
 			{
 				//Can't drop out unless they originally enrolled
-				if (transformedBean.getIsEnrolled().equalsIgnoreCase("Enrolled") && dropout.equalsIgnoreCase("true"))
+				if ((transformedBean.getIsEnrolled().equalsIgnoreCase("Enrolled") || transformedBean.getIsEnrolled().equalsIgnoreCase("true"))&& dropout.equalsIgnoreCase("true"))
 				{
 					transformedBean.setHasDropped("true");
 				}
@@ -957,7 +957,7 @@ public class TransformHelper
 			String enrollDate = bean.getEnrollmentDate();
 			if(enrollDate != null)
 			{
-				if(transformedBean.getIsEnrolled().equalsIgnoreCase("Enrolled"))
+				if(transformedBean.getIsEnrolled().equalsIgnoreCase("Enrolled") || transformedBean.getIsEnrolled().equalsIgnoreCase("true"))
 				{
 					transformedBean.setEnrollmentDate(enrollDate);
 				}
@@ -974,7 +974,7 @@ public class TransformHelper
 			if(dropout != null)
 			{
 				//Can't drop out unless they originally enrolled
-				if (transformedBean.getIsEnrolled().equalsIgnoreCase("Enrolled") && dropout.equalsIgnoreCase("true"))
+				if ((transformedBean.getIsEnrolled().equalsIgnoreCase("Enrolled") || transformedBean.getIsEnrolled().equalsIgnoreCase("true"))&& dropout.equalsIgnoreCase("true"))
 				{
 					transformedBean.setHasDropped("true");
 				}
