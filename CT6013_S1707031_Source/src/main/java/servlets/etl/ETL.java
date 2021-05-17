@@ -104,7 +104,7 @@ public class ETL extends HttpServlet
 				}
 				else
 				{
-					request.getSession(true).setAttribute("errors", "An error has occurred whilst Loading Data for the Database Warehouse" );
+					//request.getSession(true).setAttribute("errors", "An error has occurred whilst Loading Data for the Database Warehouse" );
 				}
 			}
 			else

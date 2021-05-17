@@ -381,9 +381,37 @@ public class LoadConnections extends AbstractOracleConnections
 					try
 					{
 						DataManager dataManager = new DataManager();
-						DATE effectiveDate = dataManager.convertValueToDate(bean.getEffectiveDate());
-						DATE expiredDate = dataManager.convertValueToDate(bean.getExpiredDate());
-						DATE dob = dataManager.convertValueToDate(bean.getDob());
+						DATE effectiveDate;
+						DATE expiredDate;
+						DATE dob;
+
+						if (bean.getEffectiveDate() == null || bean.getEffectiveDate().equals("Unknown") || bean.getEffectiveDate().equals("None"))
+						{
+							effectiveDate = null;
+						}
+						else
+						{
+							effectiveDate = dataManager.convertValueToDate(bean.getEffectiveDate());
+						}
+
+						if(bean.getExpiredDate() == null || bean.getExpiredDate().equals("Unknown") || bean.getExpiredDate().equals("None"))
+						{
+							expiredDate = null;
+						}
+						else
+						{
+							expiredDate = dataManager.convertValueToDate(bean.getExpiredDate());
+						}
+
+						if(bean.getDob() == null || bean.getDob().equals("Unknown") || bean.getDob().equals("None"))
+						{
+							dob = null;
+						}
+						else
+						{
+							dob = dataManager.convertValueToDate(bean.getDob());
+						}
+
 						String values = "'" + bean.getDimensionId()
 								+ "','" + bean.getTutorId()
 								+ "','" + effectiveDate
@@ -438,8 +466,27 @@ public class LoadConnections extends AbstractOracleConnections
 					try
 					{
 						DataManager dataManager = new DataManager();
-						DATE effectiveDate = dataManager.convertValueToDate(bean.getEffectiveDate());
-						DATE expiredDate = dataManager.convertValueToDate(bean.getExpiredDate());
+						DATE effectiveDate;
+						DATE expiredDate;
+
+						if (bean.getEffectiveDate() == null || bean.getEffectiveDate().equals("Unknown") || bean.getEffectiveDate().equals("None"))
+						{
+							effectiveDate = null;
+						}
+						else
+						{
+							effectiveDate = dataManager.convertValueToDate(bean.getEffectiveDate());
+						}
+
+						if(bean.getExpiredDate() == null || bean.getExpiredDate().equals("Unknown") || bean.getExpiredDate().equals("None"))
+						{
+							expiredDate = null;
+						}
+						else
+						{
+							expiredDate = dataManager.convertValueToDate(bean.getExpiredDate());
+						}
+
 						String values = "'" + bean.getDimensionId()
 								+ "','" + bean.getModuleId()
 								+ "','" + effectiveDate
@@ -493,8 +540,27 @@ public class LoadConnections extends AbstractOracleConnections
 					try
 					{
 						DataManager dataManager = new DataManager();
-						DATE effectiveDate = dataManager.convertValueToDate(bean.getEffectiveDate());
-						DATE expiredDate = dataManager.convertValueToDate(bean.getExpiredDate());
+						DATE effectiveDate;
+						DATE expiredDate;
+
+						if (bean.getEffectiveDate() == null || bean.getEffectiveDate().equals("Unknown") || bean.getEffectiveDate().equals("None"))
+						{
+							effectiveDate = null;
+						}
+						else
+						{
+							effectiveDate = dataManager.convertValueToDate(bean.getEffectiveDate());
+						}
+
+						if(bean.getExpiredDate() == null || bean.getExpiredDate().equals("Unknown") || bean.getExpiredDate().equals("None"))
+						{
+							expiredDate = null;
+						}
+						else
+						{
+							expiredDate = dataManager.convertValueToDate(bean.getExpiredDate());
+						}
+
 						String values = "'" + bean.getDimensionId()
 								+ "','" + bean.getCourseId()
 								+ "','" + effectiveDate
@@ -547,8 +613,27 @@ public class LoadConnections extends AbstractOracleConnections
 					try
 					{
 						DataManager dataManager = new DataManager();
-						DATE effectiveDate = dataManager.convertValueToDate(bean.getEffectiveDate());
-						DATE expiredDate = dataManager.convertValueToDate(bean.getExpiredDate());
+						DATE effectiveDate;
+						DATE expiredDate;
+
+						if (bean.getEffectiveDate() == null || bean.getEffectiveDate().equals("Unknown") || bean.getEffectiveDate().equals("None"))
+						{
+							effectiveDate = null;
+						}
+						else
+						{
+							effectiveDate = dataManager.convertValueToDate(bean.getEffectiveDate());
+						}
+
+						if(bean.getExpiredDate() == null || bean.getExpiredDate().equals("Unknown") || bean.getExpiredDate().equals("None"))
+						{
+							expiredDate = null;
+						}
+						else
+						{
+							expiredDate = dataManager.convertValueToDate(bean.getExpiredDate());
+						}
+
 						String values = "'" + bean.getDimensionId()
 								+ "','" + bean.getSubjectId()
 								+ "','" + effectiveDate
@@ -599,8 +684,27 @@ public class LoadConnections extends AbstractOracleConnections
 					try
 					{
 						DataManager dataManager = new DataManager();
-						DATE effectiveDate = dataManager.convertValueToDate(bean.getEffectiveDate());
-						DATE expiredDate = dataManager.convertValueToDate(bean.getExpiredDate());
+						DATE effectiveDate;
+						DATE expiredDate;
+
+						if (bean.getEffectiveDate() == null || bean.getEffectiveDate().equals("Unknown") || bean.getEffectiveDate().equals("None"))
+						{
+							effectiveDate = null;
+						}
+						else
+						{
+							effectiveDate = dataManager.convertValueToDate(bean.getEffectiveDate());
+						}
+
+						if(bean.getExpiredDate() == null || bean.getExpiredDate().equals("Unknown") || bean.getExpiredDate().equals("None"))
+						{
+							expiredDate = null;
+						}
+						else
+						{
+							expiredDate = dataManager.convertValueToDate(bean.getExpiredDate());
+						}
+
 						String values = "'" + bean.getDimensionId()
 								+ "','" + bean.getEnrollmentId()
 								+ "','" + effectiveDate
