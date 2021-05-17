@@ -22,7 +22,7 @@ public class DataManager
 	public DATE convertValueToDate(String dateAsString)
 	{
 		DATE ret;
-		if(!dateAsString.equalsIgnoreCase("unknown") && !dateAsString.equalsIgnoreCase("none"))
+		if(dateAsString != null && !dateAsString.equalsIgnoreCase("unknown") && !dateAsString.equalsIgnoreCase("none"))
 		{
 			ret = new DATE(dateAsString);
 		}
