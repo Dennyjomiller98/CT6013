@@ -450,11 +450,11 @@ public class TransformHelper
 			{
 				if(isEnrolled.equalsIgnoreCase("true"))
 				{
-					transformedBean.setIsEnrolled("Enrolled");
+					transformedBean.setIsEnrolled("true");
 				}
 				else
 				{
-					transformedBean.setIsEnrolled("Not Enrolled");
+					transformedBean.setIsEnrolled("false");
 				}
 			}
 			else
@@ -934,11 +934,11 @@ public class TransformHelper
 			{
 				if(isEnrolled.equalsIgnoreCase("true"))
 				{
-					transformedBean.setIsEnrolled("Enrolled");
+					transformedBean.setIsEnrolled("true");
 				}
 				else
 				{
-					transformedBean.setIsEnrolled("Not Enrolled");
+					transformedBean.setIsEnrolled("false");
 				}
 			}
 			else
