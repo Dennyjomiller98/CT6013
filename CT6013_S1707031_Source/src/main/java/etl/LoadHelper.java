@@ -166,7 +166,7 @@ public class LoadHelper
 		else
 		{
 			LOG.error("Data was not prepared in the DW correctly, so could not create results Fact Table");
-			request.getSession(true).setAttribute("errors", "Data was not prepared in the DW correctly");
+			//request.getSession(true).setAttribute("errors", "Data was not prepared in the DW correctly");
 		}
 		return loadSuccess;
 	}
