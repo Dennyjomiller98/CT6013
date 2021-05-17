@@ -137,23 +137,22 @@ public class LoadHelper
 		boolean modules = conn.setDimModulesData(loadBean);
 		boolean courses = conn.setDimCoursesData(loadBean);
 		boolean subjects = conn.setDimSubjectData(loadBean);
-		boolean enrollments = false;
-		try
-		{
-			enrollments = conn.setDimEnrollmentData(loadBean);
-		}
-		catch (Exception e)
-		{
-			request.getSession(true).setAttribute("errors", "Error:::" + e );
-		}
+		boolean enrollments = conn.setDimEnrollmentData(loadBean);
 
 		if(students && tutors && modules && courses && subjects && enrollments)
 		{
 			//Set main fact table data using current data
-			boolean wasSuccess = conn.setResultsData(loadBean);
-			if(wasSuccess)
+			try
 			{
-				loadSuccess = true;
+				boolean wasSuccess = conn.setResultsData(loadBean);
+				if(wasSuccess)
+				{
+					loadSuccess = true;
+				}
+			}
+			catch (Exception e)
+			{
+				request.getSession(true).setAttribute("errors", "Error:::" + e );
 			}
 		}
 		else

@@ -78,7 +78,7 @@ public class LoadConnections extends AbstractOracleConnections
 		return deleteSuccessful;
 	}
 
-	public boolean setResultsData(DWResultsBean loadBean)
+	public boolean setResultsData(DWResultsBean loadBean) throws Exception
 	{
 		boolean successfulLoad = false;
 		List<AssignmentsBean> assignments = loadBean.getAssignments();
@@ -124,7 +124,8 @@ public class LoadConnections extends AbstractOracleConnections
 					{
 						LOG.error("Error adding entry to DW", e);
 						successfulLoad = false;
-						break;
+						throw new Exception(e);
+						//break;
 					}
 				}
 				else
@@ -669,7 +670,7 @@ public class LoadConnections extends AbstractOracleConnections
 		return successfulLoad;
 	}
 
-	public boolean setDimEnrollmentData(DWResultsBean loadBean) throws Exception
+	public boolean setDimEnrollmentData(DWResultsBean loadBean)
 	{
 		boolean successfulLoad = false;
 		List<DimEnrollmentsBean> enrollmentsBeans = loadBean.getDimEnrollments();
@@ -725,8 +726,7 @@ public class LoadConnections extends AbstractOracleConnections
 					{
 						LOG.error("Error adding entry to DW", e);
 						successfulLoad = false;
-						throw new Exception(e);
-						//break;
+						break;
 					}
 				}
 				else
