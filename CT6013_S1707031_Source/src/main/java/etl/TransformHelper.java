@@ -331,7 +331,7 @@ public class TransformHelper
 			if(resitGrade != null)
 			{
 				//Only add in resit grade if resit is true
-				if(!transformedBean.getResit().equalsIgnoreCase("True"))
+				if(transformedBean.getResit().equalsIgnoreCase("true"))
 				{
 					transformedBean.setResitGrade(resitGrade);
 				}
