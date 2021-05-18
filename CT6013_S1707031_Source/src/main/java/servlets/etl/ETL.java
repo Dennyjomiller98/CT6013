@@ -97,14 +97,14 @@ public class ETL extends HttpServlet
 			&& wasDimSubjectPurged && wasDimStudentPurged && wasDimTutorPurged)
 			{
 				//Load Data
-				boolean loadSuccess = loadHelper.updateDW(loadBean, request);
+				boolean loadSuccess = loadHelper.updateDW(loadBean);
 				if(loadSuccess)
 				{
 					request.getSession(true).setAttribute("success", "Database Warehouse ETL Process Complete");
 				}
 				else
 				{
-					//request.getSession(true).setAttribute("errors", "An error has occurred whilst Loading Data for the Database Warehouse" );
+					request.getSession(true).setAttribute("errors", "An error has occurred whilst Loading Data for the Database Warehouse" );
 				}
 			}
 			else

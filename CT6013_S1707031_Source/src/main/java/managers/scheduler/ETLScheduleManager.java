@@ -94,7 +94,7 @@ public class ETLScheduleManager extends TimerTask
 					&& wasDimSubjectPurged && wasDimStudentPurged && wasDimTutorPurged)
 			{
 				//Load Data
-				boolean loadSuccess = loadHelper.updateDW(loadBean, null);
+				boolean loadSuccess = loadHelper.updateDW(loadBean);
 				if(loadSuccess)
 				{
 					LOG.debug("Database Warehouse ETL Process Complete");

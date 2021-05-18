@@ -5,7 +5,6 @@ import beans.operational.*;
 import beans.operational.dimensions.*;
 import java.sql.SQLException;
 import java.util.List;
-import javax.servlet.http.HttpServletRequest;
 import oracle.LoadConnections;
 import org.apache.log4j.Logger;
 
@@ -128,7 +127,7 @@ public class LoadHelper
 		return wasTruncated;
 	}
 
-	public boolean updateDW(DWResultsBean loadBean, HttpServletRequest request)
+	public boolean updateDW(DWResultsBean loadBean)
 	{
 		boolean loadSuccess = false;
 		LoadConnections conn = new LoadConnections();
@@ -142,26 +141,15 @@ public class LoadHelper
 		if(students && tutors && modules && courses && subjects && enrollments)
 		{
 			//Set main fact table data using current data
-			try
+			boolean wasSuccess = conn.setResultsData(loadBean);
+			if(wasSuccess)
 			{
-				boolean wasSuccess = conn.setResultsData(loadBean);
-				if(wasSuccess)
-				{
-					loadSuccess = true;
-				}
-			}
-			catch (Exception e)
-			{
-				request.getSession(true).setAttribute("errors", "Error:::" + e );
+				loadSuccess = true;
 			}
 		}
 		else
 		{
 			LOG.error("Data was not prepared in the DW correctly, so could not create results Fact Table");
-			if(request != null)
-			{
-				//request.getSession(true).setAttribute("errors", "Data was not prepared in the DW correctly");
-			}
 		}
 		return loadSuccess;
 	}

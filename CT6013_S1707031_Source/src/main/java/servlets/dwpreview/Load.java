@@ -31,7 +31,6 @@ public class Load extends HttpServlet
 		String tutorSelect = request.getParameter("tutorSelect");
 		String courseSelect = request.getParameter("courseSelect");
 
-
 		if(userEmail != null && (querySelected != null && !querySelected.equals("none")))
 		{
 			attemptDataRetrieval(request, userEmail, querySelected, yearSelect, tutorSelect, courseSelect);

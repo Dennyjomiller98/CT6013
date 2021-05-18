@@ -12,7 +12,6 @@ beans\operational\dimensions\DimModulesBean.class
 servlets\Login.class
 beans\UserBean.class
 beans\operational\dimensions\DimStudentsBean.class
-servlets\DataUpdate.class
 etl\DWDataParser.class
 oracle\UserConnections.class
 oracle\AuthenticationConnections.class
@@ -34,7 +33,6 @@ beans\operational\SubjectsBean.class
 servlets\AuthenticateLogin.class
 managers\oracle\DataManager.class
 etl\TransformHelper.class
-beans\dw\ViewBean.class
 beans\operational\ModulesBean.class
 beans\operational\CoursesBean.class
 beans\operational\StudentsBean.class

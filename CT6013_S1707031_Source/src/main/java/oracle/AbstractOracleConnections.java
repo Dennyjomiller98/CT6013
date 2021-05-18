@@ -1,8 +1,12 @@
 package oracle;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
 import org.apache.log4j.Logger;
 
 /**
@@ -14,12 +18,13 @@ public class AbstractOracleConnections implements IOracleConnections
 	static final Logger LOG = Logger.getLogger(AbstractOracleConnections.class);
 
 	//TODO - Remove these static final variables, in exchange for a properties file containing TBL name information
-	public static final String ORACLE_DRIVER = "oracle.jdbc.driver.OracleDriver";
-	public static final String ORACLE_DRIVER_URL = "jdbc:oracle:thin:@//oracle.glos.ac.uk:1521/orclpdb.chelt.local";
-	public static final String ORACLE_OP_USERNAME = "s1707031_OP";
-	public static final String ORACLE_OP_PASSWORD = "s1707031_OP!";
-	public static final String ORACLE_DW_USERNAME = "s1707031_DW";
-	public static final String ORACLE_DW_PASSWORD = "s1707031_DW!";
+	
+	private String oracleDriver;
+	private String oracleDriverUrl;
+	private String oracleOpUsername;
+	private String oracleOpPassword;
+	private String oracleDwUsername;
+	private String oracleDwPassword;
 
 	public static final String TBL_ASSIGNMENTS = "CT6013_ASSIGNMENTS";
 	public static final String TBL_COURSES = "CT6013_COURSES";
@@ -51,6 +56,29 @@ public class AbstractOracleConnections implements IOracleConnections
 	protected AbstractOracleConnections()
 	{
 		//Empty constructor, required as Abstract class
+		Properties props = new Properties();
+		try
+		{
+			InputStream resourceAsStream = getClass().getClassLoader().getResourceAsStream("/config.properties");
+			if(resourceAsStream != null)
+			{
+				props.load(resourceAsStream);
+				oracleDriver = props.getProperty("oracledriver");
+				oracleDriverUrl = props.getProperty("oracledriverurl");
+				oracleOpUsername = props.getProperty("opuser");
+				oracleOpPassword = props.getProperty("oppword");
+				oracleDwUsername = props.getProperty("dwuser");
+				oracleDwPassword = props.getProperty("dwpword");
+			}
+			else
+			{
+				throw new FileNotFoundException("Could not find properties file for configuring smtp mail");
+			}
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
 	}
 
 	public Connection getOPClient()
@@ -69,7 +97,7 @@ public class AbstractOracleConnections implements IOracleConnections
 	{
 		try
 		{
-			oracleClient = DriverManager.getConnection(ORACLE_DRIVER_URL, ORACLE_DW_USERNAME, ORACLE_DW_PASSWORD);
+			oracleClient = DriverManager.getConnection(oracleDriverUrl, oracleDwUsername, oracleDwPassword);
 		}
 		catch (SQLException throwables)
 		{
@@ -81,7 +109,7 @@ public class AbstractOracleConnections implements IOracleConnections
 	{
 		try
 		{
-			oracleClient = DriverManager.getConnection(ORACLE_DRIVER_URL, ORACLE_OP_USERNAME, ORACLE_OP_PASSWORD);
+			oracleClient = DriverManager.getConnection(oracleDriverUrl, oracleOpUsername, oracleOpPassword);
 		}
 		catch (SQLException throwables)
 		{
@@ -94,7 +122,7 @@ public class AbstractOracleConnections implements IOracleConnections
 		try
 		{
 			//Is required or oracleClient Connection is always null
-			Class.forName(ORACLE_DRIVER);
+			Class.forName(oracleDriver);
 		}
 		catch (Exception e)
 		{
