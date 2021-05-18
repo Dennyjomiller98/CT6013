@@ -18,7 +18,7 @@ public class AbstractOracleConnections implements IOracleConnections
 	static final Logger LOG = Logger.getLogger(AbstractOracleConnections.class);
 
 	//TODO - Remove these static final variables, in exchange for a properties file containing TBL name information
-	
+
 	private String oracleDriver;
 	private String oracleDriverUrl;
 	private String oracleOpUsername;
@@ -59,7 +59,7 @@ public class AbstractOracleConnections implements IOracleConnections
 		Properties props = new Properties();
 		try
 		{
-			InputStream resourceAsStream = getClass().getClassLoader().getResourceAsStream("/config.properties");
+			InputStream resourceAsStream = getClass().getClassLoader().getResourceAsStream("/oracleconfig.properties");
 			if(resourceAsStream != null)
 			{
 				props.load(resourceAsStream);
