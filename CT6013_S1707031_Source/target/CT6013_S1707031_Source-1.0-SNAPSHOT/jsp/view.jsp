@@ -46,76 +46,121 @@
                 if(success != null) { %>
             <div class="alert alert-success mysuccess" role="alert" id="formSuccess"><%=success%></div>
             <%}%>
-            <% String test = (String) session.getAttribute("test");
-                if(test != null) { %>
-            <div class="alert alert-success mysuccess" role="alert" id="formSuccess"><%=test%></div>
-            <%}%>
 
             <div class="mainBody">
-                <%--TODO - hide data-selection and show data-retrieved after selecting, give an option to "select more information" to show this info again--%>
-                <div id="data-selection">
-                    <p>
-                        You are successfully logged in.<br/><br/>
-                    </p>
+                <% String haveQueried = (String) session.getAttribute("doQuery");
+                    if(haveQueried == null) { %>
+                    <div id="data-selection">
+                        <form action="${pageContext.request.contextPath}/servlets/dwpreview/Load" method="POST">
+                            <label for="email"></label>
+                            <input style="display: none" type="text" name="email" id="email" value="<%=email%>">
 
-                    <form action="${pageContext.request.contextPath}/servlets/dwpreview/Load" method="POST">
-                        <label for="email"></label>
-                        <input style="display: none" type="text" name="email" id="email" value="<%=email%>">
+                            <label for="select">Select the question you would like to view Information on:</label>
+                            <select style="display: inline-block" name="select" id="select">
+                                <option value="none">Select Question</option>
+                                <option value="q1">Total Students on a Specific Course (Select Course Below)</option>
+                                <option value="q2">Total Dropouts on a Specific Course (Select Course Below)</option>
+                                <option value="q3">Average Grade on a Specific Course (Select Course Below)</option>
+                                <option value="q4">Student Grades based on the Tutor Teaching (Select Tutor Below)</option>
+                                <option value="q5">Number of Resits (Select Course Below)</option>
+                                <option value="q6">Number of Enrollments in a Specific Year (Select Year Below)</option>
+                                <option value="q7">Has COVID-19 affected our Enrollment intake?</option>
+                                <option value="q8">Total Number of International Students on a Specific Course (Select Course Below)</option>
+                                <option value="q9">Number of Students That Changed Courses</option>
+                                <option value="q10">COVID-19 Affect on Enrollment of International Students</option>
+                            </select>
+                            <br/>
 
-                        <label for="select">Select the question you would like to view Information on:</label>
-                        <select style="display: inline-block" name="select" id="select">
-                            <option value="none">Select Question</option>
-                            <option value="q1">Total Students on a Specific Course (Select Course Below)</option>
-                            <option value="q2">Total Dropouts on a Specific Course (Select Course Below)</option>
-                            <option value="q3">Average Grade on a Specific Course (Select Course Below)</option>
-                            <option value="q4">Student Grades based on the Tutor Teaching (Select Tutor Below)</option>
-                            <option value="q5">Number of Resits (Select Course Below)</option>
-                            <option value="q6">Number of Enrollments in a Specific Year (Select Year Below)</option>
-                            <option value="q7">Has COVID-19 affected our Enrollment intake?</option>
-                            <option value="q8">Total Number of International Students on a Specific Course (Select Course Below)</option>
-                            <option value="q9">Number of Students That Changed Courses</option>
-                            <option value="q10">COVID-19 Affect on Enrollment of International Students</option>
-                        </select>
-                        <br/>
+                            <label for="courseSelect">Select the Course you would like to view Information on:</label>
+                            <select style="display: inline-block" name="courseSelect" id="courseSelect">
+                                <option value="all">All Courses</option>
+                                <%--TODO - pull Course data in after logging in--%>
+                            </select>
+                            <br/>
+                            <label for="tutorSelect">Select the Tutor you would like to view Information on:</label>
+                            <select style="display: inline-block" name="tutorSelect" id="tutorSelect">
+                                <option value="all">All Tutors</option>
+                                <%--TODO - pull Tutor data in after logging in--%>
+                            </select>
+                            <br/>
+                            <label for="yearSelect">Select the Year you would like to view Information on:</label>
+                            <select style="display: inline-block" name="yearSelect" id="yearSelect">
+                                <option value="all">All Years</option>
+                                <option value="2021">2021</option>
+                                <option value="2020">2020</option>
+                                <option value="2019">2019</option>
+                                <option value="2018">2018</option>
+                                <option value="2017">2017</option>
+                                <option value="2016">2016</option>
+                                <option value="2015">2015</option>
+                            </select>
+                            <br/>
 
-                        <%--TODO // hide these unless Relevant Question has been selected (JQUERY)--%>
-                        <label for="courseSelect">Select the Course you would like to view Information on:</label>
-                        <select style="display: inline-block" name="courseSelect" id="courseSelect">
-                            <option value="all">All Courses</option>
-                            <%--TODO - pull Course data in after logging in--%>
-                        </select>
-                        <br/>
-                        <label for="tutorSelect">Select the Tutor you would like to view Information on:</label>
-                        <select style="display: inline-block" name="tutorSelect" id="tutorSelect">
-                            <option value="all">All Tutors</option>
-                            <%--TODO - pull Tutor data in after logging in--%>
-                        </select>
-                        <br/>
-                        <label for="yearSelect">Select the Year you would like to view Information on:</label>
-                        <select style="display: inline-block" name="yearSelect" id="yearSelect">
-                            <option value="all">All Courses</option>
-                            <%--TODO - add Year selection (up to 2000 maybe? also hide if not selected)--%>
-                        </select>
-                        <br/>
-
-                        <input type="submit" value="View">
-                    </form>
-                </div>
-
-                <div id="data-retrieved">
-                    <%--TODO - TABLE OF DW info here, graphs etc (maybe a popup? that way can re-select after?) --%>
-                        <%if(session.getAttribute("enrollmentsBeans") != null)
+                            <input type="submit" value="View">
+                        </form>
+                    </div>
+                <%} else {%>
+                <%--View Table section--%>
+                    <div id="data-retrieved">
+                        <%if(session.getAttribute("selectedQuery").equals("q1"))
                         {
-                            List<DWEnrollmentsBean> enrollments = (List<DWEnrollmentsBean>) session.getAttribute("enrollmentsBeans");
-                            if(enrollments != null) {
-                                for (DWEnrollmentsBean enrollment : enrollments)
-                                {
 
-                                }%>
-                        <div class="alert alert-success mysuccess" role="alert" id="formSuccess">Total Enrollments: <%=enrollments.size()%></div>
+                        }%>
+
+                        <%if(session.getAttribute("selectedQuery").equals("q2"))
+                        {%>
+                            <%if(session.getAttribute("enrollmentsBeans") != null)
+                            {
+                                List<DWEnrollmentsBean> enrollments = (List<DWEnrollmentsBean>) session.getAttribute("enrollmentsBeans");
+                                if(enrollments != null && !enrollments.isEmpty()) {%>
+                                    <h3>Results for: "Total Dropouts on a Specific Course"</h3>
+                                    <p>Using Year(s): XXXXXX and Course(s): XXXXX , a Total of <%=enrollments.size()%> dropout(s) were found.</p>
+                                    <%--TODO - TABLE BEGINNING, LOOP THROUGH ALL RELEVANT INFO--%>
+                                    <%for (DWEnrollmentsBean enrollment : enrollments)
+                                    {%>
+
+                                    <%}%>
+                                <%}%>
                             <%}%>
                         <%}%>
-                </div>
+
+                        <%if(session.getAttribute("selectedQuery").equals("q3"))
+                        {
+
+                        }%>
+                        <%if(session.getAttribute("selectedQuery").equals("q4"))
+                        {
+
+                        }%>
+                        <%if(session.getAttribute("selectedQuery").equals("q5"))
+                        {
+
+                        }%>
+                        <%if(session.getAttribute("selectedQuery").equals("q6"))
+                        {
+
+                        }%>
+                        <%if(session.getAttribute("selectedQuery").equals("q7"))
+                        {
+
+                        }%>
+                        <%if(session.getAttribute("selectedQuery").equals("q8"))
+                        {
+
+                        }%>
+                        <%if(session.getAttribute("selectedQuery").equals("q9"))
+                        {
+
+                        }%>
+                        <%if(session.getAttribute("selectedQuery").equals("q10"))
+                        {
+
+                        }%>
+
+                        <%--Button to hide table, show form and try again--%>
+                        <p class="formBtn selectAnother">New Search</p>
+                    </div>
+                <%}%>
             </div>
         </div>
     </body>

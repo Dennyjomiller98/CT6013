@@ -24,7 +24,12 @@ public class Load extends HttpServlet
 		request.getSession(true).removeAttribute("results");
 		request.getSession(true).removeAttribute("doQuery");
 		request.getSession(true).removeAttribute("errors");
+
 		request.getSession(true).removeAttribute("selectedQuery");
+		request.getSession(true).removeAttribute("selectedYear");
+		request.getSession(true).removeAttribute("selectedCourse");
+		request.getSession(true).removeAttribute("selectedTutor");
+
 		request.getSession(true).removeAttribute("studentsBeans");
 		request.getSession(true).removeAttribute("assignmentsBeans");
 		request.getSession(true).removeAttribute("enrollmentsBeans");
@@ -77,8 +82,7 @@ public class Load extends HttpServlet
 				else
 				{
 					//Continue setting Session Attributes
-					request.getSession(true).setAttribute("test", "Do we get this far?");
-					setSessionDataForQuery(resultsBean, querySelected, request);
+					setSessionDataForQuery(resultsBean, querySelected, request, yearSelect, courseSelect, tutorSelect);
 				}
 			}
 			else
@@ -104,10 +108,25 @@ public class Load extends HttpServlet
 		}
 	}
 
-	private void setSessionDataForQuery(DWLoadBean resultsBean, String querySelected, HttpServletRequest request)
+	private void setSessionDataForQuery(DWLoadBean resultsBean, String querySelected, HttpServletRequest request, String yearSelect, String courseSelect, String tutorSelect)
 	{
 		request.getSession(true).setAttribute("doQuery", "true");
-		request.getSession(true).setAttribute("selectedQuery", querySelected);
+		if(querySelected != null)
+		{
+			request.getSession(true).setAttribute("selectedQuery", querySelected);
+		}
+		if(yearSelect != null)
+		{
+			request.getSession(true).setAttribute("selectedYear", yearSelect);
+		}
+		if(courseSelect != null)
+		{
+			request.getSession(true).setAttribute("selectedCourse", courseSelect);
+		}
+		if(tutorSelect != null)
+		{
+			request.getSession(true).setAttribute("selectedTutor", tutorSelect);
+		}
 		request.getSession(true).setAttribute("success", "Information Successfully Retrieved");
 
 		if(resultsBean != null)
