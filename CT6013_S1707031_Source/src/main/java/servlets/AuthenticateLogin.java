@@ -1,11 +1,15 @@
 package servlets;
 
 import beans.UserBean;
+import beans.operational.dimensions.DimCoursesBean;
+import beans.operational.dimensions.DimTutorsBean;
 import java.io.IOException;
+import java.util.List;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import oracle.AuthenticationConnections;
+import oracle.DataViewConnections;
 import oracle.UserConnections;
 import org.apache.log4j.Logger;
 
@@ -33,6 +37,20 @@ public class AuthenticateLogin extends HttpServlet
 			request.getSession(true).removeAttribute("errors");
 			request.getSession(true).setAttribute("email", loggedInBean.getUsername());
 			request.getSession(true).setAttribute("pword", loggedInBean.getPword());
+
+			//Get View Page Information
+			DataViewConnections connections = new DataViewConnections();
+			List<DimCoursesBean> dwCourses = connections.getDWCourses();
+			if(dwCourses != null && !dwCourses.isEmpty())
+			{
+				request.getSession(true).setAttribute("allCourses", dwCourses);
+			}
+			List<DimTutorsBean> dwTutors = connections.getDWTutors();
+			if(dwTutors != null && !dwTutors.isEmpty())
+			{
+				request.getSession(true).setAttribute("allTutors", dwTutors);
+			}
+
 			try
 			{
 				response.sendRedirect(request.getContextPath() + "/jsp/view.jsp");

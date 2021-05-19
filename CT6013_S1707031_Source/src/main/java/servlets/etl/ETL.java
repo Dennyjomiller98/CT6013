@@ -13,6 +13,7 @@ import java.util.List;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import oracle.DataViewConnections;
 import org.apache.log4j.Logger;
 
 public class ETL extends HttpServlet
@@ -137,6 +138,19 @@ public class ETL extends HttpServlet
 		String userEmail = (String) request.getSession(true).getAttribute("email");
 		if (userEmail != null)
 		{
+			//Get View Page Information
+			DataViewConnections connections = new DataViewConnections();
+			List<DimCoursesBean> dwCourses = connections.getDWCourses();
+			if(dwCourses != null && !dwCourses.isEmpty())
+			{
+				request.getSession(true).setAttribute("allCourses", dwCourses);
+			}
+			List<DimTutorsBean> dwTutors = connections.getDWTutors();
+			if(dwTutors != null && !dwTutors.isEmpty())
+			{
+				request.getSession(true).setAttribute("allTutors", dwTutors);
+			}
+
 			//Take logged in user to view data page
 			try
 			{

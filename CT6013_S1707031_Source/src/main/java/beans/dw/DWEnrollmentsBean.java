@@ -7,6 +7,7 @@ public class DWEnrollmentsBean
 	private String fFirstname;
 	private String fSurname;
 	private String fCourseId;
+	private String fCourseName;
 	private String fEnrollmentDate;
 	private String fHasDropped;
 
@@ -58,6 +59,15 @@ public class DWEnrollmentsBean
 	public String getCourseId()
 	{
 		return fCourseId;
+	}
+
+	public void setCourseName(String courseName)
+	{
+		fCourseName = courseName;
+	}
+	public String getCourseName()
+	{
+		return fCourseName;
 	}
 
 	public void setEnrollmentDate(String enrollmentDate)

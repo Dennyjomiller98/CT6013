@@ -1,5 +1,7 @@
 <%@ page import="beans.dw.DWEnrollmentsBean" %>
-<%@ page import="java.util.List" %><%--
+<%@ page import="java.util.List" %>
+<%@ page import="beans.operational.dimensions.DimTutorsBean" %>
+<%@ page import="beans.operational.dimensions.DimCoursesBean" %><%--
   Created by IntelliJ IDEA.
   User: Denny-Jo
   Date: 18/04/2021
@@ -74,13 +76,33 @@
                             <label for="courseSelect">Select the Course you would like to view Information on:</label>
                             <select style="display: inline-block" name="courseSelect" id="courseSelect">
                                 <option value="all">All Courses</option>
-                                <%--TODO - pull Course data in after logging in--%>
+                                <%if(session.getAttribute("allCourses") != null)
+                                {
+                                    List<DimCoursesBean> allCourses = (List<DimCoursesBean>) session.getAttribute("allCourses");
+                                    if(allCourses != null)
+                                    {
+                                        for (DimCoursesBean course : allCourses)
+                                        {%>
+                                            <option value="<%=course.getCourseId()%>"><%=course.getCourseName()%></option>
+                                        <% } %>
+                                   <% } %>
+                                <% } %>
                             </select>
                             <br/>
                             <label for="tutorSelect">Select the Tutor you would like to view Information on:</label>
                             <select style="display: inline-block" name="tutorSelect" id="tutorSelect">
                                 <option value="all">All Tutors</option>
-                                <%--TODO - pull Tutor data in after logging in--%>
+                                <%if(session.getAttribute("allTutors") != null)
+                                {
+                                    List<DimTutorsBean> allTutors = (List<DimTutorsBean>) session.getAttribute("allTutors");
+                                    if(allTutors != null)
+                                    {
+                                        for (DimTutorsBean tutor : allTutors)
+                                        { %>
+                                            <option value="<%=tutor.getTutorId()%>"><%=tutor.getFirstname() + " " + tutor.getSurname()%></option>
+                                        <% } %>
+                                   <% } %>
+                                <% } %>
                             </select>
                             <br/>
                             <label for="yearSelect">Select the Year you would like to view Information on:</label>
@@ -125,15 +147,18 @@
                                     	course = (String) session.getAttribute("selectedCourse");
                                     }
                                     %>
-                                    <p>Using Year(s): <%=year%> and Course(s): <%=course%> , a Total of <%=enrollments.size()%> dropout(s) were found.</p>
+                                    <br/>
+                                    <h4>Using Year(s): <strong><%=year%></>strong> and Course(s): <strong><%=course%></strong>, a Total of <strong><%=enrollments.size()%></strong> dropout(s) were found.</h4>
+                                    <br/>
                                     <table class="table table-striped">
-                                        <caption>Total Dropouts</caption>
+                                        <caption style="  display: table-caption; text-align: center;">Total Dropouts</caption>
                                         <thead>
                                         <tr>
                                             <th scope="col">#ID</th>
                                             <th scope="col">Student Number</th>
                                             <th scope="col">Student Name</th>
                                             <th scope="col">Course #ID</th>
+                                            <th scope="col">Course Name</th>
                                             <th scope="col">Date of Enrollment</th>
                                         </tr>
                                         </thead>
@@ -145,6 +170,7 @@
                                                 <td><%=enrollment.getStudentId()%></td>
                                                 <td><%=enrollment.getStudentFirstname() + " " + enrollment.getStudentSurname()%> </td>
                                                 <td><%=enrollment.getCourseId()%></td>
+                                                <td><%=enrollment.getCourseName()%></td>
                                                 <td><%=enrollment.getEnrollmentDate()%></td>
                                             </tr>
                                         <%}%>

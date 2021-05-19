@@ -1,6 +1,7 @@
 package managers.dataview;
 
 import beans.dw.DWLoadBean;
+import beans.operational.dimensions.DimCoursesBean;
 import beans.operational.dimensions.DimEnrollmentsBean;
 import beans.operational.dimensions.DimStudentsBean;
 import java.util.List;
@@ -87,10 +88,11 @@ public class ETLQueryManager implements IQueryManager
 		DataViewConnections connections = new DataViewConnections();
 		List<DimEnrollmentsBean> allEnrollmentBeans = connections.getDWEnrollments(null, null);
 		List<DimStudentsBean> allStudentBeans = connections.getDWStudents();
+		List<DimCoursesBean> allCourses = connections.getDWCourses();
 		if(allEnrollmentBeans != null && !allEnrollmentBeans.isEmpty() && allStudentBeans != null && !allStudentBeans.isEmpty())
 		{
 			BeanManager beanManager = new BeanManager();
-			ret = beanManager.convertTotalDropouts(allStudentBeans, allEnrollmentBeans);
+			ret = beanManager.convertTotalDropouts(allStudentBeans, allEnrollmentBeans, allCourses);
 		}
 		return ret;
 	}
@@ -102,10 +104,11 @@ public class ETLQueryManager implements IQueryManager
 		DataViewConnections connections = new DataViewConnections();
 		List<DimEnrollmentsBean> allEnrollmentBeans = connections.getDWEnrollments(yearSelect, null);
 		List<DimStudentsBean> allStudentBeans = connections.getDWStudents();
+		List<DimCoursesBean> allCourses = connections.getDWCourses();
 		if(allEnrollmentBeans != null && !allEnrollmentBeans.isEmpty() && allStudentBeans != null && !allStudentBeans.isEmpty())
 		{
 			BeanManager beanManager = new BeanManager();
-			ret = beanManager.convertTotalDropouts(allStudentBeans, allEnrollmentBeans);
+			ret = beanManager.convertTotalDropouts(allStudentBeans, allEnrollmentBeans, allCourses);
 		}
 		return ret;
 	}
@@ -117,10 +120,11 @@ public class ETLQueryManager implements IQueryManager
 		DataViewConnections connections = new DataViewConnections();
 		List<DimEnrollmentsBean> allEnrollmentBeans = connections.getDWEnrollments(null, courseSelect);
 		List<DimStudentsBean> allStudentBeans = connections.getDWStudents();
+		List<DimCoursesBean> allCourses = connections.getDWCourses();
 		if(allEnrollmentBeans != null && !allEnrollmentBeans.isEmpty() && allStudentBeans != null && !allStudentBeans.isEmpty())
 		{
 			BeanManager beanManager = new BeanManager();
-			ret = beanManager.convertTotalDropouts(allStudentBeans, allEnrollmentBeans);
+			ret = beanManager.convertTotalDropouts(allStudentBeans, allEnrollmentBeans, allCourses);
 		}
 		return ret;
 	}
@@ -132,10 +136,11 @@ public class ETLQueryManager implements IQueryManager
 		DataViewConnections connections = new DataViewConnections();
 		List<DimEnrollmentsBean> allEnrollmentBeans = connections.getDWEnrollments(yearSelect, courseSelect);
 		List<DimStudentsBean> allStudentBeans = connections.getDWStudents();
+		List<DimCoursesBean> allCourses = connections.getDWCourses();
 		if(allEnrollmentBeans != null && !allEnrollmentBeans.isEmpty() && allStudentBeans != null && !allStudentBeans.isEmpty())
 		{
 			BeanManager beanManager = new BeanManager();
-			ret = beanManager.convertTotalDropouts(allStudentBeans, allEnrollmentBeans);
+			ret = beanManager.convertTotalDropouts(allStudentBeans, allEnrollmentBeans, allCourses);
 		}
 		return ret;
 	}

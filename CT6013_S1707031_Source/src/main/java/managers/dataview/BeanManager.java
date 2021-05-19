@@ -2,6 +2,7 @@ package managers.dataview;
 
 import beans.dw.DWEnrollmentsBean;
 import beans.dw.DWLoadBean;
+import beans.operational.dimensions.DimCoursesBean;
 import beans.operational.dimensions.DimEnrollmentsBean;
 import beans.operational.dimensions.DimStudentsBean;
 import java.util.List;
@@ -27,7 +28,7 @@ public class BeanManager
 		return ret;
 	}
 
-	public DWLoadBean convertTotalDropouts(List<DimStudentsBean> allStudentsBeans, List<DimEnrollmentsBean> allEnrollmentsBeans)
+	public DWLoadBean convertTotalDropouts(List<DimStudentsBean> allStudentsBeans, List<DimEnrollmentsBean> allEnrollmentsBeans, List<DimCoursesBean> allCoursesBeans)
 	{
 		DWLoadBean ret = new DWLoadBean();
 		//Loop the enrollments
@@ -39,24 +40,33 @@ public class BeanManager
 				if(enrollment.getHasDropped().equalsIgnoreCase("true"))
 				{
 					//Attempt to find matching Student Dimension info
-					DimStudentsBean matchingBean = null;
+					DimStudentsBean matchingStudent = null;
+					DimCoursesBean matchingCourse = null;
 					for (DimStudentsBean studentBean : allStudentsBeans)
 					{
 						if(enrollment.getStudentId().equalsIgnoreCase(studentBean.getStudentId()))
 						{
-							matchingBean = studentBean;
+							matchingStudent = studentBean;
+						}
+					}
+					for (DimCoursesBean courseBean : allCoursesBeans)
+					{
+						if(courseBean.getCourseId().equalsIgnoreCase(enrollment.getCourseId()))
+						{
+							matchingCourse = courseBean;
 						}
 					}
 
-					if(matchingBean != null)
+					if(matchingStudent != null)
 					{
 						//Match, add and return (for adding to session to display to user)
 						DWEnrollmentsBean bean = new DWEnrollmentsBean();
 						bean.setId(enrollment.getEnrollmentId());
 						bean.setStudentId(enrollment.getStudentId());
-						bean.setStudentFirstname(matchingBean.getFirstname());
-						bean.setStudentSurname(matchingBean.getSurname());
+						bean.setStudentFirstname(matchingStudent.getFirstname());
+						bean.setStudentSurname(matchingStudent.getSurname());
 						bean.setCourseId(enrollment.getCourseId());
+						bean.setCourseName(matchingCourse.getCourseName());
 						bean.setEnrollmentDate(enrollment.getEnrollmentDate());
 						bean.setHasDropped(enrollment.getHasDropped());
 						ret.addDWEnrollments(bean);
