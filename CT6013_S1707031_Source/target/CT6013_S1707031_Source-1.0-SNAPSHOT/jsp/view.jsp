@@ -114,12 +114,42 @@
                                 List<DWEnrollmentsBean> enrollments = (List<DWEnrollmentsBean>) session.getAttribute("enrollmentsBeans");
                                 if(enrollments != null && !enrollments.isEmpty()) {%>
                                     <h3>Results for: "Total Dropouts on a Specific Course"</h3>
-                                    <p>Using Year(s): XXXXXX and Course(s): XXXXX , a Total of <%=enrollments.size()%> dropout(s) were found.</p>
-                                    <%--TODO - TABLE BEGINNING, LOOP THROUGH ALL RELEVANT INFO--%>
-                                    <%for (DWEnrollmentsBean enrollment : enrollments)
-                                    {%>
-
-                                    <%}%>
+                                    <%String year = "Unknown";
+                                    String course = "Unknown";
+                                    if(session.getAttribute("selectedYear") != null)
+                                    {
+                                        year = (String) session.getAttribute("selectedYear");
+                                    }
+                                    if(session.getAttribute("selectedCourse") != null)
+                                    {
+                                    	course = (String) session.getAttribute("selectedCourse");
+                                    }
+                                    %>
+                                    <p>Using Year(s): <%=year%> and Course(s): <%=course%> , a Total of <%=enrollments.size()%> dropout(s) were found.</p>
+                                    <table class="table table-striped">
+                                        <caption>Total Dropouts</caption>
+                                        <thead>
+                                        <tr>
+                                            <th scope="col">#ID</th>
+                                            <th scope="col">Student Number</th>
+                                            <th scope="col">Student Name</th>
+                                            <th scope="col">Course #ID</th>
+                                            <th scope="col">Date of Enrollment</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <%for (DWEnrollmentsBean enrollment : enrollments)
+                                        {%>
+                                            <tr>
+                                                <th scope="row"><%=enrollment.getId()%></th>
+                                                <td><%=enrollment.getStudentId()%></td>
+                                                <td><%=enrollment.getStudentFirstname() + " " + enrollment.getStudentSurname()%> </td>
+                                                <td><%=enrollment.getCourseId()%></td>
+                                                <td><%=enrollment.getEnrollmentDate()%></td>
+                                            </tr>
+                                        <%}%>
+                                        </tbody>
+                                    </table>
                                 <%}%>
                             <%}%>
                         <%}%>
@@ -158,7 +188,7 @@
                         }%>
 
                         <%--Button to hide table, show form and try again--%>
-                        <p class="formBtn selectAnother">New Search</p>
+                        <button type="button" class="btn btn-primary newSearch">New Search</button>
                     </div>
                 <%}%>
             </div>

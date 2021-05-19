@@ -21,9 +21,9 @@ public class Load extends HttpServlet
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 	{
 		request.getSession(true).removeAttribute("success");
+		request.getSession(true).removeAttribute("errors");
 		request.getSession(true).removeAttribute("results");
 		request.getSession(true).removeAttribute("doQuery");
-		request.getSession(true).removeAttribute("errors");
 
 		request.getSession(true).removeAttribute("selectedQuery");
 		request.getSession(true).removeAttribute("selectedYear");

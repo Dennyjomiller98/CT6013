@@ -25,6 +25,17 @@ public class ETL extends HttpServlet
 		request.getSession(true).removeAttribute("success");
 		request.getSession(true).removeAttribute("errors");
 
+		//If on View page, need to remove previous data
+		request.getSession(true).removeAttribute("doQuery");
+		request.getSession(true).removeAttribute("results");
+		request.getSession(true).removeAttribute("selectedQuery");
+		request.getSession(true).removeAttribute("selectedYear");
+		request.getSession(true).removeAttribute("selectedCourse");
+		request.getSession(true).removeAttribute("selectedTutor");
+		request.getSession(true).removeAttribute("studentsBeans");
+		request.getSession(true).removeAttribute("assignmentsBeans");
+		request.getSession(true).removeAttribute("enrollmentsBeans");
+
 		//Retrieve ALL Operational Database Data, and store in Beans ready for Transform Process
 		try
 		{

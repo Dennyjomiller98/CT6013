@@ -20,6 +20,22 @@ public class Logout extends HttpServlet
 		request.getSession(true).removeAttribute("pword");
 		request.getSession(true).removeAttribute("email");
 
+		//Logout view page attr's
+		request.getSession(true).removeAttribute("allTutors");
+		request.getSession(true).removeAttribute("allCourses");
+
+		request.getSession(true).removeAttribute("doQuery");
+		request.getSession(true).removeAttribute("results");
+
+		request.getSession(true).removeAttribute("selectedQuery");
+		request.getSession(true).removeAttribute("selectedYear");
+		request.getSession(true).removeAttribute("selectedCourse");
+		request.getSession(true).removeAttribute("selectedTutor");
+
+		request.getSession(true).removeAttribute("studentsBeans");
+		request.getSession(true).removeAttribute("assignmentsBeans");
+		request.getSession(true).removeAttribute("enrollmentsBeans");
+
 		try
 		{
 			response.sendRedirect(request.getContextPath() + "/jsp/homepage.jsp");
