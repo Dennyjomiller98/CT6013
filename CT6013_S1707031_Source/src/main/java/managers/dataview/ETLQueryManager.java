@@ -1,6 +1,10 @@
 package managers.dataview;
 
-import beans.dw.DWResultsBean;
+import beans.dw.DWLoadBean;
+import beans.operational.dimensions.DimEnrollmentsBean;
+import beans.operational.dimensions.DimStudentsBean;
+import java.util.List;
+import oracle.DataViewConnections;
 
 /**
  * @author Denny-Jo
@@ -16,271 +20,333 @@ public class ETLQueryManager implements IQueryManager
 		//Empty Constructor
 	}
 
-	//TODO - ALL QUERIES TO DW
-
 	@Override
-	public DWResultsBean getTotalStudentsAllCoursesAllYears()
+	public DWLoadBean getTotalStudentsAllCoursesAllYears()
 	{
-		DWResultsBean ret= new DWResultsBean();
+		DWLoadBean ret= new DWLoadBean();
+		DataViewConnections connections = new DataViewConnections();
+		List<DimEnrollmentsBean> allEnrollmentBeans = connections.getDWEnrollments(null, null);
+		List<DimStudentsBean> allStudentsBeans = connections.getDWStudents();
+		if(allStudentsBeans != null && !allStudentsBeans.isEmpty() && allEnrollmentBeans != null && !allEnrollmentBeans.isEmpty())
+		{
+			BeanManager beanManager = new BeanManager();
+			ret = beanManager.convertTotalStudents(allStudentsBeans, allEnrollmentBeans);
+		}
 		return ret;
 	}
 
 	@Override
-	public DWResultsBean getTotalStudentsAllCoursesSelectedYear(String yearSelect)
+	public DWLoadBean getTotalStudentsAllCoursesSelectedYear(String yearSelect)
 	{
-		DWResultsBean ret= new DWResultsBean();
+		DWLoadBean ret= new DWLoadBean();
+		DataViewConnections connections = new DataViewConnections();
+		List<DimEnrollmentsBean> allEnrollmentBeans = connections.getDWEnrollments(yearSelect, null);
+		List<DimStudentsBean> allStudentsBeans = connections.getDWStudents();
+		if(allStudentsBeans != null && !allStudentsBeans.isEmpty() && allEnrollmentBeans != null && !allEnrollmentBeans.isEmpty())
+		{
+			BeanManager beanManager = new BeanManager();
+			ret = beanManager.convertTotalStudents(allStudentsBeans, allEnrollmentBeans);
+		}
 		return ret;
 	}
 
 	@Override
-	public DWResultsBean getTotalStudentsSelectedCourseAllYears(String courseSelect)
+	public DWLoadBean getTotalStudentsSelectedCourseAllYears(String courseSelect)
 	{
-		DWResultsBean ret= new DWResultsBean();
+		DWLoadBean ret= new DWLoadBean();
+		DataViewConnections connections = new DataViewConnections();
+		List<DimEnrollmentsBean> allEnrollmentBeans = connections.getDWEnrollments(null, courseSelect);
+		List<DimStudentsBean> allStudentsBeans = connections.getDWStudents();
+		if(allStudentsBeans != null && !allStudentsBeans.isEmpty() && allEnrollmentBeans != null && !allEnrollmentBeans.isEmpty())
+		{
+			BeanManager beanManager = new BeanManager();
+			ret = beanManager.convertTotalStudents(allStudentsBeans, allEnrollmentBeans);
+		}
 		return ret;
 	}
 
 	@Override
-	public DWResultsBean getTotalStudentsSelectedCourseSelectedYear(String courseSelect, String yearSelect)
+	public DWLoadBean getTotalStudentsSelectedCourseSelectedYear(String courseSelect, String yearSelect)
 	{
-		DWResultsBean ret= new DWResultsBean();
+		DWLoadBean ret= new DWLoadBean();
+		DataViewConnections connections = new DataViewConnections();
+		List<DimEnrollmentsBean> allEnrollmentBeans = connections.getDWEnrollments(yearSelect, courseSelect);
+		List<DimStudentsBean> allStudentsBeans = connections.getDWStudents();
+		if(allStudentsBeans != null && !allStudentsBeans.isEmpty() && allEnrollmentBeans != null && !allEnrollmentBeans.isEmpty())
+		{
+			BeanManager beanManager = new BeanManager();
+			ret = beanManager.convertTotalStudents(allStudentsBeans, allEnrollmentBeans);
+		}
 		return ret;
 	}
 
 	@Override
-	public DWResultsBean getTotalDropoutsAllCoursesAllYears()
+	public DWLoadBean getTotalDropoutsAllCoursesAllYears()
 	{
-		DWResultsBean ret= new DWResultsBean();
+		DWLoadBean ret= new DWLoadBean();
+		DataViewConnections connections = new DataViewConnections();
+		List<DimEnrollmentsBean> allEnrollmentBeans = connections.getDWEnrollments(null, null);
+		List<DimStudentsBean> allStudentBeans = connections.getDWStudents();
+		if(allEnrollmentBeans != null && !allEnrollmentBeans.isEmpty() && allStudentBeans != null && !allStudentBeans.isEmpty())
+		{
+			BeanManager beanManager = new BeanManager();
+			ret = beanManager.convertTotalDropouts(allStudentBeans, allEnrollmentBeans);
+		}
 		return ret;
 	}
 
 	@Override
-	public DWResultsBean getTotalDropoutsAllCoursesSelectedYear(String yearSelect)
+	public DWLoadBean getTotalDropoutsAllCoursesSelectedYear(String yearSelect)
 	{
-		DWResultsBean ret= new DWResultsBean();
+		DWLoadBean ret= new DWLoadBean();
+		DataViewConnections connections = new DataViewConnections();
+		List<DimEnrollmentsBean> allEnrollmentBeans = connections.getDWEnrollments(yearSelect, null);
+		List<DimStudentsBean> allStudentBeans = connections.getDWStudents();
+		if(allEnrollmentBeans != null && !allEnrollmentBeans.isEmpty() && allStudentBeans != null && !allStudentBeans.isEmpty())
+		{
+			BeanManager beanManager = new BeanManager();
+			ret = beanManager.convertTotalDropouts(allStudentBeans, allEnrollmentBeans);
+		}
 		return ret;
 	}
 
 	@Override
-	public DWResultsBean getTotalDropoutsSelectedCourseAllYears(String courseSelect)
+	public DWLoadBean getTotalDropoutsSelectedCourseAllYears(String courseSelect)
 	{
-		DWResultsBean ret= new DWResultsBean();
+		DWLoadBean ret= new DWLoadBean();
+		DataViewConnections connections = new DataViewConnections();
+		List<DimEnrollmentsBean> allEnrollmentBeans = connections.getDWEnrollments(null, courseSelect);
+		List<DimStudentsBean> allStudentBeans = connections.getDWStudents();
+		if(allEnrollmentBeans != null && !allEnrollmentBeans.isEmpty() && allStudentBeans != null && !allStudentBeans.isEmpty())
+		{
+			BeanManager beanManager = new BeanManager();
+			ret = beanManager.convertTotalDropouts(allStudentBeans, allEnrollmentBeans);
+		}
 		return ret;
 	}
 
 	@Override
-	public DWResultsBean getTotalDropoutsSelectedCourseSelectedYear(String courseSelect, String yearSelect)
+	public DWLoadBean getTotalDropoutsSelectedCourseSelectedYear(String courseSelect, String yearSelect)
 	{
-		DWResultsBean ret= new DWResultsBean();
+		DWLoadBean ret= new DWLoadBean();
+		DataViewConnections connections = new DataViewConnections();
+		List<DimEnrollmentsBean> allEnrollmentBeans = connections.getDWEnrollments(yearSelect, courseSelect);
+		List<DimStudentsBean> allStudentBeans = connections.getDWStudents();
+		if(allEnrollmentBeans != null && !allEnrollmentBeans.isEmpty() && allStudentBeans != null && !allStudentBeans.isEmpty())
+		{
+			BeanManager beanManager = new BeanManager();
+			ret = beanManager.convertTotalDropouts(allStudentBeans, allEnrollmentBeans);
+		}
 		return ret;
 	}
 
 	@Override
-	public DWResultsBean getAverageGradeAllCoursesAllYears()
+	public DWLoadBean getAverageGradeAllCoursesAllYears()
 	{
-		DWResultsBean ret= new DWResultsBean();
+		DWLoadBean ret= new DWLoadBean();
 		return ret;
 	}
 
 	@Override
-	public DWResultsBean getAverageGradeAllCoursesSelectedYear(String yearSelect)
+	public DWLoadBean getAverageGradeAllCoursesSelectedYear(String yearSelect)
 	{
-		DWResultsBean ret= new DWResultsBean();
+		DWLoadBean ret= new DWLoadBean();
 		return ret;
 	}
 
 	@Override
-	public DWResultsBean getAverageGradeSelectedCourseAllYears(String courseSelect)
+	public DWLoadBean getAverageGradeSelectedCourseAllYears(String courseSelect)
 	{
-		DWResultsBean ret= new DWResultsBean();
+		DWLoadBean ret= new DWLoadBean();
 		return ret;
 	}
 
 	@Override
-	public DWResultsBean getAverageGradeSelectedCourseSelectedYear(String courseSelect, String yearSelect)
+	public DWLoadBean getAverageGradeSelectedCourseSelectedYear(String courseSelect, String yearSelect)
 	{
-		DWResultsBean ret= new DWResultsBean();
+		DWLoadBean ret= new DWLoadBean();
 		return ret;
 	}
 
 	@Override
-	public DWResultsBean getPassRateAllTutorsAllCoursesAllYears()
+	public DWLoadBean getPassRateAllTutorsAllCoursesAllYears()
 	{
-		DWResultsBean ret= new DWResultsBean();
+		DWLoadBean ret= new DWLoadBean();
 		return ret;
 	}
 
 	@Override
-	public DWResultsBean getPassRateAllTutorsAllCoursesSelectedYear(String yearSelect)
+	public DWLoadBean getPassRateAllTutorsAllCoursesSelectedYear(String yearSelect)
 	{
-		DWResultsBean ret= new DWResultsBean();
+		DWLoadBean ret= new DWLoadBean();
 		return ret;
 	}
 
 	@Override
-	public DWResultsBean getPassRateAllTutorsSelectedCourseAllYears(String courseSelect)
+	public DWLoadBean getPassRateAllTutorsSelectedCourseAllYears(String courseSelect)
 	{
-		DWResultsBean ret= new DWResultsBean();
+		DWLoadBean ret= new DWLoadBean();
 		return ret;
 	}
 
 	@Override
-	public DWResultsBean getPassRateAllTutorsSelectedCourseSelectedYear(String courseSelect, String yearSelect)
+	public DWLoadBean getPassRateAllTutorsSelectedCourseSelectedYear(String courseSelect, String yearSelect)
 	{
-		DWResultsBean ret= new DWResultsBean();
+		DWLoadBean ret= new DWLoadBean();
 		return ret;
 	}
 
 	@Override
-	public DWResultsBean getPassRateSelectedTutorAllCoursesAllYears(String tutorSelect)
+	public DWLoadBean getPassRateSelectedTutorAllCoursesAllYears(String tutorSelect)
 	{
-		DWResultsBean ret= new DWResultsBean();
+		DWLoadBean ret= new DWLoadBean();
 		return ret;
 	}
 
 	@Override
-	public DWResultsBean getPassRateSelectedTutorAllCoursesSelectedYear(String tutorSelect, String yearSelect)
+	public DWLoadBean getPassRateSelectedTutorAllCoursesSelectedYear(String tutorSelect, String yearSelect)
 	{
-		DWResultsBean ret= new DWResultsBean();
+		DWLoadBean ret= new DWLoadBean();
 		return ret;
 	}
 
 	@Override
-	public DWResultsBean getPassRateSelectedTutorSelectedCourseAllYears(String tutorSelect, String courseSelect)
+	public DWLoadBean getPassRateSelectedTutorSelectedCourseAllYears(String tutorSelect, String courseSelect)
 	{
-		DWResultsBean ret= new DWResultsBean();
+		DWLoadBean ret= new DWLoadBean();
 		return ret;
 	}
 
 	@Override
-	public DWResultsBean getPassRateSelectedTutorSelectedCourseSelectedYear(String tutorSelect, String courseSelect, String yearSelect)
+	public DWLoadBean getPassRateSelectedTutorSelectedCourseSelectedYear(String tutorSelect, String courseSelect, String yearSelect)
 	{
-		DWResultsBean ret= new DWResultsBean();
+		DWLoadBean ret= new DWLoadBean();
 		return ret;
 	}
 
 	@Override
-	public DWResultsBean getTotalResitsAllCoursesAllYears()
+	public DWLoadBean getTotalResitsAllCoursesAllYears()
 	{
-		DWResultsBean ret= new DWResultsBean();
+		DWLoadBean ret= new DWLoadBean();
 		return ret;
 	}
 
 	@Override
-	public DWResultsBean getTotalResitsAllCoursesSelectedYear(String yearSelect)
+	public DWLoadBean getTotalResitsAllCoursesSelectedYear(String yearSelect)
 	{
-		DWResultsBean ret= new DWResultsBean();
+		DWLoadBean ret= new DWLoadBean();
 		return ret;
 	}
 
 	@Override
-	public DWResultsBean getTotalResitsSelectedCourseAllYears(String courseSelect)
+	public DWLoadBean getTotalResitsSelectedCourseAllYears(String courseSelect)
 	{
-		DWResultsBean ret= new DWResultsBean();
+		DWLoadBean ret= new DWLoadBean();
 		return ret;
 	}
 
 	@Override
-	public DWResultsBean getTotalResitsSelectedCourseSelectedYear(String courseSelect, String yearSelect)
+	public DWLoadBean getTotalResitsSelectedCourseSelectedYear(String courseSelect, String yearSelect)
 	{
-		DWResultsBean ret= new DWResultsBean();
+		DWLoadBean ret= new DWLoadBean();
 		return ret;
 	}
 
 	@Override
-	public DWResultsBean getTotalEnrollmentsAllYears()
+	public DWLoadBean getTotalEnrollmentsAllYears()
 	{
-		DWResultsBean ret= new DWResultsBean();
+		DWLoadBean ret= new DWLoadBean();
 		return ret;
 	}
 
 	@Override
-	public DWResultsBean getTotalEnrollmentsSelectedYear(String yearSelect)
+	public DWLoadBean getTotalEnrollmentsSelectedYear(String yearSelect)
 	{
-		DWResultsBean ret= new DWResultsBean();
+		DWLoadBean ret= new DWLoadBean();
 		return ret;
 	}
 
 	@Override
-	public DWResultsBean getCovidFiguresAgainstAllYears()
+	public DWLoadBean getCovidFiguresAgainstAllYears()
 	{
-		DWResultsBean ret= new DWResultsBean();
+		DWLoadBean ret= new DWLoadBean();
 		return ret;
 	}
 
 	@Override
-	public DWResultsBean getCovidFiguresAgainstSelectedYear(String yearSelect)
+	public DWLoadBean getCovidFiguresAgainstSelectedYear(String yearSelect)
 	{
-		DWResultsBean ret= new DWResultsBean();
+		DWLoadBean ret= new DWLoadBean();
 		return ret;
 	}
 
 	@Override
-	public DWResultsBean getTotalInternationalStudentsAllCoursesAllYears()
+	public DWLoadBean getTotalInternationalStudentsAllCoursesAllYears()
 	{
-		DWResultsBean ret= new DWResultsBean();
+		DWLoadBean ret= new DWLoadBean();
 		return ret;
 	}
 
 	@Override
-	public DWResultsBean getTotalInternationalStudentsAllCoursesSelectedYear(String yearSelect)
+	public DWLoadBean getTotalInternationalStudentsAllCoursesSelectedYear(String yearSelect)
 	{
-		DWResultsBean ret= new DWResultsBean();
+		DWLoadBean ret= new DWLoadBean();
 		return ret;
 	}
 
 	@Override
-	public DWResultsBean getTotalInternationalStudentsSelectedCourseAllYears(String courseSelect)
+	public DWLoadBean getTotalInternationalStudentsSelectedCourseAllYears(String courseSelect)
 	{
-		DWResultsBean ret= new DWResultsBean();
+		DWLoadBean ret= new DWLoadBean();
 		return ret;
 	}
 
 	@Override
-	public DWResultsBean getTotalInternationalStudentsSelectedCourseSelectedYear(String courseSelect, String yearSelect)
+	public DWLoadBean getTotalInternationalStudentsSelectedCourseSelectedYear(String courseSelect, String yearSelect)
 	{
-		DWResultsBean ret= new DWResultsBean();
+		DWLoadBean ret= new DWLoadBean();
 		return ret;
 	}
 
 	@Override
-	public DWResultsBean getTotalCourseChangesAllCoursesAllYears()
+	public DWLoadBean getTotalCourseChangesAllCoursesAllYears()
 	{
-		DWResultsBean ret= new DWResultsBean();
+		DWLoadBean ret= new DWLoadBean();
 		return ret;
 	}
 
 	@Override
-	public DWResultsBean getTotalCourseChangesAllCoursesSelectedYear(String yearSelect)
+	public DWLoadBean getTotalCourseChangesAllCoursesSelectedYear(String yearSelect)
 	{
-		DWResultsBean ret= new DWResultsBean();
+		DWLoadBean ret= new DWLoadBean();
 		return ret;
 	}
 
 	@Override
-	public DWResultsBean getTotalCourseChangesSelectedCourseAllYears(String courseSelect)
+	public DWLoadBean getTotalCourseChangesSelectedCourseAllYears(String courseSelect)
 	{
-		DWResultsBean ret= new DWResultsBean();
+		DWLoadBean ret= new DWLoadBean();
 		return ret;
 	}
 
 	@Override
-	public DWResultsBean getTotalCourseChangesSelectedCourseSelectedYear(String courseSelect, String yearSelect)
+	public DWLoadBean getTotalCourseChangesSelectedCourseSelectedYear(String courseSelect, String yearSelect)
 	{
-		DWResultsBean ret= new DWResultsBean();
+		DWLoadBean ret= new DWLoadBean();
 		return ret;
 	}
 
 	@Override
-	public DWResultsBean getCovidInternationalStudentEnrollmentsAgainstAllYears()
+	public DWLoadBean getCovidInternationalStudentEnrollmentsAgainstAllYears()
 	{
-		DWResultsBean ret= new DWResultsBean();
+		DWLoadBean ret= new DWLoadBean();
 		return ret;
 	}
 
 	@Override
-	public DWResultsBean getCovidInternationalStudentAgainstSelectedYear(String yearSelect)
+	public DWLoadBean getCovidInternationalStudentAgainstSelectedYear(String yearSelect)
 	{
-		DWResultsBean ret= new DWResultsBean();
+		DWLoadBean ret= new DWLoadBean();
 		return ret;
 	}
 }

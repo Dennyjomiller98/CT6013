@@ -1,6 +1,6 @@
 package servlets.etl;
 
-import beans.dw.DWResultsBean;
+import beans.dw.DWLoadBean;
 import beans.operational.*;
 import beans.operational.dimensions.*;
 import etl.DataTransformer;
@@ -63,7 +63,7 @@ public class ETL extends HttpServlet
 
 			//Data has been null-safe checked, so now we can Transform Dates/Check ID's before Load
 			LoadHelper loadHelper = new LoadHelper();
-			DWResultsBean loadBean = new DWResultsBean();
+			DWLoadBean loadBean = new DWLoadBean();
 
 			//Prepare Data
 			loadHelper.prepareCourseData(coursesBeans, loadBean);

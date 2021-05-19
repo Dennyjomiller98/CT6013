@@ -1,6 +1,6 @@
 package oracle;
 
-import beans.dw.DWResultsBean;
+import beans.dw.DWLoadBean;
 import beans.operational.*;
 import beans.operational.dimensions.*;
 import java.sql.Connection;
@@ -78,7 +78,7 @@ public class LoadConnections extends AbstractOracleConnections
 		return deleteSuccessful;
 	}
 
-	public boolean setResultsData(DWResultsBean loadBean)
+	public boolean setResultsData(DWLoadBean loadBean)
 	{
 		boolean successfulLoad = false;
 		List<AssignmentsBean> assignments = loadBean.getAssignments();
@@ -142,7 +142,7 @@ public class LoadConnections extends AbstractOracleConnections
 		return successfulLoad;
 	}
 
-	private Map<String, String> initExtraDataForFactTable(DWResultsBean loadBean, AssignmentsBean result)
+	private Map<String, String> initExtraDataForFactTable(DWLoadBean loadBean, AssignmentsBean result)
 	{
 		String tutorId = null;
 		String courseId = null;
@@ -282,7 +282,7 @@ public class LoadConnections extends AbstractOracleConnections
 		oracleClient.close();
 	}
 
-	public boolean setDimStudentsData(DWResultsBean loadBean)
+	public boolean setDimStudentsData(DWLoadBean loadBean)
 	{
 		boolean successfulLoad = false;
 		List<DimStudentsBean> studentBeans = loadBean.getDimStudents();
@@ -366,7 +366,7 @@ public class LoadConnections extends AbstractOracleConnections
 		return successfulLoad;
 	}
 
-	public boolean setDimTutorsData(DWResultsBean loadBean)
+	public boolean setDimTutorsData(DWLoadBean loadBean)
 	{
 		boolean successfulLoad = false;
 		List<DimTutorsBean> tutorBeans = loadBean.getDimTutors();
@@ -451,7 +451,7 @@ public class LoadConnections extends AbstractOracleConnections
 		return successfulLoad;
 	}
 
-	public boolean setDimModulesData(DWResultsBean loadBean)
+	public boolean setDimModulesData(DWLoadBean loadBean)
 	{
 		boolean successfulLoad = false;
 		List<DimModulesBean> modulesBeans = loadBean.getDimModules();
@@ -525,7 +525,7 @@ public class LoadConnections extends AbstractOracleConnections
 		return successfulLoad;
 	}
 
-	public boolean setDimCoursesData(DWResultsBean loadBean)
+	public boolean setDimCoursesData(DWLoadBean loadBean)
 	{
 		boolean successfulLoad = false;
 		List<DimCoursesBean> coursesBeans = loadBean.getDimCourses();
@@ -598,7 +598,7 @@ public class LoadConnections extends AbstractOracleConnections
 		return successfulLoad;
 	}
 
-	public boolean setDimSubjectData(DWResultsBean loadBean)
+	public boolean setDimSubjectData(DWLoadBean loadBean)
 	{
 		boolean successfulLoad = false;
 		List<DimSubjectsBean> subjectsBeans = loadBean.getDimSubjects();
@@ -669,7 +669,7 @@ public class LoadConnections extends AbstractOracleConnections
 		return successfulLoad;
 	}
 
-	public boolean setDimEnrollmentData(DWResultsBean loadBean)
+	public boolean setDimEnrollmentData(DWLoadBean loadBean)
 	{
 		boolean successfulLoad = false;
 		List<DimEnrollmentsBean> enrollmentsBeans = loadBean.getDimEnrollments();

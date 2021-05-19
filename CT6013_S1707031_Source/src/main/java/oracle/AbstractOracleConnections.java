@@ -17,8 +17,6 @@ public class AbstractOracleConnections implements IOracleConnections
 {
 	static final Logger LOG = Logger.getLogger(AbstractOracleConnections.class);
 
-	//TODO - Remove these static final variables, in exchange for a properties file containing TBL name information
-
 	private String oracleDriver;
 	private String oracleDriverUrl;
 	private String oracleOpUsername;
@@ -72,12 +70,12 @@ public class AbstractOracleConnections implements IOracleConnections
 			}
 			else
 			{
-				throw new FileNotFoundException("Could not find properties file for configuring smtp mail");
+				throw new FileNotFoundException("Could not find properties file for configuring Oracle Connection");
 			}
 		}
 		catch (IOException e)
 		{
-			e.printStackTrace();
+			LOG.error(e);
 		}
 	}
 

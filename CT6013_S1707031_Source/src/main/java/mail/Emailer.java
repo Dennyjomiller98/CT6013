@@ -41,7 +41,7 @@ public class Emailer
 		}
 		catch (IOException e)
 		{
-			e.printStackTrace();
+			LOG.error(e);
 		}
 	}
 

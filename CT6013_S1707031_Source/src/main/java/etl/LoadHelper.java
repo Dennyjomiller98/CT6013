@@ -1,6 +1,6 @@
 package etl;
 
-import beans.dw.DWResultsBean;
+import beans.dw.DWLoadBean;
 import beans.operational.*;
 import beans.operational.dimensions.*;
 import java.sql.SQLException;
@@ -127,7 +127,7 @@ public class LoadHelper
 		return wasTruncated;
 	}
 
-	public boolean updateDW(DWResultsBean loadBean)
+	public boolean updateDW(DWLoadBean loadBean)
 	{
 		boolean loadSuccess = false;
 		LoadConnections conn = new LoadConnections();
@@ -154,7 +154,7 @@ public class LoadHelper
 		return loadSuccess;
 	}
 
-	public void prepareAssignmentData(List<AssignmentsBean> assignmentsBeanList, DWResultsBean loadBean)
+	public void prepareAssignmentData(List<AssignmentsBean> assignmentsBeanList, DWLoadBean loadBean)
 	{
 		if (!assignmentsBeanList.isEmpty())
 		{
@@ -173,7 +173,7 @@ public class LoadHelper
 		}
 	}
 
-	public void prepareCourseData(List<CoursesBean> coursesBeans, DWResultsBean loadBean)
+	public void prepareCourseData(List<CoursesBean> coursesBeans, DWLoadBean loadBean)
 	{
 		if (!coursesBeans.isEmpty())
 		{
@@ -192,7 +192,7 @@ public class LoadHelper
 		}
 	}
 
-	public void prepareEnrollmentData(List<EnrollmentsBean> enrollmentsBeans, DWResultsBean loadBean)
+	public void prepareEnrollmentData(List<EnrollmentsBean> enrollmentsBeans, DWLoadBean loadBean)
 	{
 		if (!enrollmentsBeans.isEmpty())
 		{
@@ -211,7 +211,7 @@ public class LoadHelper
 		}
 	}
 
-	public void prepareModuleData(List<ModulesBean> modulesBeans, DWResultsBean loadBean)
+	public void prepareModuleData(List<ModulesBean> modulesBeans, DWLoadBean loadBean)
 	{
 		if (!modulesBeans.isEmpty())
 		{
@@ -230,7 +230,7 @@ public class LoadHelper
 		}
 	}
 
-	public void prepareStudentData(List<StudentsBean> studentsBeans, DWResultsBean loadBean)
+	public void prepareStudentData(List<StudentsBean> studentsBeans, DWLoadBean loadBean)
 	{
 		if (!studentsBeans.isEmpty())
 		{
@@ -249,7 +249,7 @@ public class LoadHelper
 		}
 	}
 
-	public void prepareSubjectData(List<SubjectsBean> subjectsBeans, DWResultsBean loadBean)
+	public void prepareSubjectData(List<SubjectsBean> subjectsBeans, DWLoadBean loadBean)
 	{
 		if (!subjectsBeans.isEmpty())
 		{
@@ -268,7 +268,7 @@ public class LoadHelper
 		}
 	}
 
-	public void prepareTutorData(List<TutorsBean> tutorsBeans, DWResultsBean loadBean)
+	public void prepareTutorData(List<TutorsBean> tutorsBeans, DWLoadBean loadBean)
 	{
 		if (!tutorsBeans.isEmpty())
 		{
@@ -287,7 +287,7 @@ public class LoadHelper
 		}
 	}
 
-	public void prepareDimCourseData(List<DimCoursesBean> dimCoursesBeans, DWResultsBean loadBean)
+	public void prepareDimCourseData(List<DimCoursesBean> dimCoursesBeans, DWLoadBean loadBean)
 	{
 		if (!dimCoursesBeans.isEmpty())
 		{
@@ -306,7 +306,7 @@ public class LoadHelper
 		}
 	}
 
-	public void prepareDimEnrollmentData(List<DimEnrollmentsBean> dimEnrollmentsBeans, DWResultsBean loadBean)
+	public void prepareDimEnrollmentData(List<DimEnrollmentsBean> dimEnrollmentsBeans, DWLoadBean loadBean)
 	{
 		if (!dimEnrollmentsBeans.isEmpty())
 		{
@@ -325,7 +325,7 @@ public class LoadHelper
 		}
 	}
 
-	public void prepareDimModuleData(List<DimModulesBean> dimModulesBeans, DWResultsBean loadBean)
+	public void prepareDimModuleData(List<DimModulesBean> dimModulesBeans, DWLoadBean loadBean)
 	{
 		if (!dimModulesBeans.isEmpty())
 		{
@@ -344,7 +344,7 @@ public class LoadHelper
 		}
 	}
 
-	public void prepareDimStudentData(List<DimStudentsBean> dimStudentsBeans, DWResultsBean loadBean)
+	public void prepareDimStudentData(List<DimStudentsBean> dimStudentsBeans, DWLoadBean loadBean)
 	{
 		if (!dimStudentsBeans.isEmpty())
 		{
@@ -363,7 +363,7 @@ public class LoadHelper
 		}
 	}
 
-	public void prepareDimSubjectData(List<DimSubjectsBean> dimSubjectsBeans, DWResultsBean loadBean)
+	public void prepareDimSubjectData(List<DimSubjectsBean> dimSubjectsBeans, DWLoadBean loadBean)
 	{
 		if (!dimSubjectsBeans.isEmpty())
 		{
@@ -382,7 +382,7 @@ public class LoadHelper
 		}
 	}
 
-	public void prepareDimTutorData(List<DimTutorsBean> dimTutorsBeans, DWResultsBean loadBean)
+	public void prepareDimTutorData(List<DimTutorsBean> dimTutorsBeans, DWLoadBean loadBean)
 	{
 		if (!dimTutorsBeans.isEmpty())
 		{

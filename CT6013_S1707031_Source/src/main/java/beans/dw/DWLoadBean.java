@@ -9,9 +9,9 @@ import java.util.Map;
 
 /**
  * @author Denny-Jo
- * DWResultsBean JavaBean - Assists with storing DB data for the DW Assignments Fact Table
+ * DWLoadBean JavaBean - Assists with storing DB data for the DW Assignments Fact Table
  * */
-public class DWResultsBean
+public class DWLoadBean
 {
 	private List<AssignmentsBean> fAssignments;
 	private List<CoursesBean> fCourses;
@@ -28,9 +28,13 @@ public class DWResultsBean
 	private List<DimSubjectsBean> fDimSubjects;
 	private List<DimTutorsBean> fDimTutors;
 
+	private List<DWStudentsBean> fDWStudents;
+	private List<DWEnrollmentsBean> fDWEnrollments;
+	private List<DWAssignmentsBean> fDWAssignments;
+
 	private Map<String, String> fErrors;
 
-	public DWResultsBean()
+	public DWLoadBean()
 	{
 		//Empty Constructor
 	}
@@ -254,6 +258,57 @@ public class DWResultsBean
 			fDimTutors = new ArrayList<>();
 		}
 		fDimTutors.add(bean);
+	}
+
+	public void setDWStudents(List<DWStudentsBean> beans)
+	{
+		fDWStudents = beans;
+	}
+	public List<DWStudentsBean> getDWStudents()
+	{
+		return fDWStudents;
+	}
+	public void addDWStudents(DWStudentsBean bean)
+	{
+		if (fDWStudents == null || fDWStudents.isEmpty())
+		{
+			fDWStudents = new ArrayList<>();
+		}
+		fDWStudents.add(bean);
+	}
+
+	public void setDWEnrollments(List<DWEnrollmentsBean> beans)
+	{
+		fDWEnrollments = beans;
+	}
+	public List<DWEnrollmentsBean> getDWEnrollments()
+	{
+		return fDWEnrollments;
+	}
+	public void addDWEnrollments(DWEnrollmentsBean bean)
+	{
+		if (fDWEnrollments == null || fDWEnrollments.isEmpty())
+		{
+			fDWEnrollments = new ArrayList<>();
+		}
+		fDWEnrollments.add(bean);
+	}
+
+	public void setDWAssignments(List<DWAssignmentsBean> beans)
+	{
+		fDWAssignments = beans;
+	}
+	public List<DWAssignmentsBean> getDWAssignments()
+	{
+		return fDWAssignments;
+	}
+	public void addDWAssignments(DWAssignmentsBean bean)
+	{
+		if (fDWAssignments == null || fDWAssignments.isEmpty())
+		{
+			fDWAssignments = new ArrayList<>();
+		}
+		fDWAssignments.add(bean);
 	}
 
 	public void addErrors(String name, String error)

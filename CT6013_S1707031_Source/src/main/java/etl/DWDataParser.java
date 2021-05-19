@@ -1,6 +1,6 @@
 package etl;
 
-import beans.dw.DWResultsBean;
+import beans.dw.DWLoadBean;
 import beans.operational.*;
 import beans.operational.dimensions.*;
 
@@ -15,7 +15,7 @@ public class DWDataParser
 		//Empty Constructor
 	}
 
-	public void setAssignmentsData(DWResultsBean loadBean, AssignmentsBean beanToLoad)
+	public void setAssignmentsData(DWLoadBean loadBean, AssignmentsBean beanToLoad)
 	{
 		if(beanToLoad != null)
 		{
@@ -23,7 +23,7 @@ public class DWDataParser
 		}
 	}
 
-	public void setCoursesData(DWResultsBean loadBean, CoursesBean beanToLoad)
+	public void setCoursesData(DWLoadBean loadBean, CoursesBean beanToLoad)
 	{
 		if(beanToLoad != null)
 		{
@@ -31,7 +31,7 @@ public class DWDataParser
 		}
 	}
 
-	public void setEnrollmentsData(DWResultsBean loadBean, EnrollmentsBean beanToLoad)
+	public void setEnrollmentsData(DWLoadBean loadBean, EnrollmentsBean beanToLoad)
 	{
 		if(beanToLoad != null)
 		{
@@ -39,7 +39,7 @@ public class DWDataParser
 		}
 	}
 
-	public void setModulesData(DWResultsBean loadBean, ModulesBean beanToLoad)
+	public void setModulesData(DWLoadBean loadBean, ModulesBean beanToLoad)
 	{
 		if(beanToLoad != null)
 		{
@@ -47,7 +47,7 @@ public class DWDataParser
 		}
 	}
 
-	public void setStudentsData(DWResultsBean loadBean, StudentsBean beanToLoad)
+	public void setStudentsData(DWLoadBean loadBean, StudentsBean beanToLoad)
 	{
 		if(beanToLoad != null)
 		{
@@ -55,7 +55,7 @@ public class DWDataParser
 		}
 	}
 
-	public void setSubjectsData(DWResultsBean loadBean, SubjectsBean beanToLoad)
+	public void setSubjectsData(DWLoadBean loadBean, SubjectsBean beanToLoad)
 	{
 		if(beanToLoad != null)
 		{
@@ -63,7 +63,7 @@ public class DWDataParser
 		}
 	}
 
-	public void setTutorsData(DWResultsBean loadBean, TutorsBean beanToLoad)
+	public void setTutorsData(DWLoadBean loadBean, TutorsBean beanToLoad)
 	{
 		if(beanToLoad != null)
 		{
@@ -71,7 +71,7 @@ public class DWDataParser
 		}
 	}
 
-	public void setDimCoursesData(DWResultsBean loadBean, DimCoursesBean beanToLoad)
+	public void setDimCoursesData(DWLoadBean loadBean, DimCoursesBean beanToLoad)
 	{
 		if(beanToLoad != null)
 		{
@@ -79,7 +79,7 @@ public class DWDataParser
 		}
 	}
 
-	public void setDimEnrollmentsData(DWResultsBean loadBean, DimEnrollmentsBean beanToLoad)
+	public void setDimEnrollmentsData(DWLoadBean loadBean, DimEnrollmentsBean beanToLoad)
 	{
 		if(beanToLoad != null)
 		{
@@ -87,7 +87,7 @@ public class DWDataParser
 		}
 	}
 
-	public void setDimModulesData(DWResultsBean loadBean, DimModulesBean beanToLoad)
+	public void setDimModulesData(DWLoadBean loadBean, DimModulesBean beanToLoad)
 	{
 		if(beanToLoad != null)
 		{
@@ -95,7 +95,7 @@ public class DWDataParser
 		}
 	}
 
-	public void setDimStudentsData(DWResultsBean loadBean, DimStudentsBean beanToLoad)
+	public void setDimStudentsData(DWLoadBean loadBean, DimStudentsBean beanToLoad)
 	{
 		if(beanToLoad != null)
 		{
@@ -103,7 +103,7 @@ public class DWDataParser
 		}
 	}
 
-	public void setDimSubjectsData(DWResultsBean loadBean, DimSubjectsBean beanToLoad)
+	public void setDimSubjectsData(DWLoadBean loadBean, DimSubjectsBean beanToLoad)
 	{
 		if(beanToLoad != null)
 		{
@@ -111,7 +111,7 @@ public class DWDataParser
 		}
 	}
 
-	public void setDimTutorsData(DWResultsBean loadBean, DimTutorsBean beanToLoad)
+	public void setDimTutorsData(DWLoadBean loadBean, DimTutorsBean beanToLoad)
 	{
 		if(beanToLoad != null)
 		{

@@ -1,7 +1,7 @@
 package managers.dataview;
 
 import beans.UserBean;
-import beans.dw.DWResultsBean;
+import beans.dw.DWLoadBean;
 import oracle.UserConnections;
 import org.apache.log4j.Logger;
 
@@ -28,9 +28,9 @@ public class DecisionMakerDataManager
 		//Empty Constructor
 	}
 
-	public DWResultsBean attemptDataRetrieval(String querySelected, String yearSelect, String courseSelect, String tutorSelect)
+	public DWLoadBean attemptDataRetrieval(String querySelected, String yearSelect, String courseSelect, String tutorSelect)
 	{
-		DWResultsBean results = new DWResultsBean();
+		DWLoadBean results = new DWLoadBean();
 		IQueryManager queryManager = new ETLQueryManager();
 		switch (querySelected)
 		{
@@ -80,9 +80,9 @@ public class DecisionMakerDataManager
 		return results;
 	}
 
-	private DWResultsBean q1QuerySelection(String yearSelect, String courseSelect, IQueryManager queryManager)
+	private DWLoadBean q1QuerySelection(String yearSelect, String courseSelect, IQueryManager queryManager)
 	{
-		DWResultsBean bean;
+		DWLoadBean bean;
 		if(courseSelect != null)
 		{
 			if(courseSelect.equals("all"))
@@ -101,7 +101,7 @@ public class DecisionMakerDataManager
 				else
 				{
 					LOG.error("Year not found/selected");
-					bean = new DWResultsBean();
+					bean = new DWLoadBean();
 					bean.addErrors(YEAR, YEAR_ERROR);
 				}
 			}
@@ -121,7 +121,7 @@ public class DecisionMakerDataManager
 				else
 				{
 					LOG.error("Year not found/selected");
-					bean = new DWResultsBean();
+					bean = new DWLoadBean();
 					bean.addErrors(YEAR, YEAR_ERROR);
 				}
 			}
@@ -129,15 +129,15 @@ public class DecisionMakerDataManager
 		else
 		{
 			LOG.error("Course not found/selected");
-			bean = new DWResultsBean();
+			bean = new DWLoadBean();
 			bean.addErrors(COURSE, COURSE_ERROR);
 		}
 		return bean;
 	}
 
-	private DWResultsBean q2QuerySelection(String yearSelect, String courseSelect, IQueryManager queryManager)
+	private DWLoadBean q2QuerySelection(String yearSelect, String courseSelect, IQueryManager queryManager)
 	{
-		DWResultsBean bean;
+		DWLoadBean bean;
 		if (courseSelect != null)
 		{
 			if(courseSelect.equals("all"))
@@ -156,7 +156,7 @@ public class DecisionMakerDataManager
 				else
 				{
 					LOG.error("Year not found/selected");
-					bean = new DWResultsBean();
+					bean = new DWLoadBean();
 					bean.addErrors(YEAR, YEAR_ERROR);
 				}
 			}
@@ -177,7 +177,7 @@ public class DecisionMakerDataManager
 				else
 				{
 					LOG.error("Year not found/selected");
-					bean = new DWResultsBean();
+					bean = new DWLoadBean();
 					bean.addErrors(YEAR, YEAR_ERROR);
 				}
 			}
@@ -185,15 +185,15 @@ public class DecisionMakerDataManager
 		else
 		{
 			LOG.error("Course not found/selected");
-			bean = new DWResultsBean();
+			bean = new DWLoadBean();
 			bean.addErrors(COURSE, COURSE_ERROR);
 		}
 		return bean;
 	}
 
-	private DWResultsBean q3QuerySelection(String yearSelect, String courseSelect, IQueryManager queryManager)
+	private DWLoadBean q3QuerySelection(String yearSelect, String courseSelect, IQueryManager queryManager)
 	{
-		DWResultsBean bean;
+		DWLoadBean bean;
 		if (courseSelect != null)
 		{
 			if(courseSelect.equals("all"))
@@ -212,7 +212,7 @@ public class DecisionMakerDataManager
 				else
 				{
 					LOG.error("Year not found/selected");
-					bean = new DWResultsBean();
+					bean = new DWLoadBean();
 					bean.addErrors(YEAR, YEAR_ERROR);
 				}
 			}
@@ -232,7 +232,7 @@ public class DecisionMakerDataManager
 				else
 				{
 					LOG.error("Year not found/selected");
-					bean = new DWResultsBean();
+					bean = new DWLoadBean();
 					bean.addErrors(YEAR, YEAR_ERROR);
 				}
 			}
@@ -240,15 +240,15 @@ public class DecisionMakerDataManager
 		else
 		{
 			LOG.error("Course not found/selected");
-			bean = new DWResultsBean();
+			bean = new DWLoadBean();
 			bean.addErrors(COURSE, COURSE_ERROR);
 		}
 		return bean;
 	}
 
-	private DWResultsBean q4QuerySelection(String yearSelect, String courseSelect, String tutorSelect, IQueryManager queryManager)
+	private DWLoadBean q4QuerySelection(String yearSelect, String courseSelect, String tutorSelect, IQueryManager queryManager)
 	{
-		DWResultsBean bean;
+		DWLoadBean bean;
 		if(tutorSelect != null)
 		{
 			if(tutorSelect.equals("all"))
@@ -263,15 +263,15 @@ public class DecisionMakerDataManager
 		else
 		{
 			LOG.error("Tutor not found/selected");
-			bean = new DWResultsBean();
+			bean = new DWLoadBean();
 			bean.addErrors(TUTOR, TUTOR_ERROR);
 		}
 		return bean;
 	}
 
-	private DWResultsBean q4SelectedTutorQuery(String yearSelect, String courseSelect, String tutorSelect, IQueryManager queryManager)
+	private DWLoadBean q4SelectedTutorQuery(String yearSelect, String courseSelect, String tutorSelect, IQueryManager queryManager)
 	{
-		DWResultsBean bean;
+		DWLoadBean bean;
 		if (courseSelect != null)
 		{
 			if(courseSelect.equals("all"))
@@ -290,7 +290,7 @@ public class DecisionMakerDataManager
 				else
 				{
 					LOG.error("Year not found/selected");
-					bean = new DWResultsBean();
+					bean = new DWLoadBean();
 					bean.addErrors(YEAR, YEAR_ERROR);
 				}
 			}
@@ -310,7 +310,7 @@ public class DecisionMakerDataManager
 				else
 				{
 					LOG.error("Year not found/selected");
-					bean = new DWResultsBean();
+					bean = new DWLoadBean();
 					bean.addErrors(YEAR, YEAR_ERROR);
 				}
 			}
@@ -318,15 +318,15 @@ public class DecisionMakerDataManager
 		else
 		{
 			LOG.error("Course not found/selected");
-			bean = new DWResultsBean();
+			bean = new DWLoadBean();
 			bean.addErrors(COURSE, COURSE_ERROR);
 		}
 		return bean;
 	}
 
-	private DWResultsBean q4AllTutorQuery(String yearSelect, String courseSelect, IQueryManager queryManager)
+	private DWLoadBean q4AllTutorQuery(String yearSelect, String courseSelect, IQueryManager queryManager)
 	{
-		DWResultsBean bean;
+		DWLoadBean bean;
 		if (courseSelect != null)
 		{
 			if(courseSelect.equals("all"))
@@ -345,7 +345,7 @@ public class DecisionMakerDataManager
 				else
 				{
 					LOG.error("Year not found/selected");
-					bean = new DWResultsBean();
+					bean = new DWLoadBean();
 					bean.addErrors(YEAR, YEAR_ERROR);
 				}
 			}
@@ -365,7 +365,7 @@ public class DecisionMakerDataManager
 				else
 				{
 					LOG.error("Year not found/selected");
-					bean = new DWResultsBean();
+					bean = new DWLoadBean();
 					bean.addErrors(YEAR, YEAR_ERROR);
 				}
 			}
@@ -373,15 +373,15 @@ public class DecisionMakerDataManager
 		else
 		{
 			LOG.error("Course not found/selected");
-			bean = new DWResultsBean();
+			bean = new DWLoadBean();
 			bean.addErrors(COURSE, COURSE_ERROR);
 		}
 		return bean;
 	}
 
-	private DWResultsBean q5QuerySelection(String yearSelect, String courseSelect, IQueryManager queryManager)
+	private DWLoadBean q5QuerySelection(String yearSelect, String courseSelect, IQueryManager queryManager)
 	{
-		DWResultsBean bean;
+		DWLoadBean bean;
 		if(courseSelect != null)
 		{
 			if(courseSelect.equals("all"))
@@ -400,7 +400,7 @@ public class DecisionMakerDataManager
 				else
 				{
 					LOG.error("Year not found/selected");
-					bean = new DWResultsBean();
+					bean = new DWLoadBean();
 					bean.addErrors(YEAR, YEAR_ERROR);
 				}
 			}
@@ -420,7 +420,7 @@ public class DecisionMakerDataManager
 				else
 				{
 					LOG.error("Year not found/selected");
-					bean = new DWResultsBean();
+					bean = new DWLoadBean();
 					bean.addErrors(YEAR, YEAR_ERROR);
 				}
 			}
@@ -428,15 +428,15 @@ public class DecisionMakerDataManager
 		else
 		{
 			LOG.error("Course not found/selected");
-			bean = new DWResultsBean();
+			bean = new DWLoadBean();
 			bean.addErrors(COURSE, COURSE_ERROR);
 		}
 		return bean;
 	}
 
-	private DWResultsBean q6QuerySelection(String yearSelect, IQueryManager queryManager)
+	private DWLoadBean q6QuerySelection(String yearSelect, IQueryManager queryManager)
 	{
-		DWResultsBean bean;
+		DWLoadBean bean;
 		if(yearSelect != null)
 		{
 			if(yearSelect.equals("all"))
@@ -451,15 +451,15 @@ public class DecisionMakerDataManager
 		else
 		{
 			LOG.error("Year not found/selected");
-			bean = new DWResultsBean();
+			bean = new DWLoadBean();
 			bean.addErrors(YEAR, YEAR_ERROR);
 		}
 		return bean;
 	}
 
-	private DWResultsBean q7QuerySelection(String yearSelect, IQueryManager queryManager)
+	private DWLoadBean q7QuerySelection(String yearSelect, IQueryManager queryManager)
 	{
-		DWResultsBean bean;
+		DWLoadBean bean;
 		if(yearSelect != null)
 		{
 			if(yearSelect.equals("all"))
@@ -474,15 +474,15 @@ public class DecisionMakerDataManager
 		else
 		{
 			LOG.error("Year not found/selected");
-			bean = new DWResultsBean();
+			bean = new DWLoadBean();
 			bean.addErrors(YEAR, YEAR_ERROR);
 		}
 		return bean;
 	}
 
-	private DWResultsBean q8QuerySelection(String yearSelect, String courseSelect, IQueryManager queryManager)
+	private DWLoadBean q8QuerySelection(String yearSelect, String courseSelect, IQueryManager queryManager)
 	{
-		DWResultsBean bean;
+		DWLoadBean bean;
 		if(courseSelect != null)
 		{
 			if(courseSelect.equals("all"))
@@ -501,7 +501,7 @@ public class DecisionMakerDataManager
 				else
 				{
 					LOG.error("Year not found/selected");
-					bean = new DWResultsBean();
+					bean = new DWLoadBean();
 					bean.addErrors(YEAR, YEAR_ERROR);
 				}
 			}
@@ -521,7 +521,7 @@ public class DecisionMakerDataManager
 				else
 				{
 					LOG.error("Year not found/selected");
-					bean = new DWResultsBean();
+					bean = new DWLoadBean();
 					bean.addErrors(YEAR, YEAR_ERROR);
 				}
 			}
@@ -529,15 +529,15 @@ public class DecisionMakerDataManager
 		else
 		{
 			LOG.error("Course not found/selected");
-			bean = new DWResultsBean();
+			bean = new DWLoadBean();
 			bean.addErrors(COURSE, COURSE_ERROR);
 		}
 		return bean;
 	}
 
-	private DWResultsBean q9QuerySelection(String yearSelect, String courseSelect, IQueryManager queryManager)
+	private DWLoadBean q9QuerySelection(String yearSelect, String courseSelect, IQueryManager queryManager)
 	{
-		DWResultsBean bean;
+		DWLoadBean bean;
 		if(courseSelect != null)
 		{
 			if(courseSelect.equals("all"))
@@ -556,7 +556,7 @@ public class DecisionMakerDataManager
 				else
 				{
 					LOG.error("Year not found/selected");
-					bean = new DWResultsBean();
+					bean = new DWLoadBean();
 					bean.addErrors(YEAR, YEAR_ERROR);
 				}
 			}
@@ -576,7 +576,7 @@ public class DecisionMakerDataManager
 				else
 				{
 					LOG.error("Year not found/selected");
-					bean = new DWResultsBean();
+					bean = new DWLoadBean();
 					bean.addErrors(YEAR, YEAR_ERROR);
 				}
 			}
@@ -584,15 +584,15 @@ public class DecisionMakerDataManager
 		else
 		{
 			LOG.error("Course not found/selected");
-			bean = new DWResultsBean();
+			bean = new DWLoadBean();
 			bean.addErrors(COURSE, COURSE_ERROR);
 		}
 		return bean;
 	}
 
-	private DWResultsBean q10QuerySelection(String yearSelect, IQueryManager queryManager)
+	private DWLoadBean q10QuerySelection(String yearSelect, IQueryManager queryManager)
 	{
-		DWResultsBean bean;
+		DWLoadBean bean;
 		if(yearSelect != null)
 		{
 			if(yearSelect.equals("all"))
@@ -607,7 +607,7 @@ public class DecisionMakerDataManager
 		else
 		{
 			LOG.error("Year not found/selected");
-			bean = new DWResultsBean();
+			bean = new DWLoadBean();
 			bean.addErrors(YEAR, YEAR_ERROR);
 		}
 		return bean;

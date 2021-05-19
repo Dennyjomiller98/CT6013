@@ -1,6 +1,6 @@
 package etl;
 
-import beans.dw.DWResultsBean;
+import beans.dw.DWLoadBean;
 import beans.operational.*;
 import beans.operational.dimensions.*;
 import java.util.List;
@@ -20,7 +20,7 @@ public class DataTransformer
 		//Empty Constructor
 	}
 
-	public DWResultsBean validateAndTransformData(DWResultsBean bean)
+	public DWLoadBean validateAndTransformData(DWLoadBean bean)
 	{
 		validateTables(bean);
 		validateDimensionTables(bean);
@@ -28,7 +28,7 @@ public class DataTransformer
 	}
 
 	//Validates the current data tables (used for DW_RESULTS)
-	private void validateTables(DWResultsBean bean)
+	private void validateTables(DWLoadBean bean)
 	{
 		List<SubjectsBean> subjects = bean.getSubjects();
 		List<ModulesBean> modules = bean.getModules();
@@ -48,7 +48,7 @@ public class DataTransformer
 	}
 
 	//Validates the 2SCD Tables
-	private void validateDimensionTables(DWResultsBean bean)
+	private void validateDimensionTables(DWLoadBean bean)
 	{
 		List<DimSubjectsBean> dimSubjects = bean.getDimSubjects();
 		List<DimModulesBean> dimModules = bean.getDimModules();

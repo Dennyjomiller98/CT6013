@@ -1,4 +1,5 @@
-<%--
+<%@ page import="beans.dw.DWEnrollmentsBean" %>
+<%@ page import="java.util.List" %><%--
   Created by IntelliJ IDEA.
   User: Denny-Jo
   Date: 18/04/2021
@@ -99,6 +100,17 @@
 
                 <div id="data-retrieved">
                     <%--TODO - TABLE OF DW info here, graphs etc (maybe a popup? that way can re-select after?) --%>
+                        <%if(session.getAttribute("enrollments") != null)
+                        {
+                            List<DWEnrollmentsBean> enrollments = (List<DWEnrollmentsBean>) session.getAttribute("enrollments");
+                            if(enrollments != null) {
+                                for (DWEnrollmentsBean enrollment : enrollments)
+                                {
+
+                                }%>
+                        <div class="alert alert-success mysuccess" role="alert" id="formSuccess">Total Enrollments: <%=enrollments.size()%></div>
+                            <%}%>
+                        <%}%>
                 </div>
             </div>
         </div>

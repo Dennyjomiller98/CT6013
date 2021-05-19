@@ -1,6 +1,6 @@
 package servlets.dwpreview;
 
-import beans.dw.DWResultsBean;
+import beans.dw.DWLoadBean;
 import java.io.IOException;
 import java.util.Map;
 import javax.servlet.http.HttpServlet;
@@ -24,6 +24,10 @@ public class Load extends HttpServlet
 		request.getSession(true).removeAttribute("results");
 		request.getSession(true).removeAttribute("doQuery");
 		request.getSession(true).removeAttribute("errors");
+		request.getSession(true).removeAttribute("selectedQuery");
+		request.getSession(true).removeAttribute("studentsBeans");
+		request.getSession(true).removeAttribute("assignmentsBeans");
+		request.getSession(true).removeAttribute("enrollmentsBeans");
 
 		String userEmail = request.getParameter("email");
 		String querySelected = request.getParameter("select");
@@ -55,7 +59,7 @@ public class Load extends HttpServlet
 		boolean hasAuthorisedRole = dataManager.validateRole(userEmail, querySelected);
 		if(hasAuthorisedRole)
 		{
-			DWResultsBean resultsBean = dataManager.attemptDataRetrieval(querySelected, yearSelect, courseSelect, tutorSelect);
+			DWLoadBean resultsBean = dataManager.attemptDataRetrieval(querySelected, yearSelect, courseSelect, tutorSelect);
 			if(resultsBean != null)
 			{
 				//Check for errors
@@ -99,11 +103,26 @@ public class Load extends HttpServlet
 		}
 	}
 
-	private void setSessionDataForQuery(DWResultsBean resultsBean, String querySelected, HttpServletRequest request)
+	private void setSessionDataForQuery(DWLoadBean resultsBean, String querySelected, HttpServletRequest request)
 	{
 		request.getSession(true).setAttribute("doQuery", "true");
+		request.getSession(true).setAttribute("selectedQuery", querySelected);
 		request.getSession(true).setAttribute("Success", "Information Successfully Retrieved");
 
-		//TODO - set session attributes from DWResultsBean
+		if(resultsBean != null)
+		{
+			if(resultsBean.getDWStudents() != null && !resultsBean.getDWStudents().isEmpty())
+			{
+				request.getSession(true).setAttribute("studentsBeans", resultsBean.getDWStudents());
+			}
+			if (resultsBean.getDWAssignments() != null && !resultsBean.getDWAssignments().isEmpty())
+			{
+				request.getSession(true).setAttribute("assignmentsBeans", resultsBean.getDWAssignments());
+			}
+			if (resultsBean.getDWEnrollments() != null && !resultsBean.getDWEnrollments().isEmpty())
+			{
+				request.getSession(true).setAttribute("enrollmentsBeans", resultsBean.getDWEnrollments());
+			}
+		}
 	}
 }
