@@ -18,7 +18,7 @@ public class Load extends HttpServlet
 	static final Logger LOG = Logger.getLogger(Load.class);
 
 	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 	{
 		request.getSession(true).removeAttribute("success");
 		request.getSession(true).removeAttribute("results");

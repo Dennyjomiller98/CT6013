@@ -29,10 +29,10 @@ public class DataViewConnections extends AbstractOracleConnections
 				//Select Query
 				String query = "SELECT * FROM " + TBL_DW_DIM_STUDENT;
 				//Execute query
-				ArrayList<DimStudentsBean> allStudents = executeStudentsQuery(oracleClient, query);
-				if(!allStudents.isEmpty())
+				ArrayList<DimStudentsBean> allBeans = executeStudentsQuery(oracleClient, query);
+				if(!allBeans.isEmpty())
 				{
-					ret = allStudents;
+					ret = allBeans;
 				}
 				else
 				{
