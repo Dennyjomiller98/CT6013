@@ -77,6 +77,7 @@ public class Load extends HttpServlet
 				else
 				{
 					//Continue setting Session Attributes
+					request.getSession(true).setAttribute("test", "Do we get this far?");
 					setSessionDataForQuery(resultsBean, querySelected, request);
 				}
 			}
@@ -107,7 +108,7 @@ public class Load extends HttpServlet
 	{
 		request.getSession(true).setAttribute("doQuery", "true");
 		request.getSession(true).setAttribute("selectedQuery", querySelected);
-		request.getSession(true).setAttribute("Success", "Information Successfully Retrieved");
+		request.getSession(true).setAttribute("success", "Information Successfully Retrieved");
 
 		if(resultsBean != null)
 		{

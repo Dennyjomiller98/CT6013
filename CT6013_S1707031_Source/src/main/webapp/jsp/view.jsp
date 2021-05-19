@@ -46,6 +46,10 @@
                 if(success != null) { %>
             <div class="alert alert-success mysuccess" role="alert" id="formSuccess"><%=success%></div>
             <%}%>
+            <% String test = (String) session.getAttribute("test");
+                if(test != null) { %>
+            <div class="alert alert-success mysuccess" role="alert" id="formSuccess"><%=test%></div>
+            <%}%>
 
             <div class="mainBody">
                 <%--TODO - hide data-selection and show data-retrieved after selecting, give an option to "select more information" to show this info again--%>
