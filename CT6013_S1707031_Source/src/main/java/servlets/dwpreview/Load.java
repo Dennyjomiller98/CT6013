@@ -60,19 +60,19 @@ public class Load extends HttpServlet
 		if(hasAuthorisedRole)
 		{
 			DWLoadBean resultsBean = dataManager.attemptDataRetrieval(querySelected, yearSelect, courseSelect, tutorSelect);
-			if(resultsBean != null)
-			{
-				//Check for errors
-				Map<String, String> errors = resultsBean.getErrors();
-				if(errors != null && !errors.isEmpty())
-				{
-					StringBuilder errOutput = new StringBuilder("Error with: ");
-					//Error out if any errors occurred
-					for (Map.Entry<String, String> error : errors.entrySet())
+					if(resultsBean != null)
 					{
-						errOutput.append(error.getKey()).append(" : ").append(error.getValue());
-					}
-					request.getSession(true).setAttribute("errors", errOutput.toString());
+						//Check for errors
+						Map<String, String> errors = resultsBean.getErrors();
+						if(errors != null && !errors.isEmpty())
+						{
+							StringBuilder errOutput = new StringBuilder("Error with: ");
+							//Error out if any errors occurred
+							for (Map.Entry<String, String> error : errors.entrySet())
+							{
+								errOutput.append(error.getKey()).append(" : ").append(error.getValue());
+							}
+							request.getSession(true).setAttribute("errors", errOutput.toString());
 				}
 				else
 				{

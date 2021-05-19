@@ -104,9 +104,9 @@
 
                 <div id="data-retrieved">
                     <%--TODO - TABLE OF DW info here, graphs etc (maybe a popup? that way can re-select after?) --%>
-                        <%if(session.getAttribute("enrollments") != null)
+                        <%if(session.getAttribute("enrollmentsBeans") != null)
                         {
-                            List<DWEnrollmentsBean> enrollments = (List<DWEnrollmentsBean>) session.getAttribute("enrollments");
+                            List<DWEnrollmentsBean> enrollments = (List<DWEnrollmentsBean>) session.getAttribute("enrollmentsBeans");
                             if(enrollments != null) {
                                 for (DWEnrollmentsBean enrollment : enrollments)
                                 {
