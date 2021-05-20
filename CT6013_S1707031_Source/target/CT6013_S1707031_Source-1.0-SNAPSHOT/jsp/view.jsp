@@ -74,8 +74,8 @@
                         </select>
                         <br/>
 
-                        <label for="courseSelect">Select the Course you would like to view Information on:</label>
-                        <select style="display: inline-block" name="courseSelect" id="courseSelect">
+                        <label for="courseSelect" class="courseSelect">Select the Course you would like to view Information on:</label>
+                        <select style="display: inline-block" name="courseSelect" id="courseSelect" class="courseSelect">
                             <option value="all">All Courses</option>
                             <%if(session.getAttribute("allCourses") != null)
                             {
@@ -90,8 +90,8 @@
                             <% } %>
                         </select>
                         <br/>
-                        <label for="tutorSelect">Select the Tutor you would like to view Information on:</label>
-                        <select style="display: inline-block" name="tutorSelect" id="tutorSelect">
+                        <label for="tutorSelect" class="tutorSelect">Select the Tutor you would like to view Information on:</label>
+                        <select style="display: inline-block" name="tutorSelect" id="tutorSelect" class="tutorSelect">
                             <option value="all">All Tutors</option>
                             <%if(session.getAttribute("allTutors") != null)
                             {
@@ -106,8 +106,8 @@
                             <% } %>
                         </select>
                         <br/>
-                        <label for="yearSelect">Select the Year you would like to view Information on:</label>
-                        <select style="display: inline-block" name="yearSelect" id="yearSelect">
+                        <label for="yearSelect" class="yearSelect">Select the Year you would like to view Information on:</label>
+                        <select style="display: inline-block" name="yearSelect" id="yearSelect" class="yearSelect">
                             <option value="all">All Years</option>
                             <option value="2021">2021</option>
                             <option value="2020">2020</option>
@@ -126,11 +126,13 @@
                 <%if(haveQueried != null) {%>
                 <%--View Table section--%>
                     <div id="data-retrieved" style="display: inline-block">
+                        <%--Q1: Total Students--%>
                         <%if(session.getAttribute("selectedQuery").equals("q1"))
                         {
 
                         }%>
 
+                        <%--Q2: Total Dropouts--%>
                         <%if(session.getAttribute("selectedQuery").equals("q2"))
                         {%>
                             <h3>Results for: "Total Dropouts on a Specific Course"</h3>
@@ -218,6 +220,7 @@
                         }%>
 
                         <%--Button to hide table, show form and try again--%>
+                        <br/>
                         <button type="button" class="btn btn-primary newSearch">New Search</button>
                     </div>
                 <%}%>
