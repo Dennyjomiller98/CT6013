@@ -50,22 +50,26 @@ function showCourseYear() {
     $('.yearSelect').attr('style', 'display:inline-block');
     $('.courseSelect').attr('style', 'display:inline-block');
     $('.tutorSelect').attr('style', 'display:none');
+    $('.submitButton').attr('style', 'display:inline-block');
 }
 
 function showYear() {
     $('.yearSelect').attr('style', 'display:inline-block');
     $('.courseSelect').attr('style', 'display:none');
     $('.tutorSelect').attr('style', 'display:none');
+    $('.submitButton').attr('style', 'display:inline-block');
 }
 
 function showCourseYearTutor() {
     $('.yearSelect').attr('style', 'display:inline-block');
     $('.courseSelect').attr('style', 'display:inline-block');
     $('.tutorSelect').attr('style', 'display:inline-block');
+    $('.submitButton').attr('style', 'display:inline-block');
 }
 
 function showNone() {
     $('.yearSelect').attr('style', 'display:none');
     $('.courseSelect').attr('style', 'display:none');
     $('.tutorSelect').attr('style', 'display:none');
+    $('.submitButton').attr('style', 'display:none');
 }
