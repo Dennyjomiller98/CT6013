@@ -4,7 +4,7 @@ $( document ).ready(function() {
     $('.newSearch').on('click', function(e){
         console.log("I am clicked")
         e.preventDefault();
-        $('#data-retrieved').attr('display', 'none');
-        $('#data-selection').attr('display', 'inline-block');
+        $('#data-retrieved').attr('style', 'display:none');
+        $('#data-selection').attr('style', 'display:inline-block');
     });
 });

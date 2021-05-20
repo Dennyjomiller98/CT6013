@@ -53,7 +53,7 @@
 
             <%String haveQueried = (String) session.getAttribute("doQuery");%>
             <div class="mainBody">
-                <div id="data-selection" <%if(haveQueried == null){%>style="display: none"<%}%> >
+                <div id="data-selection" <%if(haveQueried != null){%>style="display: none"<%}%> >
                     <form action="${pageContext.request.contextPath}/servlets/dwpreview/Load" method="POST">
                         <label for="email"></label>
                         <input style="display: none" type="text" name="email" id="email" value="<%=email%>">
@@ -122,6 +122,7 @@
                         <input type="submit" value="View">
                     </form>
                 </div>
+
                 <%if(haveQueried != null) {%>
                 <%--View Table section--%>
                     <div id="data-retrieved" style="display: inline-block">
