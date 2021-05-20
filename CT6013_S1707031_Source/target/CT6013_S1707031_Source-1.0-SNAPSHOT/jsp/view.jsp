@@ -51,79 +51,78 @@
             <div class="alert alert-success mysuccess" role="alert" id="formSuccess"><%=success%></div>
             <%}%>
 
+            <%String haveQueried = (String) session.getAttribute("doQuery");%>
             <div class="mainBody">
-                <% String haveQueried = (String) session.getAttribute("doQuery");
-                    if(haveQueried == null) { %>
-                    <div id="data-selection">
-                        <form action="${pageContext.request.contextPath}/servlets/dwpreview/Load" method="POST">
-                            <label for="email"></label>
-                            <input style="display: none" type="text" name="email" id="email" value="<%=email%>">
+                <div id="data-selection" <%if(haveQueried == null){%>style="display: none"<%}%> >
+                    <form action="${pageContext.request.contextPath}/servlets/dwpreview/Load" method="POST">
+                        <label for="email"></label>
+                        <input style="display: none" type="text" name="email" id="email" value="<%=email%>">
 
-                            <label for="select">Select the question you would like to view Information on:</label>
-                            <select style="display: inline-block" name="select" id="select">
-                                <option value="none">Select Question</option>
-                                <option value="q1">Total Students on a Specific Course (Select Course Below)</option>
-                                <option value="q2">Total Dropouts on a Specific Course (Select Course Below)</option>
-                                <option value="q3">Average Grade on a Specific Course (Select Course Below)</option>
-                                <option value="q4">Student Grades based on the Tutor Teaching (Select Tutor Below)</option>
-                                <option value="q5">Number of Resits (Select Course Below)</option>
-                                <option value="q6">Number of Enrollments in a Specific Year (Select Year Below)</option>
-                                <option value="q7">Has COVID-19 affected our Enrollment intake?</option>
-                                <option value="q8">Total Number of International Students on a Specific Course (Select Course Below)</option>
-                                <option value="q9">Number of Students That Changed Courses</option>
-                                <option value="q10">COVID-19 Affect on Enrollment of International Students</option>
-                            </select>
-                            <br/>
+                        <label for="select">Select the question you would like to view Information on:</label>
+                        <select style="display: inline-block" name="select" id="select">
+                            <option value="none">Select Question</option>
+                            <option value="q1">Total Students on a Specific Course (Select Course Below)</option>
+                            <option value="q2">Total Dropouts on a Specific Course (Select Course Below)</option>
+                            <option value="q3">Average Grade on a Specific Course (Select Course Below)</option>
+                            <option value="q4">Student Grades based on the Tutor Teaching (Select Tutor Below)</option>
+                            <option value="q5">Number of Resits (Select Course Below)</option>
+                            <option value="q6">Number of Enrollments in a Specific Year (Select Year Below)</option>
+                            <option value="q7">Has COVID-19 affected our Enrollment intake?</option>
+                            <option value="q8">Total Number of International Students on a Specific Course (Select Course Below)</option>
+                            <option value="q9">Number of Students That Changed Courses</option>
+                            <option value="q10">COVID-19 Affect on Enrollment of International Students</option>
+                        </select>
+                        <br/>
 
-                            <label for="courseSelect">Select the Course you would like to view Information on:</label>
-                            <select style="display: inline-block" name="courseSelect" id="courseSelect">
-                                <option value="all">All Courses</option>
-                                <%if(session.getAttribute("allCourses") != null)
+                        <label for="courseSelect">Select the Course you would like to view Information on:</label>
+                        <select style="display: inline-block" name="courseSelect" id="courseSelect">
+                            <option value="all">All Courses</option>
+                            <%if(session.getAttribute("allCourses") != null)
+                            {
+                                List<DimCoursesBean> allCourses = (List<DimCoursesBean>) session.getAttribute("allCourses");
+                                if(allCourses != null)
                                 {
-                                    List<DimCoursesBean> allCourses = (List<DimCoursesBean>) session.getAttribute("allCourses");
-                                    if(allCourses != null)
-                                    {
-                                        for (DimCoursesBean course : allCourses)
-                                        {%>
-                                            <option value="<%=course.getCourseId()%>"><%=course.getCourseName()%></option>
-                                        <% } %>
-                                   <% } %>
-                                <% } %>
-                            </select>
-                            <br/>
-                            <label for="tutorSelect">Select the Tutor you would like to view Information on:</label>
-                            <select style="display: inline-block" name="tutorSelect" id="tutorSelect">
-                                <option value="all">All Tutors</option>
-                                <%if(session.getAttribute("allTutors") != null)
+                                    for (DimCoursesBean course : allCourses)
+                                    {%>
+                                        <option value="<%=course.getCourseId()%>"><%=course.getCourseName()%></option>
+                                    <% } %>
+                               <% } %>
+                            <% } %>
+                        </select>
+                        <br/>
+                        <label for="tutorSelect">Select the Tutor you would like to view Information on:</label>
+                        <select style="display: inline-block" name="tutorSelect" id="tutorSelect">
+                            <option value="all">All Tutors</option>
+                            <%if(session.getAttribute("allTutors") != null)
+                            {
+                                List<DimTutorsBean> allTutors = (List<DimTutorsBean>) session.getAttribute("allTutors");
+                                if(allTutors != null)
                                 {
-                                    List<DimTutorsBean> allTutors = (List<DimTutorsBean>) session.getAttribute("allTutors");
-                                    if(allTutors != null)
-                                    {
-                                        for (DimTutorsBean tutor : allTutors)
-                                        { %>
-                                            <option value="<%=tutor.getTutorId()%>"><%=tutor.getFirstname() + " " + tutor.getSurname()%></option>
-                                        <% } %>
-                                   <% } %>
-                                <% } %>
-                            </select>
-                            <br/>
-                            <label for="yearSelect">Select the Year you would like to view Information on:</label>
-                            <select style="display: inline-block" name="yearSelect" id="yearSelect">
-                                <option value="all">All Years</option>
-                                <option value="2021">2021</option>
-                                <option value="2020">2020</option>
-                                <option value="2019">2019</option>
-                                <option value="2018">2018</option>
-                                <option value="2017">2017</option>
-                                <option value="2016">2016</option>
-                                <option value="2015">2015</option>
-                            </select>
-                            <br/>
+                                    for (DimTutorsBean tutor : allTutors)
+                                    { %>
+                                        <option value="<%=tutor.getTutorId()%>"><%=tutor.getFirstname() + " " + tutor.getSurname()%></option>
+                                    <% } %>
+                               <% } %>
+                            <% } %>
+                        </select>
+                        <br/>
+                        <label for="yearSelect">Select the Year you would like to view Information on:</label>
+                        <select style="display: inline-block" name="yearSelect" id="yearSelect">
+                            <option value="all">All Years</option>
+                            <option value="2021">2021</option>
+                            <option value="2020">2020</option>
+                            <option value="2019">2019</option>
+                            <option value="2018">2018</option>
+                            <option value="2017">2017</option>
+                            <option value="2016">2016</option>
+                            <option value="2015">2015</option>
+                        </select>
+                        <br/>
 
-                            <input type="submit" value="View">
-                        </form>
-                    </div>
-                <%} else {%>
+                        <input type="submit" value="View">
+                    </form>
+                </div>
+                <%if(haveQueried != null) {%>
                 <%--View Table section--%>
                     <div id="data-retrieved" style="display: inline-block">
                         <%if(session.getAttribute("selectedQuery").equals("q1"))
