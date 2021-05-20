@@ -152,6 +152,47 @@ public class DataViewConnections extends AbstractOracleConnections
 		return ret;
 	}
 
+	public List<DimTutorsBean> getDWTutors()
+	{
+		List<DimTutorsBean> ret = new ArrayList<>();
+		setOracleDriver();
+		try
+		{
+			AbstractOracleConnections conn = new AbstractOracleConnections();
+			Connection oracleClient = conn.getDWClient();
+			if(oracleClient != null)
+			{
+				//Select Query
+				String query = "SELECT * FROM " + TBL_DW_DIM_TUTOR;
+				//Execute query
+				ArrayList<DimTutorsBean> allBeans = executeTutorsQuery(oracleClient, query);
+				if(!allBeans.isEmpty())
+				{
+					ret = allBeans;
+				}
+				else
+				{
+					LOG.debug("No Results retrieved from DW.");
+				}
+			}
+			else
+			{
+				LOG.error("connection failure");
+			}
+		}
+		catch(Exception e)
+		{
+			LOG.error("Unable to retrieve DW Data", e);
+		}
+		return ret;
+	}
+
+	public List<AssignmentsBean> getDWResults()
+	{
+		//TODO
+		return null;
+	}
+
 	public List<DimModulesBean> getDWModules()
 	{
 		//TODO
@@ -159,18 +200,6 @@ public class DataViewConnections extends AbstractOracleConnections
 	}
 
 	public List<DimSubjectsBean> getDWSubjects()
-	{
-		//TODO
-		return null;
-	}
-
-	public List<DimTutorsBean> getDWTutors()
-	{
-		//TODO
-		return null;
-	}
-
-	public List<AssignmentsBean> getDWResults()
 	{
 		//TODO
 		return null;
@@ -185,6 +214,26 @@ public class DataViewConnections extends AbstractOracleConnections
 			while (resultSet.next())
 			{
 				DimStudentsBean bean = new DimStudentsBean(resultSet);
+				allBeans.add(bean);
+			}
+		}
+		catch(Exception e)
+		{
+			LOG.error("Query failure, using query: " + query, e);
+		}
+		oracleClient.close();
+		return allBeans;
+	}
+
+	private ArrayList<DimTutorsBean> executeTutorsQuery(Connection oracleClient, String query) throws SQLException
+	{
+		ArrayList<DimTutorsBean> allBeans = new ArrayList<>();
+		try (PreparedStatement preparedStatement = oracleClient.prepareStatement(query))
+		{
+			ResultSet resultSet = preparedStatement.executeQuery(query);
+			while (resultSet.next())
+			{
+				DimTutorsBean bean = new DimTutorsBean(resultSet);
 				allBeans.add(bean);
 			}
 		}

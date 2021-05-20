@@ -18,6 +18,8 @@
     <body>
         <jsp:include page="required.jsp"/>
         <link rel="stylesheet" href="../css/main.css">
+        <link href="../js/view.js">
+
         <div class="content">
             <%  String email = null;
                 if(session.getAttribute("email") != null)
@@ -123,7 +125,7 @@
                     </div>
                 <%} else {%>
                 <%--View Table section--%>
-                    <div id="data-retrieved">
+                    <div id="data-retrieved" style="display: inline-block">
                         <%if(session.getAttribute("selectedQuery").equals("q1"))
                         {
 
@@ -148,7 +150,7 @@
                                     }
                                     %>
                                     <br/>
-                                    <h4>Using Year(s): <strong><%=year%></>strong> and Course(s): <strong><%=course%></strong>, a Total of <strong><%=enrollments.size()%></strong> dropout(s) were found.</h4>
+                                    <h4>Using Year(s): <strong><%=year%></strong> and Course #: <strong><%=course%></strong>, a Total of <strong><%=enrollments.size()%></strong> dropout(s) were found.</h4>
                                     <br/>
                                     <table class="table table-striped">
                                         <caption style="  display: table-caption; text-align: center;">Total Dropouts</caption>
