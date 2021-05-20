@@ -18,7 +18,7 @@
     <body>
         <jsp:include page="required.jsp"/>
         <link rel="stylesheet" href="../css/main.css">
-        <link href="../js/view.js">
+        <script type="text/javascript" src="../js/view.js"></script>
 
         <div class="content">
             <%  String email = null;
