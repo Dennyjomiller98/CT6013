@@ -8,7 +8,6 @@ $( document ).ready(function() {
     });
 
     $('#select').on('change', function(e){
-        console.log("I am clicked")
         e.preventDefault();
         let selectedVal = $(this).val();
         if (selectedVal === "q1") {
@@ -41,6 +40,9 @@ $( document ).ready(function() {
         else if (selectedVal === "q10") {
             showYear();
         }
+        else if (selectedVal === "none") {
+            showNone();
+        }
     });
 });
 
@@ -60,4 +62,10 @@ function showCourseYearTutor() {
     $('.yearSelect').attr('style', 'display:inline-block');
     $('.courseSelect').attr('style', 'display:inline-block');
     $('.tutorSelect').attr('style', 'display:inline-block');
+}
+
+function showNone() {
+    $('.yearSelect').attr('style', 'display:none');
+    $('.courseSelect').attr('style', 'display:none');
+    $('.tutorSelect').attr('style', 'display:none');
 }

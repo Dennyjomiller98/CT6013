@@ -74,8 +74,8 @@
                         </select>
                         <br/>
 
-                        <label for="courseSelect" class="courseSelect">Select the Course you would like to view Information on:</label>
-                        <select style="display: inline-block" name="courseSelect" id="courseSelect" class="courseSelect">
+                        <label for="courseSelect" class="courseSelect" style="display: none">Select the Course you would like to view Information on:</label>
+                        <select style="display: none" name="courseSelect" id="courseSelect" class="courseSelect">
                             <option value="all">All Courses</option>
                             <%if(session.getAttribute("allCourses") != null)
                             {
@@ -90,8 +90,8 @@
                             <% } %>
                         </select>
                         <br/>
-                        <label for="tutorSelect" class="tutorSelect">Select the Tutor you would like to view Information on:</label>
-                        <select style="display: inline-block" name="tutorSelect" id="tutorSelect" class="tutorSelect">
+                        <label for="tutorSelect" class="tutorSelect" style="display: none">Select the Tutor you would like to view Information on:</label>
+                        <select style="display: none" name="tutorSelect" id="tutorSelect" class="tutorSelect">
                             <option value="all">All Tutors</option>
                             <%if(session.getAttribute("allTutors") != null)
                             {
@@ -106,8 +106,8 @@
                             <% } %>
                         </select>
                         <br/>
-                        <label for="yearSelect" class="yearSelect">Select the Year you would like to view Information on:</label>
-                        <select style="display: inline-block" name="yearSelect" id="yearSelect" class="yearSelect">
+                        <label for="yearSelect" class="yearSelect" style="display: none">Select the Year you would like to view Information on:</label>
+                        <select style="display: none" name="yearSelect" id="yearSelect" class="yearSelect">
                             <option value="all">All Years</option>
                             <option value="2021">2021</option>
                             <option value="2020">2020</option>
