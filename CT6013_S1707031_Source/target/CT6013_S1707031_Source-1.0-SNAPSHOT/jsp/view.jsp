@@ -53,7 +53,7 @@
 
             <%String haveQueried = (String) session.getAttribute("doQuery");%>
             <div class="mainBody">
-                <div id="data-selection" <%if(haveQueried != null){%>style="display: none"<%}%> >
+                <div id="data-selection" <%if(haveQueried != null){%>style="display: none"<%}%> style="display: inline-block">
                     <form action="${pageContext.request.contextPath}/servlets/dwpreview/Load" method="POST">
                         <label for="email"></label>
                         <input style="display: none" type="text" name="email" id="email" value="<%=email%>">
@@ -133,22 +133,22 @@
 
                         <%if(session.getAttribute("selectedQuery").equals("q2"))
                         {%>
+                            <h3>Results for: "Total Dropouts on a Specific Course"</h3>
+                            <%String year = "Unknown";
+                                String course = "Unknown";
+                                if(session.getAttribute("selectedYear") != null)
+                                {
+                                    year = (String) session.getAttribute("selectedYear");
+                                }
+                                if(session.getAttribute("selectedCourse") != null)
+                                {
+                                    course = (String) session.getAttribute("selectedCourse");
+                                }
+                            %>
                             <%if(session.getAttribute("enrollmentsBeans") != null)
-                            {
-                                List<DWEnrollmentsBean> enrollments = (List<DWEnrollmentsBean>) session.getAttribute("enrollmentsBeans");
+                            {%>
+                                <%List<DWEnrollmentsBean> enrollments = (List<DWEnrollmentsBean>) session.getAttribute("enrollmentsBeans");
                                 if(enrollments != null && !enrollments.isEmpty()) {%>
-                                    <h3>Results for: "Total Dropouts on a Specific Course"</h3>
-                                    <%String year = "Unknown";
-                                    String course = "Unknown";
-                                    if(session.getAttribute("selectedYear") != null)
-                                    {
-                                        year = (String) session.getAttribute("selectedYear");
-                                    }
-                                    if(session.getAttribute("selectedCourse") != null)
-                                    {
-                                    	course = (String) session.getAttribute("selectedCourse");
-                                    }
-                                    %>
                                     <br/>
                                     <h4>Using Year(s): <strong><%=year%></strong> and Course #: <strong><%=course%></strong>, a Total of <strong><%=enrollments.size()%></strong> dropout(s) were found.</h4>
                                     <br/>
@@ -179,6 +179,8 @@
                                         </tbody>
                                     </table>
                                 <%}%>
+                            <%}else{ %>
+                                <h4>Using Year(s): <strong><%=year%></strong> and Course #: <strong><%=course%></strong>, no dropout(s) were found.</h4>
                             <%}%>
                         <%}%>
 
