@@ -486,7 +486,7 @@ public class BeanManager
 					{
 						for (AssignmentsBean assignmentsBean : dwResults)
 						{
-							if(assignmentsBean.getInternational().equals("true"))
+							if(assignmentsBean.getStudentId().equals(matchingStudent.getStudentId()) && assignmentsBean.getInternational().equals("true"))
 							{
 								DWEnrollmentsBean bean = new DWEnrollmentsBean();
 								bean.setId(enrollmentBean.getEnrollmentId());
