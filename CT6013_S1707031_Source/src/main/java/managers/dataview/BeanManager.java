@@ -648,8 +648,22 @@ public class BeanManager
 		{
 			if(allEnrollmentBean.getEnrollmentId().equals(id))
 			{
-				ret.add(allEnrollmentBean);
+				if(allEnrollmentBean.getIsCurrent().equals("false"))
+				{
+					oldCourseVal = allEnrollmentBean;
+				}
+				if(allEnrollmentBean.getIsCurrent().equals("true"))
+				{
+					newCourseVal = allEnrollmentBean;
+				}
 			}
+		}
+
+		//Only add and return if course values are not the same
+		if(oldCourseVal != null && newCourseVal != null && !oldCourseVal.getCourseId().equals(newCourseVal.getCourseId()))
+		{
+			ret.add(oldCourseVal);
+			ret.add(newCourseVal);
 		}
 	}
 	private void loopIdsForCourseChanges(List<DimEnrollmentsBean> allEnrollmentBeans, List<DimEnrollmentsBean> ret, String id)
