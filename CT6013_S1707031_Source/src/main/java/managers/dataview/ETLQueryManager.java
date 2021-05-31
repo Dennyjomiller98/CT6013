@@ -569,7 +569,7 @@ public class ETLQueryManager implements IQueryManager
 	{
 		DWLoadBean ret= new DWLoadBean();
 		DataViewConnections connections = new DataViewConnections();
-		List<DimEnrollmentsBean> allEnrollmentBeans = connections.getDWEnrollments(null, null);
+		List<DimEnrollmentsBean> allEnrollmentBeans = connections.getDWEnrollmentsCourseChanges(null, null);
 		List<DimStudentsBean> allStudentsBeans = connections.getDWStudents();
 		List<DimCoursesBean> allCourses = connections.getDWCourses();
 		if(allStudentsBeans != null && !allStudentsBeans.isEmpty() && allEnrollmentBeans != null
@@ -586,7 +586,7 @@ public class ETLQueryManager implements IQueryManager
 	{
 		DWLoadBean ret= new DWLoadBean();
 		DataViewConnections connections = new DataViewConnections();
-		List<DimEnrollmentsBean> allEnrollmentBeans = connections.getDWEnrollments(yearSelect, null);
+		List<DimEnrollmentsBean> allEnrollmentBeans = connections.getDWEnrollmentsCourseChanges(yearSelect, null);
 		List<DimStudentsBean> allStudentsBeans = connections.getDWStudents();
 		List<DimCoursesBean> allCourses = connections.getDWCourses();
 		if(allStudentsBeans != null && !allStudentsBeans.isEmpty() && allEnrollmentBeans != null
@@ -603,7 +603,7 @@ public class ETLQueryManager implements IQueryManager
 	{
 		DWLoadBean ret= new DWLoadBean();
 		DataViewConnections connections = new DataViewConnections();
-		List<DimEnrollmentsBean> allEnrollmentBeans = connections.getDWEnrollments(null, courseSelect);
+		List<DimEnrollmentsBean> allEnrollmentBeans = connections.getDWEnrollmentsCourseChanges(null, courseSelect);
 		List<DimStudentsBean> allStudentsBeans = connections.getDWStudents();
 		List<DimCoursesBean> allCourses = connections.getDWCourses();
 		if(allStudentsBeans != null && !allStudentsBeans.isEmpty() && allEnrollmentBeans != null
@@ -620,7 +620,7 @@ public class ETLQueryManager implements IQueryManager
 	{
 		DWLoadBean ret= new DWLoadBean();
 		DataViewConnections connections = new DataViewConnections();
-		List<DimEnrollmentsBean> allEnrollmentBeans = connections.getDWEnrollments(yearSelect, courseSelect);
+		List<DimEnrollmentsBean> allEnrollmentBeans = connections.getDWEnrollmentsCourseChanges(yearSelect, courseSelect);
 		List<DimStudentsBean> allStudentsBeans = connections.getDWStudents();
 		List<DimCoursesBean> allCourses = connections.getDWCourses();
 		if(allStudentsBeans != null && !allStudentsBeans.isEmpty() && allEnrollmentBeans != null
