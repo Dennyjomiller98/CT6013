@@ -604,18 +604,21 @@ public class ETLQueryManager implements IQueryManager
 		{
 			for (DWEnrollmentsBean enrollment : dwEnrollments)
 			{
-				for (AssignmentsBean assignment : dwResults)
+				for (AssignmentsBean dwResult : dwResults)
 				{
-					//Add enrollment
-					if ((assignment.getStudentId().equals(enrollment.getStudentId()) && assignment.getInternational().equals("true"))
-							|| (enrollment.getEnrollmentDate().startsWith("2020") && assignment.getInternational().equals("true"))
-							|| (enrollment.getEnrollmentDate().startsWith("2021")) && assignment.getInternational().equals("true"))
+					AssignmentsBean match = null;
+					if(enrollment.getStudentId().equals(dwResult.getStudentId()) && dwResult.getInternational().equals("true"))
+					{
+						match = dwResult;
+					}
+					if(match != null)
 					{
 						enrollment.setInternational("true");
 						ret.addDWEnrollments(enrollment);
-						break;
 					}
 				}
+				enrollment.setInternational("true");
+				ret.addDWEnrollments(enrollment);
 			}
 		}
 		return ret;
@@ -633,18 +636,24 @@ public class ETLQueryManager implements IQueryManager
 		{
 			for (DWEnrollmentsBean enrollment : dwEnrollments)
 			{
-				for (AssignmentsBean assignment : dwResults)
+				if ((enrollment.getEnrollmentDate().startsWith(yearSelect) || enrollment.getEnrollmentDate().startsWith("2020") || enrollment.getEnrollmentDate().startsWith("2021")) )
 				{
-					//Add enrollment if selected year, or if 2020/2021 for covid figures
-					if (assignment.getStudentId().equals(enrollment.getStudentId()) && assignment.getInternational().equals("true") && (enrollment.getEnrollmentDate().startsWith(yearSelect)
-							|| enrollment.getEnrollmentDate().startsWith("2020")
-							|| enrollment.getEnrollmentDate().startsWith("2021")))
+					for (AssignmentsBean dwResult : dwResults)
 					{
-						enrollment.setInternational("true");
-						ret.addDWEnrollments(enrollment);
+						AssignmentsBean match = null;
+						if(enrollment.getStudentId().equals(dwResult.getStudentId()) && dwResult.getInternational().equals("true"))
+						{
+							match = dwResult;
+						}
+						if(match != null)
+						{
+							enrollment.setInternational("true");
+							ret.addDWEnrollments(enrollment);
+						}
 					}
+					enrollment.setInternational("true");
+					ret.addDWEnrollments(enrollment);
 				}
-
 			}
 		}
 		return ret;

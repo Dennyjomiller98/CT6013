@@ -897,7 +897,7 @@
                             </script>
 
                             <br/>
-                            <h4>The following Table shows the Total Enrollments for selected Year(s): <strong><%=year%></strong></h4>
+                            <h4>The following Table shows the Total International Enrollments for selected Year(s): <strong><%=year%></strong></h4>
                             <br/>
                             <table class="table table-striped">
                                 <caption style="  display: table-caption; text-align: center;">Total Current International Student Enrollments</caption>
