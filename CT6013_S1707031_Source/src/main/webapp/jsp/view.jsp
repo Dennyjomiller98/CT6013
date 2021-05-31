@@ -1,7 +1,8 @@
 <%@ page import="beans.dw.DWEnrollmentsBean" %>
 <%@ page import="java.util.List" %>
 <%@ page import="beans.operational.dimensions.DimTutorsBean" %>
-<%@ page import="beans.operational.dimensions.DimCoursesBean" %><%--
+<%@ page import="beans.operational.dimensions.DimCoursesBean" %>
+<%@ page import="beans.dw.DWAssignmentsBean" %><%--
   Created by IntelliJ IDEA.
   User: Denny-Jo
   Date: 18/04/2021
@@ -146,10 +147,10 @@
                             <%List<DWEnrollmentsBean> enrollments = (List<DWEnrollmentsBean>) session.getAttribute("enrollmentsBeans");
                                 if(enrollments != null && !enrollments.isEmpty()) {%>
                             <br/>
-                            <h4>Using Year(s): <strong><%=year%></strong> and Course #: <strong><%=course%></strong>, a Total of <strong><%=enrollments.size()%></strong> dropout(s) were found.</h4>
+                            <h4>Using Year(s): <strong><%=year%></strong> and Course #: <strong><%=course%></strong>, a Total of <strong><%=enrollments.size()%></strong> Student Enrollment(s) were found.</h4>
                             <br/>
                             <table class="table table-striped">
-                                <caption style="  display: table-caption; text-align: center;">Total Dropouts</caption>
+                                <caption style="  display: table-caption; text-align: center;">Total Student Enrollments</caption>
                                 <thead>
                                 <tr>
                                     <th scope="col">#ID</th>
@@ -235,9 +236,84 @@
                         <%}%>
 
                         <%if(session.getAttribute("selectedQuery").equals("q3"))
-                        {
+                        {%>
+                            <h3>Results for: "Average Grade on a Specific Course"</h3>
+                            <%String year = "Unknown";
+                                String course = "Unknown";
+                                if(session.getAttribute("selectedYear") != null)
+                                {
+                                    year = (String) session.getAttribute("selectedYear");
+                                }
+                                if(session.getAttribute("selectedCourse") != null)
+                                {
+                                    course = (String) session.getAttribute("selectedCourse");
+                                }
+                            %>
 
-                        }%>
+                            <%if(session.getAttribute("assignmentsBeans") != null)
+                            {%>
+                            <%List<DWAssignmentsBean> assignments = (List<DWAssignmentsBean>) session.getAttribute("assignmentsBeans");
+                                if(assignments != null && !assignments.isEmpty()) {%>
+                            <br/>
+                            <h4>Using Year(s): <strong><%=year%></strong> and Course #: <strong><%=course%></strong>, a Total of <strong><%=assignments.size()%></strong> results were found.</h4>
+                            <br/>
+                            <table class="table table-striped">
+                                <caption style="  display: table-caption; text-align: center;">Total Dropouts</caption>
+                                <thead>
+                                <tr>
+                                    <th scope="col">#ID</th>
+                                    <th scope="col">Student Number</th>
+                                    <th scope="col">Student Name</th>
+                                    <th scope="col">Course #ID</th>
+                                    <th scope="col">Course Name</th>
+                                    <th scope="col">Year</th>
+                                    <th scope="col">Grade</th>
+                                    <th scope="col">Did Resit</th>
+                                    <th scope="col">Resist Grade</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <%for (DWAssignmentsBean assignment : assignments)
+                                {%>
+                                <tr>
+                                    <th scope="row"><%=assignment.getAssignmentId()%></th>
+                                    <td><%=assignment.getStudentId()%></td>
+                                    <td><%=assignment.getStudentFirstname() + " " + assignment.getStudentSurname()%> </td>
+                                    <td><%=assignment.getCourseId()%></td>
+                                    <td><%=assignment.getCourseName()%></td>
+                                    <td><%=assignment.getAcademicYear()%></td>
+                                    <td><%=assignment.getGrade()%></td>
+                                    <td><%=assignment.getResit()%></td>
+                                    <td><%=assignment.getResitGrade()%></td>
+                                </tr>
+                                <%}%>
+                                </tbody>
+                            </table>
+                            <br/>
+                            <%
+                                int size = assignments.size();
+                                int total = 0;
+                                for (DWAssignmentsBean assignment : assignments)
+                                {
+                                	if(assignment.getResit().equalsIgnoreCase("true"))
+                                    {
+                                        //Take Resat Marks
+                                        total = Integer.parseInt(total + assignment.getResitGrade());
+                                    }
+                                	else
+                                    {
+                                        //Take original marks
+                                        total = Integer.parseInt(total + assignment.getGrade());
+                                    }
+                                }
+                                int average = total/size;
+                            %>
+                            <h4>The Average Grade for the following Results is: <strong><%=String.valueOf(average)%></strong></h4>
+                            <%}%>
+                            <%}else{ %>
+                            <h4>Using Year(s): <strong><%=year%></strong> and Course #: <strong><%=course%></strong>, no Grades were found.</h4>
+                            <%}%>
+                        <%}%>
                         <%if(session.getAttribute("selectedQuery").equals("q4"))
                         {
 

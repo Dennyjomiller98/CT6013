@@ -1,6 +1,7 @@
 package managers.dataview;
 
 import beans.dw.DWLoadBean;
+import beans.operational.AssignmentsBean;
 import beans.operational.dimensions.DimCoursesBean;
 import beans.operational.dimensions.DimEnrollmentsBean;
 import beans.operational.dimensions.DimStudentsBean;
@@ -153,6 +154,15 @@ public class ETLQueryManager implements IQueryManager
 	public DWLoadBean getAverageGradeAllCoursesAllYears()
 	{
 		DWLoadBean ret= new DWLoadBean();
+		DataViewConnections connections = new DataViewConnections();
+		List<AssignmentsBean> dwResults = connections.getDWResults(null, null);
+		List<DimStudentsBean> allStudentBeans = connections.getDWStudents();
+		List<DimCoursesBean> allCourses = connections.getDWCourses();
+		if(dwResults != null && !dwResults.isEmpty() && allStudentBeans != null && !allStudentBeans.isEmpty())
+		{
+			BeanManager beanManager = new BeanManager();
+			ret = beanManager.convertAverageGrade(dwResults, allStudentBeans, allCourses);
+		}
 		return ret;
 	}
 
@@ -160,6 +170,15 @@ public class ETLQueryManager implements IQueryManager
 	public DWLoadBean getAverageGradeAllCoursesSelectedYear(String yearSelect)
 	{
 		DWLoadBean ret= new DWLoadBean();
+		DataViewConnections connections = new DataViewConnections();
+		List<AssignmentsBean> dwResults = connections.getDWResults(null, null);
+		List<DimStudentsBean> allStudentBeans = connections.getDWStudents();
+		List<DimCoursesBean> allCourses = connections.getDWCourses();
+		if(dwResults != null && !dwResults.isEmpty() && allStudentBeans != null && !allStudentBeans.isEmpty())
+		{
+			BeanManager beanManager = new BeanManager();
+			ret = beanManager.convertAverageGrade(dwResults, allStudentBeans, allCourses);
+		}
 		return ret;
 	}
 
@@ -167,6 +186,15 @@ public class ETLQueryManager implements IQueryManager
 	public DWLoadBean getAverageGradeSelectedCourseAllYears(String courseSelect)
 	{
 		DWLoadBean ret= new DWLoadBean();
+		DataViewConnections connections = new DataViewConnections();
+		List<AssignmentsBean> dwResults = connections.getDWResults(null, null);
+		List<DimStudentsBean> allStudentBeans = connections.getDWStudents();
+		List<DimCoursesBean> allCourses = connections.getDWCourses();
+		if(dwResults != null && !dwResults.isEmpty() && allStudentBeans != null && !allStudentBeans.isEmpty())
+		{
+			BeanManager beanManager = new BeanManager();
+			ret = beanManager.convertAverageGrade(dwResults, allStudentBeans, allCourses);
+		}
 		return ret;
 	}
 
@@ -174,6 +202,15 @@ public class ETLQueryManager implements IQueryManager
 	public DWLoadBean getAverageGradeSelectedCourseSelectedYear(String courseSelect, String yearSelect)
 	{
 		DWLoadBean ret= new DWLoadBean();
+		DataViewConnections connections = new DataViewConnections();
+		List<AssignmentsBean> dwResults = connections.getDWResults(null, null);
+		List<DimStudentsBean> allStudentBeans = connections.getDWStudents();
+		List<DimCoursesBean> allCourses = connections.getDWCourses();
+		if(dwResults != null && !dwResults.isEmpty() && allStudentBeans != null && !allStudentBeans.isEmpty())
+		{
+			BeanManager beanManager = new BeanManager();
+			ret = beanManager.convertAverageGrade(dwResults, allStudentBeans, allCourses);
+		}
 		return ret;
 	}
 

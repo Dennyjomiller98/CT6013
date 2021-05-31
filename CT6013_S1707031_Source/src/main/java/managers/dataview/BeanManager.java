@@ -1,7 +1,9 @@
 package managers.dataview;
 
+import beans.dw.DWAssignmentsBean;
 import beans.dw.DWEnrollmentsBean;
 import beans.dw.DWLoadBean;
+import beans.operational.AssignmentsBean;
 import beans.operational.dimensions.DimCoursesBean;
 import beans.operational.dimensions.DimEnrollmentsBean;
 import beans.operational.dimensions.DimStudentsBean;
@@ -138,6 +140,68 @@ public class BeanManager
 						LOG.error("No matching information for student");
 					}
 				}
+			}
+		}
+		return ret;
+	}
+
+	/*For Q3*/
+	public DWLoadBean convertAverageGrade(List<AssignmentsBean> allGrades, List<DimStudentsBean> allStudentsBeans, List<DimCoursesBean> allCoursesBeans)
+	{
+		DWLoadBean ret = new DWLoadBean();
+		if(allGrades != null && !allGrades.isEmpty())
+		{
+			//Loop the results
+			for (AssignmentsBean assignmentBean : allGrades)
+			{
+				//Get matching student and course
+				DimStudentsBean matchingStudent = null;
+				DimCoursesBean matchingCourse = null;
+				for (DimStudentsBean studentBean : allStudentsBeans)
+				{
+					if(assignmentBean.getStudentId().equalsIgnoreCase(studentBean.getStudentId()))
+					{
+						matchingStudent = studentBean;
+					}
+				}
+				for (DimCoursesBean courseBean : allCoursesBeans)
+				{
+					if(courseBean.getModuleIds().contains(assignmentBean.getModule()))
+					{
+						matchingCourse = courseBean;
+					}
+				}
+
+				DWAssignmentsBean bean = new DWAssignmentsBean();
+				bean.setAssignmentId(assignmentBean.getAssignmentId());
+				bean.setStudentId(assignmentBean.getStudentId());
+				if(matchingStudent != null)
+				{
+					bean.setStudentFirstname(matchingStudent.getFirstname());
+					bean.setStudentSurname(matchingStudent.getSurname());
+				}
+				else
+				{
+					bean.setStudentFirstname("Unknown");
+					bean.setStudentSurname("Unknown");
+				}
+				bean.setAcademicYear(assignmentBean.getAcademicYear());
+				bean.setModule(assignmentBean.getModule());
+				bean.setSemester(assignmentBean.getSemester());
+				bean.setGrade(assignmentBean.getGrade());
+				bean.setResit(assignmentBean.getResit());
+				bean.setResitGrade(assignmentBean.getResitGrade());
+				if (matchingCourse != null)
+				{
+					bean.setCourseId(matchingCourse.getCourseId());
+					bean.setCourseName(matchingCourse.getCourseName());
+				}
+				else
+				{
+					bean.setCourseId("Unknown");
+					bean.setCourseName("Unknown");
+				}
+				ret.addDWAssignments(bean);
 			}
 		}
 		return ret;

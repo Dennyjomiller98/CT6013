@@ -187,10 +187,68 @@ public class DataViewConnections extends AbstractOracleConnections
 		return ret;
 	}
 
-	public List<AssignmentsBean> getDWResults()
+	public List<AssignmentsBean> getDWResults(String yearSelect, String courseSelect)
 	{
-		//TODO
-		return null;
+		List<AssignmentsBean> ret = new ArrayList<>();
+		setOracleDriver();
+		try
+		{
+			AbstractOracleConnections conn = new AbstractOracleConnections();
+			Connection oracleClient = conn.getDWClient();
+			if(oracleClient != null)
+			{
+				//Select Query
+				String query = getResultsQuery(yearSelect, courseSelect);
+				//Execute query
+				ArrayList<AssignmentsBean> allBeans = executeResultsQuery(oracleClient, query);
+				if(!allBeans.isEmpty())
+				{
+					ret = allBeans;
+				}
+				else
+				{
+					LOG.debug("No Results retrieved from DW.");
+				}
+			}
+			else
+			{
+				LOG.error("connection failure");
+			}
+		}
+		catch(Exception e)
+		{
+			LOG.error("Unable to retrieve DW Data", e);
+		}
+		return ret;
+	}
+
+	private String getResultsQuery(String yearSelect, String courseSelect)
+	{
+		String query;
+		if(yearSelect != null || courseSelect != null)
+		{
+			if(yearSelect != null && courseSelect != null)
+			{
+				//course select year select
+				query = "SELECT * FROM " + TBL_DW_RESULTS + " WHERE Course_Id='" + courseSelect +"' AND Academic_Year='"+ yearSelect +"'";
+			}
+			else if(yearSelect != null)
+			{
+				//all course year select
+				query = "SELECT * FROM " + TBL_DW_RESULTS + " WHERE Academic_Year='"+ yearSelect +"'";
+			}
+			else
+			{
+				//Course select all years
+				query = "SELECT * FROM " + TBL_DW_RESULTS + " WHERE Course_Id='" + courseSelect +"'";
+			}
+		}
+		else
+		{
+			//Default ALL
+			query = "SELECT * FROM " + TBL_DW_RESULTS;
+		}
+		return query;
 	}
 
 	public List<DimModulesBean> getDWModules()
@@ -274,6 +332,26 @@ public class DataViewConnections extends AbstractOracleConnections
 			while (resultSet.next())
 			{
 				DimEnrollmentsBean bean = new DimEnrollmentsBean(resultSet);
+				allBeans.add(bean);
+			}
+		}
+		catch(Exception e)
+		{
+			LOG.error("Query failure, using query: " + query, e);
+		}
+		oracleClient.close();
+		return allBeans;
+	}
+
+	private ArrayList<AssignmentsBean> executeResultsQuery(Connection oracleClient, String query) throws SQLException
+	{
+		ArrayList<AssignmentsBean> allBeans = new ArrayList<>();
+		try (PreparedStatement preparedStatement = oracleClient.prepareStatement(query))
+		{
+			ResultSet resultSet = preparedStatement.executeQuery(query);
+			while (resultSet.next())
+			{
+				AssignmentsBean bean = new AssignmentsBean(resultSet);
 				allBeans.add(bean);
 			}
 		}
