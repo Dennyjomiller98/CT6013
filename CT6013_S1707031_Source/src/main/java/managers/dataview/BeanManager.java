@@ -8,6 +8,7 @@ import beans.operational.dimensions.DimCoursesBean;
 import beans.operational.dimensions.DimEnrollmentsBean;
 import beans.operational.dimensions.DimStudentsBean;
 import beans.operational.dimensions.DimTutorsBean;
+import java.util.ArrayList;
 import java.util.List;
 import org.apache.log4j.Logger;
 
@@ -402,7 +403,38 @@ public class BeanManager
 							bean.setCourseName("Unknown");
 						}
 						bean.setEnrollmentDate(enrollmentBean.getEnrollmentDate());
-						ret.addDWEnrollments(bean);
+
+						//Loop the values we have to make sure 2nd SCD data is not duplicating.
+						List<DWEnrollmentsBean> currentEnrollments = ret.getDWEnrollments();
+
+						String badEnrollmentId = null;
+						for (DWEnrollmentsBean dwEnrollment : currentEnrollments)
+						{
+							//Take most up to date bean
+							if (dwEnrollment.getId().equals(bean.getId()) && enrollmentBean.getIsCurrent().equals("true"))
+							{
+								//Replace with existing one
+								badEnrollmentId = dwEnrollment.getId();
+							}
+						}
+						if(badEnrollmentId != null)
+						{
+							List<DWEnrollmentsBean> newBeans = new ArrayList<>();
+							for (DWEnrollmentsBean enrollment : currentEnrollments)
+							{
+								if(!enrollment.getId().equals(badEnrollmentId))
+								{
+									newBeans.add(enrollment);
+								}
+							}
+							//Now add new bean and send to DWLoadBean
+							newBeans.add(bean);
+							ret.setDWEnrollments(newBeans);
+						}
+						else
+						{
+							ret.addDWEnrollments(bean);
+						}
 					}
 					else
 					{

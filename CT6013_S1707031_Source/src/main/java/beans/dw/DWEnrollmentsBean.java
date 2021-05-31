@@ -10,6 +10,7 @@ public class DWEnrollmentsBean
 	private String fCourseName;
 	private String fEnrollmentDate;
 	private String fHasDropped;
+	private String fIsCurrent;
 
 	public DWEnrollmentsBean()
 	{
@@ -86,5 +87,14 @@ public class DWEnrollmentsBean
 	public String getHasDropped()
 	{
 		return fHasDropped;
+	}
+
+	public void setIsCurrent(String isCurrent)
+	{
+		fIsCurrent = isCurrent;
+	}
+	public String getIsCurrent()
+	{
+		return fIsCurrent;
 	}
 }
