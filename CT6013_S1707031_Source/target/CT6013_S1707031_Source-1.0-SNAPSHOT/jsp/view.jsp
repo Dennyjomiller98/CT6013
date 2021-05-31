@@ -445,7 +445,7 @@
                         <%--Q4: Total Resits--%>
                         <%if(session.getAttribute("selectedQuery").equals("q5"))
                         {%>
-                            <h3>Results for: "Average Grade on a Specific Course"</h3>
+                            <h3>Results for: "Total Resits on a Specific Course"</h3>
                             <%String year = "Unknown";
                                 String course = "Unknown";
                                 if(session.getAttribute("selectedYear") != null)
@@ -466,7 +466,7 @@
                             <h4>Using Year(s): <strong><%=year%></strong> and Course #: <strong><%=course%></strong>, a Total of <strong><%=assignments.size()%></strong> Resits were found.</h4>
                             <br/>
                             <table class="table table-striped">
-                                <caption style="  display: table-caption; text-align: center;">Average Marks</caption>
+                                <caption style="  display: table-caption; text-align: center;">Total Resits</caption>
                                 <thead>
                                 <tr>
                                     <th scope="col">#ID</th>
@@ -517,7 +517,7 @@
                             </table>
                             <%}%>
                             <%}else{ %>
-                            <h4>Using Year(s): <strong><%=year%></strong> and Course #: <strong><%=course%></strong>, no Grades were found.</h4>
+                            <h4>Using Year(s): <strong><%=year%></strong> and Course #: <strong><%=course%></strong>, no Resit Grades were found.</h4>
                             <%}%>
                         <%}%>
                         <%if(session.getAttribute("selectedQuery").equals("q6"))
