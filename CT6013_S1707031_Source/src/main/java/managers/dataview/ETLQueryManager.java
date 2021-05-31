@@ -5,6 +5,7 @@ import beans.operational.AssignmentsBean;
 import beans.operational.dimensions.DimCoursesBean;
 import beans.operational.dimensions.DimEnrollmentsBean;
 import beans.operational.dimensions.DimStudentsBean;
+import beans.operational.dimensions.DimTutorsBean;
 import java.util.List;
 import oracle.DataViewConnections;
 
@@ -218,6 +219,16 @@ public class ETLQueryManager implements IQueryManager
 	public DWLoadBean getPassRateAllTutorsAllCoursesAllYears()
 	{
 		DWLoadBean ret= new DWLoadBean();
+		DataViewConnections connections = new DataViewConnections();
+		List<AssignmentsBean> dwResults = connections.getDWResults(null, null);
+		List<DimStudentsBean> allStudentBeans = connections.getDWStudents();
+		List<DimTutorsBean> allTutorsBeans = connections.getDWTutors();
+		List<DimCoursesBean> allCourses = connections.getDWCourses();
+		if(dwResults != null && !dwResults.isEmpty() && allStudentBeans != null && !allStudentBeans.isEmpty())
+		{
+			BeanManager beanManager = new BeanManager();
+			ret = beanManager.convertGradeAgainstTutor(dwResults, allStudentBeans, allCourses, allTutorsBeans);
+		}
 		return ret;
 	}
 

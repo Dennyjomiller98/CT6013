@@ -7,6 +7,7 @@ import beans.operational.AssignmentsBean;
 import beans.operational.dimensions.DimCoursesBean;
 import beans.operational.dimensions.DimEnrollmentsBean;
 import beans.operational.dimensions.DimStudentsBean;
+import beans.operational.dimensions.DimTutorsBean;
 import java.util.List;
 import org.apache.log4j.Logger;
 
@@ -184,6 +185,82 @@ public class BeanManager
 				{
 					bean.setStudentFirstname("Unknown");
 					bean.setStudentSurname("Unknown");
+				}
+				bean.setAcademicYear(assignmentBean.getAcademicYear());
+				bean.setModule(assignmentBean.getModule());
+				bean.setSemester(assignmentBean.getSemester());
+				bean.setGrade(assignmentBean.getGrade());
+				bean.setResit(assignmentBean.getResit());
+				bean.setResitGrade(assignmentBean.getResitGrade());
+				if (matchingCourse != null)
+				{
+					bean.setCourseId(matchingCourse.getCourseId());
+					bean.setCourseName(matchingCourse.getCourseName());
+				}
+				else
+				{
+					bean.setCourseId("Unknown");
+					bean.setCourseName("Unknown");
+				}
+				ret.addDWAssignments(bean);
+			}
+		}
+		return ret;
+	}
+
+	/*For Q4*/
+	public DWLoadBean convertGradeAgainstTutor(List<AssignmentsBean> allGrades, List<DimStudentsBean> allStudentsBeans, List<DimCoursesBean> allCoursesBeans, List<DimTutorsBean> allTutorsBeans)
+	{
+		DWLoadBean ret = new DWLoadBean();
+		if(allGrades != null && !allGrades.isEmpty())
+		{
+			//Loop the results
+			for (AssignmentsBean assignmentBean : allGrades)
+			{
+				//Get matching student and course
+				DimStudentsBean matchingStudent = null;
+				DimCoursesBean matchingCourse = null;
+				DimTutorsBean matchingTutor = null;
+				for (DimStudentsBean studentBean : allStudentsBeans)
+				{
+					if(assignmentBean.getStudentId().equalsIgnoreCase(studentBean.getStudentId()))
+					{
+						matchingStudent = studentBean;
+					}
+				}
+				for (DimCoursesBean courseBean : allCoursesBeans)
+				{
+					if(courseBean.getModuleIds() != null && courseBean.getModuleIds().contains(assignmentBean.getModule()))
+					{
+						matchingCourse = courseBean;
+					}
+				}
+				for (DimTutorsBean tutorBean : allTutorsBeans)
+				{
+					if(tutorBean.getTutorId().equalsIgnoreCase(assignmentBean.getTutorId()))
+					{
+						matchingTutor = tutorBean;
+					}
+				}
+
+				DWAssignmentsBean bean = new DWAssignmentsBean();
+				bean.setAssignmentId(assignmentBean.getAssignmentId());
+				bean.setStudentId(assignmentBean.getStudentId());
+				if(matchingStudent != null)
+				{
+					bean.setStudentFirstname(matchingStudent.getFirstname());
+					bean.setStudentSurname(matchingStudent.getSurname());
+				}
+				else
+				{
+					bean.setStudentFirstname("Unknown");
+					bean.setStudentSurname("Unknown");
+				}
+				if(matchingTutor != null)
+				{
+					bean.setTutorId(matchingTutor.getTutorId());
+					bean.setTutorFirstname(matchingTutor.getFirstname());
+					bean.setTutorSurname(matchingTutor.getSurname());
 				}
 				bean.setAcademicYear(assignmentBean.getAcademicYear());
 				bean.setModule(assignmentBean.getModule());

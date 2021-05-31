@@ -22,6 +22,9 @@ public class AssignmentsBean
 	private String fResit;
 	private String fResitGrade;
 	private String fInternational;
+	private String fTutorId;
+	private String fTutorFirstname;
+	private String fTutorSurname;
 
 	public AssignmentsBean()
 	{
@@ -61,6 +64,9 @@ public class AssignmentsBean
 			fResit = String.valueOf(bean.getResit());
 			fResitGrade = String.valueOf(bean.getResitGrade());
 			fInternational = String.valueOf(bean.getInternational());
+			fTutorId = String.valueOf(bean.getTutorId());
+			fTutorFirstname = String.valueOf(bean.getTutorFirstname());
+			fTutorSurname = String.valueOf(bean.getTutorSurname());
 		}
 		catch (Exception e)
 		{
@@ -147,5 +153,32 @@ public class AssignmentsBean
 	public String getInternational()
 	{
 		return fInternational;
+	}
+
+	public void setTutorId(String id)
+	{
+		fTutorId = id;
+	}
+	public String getTutorId()
+	{
+		return fTutorId;
+	}
+
+	public void setTutorFirstname(String firstname)
+	{
+		fTutorFirstname = firstname;
+	}
+	public String getTutorFirstname()
+	{
+		return fTutorFirstname;
+	}
+
+	public void setTutorSurname(String surname)
+	{
+		fTutorSurname = surname;
+	}
+	public String getTutorSurname()
+	{
+		return fTutorSurname;
 	}
 }

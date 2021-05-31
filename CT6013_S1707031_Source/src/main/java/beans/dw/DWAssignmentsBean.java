@@ -20,6 +20,9 @@ public class DWAssignmentsBean
 	private String fSurname;
 	private String fCourseId;
 	private String fCourseName;
+	private String fTutorId;
+	private String fTutorFirstname;
+	private String fTutorSurname;
 
 	public DWAssignmentsBean()
 	{
@@ -162,5 +165,32 @@ public class DWAssignmentsBean
 	public String getCourseName()
 	{
 		return fCourseName;
+	}
+
+	public void setTutorId(String id)
+	{
+		fTutorId = id;
+	}
+	public String getTutorId()
+	{
+		return fTutorId;
+	}
+
+	public void setTutorFirstname(String firstname)
+	{
+		fTutorFirstname = firstname;
+	}
+	public String getTutorFirstname()
+	{
+		return fTutorFirstname;
+	}
+
+	public void setTutorSurname(String surname)
+	{
+		fTutorSurname = surname;
+	}
+	public String getTutorSurname()
+	{
+		return fTutorSurname;
 	}
 }
