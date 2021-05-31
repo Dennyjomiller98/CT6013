@@ -21,19 +21,74 @@ public class BeanManager
 		//Empty Constructor
 	}
 
-	public DWLoadBean convertTotalStudents(List<DimStudentsBean> allStudentsBeans, List<DimEnrollmentsBean> allEnrollmentBeans)
+	/*For Q1*/
+	public DWLoadBean convertTotalStudents(List<DimStudentsBean> allStudentsBeans, List<DimEnrollmentsBean> allEnrollmentBeans, List<DimCoursesBean> allCourseBeans)
 	{
 		DWLoadBean ret = new DWLoadBean();
-		//TODO - add DWStudentsBean into DWLoadBean
+		if(allStudentsBeans != null && !allStudentsBeans.isEmpty() && allEnrollmentBeans != null && !allEnrollmentBeans.isEmpty())
+		{
+			//Loop enrollment beans
+			for (DimEnrollmentsBean enrollmentBean : allEnrollmentBeans)
+			{
+				//Filter for enrolled only (excluding dropped out students
+				if(enrollmentBean.getIsEnrolled().equals("true") && !enrollmentBean.getHasDropped().equalsIgnoreCase("true"))
+				{
+					DimStudentsBean matchingStudent = null;
+					DimCoursesBean matchingCourse = null;
+					String studentId = enrollmentBean.getStudentId();
+					for (DimStudentsBean studentBean : allStudentsBeans)
+					{
+						if(studentBean.getStudentId().equalsIgnoreCase(studentId))
+						{
+							matchingStudent = studentBean;
+						}
+					}
+					for (DimCoursesBean courseBean : allCourseBeans)
+					{
+						if(courseBean.getCourseId().equalsIgnoreCase(enrollmentBean.getCourseId()))
+						{
+							matchingCourse = courseBean;
+						}
+					}
+
+					//Check matching student exists in DB
+					if(matchingStudent != null)
+					{
+						DWEnrollmentsBean bean = new DWEnrollmentsBean();
+						bean.setId(enrollmentBean.getEnrollmentId());
+						bean.setStudentId(enrollmentBean.getStudentId());
+						bean.setStudentFirstname(matchingStudent.getFirstname());
+						bean.setStudentSurname(matchingStudent.getSurname());
+						bean.setCourseId(enrollmentBean.getCourseId());
+						if(matchingCourse != null)
+						{
+							bean.setCourseName(matchingCourse.getCourseName());
+						}
+						else
+						{
+							bean.setCourseName("Unknown");
+						}
+						bean.setEnrollmentDate(enrollmentBean.getEnrollmentDate());
+						ret.addDWEnrollments(bean);
+					}
+					else
+					{
+						LOG.error("No matching information for student");
+					}
+				}
+
+			}
+		}
 		return ret;
 	}
 
+	/*For Q2*/
 	public DWLoadBean convertTotalDropouts(List<DimStudentsBean> allStudentsBeans, List<DimEnrollmentsBean> allEnrollmentsBeans, List<DimCoursesBean> allCoursesBeans)
 	{
 		DWLoadBean ret = new DWLoadBean();
-		//Loop the enrollments
 		if(allEnrollmentsBeans != null && !allEnrollmentsBeans.isEmpty())
 		{
+			//Loop the enrollments
 			for (DimEnrollmentsBean enrollment : allEnrollmentsBeans)
 			{
 				//Filter for Dropouts ONLY
@@ -63,12 +118,19 @@ public class BeanManager
 						DWEnrollmentsBean bean = new DWEnrollmentsBean();
 						bean.setId(enrollment.getEnrollmentId());
 						bean.setStudentId(enrollment.getStudentId());
-						bean.setStudentFirstname(matchingStudent.getFirstname());
-						bean.setStudentSurname(matchingStudent.getSurname());
-						bean.setCourseId(enrollment.getCourseId());
-						bean.setCourseName(matchingCourse.getCourseName());
 						bean.setEnrollmentDate(enrollment.getEnrollmentDate());
 						bean.setHasDropped(enrollment.getHasDropped());
+						bean.setCourseId(enrollment.getCourseId());
+						bean.setStudentFirstname(matchingStudent.getFirstname());
+						bean.setStudentSurname(matchingStudent.getSurname());
+						if (matchingCourse != null)
+						{
+							bean.setCourseName(matchingCourse.getCourseName());
+						}
+						else
+						{
+							bean.setCourseName("Unknown");
+						}
 						ret.addDWEnrollments(bean);
 					}
 					else

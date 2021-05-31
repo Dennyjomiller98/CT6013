@@ -128,9 +128,57 @@
                     <div id="data-retrieved" style="display: inline-block">
                         <%--Q1: Total Students--%>
                         <%if(session.getAttribute("selectedQuery").equals("q1"))
-                        {
-
-                        }%>
+                        {%>
+                            <h3>Results for: "Total Students Enrolled on a Specific Course"</h3>
+                            <%String year = "Unknown";
+                                String course = "Unknown";
+                                if(session.getAttribute("selectedYear") != null)
+                                {
+                                    year = (String) session.getAttribute("selectedYear");
+                                }
+                                if(session.getAttribute("selectedCourse") != null)
+                                {
+                                    course = (String) session.getAttribute("selectedCourse");
+                                }
+                            %>
+                            <%if(session.getAttribute("enrollmentsBeans") != null)
+                            {%>
+                            <%List<DWEnrollmentsBean> enrollments = (List<DWEnrollmentsBean>) session.getAttribute("enrollmentsBeans");
+                                if(enrollments != null && !enrollments.isEmpty()) {%>
+                            <br/>
+                            <h4>Using Year(s): <strong><%=year%></strong> and Course #: <strong><%=course%></strong>, a Total of <strong><%=enrollments.size()%></strong> dropout(s) were found.</h4>
+                            <br/>
+                            <table class="table table-striped">
+                                <caption style="  display: table-caption; text-align: center;">Total Dropouts</caption>
+                                <thead>
+                                <tr>
+                                    <th scope="col">#ID</th>
+                                    <th scope="col">Student Number</th>
+                                    <th scope="col">Student Name</th>
+                                    <th scope="col">Course #ID</th>
+                                    <th scope="col">Course Name</th>
+                                    <th scope="col">Date of Enrollment</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <%for (DWEnrollmentsBean enrollment : enrollments)
+                                {%>
+                                <tr>
+                                    <th scope="row"><%=enrollment.getId()%></th>
+                                    <td><%=enrollment.getStudentId()%></td>
+                                    <td><%=enrollment.getStudentFirstname() + " " + enrollment.getStudentSurname()%> </td>
+                                    <td><%=enrollment.getCourseId()%></td>
+                                    <td><%=enrollment.getCourseName()%></td>
+                                    <td><%=enrollment.getEnrollmentDate()%></td>
+                                </tr>
+                                <%}%>
+                                </tbody>
+                            </table>
+                            <%}%>
+                            <%}else{ %>
+                            <h4>Using Year(s): <strong><%=year%></strong> and Course #: <strong><%=course%></strong>, no Student Enrollment(s) were found.</h4>
+                            <%}%>
+                        <%}%>
 
                         <%--Q2: Total Dropouts--%>
                         <%if(session.getAttribute("selectedQuery").equals("q2"))
