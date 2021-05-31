@@ -188,7 +188,7 @@ public class DataViewConnections extends AbstractOracleConnections
 		return ret;
 	}
 
-	public List<AssignmentsBean> getDWResults(String yearSelect, String courseSelect)
+	public List<AssignmentsBean> getDWResults(String yearSelect, String courseSelect, String tutorSelect)
 	{
 		List<AssignmentsBean> ret = new ArrayList<>();
 		setOracleDriver();
@@ -199,7 +199,7 @@ public class DataViewConnections extends AbstractOracleConnections
 			if(oracleClient != null)
 			{
 				//Select Query
-				String query = getResultsQuery(yearSelect, courseSelect);
+				String query = getResultsQuery(yearSelect, courseSelect, tutorSelect);
 				//Execute query
 				ArrayList<AssignmentsBean> allBeans = executeResultsQuery(oracleClient, query);
 				if(!allBeans.isEmpty())
@@ -223,7 +223,50 @@ public class DataViewConnections extends AbstractOracleConnections
 		return ret;
 	}
 
-	private String getResultsQuery(String yearSelect, String courseSelect)
+	private String getResultsQuery(String yearSelect, String courseSelect, String tutorSelect)
+	{
+		String query;
+		if (tutorSelect == null)
+		{
+			query = getResultsQueryNoTutor(yearSelect, courseSelect);
+		}
+		else
+		{
+			query = getResultsQueryWithTutor(yearSelect, courseSelect, tutorSelect);
+		}
+		return query;
+	}
+
+	private String getResultsQueryWithTutor(String yearSelect, String courseSelect, String tutorSelect)
+	{
+		String query;
+		if(yearSelect != null || courseSelect != null)
+		{
+			if(yearSelect != null && courseSelect != null)
+			{
+				//course select year select
+				query = "SELECT * FROM " + TBL_DW_RESULTS + " WHERE Course_Id='" + courseSelect +"' AND Tutor_Id='"+ tutorSelect +"' AND Academic_Year LIKE '"+ yearSelect +"%'";
+			}
+			else if(yearSelect != null)
+			{
+				//all course year select
+				query = "SELECT * FROM " + TBL_DW_RESULTS + " WHERE Tutor_Id='"+ tutorSelect +"' AND Academic_Year LIKE '"+ yearSelect +"%'";
+			}
+			else
+			{
+				//Course select all years
+				query = "SELECT * FROM " + TBL_DW_RESULTS + " WHERE Course_Id LIKE '" + courseSelect +"%' AND Tutor_Id='"+ tutorSelect +"'";
+			}
+		}
+		else
+		{
+			//Default ALL
+			query = "SELECT * FROM " + TBL_DW_RESULTS + "WHERE Tutor_Id='"+ tutorSelect +"'";
+		}
+		return query;
+	}
+
+	private String getResultsQueryNoTutor(String yearSelect, String courseSelect)
 	{
 		String query;
 		if(yearSelect != null || courseSelect != null)

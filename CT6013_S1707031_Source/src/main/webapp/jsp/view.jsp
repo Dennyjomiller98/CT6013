@@ -335,7 +335,7 @@
 
                         <%if(session.getAttribute("selectedQuery").equals("q4"))
                         {%>
-                            <h3>Results for: "Average Grade on a Specific Course"</h3>
+                            <h3>Results for: "Student Grades based on the Tutor Teaching"</h3>
                             <%String year = "Unknown";
                                 String course = "Unknown";
                                 String tutor = "Unknown";
