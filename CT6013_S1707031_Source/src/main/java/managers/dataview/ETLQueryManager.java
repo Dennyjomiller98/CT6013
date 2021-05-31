@@ -595,22 +595,27 @@ public class ETLQueryManager implements IQueryManager
 	@Override
 	public DWLoadBean getCovidInternationalStudentEnrollmentsAgainstAllYears()
 	{
-		DWLoadBean ret = new DWLoadBean();
+		DWLoadBean ret= new DWLoadBean();
 		DataViewConnections connections = new DataViewConnections();
+		List<AssignmentsBean> dwResults = connections.getDWResultsInternational(null, null);
 		DWLoadBean enrollmentFigures = getEnrollmentFigures(null);
 		List<DWEnrollmentsBean> dwEnrollments = enrollmentFigures.getDWEnrollments();
-		List<AssignmentsBean> dwResults = connections.getDWResultsInternational(null, null);
 		if(dwEnrollments != null && !dwEnrollments.isEmpty() && dwResults != null && !dwResults.isEmpty())
 		{
 			for (DWEnrollmentsBean enrollment : dwEnrollments)
 			{
-				for (AssignmentsBean assignmentsBean : dwResults)
+				for (AssignmentsBean assignment : dwResults)
 				{
-					if(assignmentsBean.getInternational().equals("true"))
+					//Add enrollment
+					if (assignment.getStudentId().equals(enrollment.getStudentId()) && assignment.getInternational().equals("true")
+							|| enrollment.getEnrollmentDate().startsWith("2020")
+							|| enrollment.getEnrollmentDate().startsWith("2021"))
 					{
+						enrollment.setInternational("true");
 						ret.addDWEnrollments(enrollment);
 					}
 				}
+
 			}
 		}
 		return ret;
@@ -635,6 +640,7 @@ public class ETLQueryManager implements IQueryManager
 							|| enrollment.getEnrollmentDate().startsWith("2020")
 							|| enrollment.getEnrollmentDate().startsWith("2021")))
 					{
+						enrollment.setInternational("true");
 						ret.addDWEnrollments(enrollment);
 					}
 				}
