@@ -568,6 +568,16 @@ public class ETLQueryManager implements IQueryManager
 	public DWLoadBean getTotalCourseChangesAllCoursesAllYears()
 	{
 		DWLoadBean ret= new DWLoadBean();
+		DataViewConnections connections = new DataViewConnections();
+		List<DimEnrollmentsBean> allEnrollmentBeans = connections.getDWEnrollments(null, null);
+		List<DimStudentsBean> allStudentsBeans = connections.getDWStudents();
+		List<DimCoursesBean> allCourses = connections.getDWCourses();
+		if(allStudentsBeans != null && !allStudentsBeans.isEmpty() && allEnrollmentBeans != null
+				&& !allEnrollmentBeans.isEmpty() && allCourses != null && !allCourses.isEmpty())
+		{
+			BeanManager beanManager = new BeanManager();
+			ret = beanManager.convertTotalCourseChanges(allStudentsBeans, allEnrollmentBeans, allCourses);
+		}
 		return ret;
 	}
 
@@ -575,6 +585,16 @@ public class ETLQueryManager implements IQueryManager
 	public DWLoadBean getTotalCourseChangesAllCoursesSelectedYear(String yearSelect)
 	{
 		DWLoadBean ret= new DWLoadBean();
+		DataViewConnections connections = new DataViewConnections();
+		List<DimEnrollmentsBean> allEnrollmentBeans = connections.getDWEnrollments(yearSelect, null);
+		List<DimStudentsBean> allStudentsBeans = connections.getDWStudents();
+		List<DimCoursesBean> allCourses = connections.getDWCourses();
+		if(allStudentsBeans != null && !allStudentsBeans.isEmpty() && allEnrollmentBeans != null
+				&& !allEnrollmentBeans.isEmpty() && allCourses != null && !allCourses.isEmpty())
+		{
+			BeanManager beanManager = new BeanManager();
+			ret = beanManager.convertTotalCourseChanges(allStudentsBeans, allEnrollmentBeans, allCourses);
+		}
 		return ret;
 	}
 
@@ -582,6 +602,16 @@ public class ETLQueryManager implements IQueryManager
 	public DWLoadBean getTotalCourseChangesSelectedCourseAllYears(String courseSelect)
 	{
 		DWLoadBean ret= new DWLoadBean();
+		DataViewConnections connections = new DataViewConnections();
+		List<DimEnrollmentsBean> allEnrollmentBeans = connections.getDWEnrollments(null, courseSelect);
+		List<DimStudentsBean> allStudentsBeans = connections.getDWStudents();
+		List<DimCoursesBean> allCourses = connections.getDWCourses();
+		if(allStudentsBeans != null && !allStudentsBeans.isEmpty() && allEnrollmentBeans != null
+				&& !allEnrollmentBeans.isEmpty() && allCourses != null && !allCourses.isEmpty())
+		{
+			BeanManager beanManager = new BeanManager();
+			ret = beanManager.convertTotalCourseChanges(allStudentsBeans, allEnrollmentBeans, allCourses);
+		}
 		return ret;
 	}
 
@@ -589,6 +619,16 @@ public class ETLQueryManager implements IQueryManager
 	public DWLoadBean getTotalCourseChangesSelectedCourseSelectedYear(String courseSelect, String yearSelect)
 	{
 		DWLoadBean ret= new DWLoadBean();
+		DataViewConnections connections = new DataViewConnections();
+		List<DimEnrollmentsBean> allEnrollmentBeans = connections.getDWEnrollments(yearSelect, courseSelect);
+		List<DimStudentsBean> allStudentsBeans = connections.getDWStudents();
+		List<DimCoursesBean> allCourses = connections.getDWCourses();
+		if(allStudentsBeans != null && !allStudentsBeans.isEmpty() && allEnrollmentBeans != null
+				&& !allEnrollmentBeans.isEmpty() && allCourses != null && !allCourses.isEmpty())
+		{
+			BeanManager beanManager = new BeanManager();
+			ret = beanManager.convertTotalCourseChanges(allStudentsBeans, allEnrollmentBeans, allCourses);
+		}
 		return ret;
 	}
 
@@ -635,25 +675,30 @@ public class ETLQueryManager implements IQueryManager
 		{
 			for (DWEnrollmentsBean enrollment : dwEnrollments)
 			{
-				if ((enrollment.getEnrollmentDate().startsWith(yearSelect) || enrollment.getEnrollmentDate().startsWith("2020") || enrollment.getEnrollmentDate().startsWith("2021")) )
-				{
-					AssignmentsBean match = null;
-					for (AssignmentsBean dwResult : dwResults)
-					{
-						if(enrollment.getStudentId().equals(dwResult.getStudentId()) && dwResult.getInternational().equals("true"))
-						{
-							match = dwResult;
-							break;
-						}
-					}
-					if(match != null)
-					{
-						enrollment.setInternational("true");
-						ret.addDWEnrollments(enrollment);
-					}
-				}
+				getCovidInternationalStudentsFromBeans(yearSelect, ret, dwResults, enrollment);
 			}
 		}
 		return ret;
+	}
+
+	private void getCovidInternationalStudentsFromBeans(String yearSelect, DWLoadBean ret, List<AssignmentsBean> dwResults, DWEnrollmentsBean enrollment)
+	{
+		if ((enrollment.getEnrollmentDate().startsWith(yearSelect) || enrollment.getEnrollmentDate().startsWith("2020") || enrollment.getEnrollmentDate().startsWith("2021")) )
+		{
+			AssignmentsBean match = null;
+			for (AssignmentsBean dwResult : dwResults)
+			{
+				if(enrollment.getStudentId().equals(dwResult.getStudentId()) && dwResult.getInternational().equals("true"))
+				{
+					match = dwResult;
+					break;
+				}
+			}
+			if(match != null)
+			{
+				enrollment.setInternational("true");
+				ret.addDWEnrollments(enrollment);
+			}
+		}
 	}
 }

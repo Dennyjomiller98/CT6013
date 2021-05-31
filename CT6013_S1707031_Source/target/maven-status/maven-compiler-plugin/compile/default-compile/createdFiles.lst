@@ -20,7 +20,6 @@ oracle\AuthenticationConnections.class
 oracle\IOracleConnections.class
 beans\operational\TutorsBean.class
 managers\dataview\ETLQueryManager.class
-beans\dw\DWStudentsBean.class
 encryption\PasswordHasher.class
 beans\operational\dimensions\DimSubjectsBean.class
 servlets\Authentication2Factor.class

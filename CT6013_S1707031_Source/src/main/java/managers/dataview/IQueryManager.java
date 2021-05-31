@@ -11,25 +11,25 @@ import beans.dw.DWLoadBean;
  * */
 public interface IQueryManager
 {
-	//Q1 (DWStudentsBean)
+	//Q1
 	DWLoadBean getTotalStudentsAllCoursesAllYears();
 	DWLoadBean getTotalStudentsAllCoursesSelectedYear(String yearSelect);
 	DWLoadBean getTotalStudentsSelectedCourseAllYears(String courseSelect);
 	DWLoadBean getTotalStudentsSelectedCourseSelectedYear(String courseSelect, String yearSelect);
 
-	//Q2 (DWStudentsBean)
+	//Q2
 	DWLoadBean getTotalDropoutsAllCoursesAllYears();
 	DWLoadBean getTotalDropoutsAllCoursesSelectedYear(String yearSelect);
 	DWLoadBean getTotalDropoutsSelectedCourseAllYears(String courseSelect);
 	DWLoadBean getTotalDropoutsSelectedCourseSelectedYear(String courseSelect, String yearSelect);
 
-	//Q3 (DWAssignmentsBean)
+	//Q3
 	DWLoadBean getAverageGradeAllCoursesAllYears();
 	DWLoadBean getAverageGradeAllCoursesSelectedYear(String yearSelect);
 	DWLoadBean getAverageGradeSelectedCourseAllYears(String courseSelect);
 	DWLoadBean getAverageGradeSelectedCourseSelectedYear(String courseSelect, String yearSelect);
 
-	//Q4 (DWAssignmentsBean)
+	//Q4
 	DWLoadBean getPassRateAllTutorsAllCoursesAllYears();
 	DWLoadBean getPassRateAllTutorsAllCoursesSelectedYear(String yearSelect);
 	DWLoadBean getPassRateAllTutorsSelectedCourseAllYears(String courseSelect);
@@ -39,33 +39,33 @@ public interface IQueryManager
 	DWLoadBean getPassRateSelectedTutorSelectedCourseAllYears(String tutorSelect, String courseSelect);
 	DWLoadBean getPassRateSelectedTutorSelectedCourseSelectedYear(String tutorSelect, String courseSelect, String yearSelect);
 
-	//Q5 (DWAssignmentsBean)
+	//Q5
 	DWLoadBean getTotalResitsAllCoursesAllYears();
 	DWLoadBean getTotalResitsAllCoursesSelectedYear(String yearSelect);
 	DWLoadBean getTotalResitsSelectedCourseAllYears(String courseSelect);
 	DWLoadBean getTotalResitsSelectedCourseSelectedYear(String courseSelect, String yearSelect);
 
-	//Q6 (DWEnrollmentsBean)
+	//Q6
 	DWLoadBean getTotalEnrollmentsAllYears();
 	DWLoadBean getTotalEnrollmentsSelectedYear(String yearSelect);
 
-	//Q7 (DWEnrollmentsBean)
+	//Q7
 	DWLoadBean getCovidFiguresAgainstAllYears();
 	DWLoadBean getCovidFiguresAgainstSelectedYear(String yearSelect);
 
-	//Q8 (DWStudentsBean)
+	//Q8
 	DWLoadBean getTotalInternationalStudentsAllCoursesAllYears();
 	DWLoadBean getTotalInternationalStudentsAllCoursesSelectedYear(String yearSelect);
 	DWLoadBean getTotalInternationalStudentsSelectedCourseAllYears(String courseSelect);
 	DWLoadBean getTotalInternationalStudentsSelectedCourseSelectedYear(String courseSelect, String yearSelect);
 
-	//Q9 (DWEnrollmentsBean)
+	//Q9
 	DWLoadBean getTotalCourseChangesAllCoursesAllYears();
 	DWLoadBean getTotalCourseChangesAllCoursesSelectedYear(String yearSelect);
 	DWLoadBean getTotalCourseChangesSelectedCourseAllYears(String courseSelect);
 	DWLoadBean getTotalCourseChangesSelectedCourseSelectedYear(String courseSelect, String yearSelect);
 
-	//Q10 (DWEnrollmentsBean)(DWStudentsBean)
+	//Q10
 	DWLoadBean getCovidInternationalStudentEnrollmentsAgainstAllYears();
 	DWLoadBean getCovidInternationalStudentAgainstSelectedYear(String yearSelect);
 }

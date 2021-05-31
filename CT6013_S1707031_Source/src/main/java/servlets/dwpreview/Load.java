@@ -131,10 +131,6 @@ public class Load extends HttpServlet
 
 		if(resultsBean != null)
 		{
-			if(resultsBean.getDWStudents() != null && !resultsBean.getDWStudents().isEmpty())
-			{
-				request.getSession(true).setAttribute("studentsBeans", resultsBean.getDWStudents());
-			}
 			if (resultsBean.getDWAssignments() != null && !resultsBean.getDWAssignments().isEmpty())
 			{
 				request.getSession(true).setAttribute("assignmentsBeans", resultsBean.getDWAssignments());

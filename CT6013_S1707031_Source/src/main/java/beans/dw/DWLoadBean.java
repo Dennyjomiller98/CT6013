@@ -28,7 +28,6 @@ public class DWLoadBean
 	private List<DimSubjectsBean> fDimSubjects;
 	private List<DimTutorsBean> fDimTutors;
 
-	private List<DWStudentsBean> fDWStudents;
 	private List<DWEnrollmentsBean> fDWEnrollments;
 	private List<DWAssignmentsBean> fDWAssignments;
 
@@ -258,23 +257,6 @@ public class DWLoadBean
 			fDimTutors = new ArrayList<>();
 		}
 		fDimTutors.add(bean);
-	}
-
-	public void setDWStudents(List<DWStudentsBean> beans)
-	{
-		fDWStudents = beans;
-	}
-	public List<DWStudentsBean> getDWStudents()
-	{
-		return fDWStudents;
-	}
-	public void addDWStudents(DWStudentsBean bean)
-	{
-		if (fDWStudents == null || fDWStudents.isEmpty())
-		{
-			fDWStudents = new ArrayList<>();
-		}
-		fDWStudents.add(bean);
 	}
 
 	public void setDWEnrollments(List<DWEnrollmentsBean> beans)

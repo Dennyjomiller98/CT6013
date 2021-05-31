@@ -550,4 +550,125 @@ public class BeanManager
 		}
 		return ret;
 	}
+
+	/*For Q9*/
+	public DWLoadBean convertTotalCourseChanges(List<DimStudentsBean> allStudentsBeans, List<DimEnrollmentsBean> allEnrollmentBeans, List<DimCoursesBean> allCourses)
+	{
+		DWLoadBean ret = new DWLoadBean();
+		if(allStudentsBeans != null && !allStudentsBeans.isEmpty() && allEnrollmentBeans != null && !allEnrollmentBeans.isEmpty()
+		&& allCourses != null && !allCourses.isEmpty())
+		{
+			//Filter Only course changes
+			List<DimEnrollmentsBean> courseChangeEnrollments = filterCourseChangesOnly(allEnrollmentBeans);
+			if(!courseChangeEnrollments.isEmpty())
+			{
+				//Loop enrollment beans
+				for (DimEnrollmentsBean enrollmentBean : courseChangeEnrollments)
+				{
+					//Filter for enrolled only
+					if(enrollmentBean.getIsEnrolled().equals("true"))
+					{
+						DimStudentsBean matchingStudent = null;
+						DimCoursesBean matchingCourse = null;
+						String studentId = enrollmentBean.getStudentId();
+						for (DimStudentsBean studentBean : allStudentsBeans)
+						{
+							if(studentBean.getStudentId().equalsIgnoreCase(studentId))
+							{
+								matchingStudent = studentBean;
+							}
+						}
+						for (DimCoursesBean courseBean : allCourses)
+						{
+							if(courseBean.getCourseId().equalsIgnoreCase(enrollmentBean.getCourseId()))
+							{
+								matchingCourse = courseBean;
+							}
+						}
+
+						//Check matching student exists in DB
+						if(matchingStudent != null)
+						{
+							DWEnrollmentsBean bean = new DWEnrollmentsBean();
+							bean.setId(enrollmentBean.getEnrollmentId());
+							bean.setStudentId(enrollmentBean.getStudentId());
+							bean.setStudentFirstname(matchingStudent.getFirstname());
+							bean.setStudentSurname(matchingStudent.getSurname());
+							bean.setCourseId(enrollmentBean.getCourseId());
+							if(matchingCourse != null)
+							{
+								bean.setCourseName(matchingCourse.getCourseName());
+							}
+							else
+							{
+								bean.setCourseName("Unknown");
+							}
+							bean.setEnrollmentDate(enrollmentBean.getEnrollmentDate());
+							ret.addDWEnrollments(bean);
+						}
+						else
+						{
+							LOG.error("No matching information for student");
+						}
+					}
+				}
+			}
+		}
+		return ret;
+	}
+
+	private List<DimEnrollmentsBean> filterCourseChangesOnly(List<DimEnrollmentsBean> allEnrollmentBeans)
+	{
+		List<DimEnrollmentsBean> ret = new ArrayList<>();
+		List<String> idsToCheck = new ArrayList<>();
+		for (DimEnrollmentsBean bean : allEnrollmentBeans)
+		{
+			//Only look at values that have been changed
+			if(bean.getIsCurrent().equals("false"))
+			{
+				idsToCheck.add(bean.getEnrollmentId());
+			}
+		}
+
+		if(!idsToCheck.isEmpty())
+		{
+			for (String id : idsToCheck)
+			{
+				loopIdsForCourseChanges(allEnrollmentBeans, ret, id);
+			}
+		}
+		return ret;
+	}
+
+	private void loopIdsForCourseChanges(List<DimEnrollmentsBean> allEnrollmentBeans, List<DimEnrollmentsBean> ret, String id)
+	{
+		DimEnrollmentsBean oldVal = null;
+		DimEnrollmentsBean newVal = null;
+		for (DimEnrollmentsBean allEnrollmentBean : allEnrollmentBeans)
+		{
+			if(allEnrollmentBean.getEnrollmentId().equals(id))
+			{
+				if(allEnrollmentBean.getIsCurrent().equals("false"))
+				{
+					oldVal = allEnrollmentBean;
+				}
+				else
+				{
+					newVal = allEnrollmentBean;
+				}
+			}
+		}
+
+		if(oldVal != null && newVal != null)
+		{
+			//Add both Beans to returned list if course was changed
+			String oldCourseId = oldVal.getCourseId();
+			String newCourseId = newVal.getCourseId();
+			if(!oldCourseId.equals(newCourseId))
+			{
+				ret.add(oldVal);
+				ret.add(newVal);
+			}
+		}
+	}
 }

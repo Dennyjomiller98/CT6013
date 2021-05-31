@@ -164,19 +164,32 @@ public class AssignmentsBean
 		return fTutorId;
 	}
 
+	/*Tutor Methods are required for bean conversion*/
+	/**
+	 * @implNote - DO NOT REMOVE
+	 * */
 	public void setTutorFirstname(String firstname)
 	{
 		fTutorFirstname = firstname;
 	}
+	/**
+	 * @implNote - DO NOT REMOVE
+	 * */
 	public String getTutorFirstname()
 	{
 		return fTutorFirstname;
 	}
 
+	/**
+	 * @implNote - DO NOT REMOVE
+	 * */
 	public void setTutorSurname(String surname)
 	{
 		fTutorSurname = surname;
 	}
+	/**
+	 * @implNote - DO NOT REMOVE
+	 * */
 	public String getTutorSurname()
 	{
 		return fTutorSurname;
