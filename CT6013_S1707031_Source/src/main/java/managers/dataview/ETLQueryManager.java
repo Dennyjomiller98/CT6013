@@ -628,7 +628,7 @@ public class ETLQueryManager implements IQueryManager
 	{
 		DWLoadBean ret= new DWLoadBean();
 		DataViewConnections connections = new DataViewConnections();
-		List<AssignmentsBean> dwResults = connections.getDWResultsInternational(yearSelect, null);
+		List<AssignmentsBean> dwResults = connections.getDWResultsInternational(null, null);
 		DWLoadBean enrollmentFigures = getEnrollmentFigures(null);
 		List<DWEnrollmentsBean> dwEnrollments = enrollmentFigures.getDWEnrollments();
 		if(dwEnrollments != null && !dwEnrollments.isEmpty() && dwResults != null && !dwResults.isEmpty())
