@@ -42,6 +42,7 @@ public class DWAssignmentsBean
 			fResit = String.valueOf(resultSet.getString("Resit"));
 			fResitGrade = String.valueOf(resultSet.getString("Resit_Grade"));
 			fInternational = String.valueOf(resultSet.getString("International"));
+			fTutorId = String.valueOf(resultSet.getString("Tutor_Id"));
 		}
 		catch (SQLException e)
 		{
