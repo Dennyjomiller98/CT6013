@@ -171,7 +171,7 @@ public class ETLQueryManager implements IQueryManager
 	{
 		DWLoadBean ret= new DWLoadBean();
 		DataViewConnections connections = new DataViewConnections();
-		List<AssignmentsBean> dwResults = connections.getDWResults(null, null);
+		List<AssignmentsBean> dwResults = connections.getDWResults(yearSelect, null);
 		List<DimStudentsBean> allStudentBeans = connections.getDWStudents();
 		List<DimCoursesBean> allCourses = connections.getDWCourses();
 		if(dwResults != null && !dwResults.isEmpty() && allStudentBeans != null && !allStudentBeans.isEmpty())
@@ -187,7 +187,7 @@ public class ETLQueryManager implements IQueryManager
 	{
 		DWLoadBean ret= new DWLoadBean();
 		DataViewConnections connections = new DataViewConnections();
-		List<AssignmentsBean> dwResults = connections.getDWResults(null, null);
+		List<AssignmentsBean> dwResults = connections.getDWResults(null, courseSelect);
 		List<DimStudentsBean> allStudentBeans = connections.getDWStudents();
 		List<DimCoursesBean> allCourses = connections.getDWCourses();
 		if(dwResults != null && !dwResults.isEmpty() && allStudentBeans != null && !allStudentBeans.isEmpty())
@@ -203,7 +203,7 @@ public class ETLQueryManager implements IQueryManager
 	{
 		DWLoadBean ret= new DWLoadBean();
 		DataViewConnections connections = new DataViewConnections();
-		List<AssignmentsBean> dwResults = connections.getDWResults(null, null);
+		List<AssignmentsBean> dwResults = connections.getDWResults(yearSelect, courseSelect);
 		List<DimStudentsBean> allStudentBeans = connections.getDWStudents();
 		List<DimCoursesBean> allCourses = connections.getDWCourses();
 		if(dwResults != null && !dwResults.isEmpty() && allStudentBeans != null && !allStudentBeans.isEmpty())

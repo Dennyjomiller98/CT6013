@@ -266,10 +266,12 @@
                                     <th scope="col">Student Name</th>
                                     <th scope="col">Course #ID</th>
                                     <th scope="col">Course Name</th>
-                                    <th scope="col">Year</th>
+                                    <th scope="col">Module #ID</th>
+                                    <th scope="col">Semester</th>
                                     <th scope="col">Grade</th>
                                     <th scope="col">Did Resit</th>
                                     <th scope="col">Resist Grade</th>
+                                    <th scope="col">Year</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -281,7 +283,8 @@
                                     <td><%=assignment.getStudentFirstname() + " " + assignment.getStudentSurname()%> </td>
                                     <td><%=assignment.getCourseId()%></td>
                                     <td><%=assignment.getCourseName()%></td>
-                                    <td><%=assignment.getAcademicYear()%></td>
+                                    <td><%=assignment.getModule()%></td>
+                                    <td><%=assignment.getSemester()%></td>
                                     <%if(!assignment.getGrade().equalsIgnoreCase("none"))
                                     {%>
                                        <td><%=assignment.getGrade() + "%"%></td>
@@ -299,6 +302,7 @@
                                     {%>
                                     <td><%=assignment.getResitGrade()%></td>
                                     <%}%>
+                                    <td><%=assignment.getAcademicYear()%></td>
                                 </tr>
                                 <%}%>
                                 </tbody>
@@ -312,12 +316,12 @@
                                 	if(assignment.getResit().equalsIgnoreCase("true"))
                                     {
                                         //Take Resat Marks
-                                        total = Integer.parseInt(total + assignment.getResitGrade());
+                                        total = total + Integer.parseInt(assignment.getResitGrade());
                                     }
                                 	else
                                     {
                                         //Take original marks
-                                        total = Integer.parseInt(total + assignment.getGrade());
+                                        total = total + Integer.parseInt(assignment.getGrade());
                                     }
                                 }
                                 int average = total/size;
