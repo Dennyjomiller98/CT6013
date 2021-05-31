@@ -305,6 +305,41 @@ public class DataViewConnections extends AbstractOracleConnections
 		return query;
 	}
 
+	public List<AssignmentsBean> getDWResultsInternational(String yearSelect, String courseSelect)
+	{
+		List<AssignmentsBean> ret = new ArrayList<>();
+		setOracleDriver();
+		try
+		{
+			AbstractOracleConnections conn = new AbstractOracleConnections();
+			Connection oracleClient = conn.getDWClient();
+			if(oracleClient != null)
+			{
+				//Select Query
+				String query = getResultsQueryNoTutor(yearSelect, courseSelect);
+				//Execute query
+				ArrayList<AssignmentsBean> allBeans = executeResultsQuery(oracleClient, query);
+				if(!allBeans.isEmpty())
+				{
+					ret = allBeans;
+				}
+				else
+				{
+					LOG.debug("No Results retrieved from DW.");
+				}
+			}
+			else
+			{
+				LOG.error("connection failure");
+			}
+		}
+		catch(Exception e)
+		{
+			LOG.error("Unable to retrieve DW Data", e);
+		}
+		return ret;
+	}
+
 	public List<AssignmentsBean> getDWResults(String yearSelect, String courseSelect, String tutorSelect)
 	{
 		List<AssignmentsBean> ret = new ArrayList<>();
@@ -512,17 +547,4 @@ public class DataViewConnections extends AbstractOracleConnections
 		oracleClient.close();
 		return allBeans;
 	}
-
-	public List<DimModulesBean> getDWModules()
-	{
-		//TODO (if needed)
-		return null;
-	}
-
-	public List<DimSubjectsBean> getDWSubjects()
-	{
-		//TODO (if needed)
-		return null;
-	}
-
 }

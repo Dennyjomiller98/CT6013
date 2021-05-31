@@ -497,6 +497,17 @@ public class ETLQueryManager implements IQueryManager
 	public DWLoadBean getTotalInternationalStudentsAllCoursesAllYears()
 	{
 		DWLoadBean ret= new DWLoadBean();
+		DataViewConnections connections = new DataViewConnections();
+		List<DimEnrollmentsBean> allEnrollmentBeans = connections.getDWEnrollments(null, null);
+		List<DimStudentsBean> allStudentsBeans = connections.getDWStudents();
+		List<AssignmentsBean> dwResults = connections.getDWResultsInternational(null, null);
+		List<DimCoursesBean> allCourses = connections.getDWCourses();
+		if(allStudentsBeans != null && !allStudentsBeans.isEmpty() && allEnrollmentBeans != null
+				&& !allEnrollmentBeans.isEmpty() && dwResults != null && !dwResults.isEmpty())
+		{
+			BeanManager beanManager = new BeanManager();
+			ret = beanManager.convertTotalInternationalStudents(dwResults, allStudentsBeans, allEnrollmentBeans, allCourses);
+		}
 		return ret;
 	}
 
@@ -504,6 +515,17 @@ public class ETLQueryManager implements IQueryManager
 	public DWLoadBean getTotalInternationalStudentsAllCoursesSelectedYear(String yearSelect)
 	{
 		DWLoadBean ret= new DWLoadBean();
+		DataViewConnections connections = new DataViewConnections();
+		List<DimEnrollmentsBean> allEnrollmentBeans = connections.getDWEnrollments(yearSelect, null);
+		List<DimStudentsBean> allStudentsBeans = connections.getDWStudents();
+		List<AssignmentsBean> dwResults = connections.getDWResultsInternational(yearSelect, null);
+		List<DimCoursesBean> allCourses = connections.getDWCourses();
+		if(allStudentsBeans != null && !allStudentsBeans.isEmpty() && allEnrollmentBeans != null
+				&& !allEnrollmentBeans.isEmpty() && dwResults != null && !dwResults.isEmpty())
+		{
+			BeanManager beanManager = new BeanManager();
+			ret = beanManager.convertTotalInternationalStudents(dwResults, allStudentsBeans, allEnrollmentBeans, allCourses);
+		}
 		return ret;
 	}
 
@@ -511,6 +533,17 @@ public class ETLQueryManager implements IQueryManager
 	public DWLoadBean getTotalInternationalStudentsSelectedCourseAllYears(String courseSelect)
 	{
 		DWLoadBean ret= new DWLoadBean();
+		DataViewConnections connections = new DataViewConnections();
+		List<DimEnrollmentsBean> allEnrollmentBeans = connections.getDWEnrollments(null, courseSelect);
+		List<DimStudentsBean> allStudentsBeans = connections.getDWStudents();
+		List<AssignmentsBean> dwResults = connections.getDWResultsInternational(null, courseSelect);
+		List<DimCoursesBean> allCourses = connections.getDWCourses();
+		if(allStudentsBeans != null && !allStudentsBeans.isEmpty() && allEnrollmentBeans != null
+				&& !allEnrollmentBeans.isEmpty() && dwResults != null && !dwResults.isEmpty())
+		{
+			BeanManager beanManager = new BeanManager();
+			ret = beanManager.convertTotalInternationalStudents(dwResults, allStudentsBeans, allEnrollmentBeans, allCourses);
+		}
 		return ret;
 	}
 
@@ -518,6 +551,17 @@ public class ETLQueryManager implements IQueryManager
 	public DWLoadBean getTotalInternationalStudentsSelectedCourseSelectedYear(String courseSelect, String yearSelect)
 	{
 		DWLoadBean ret= new DWLoadBean();
+		DataViewConnections connections = new DataViewConnections();
+		List<DimEnrollmentsBean> allEnrollmentBeans = connections.getDWEnrollments(yearSelect, courseSelect);
+		List<DimStudentsBean> allStudentsBeans = connections.getDWStudents();
+		List<AssignmentsBean> dwResults = connections.getDWResultsInternational(yearSelect, courseSelect);
+		List<DimCoursesBean> allCourses = connections.getDWCourses();
+		if(allStudentsBeans != null && !allStudentsBeans.isEmpty() && allEnrollmentBeans != null
+				&& !allEnrollmentBeans.isEmpty() && dwResults != null && !dwResults.isEmpty())
+		{
+			BeanManager beanManager = new BeanManager();
+			ret = beanManager.convertTotalInternationalStudents(dwResults, allStudentsBeans, allEnrollmentBeans, allCourses);
+		}
 		return ret;
 	}
 

@@ -10,6 +10,7 @@ public class DWEnrollmentsBean
 	private String fCourseName;
 	private String fEnrollmentDate;
 	private String fHasDropped;
+	private String fInternational;
 
 	public DWEnrollmentsBean()
 	{
@@ -86,5 +87,14 @@ public class DWEnrollmentsBean
 	public String getHasDropped()
 	{
 		return fHasDropped;
+	}
+
+	public void setInternational(String international)
+	{
+		fInternational = international;
+	}
+	public String getInternational()
+	{
+		return fInternational;
 	}
 }
