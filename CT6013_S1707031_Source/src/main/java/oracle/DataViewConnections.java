@@ -231,17 +231,17 @@ public class DataViewConnections extends AbstractOracleConnections
 			if(yearSelect != null && courseSelect != null)
 			{
 				//course select year select
-				query = "SELECT * FROM " + TBL_DW_RESULTS + " WHERE Course_Id='" + courseSelect +"' AND Academic_Year='"+ yearSelect +"'";
+				query = "SELECT * FROM " + TBL_DW_RESULTS + " WHERE Course_Id='" + courseSelect +"' AND Academic_Year LIKE '"+ yearSelect +"%'";
 			}
 			else if(yearSelect != null)
 			{
 				//all course year select
-				query = "SELECT * FROM " + TBL_DW_RESULTS + " WHERE Academic_Year='"+ yearSelect +"'";
+				query = "SELECT * FROM " + TBL_DW_RESULTS + " WHERE Academic_Year LIKE '"+ yearSelect +"%'";
 			}
 			else
 			{
 				//Course select all years
-				query = "SELECT * FROM " + TBL_DW_RESULTS + " WHERE Course_Id='" + courseSelect +"'";
+				query = "SELECT * FROM " + TBL_DW_RESULTS + " WHERE Course_Id LIKE '" + courseSelect +"%'";
 			}
 		}
 		else

@@ -282,9 +282,23 @@
                                     <td><%=assignment.getCourseId()%></td>
                                     <td><%=assignment.getCourseName()%></td>
                                     <td><%=assignment.getAcademicYear()%></td>
-                                    <td><%=assignment.getGrade()%></td>
+                                    <%if(!assignment.getGrade().equalsIgnoreCase("none"))
+                                    {%>
+                                       <td><%=assignment.getGrade() + "%"%></td>
+                                    <%}
+                                        else
+                                    {%>
+                                        <td><%=assignment.getGrade()%></td>
+                                    <%}%>
                                     <td><%=assignment.getResit()%></td>
+                                    <%if(!assignment.getResitGrade().equalsIgnoreCase("none"))
+                                    {%>
+                                    <td><%=assignment.getResitGrade() + "%"%></td>
+                                    <%}
+                                    else
+                                    {%>
                                     <td><%=assignment.getResitGrade()%></td>
+                                    <%}%>
                                 </tr>
                                 <%}%>
                                 </tbody>
@@ -308,7 +322,8 @@
                                 }
                                 int average = total/size;
                             %>
-                            <h4>The Average Grade for the following Results is: <strong><%=String.valueOf(average)%></strong></h4>
+                            <h4>The Average Grade for the following Results is: <strong><%=average + "%"%></strong></h4>
+                            <h4>The Total is: <strong><%=String.valueOf(total)%></strong></h4>
                             <%}%>
                             <%}else{ %>
                             <h4>Using Year(s): <strong><%=year%></strong> and Course #: <strong><%=course%></strong>, no Grades were found.</h4>
