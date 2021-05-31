@@ -291,4 +291,67 @@ public class BeanManager
 		}
 		return ret;
 	}
+
+	/*For Q5*/
+	public DWLoadBean convertTotalResits(List<AssignmentsBean> dwResults, List<DimStudentsBean> allStudentBeans, List<DimCoursesBean> allCourses)
+	{
+		DWLoadBean ret = new DWLoadBean();
+		if(dwResults != null && !dwResults.isEmpty())
+		{
+			//Loop the results
+			for (AssignmentsBean assignmentBean : dwResults)
+			{
+				//Get matching student and course
+				DimStudentsBean matchingStudent = null;
+				DimCoursesBean matchingCourse = null;
+				for (DimStudentsBean studentBean : allStudentBeans)
+				{
+					if(assignmentBean.getStudentId().equalsIgnoreCase(studentBean.getStudentId()))
+					{
+						matchingStudent = studentBean;
+					}
+				}
+				for (DimCoursesBean courseBean : allCourses)
+				{
+					if(courseBean.getModuleIds() != null && courseBean.getModuleIds().contains(assignmentBean.getModule()))
+					{
+						matchingCourse = courseBean;
+					}
+				}
+
+				DWAssignmentsBean bean = new DWAssignmentsBean();
+				bean.setAssignmentId(assignmentBean.getAssignmentId());
+				bean.setStudentId(assignmentBean.getStudentId());
+				if(matchingStudent != null)
+				{
+					bean.setStudentFirstname(matchingStudent.getFirstname());
+					bean.setStudentSurname(matchingStudent.getSurname());
+				}
+				else
+				{
+					bean.setStudentFirstname("Unknown");
+					bean.setStudentSurname("Unknown");
+				}
+
+				bean.setAcademicYear(assignmentBean.getAcademicYear());
+				bean.setModule(assignmentBean.getModule());
+				bean.setSemester(assignmentBean.getSemester());
+				bean.setGrade(assignmentBean.getGrade());
+				bean.setResit(assignmentBean.getResit());
+				bean.setResitGrade(assignmentBean.getResitGrade());
+				if (matchingCourse != null)
+				{
+					bean.setCourseId(matchingCourse.getCourseId());
+					bean.setCourseName(matchingCourse.getCourseName());
+				}
+				else
+				{
+					bean.setCourseId("Unknown");
+					bean.setCourseName("Unknown");
+				}
+				ret.addDWAssignments(bean);
+			}
+		}
+		return ret;
+	}
 }

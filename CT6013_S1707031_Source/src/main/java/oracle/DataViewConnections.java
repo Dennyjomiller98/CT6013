@@ -188,6 +188,70 @@ public class DataViewConnections extends AbstractOracleConnections
 		return ret;
 	}
 
+	public List<AssignmentsBean> getDWResitResults(String yearSelect, String courseSelect)
+	{
+		List<AssignmentsBean> ret = new ArrayList<>();
+		setOracleDriver();
+		try
+		{
+			AbstractOracleConnections conn = new AbstractOracleConnections();
+			Connection oracleClient = conn.getDWClient();
+			if(oracleClient != null)
+			{
+				//Select Query
+				String query = getResitResultsQuery(yearSelect, courseSelect);
+				//Execute query
+				ArrayList<AssignmentsBean> allBeans = executeResultsQuery(oracleClient, query);
+				if(!allBeans.isEmpty())
+				{
+					ret = allBeans;
+				}
+				else
+				{
+					LOG.debug("No Results retrieved from DW.");
+				}
+			}
+			else
+			{
+				LOG.error("connection failure");
+			}
+		}
+		catch(Exception e)
+		{
+			LOG.error("Unable to retrieve DW Data", e);
+		}
+		return ret;
+	}
+
+	private String getResitResultsQuery(String yearSelect, String courseSelect)
+	{
+		String query;
+		if(yearSelect != null || courseSelect != null)
+		{
+			if(yearSelect != null && courseSelect != null)
+			{
+				//course select year select
+				query = "SELECT * FROM " + TBL_DW_RESULTS + " WHERE Course_Id='" + courseSelect +"' AND Academic_Year LIKE '"+ yearSelect +"%' AND Resit='true'";
+			}
+			else if(yearSelect != null)
+			{
+				//all course year select
+				query = "SELECT * FROM " + TBL_DW_RESULTS + " WHERE Academic_Year LIKE '"+ yearSelect +"%' AND Resit='true'";
+			}
+			else
+			{
+				//Course select all years
+				query = "SELECT * FROM " + TBL_DW_RESULTS + " WHERE Course_Id LIKE '" + courseSelect +"%' AND Resit='true'";
+			}
+		}
+		else
+		{
+			//Default ALL
+			query = "SELECT * FROM " + TBL_DW_RESULTS + " WHERE Resit='true'";
+		}
+		return query;
+	}
+
 	public List<AssignmentsBean> getDWResults(String yearSelect, String courseSelect, String tutorSelect)
 	{
 		List<AssignmentsBean> ret = new ArrayList<>();

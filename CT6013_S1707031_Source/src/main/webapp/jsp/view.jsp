@@ -62,16 +62,16 @@
                         <label for="select">Select the question you would like to view Information on:</label>
                         <select style="display: inline-block" name="select" id="select">
                             <option value="none">Select Question</option>
-                            <option value="q1">Total Students on a Specific Course (Select Course Below)</option>
-                            <option value="q2">Total Dropouts on a Specific Course (Select Course Below)</option>
-                            <option value="q3">Average Grade on a Specific Course (Select Course Below)</option>
-                            <option value="q4">Student Grades based on the Tutor Teaching (Select Tutor Below)</option>
-                            <option value="q5">Number of Resits (Select Course Below)</option>
-                            <option value="q6">Number of Enrollments in a Specific Year (Select Year Below)</option>
-                            <option value="q7">Has COVID-19 affected our Enrollment intake?</option>
-                            <option value="q8">Total Number of International Students on a Specific Course (Select Course Below)</option>
-                            <option value="q9">Number of Students That Changed Courses</option>
-                            <option value="q10">COVID-19 Affect on Enrollment of International Students</option>
+                            <option value="q1">1. Total Students on a Specific Course (Select Course Below)</option>
+                            <option value="q2">2. Total Dropouts on a Specific Course (Select Course Below)</option>
+                            <option value="q3">3. Average Grade on a Specific Course (Select Course Below)</option>
+                            <option value="q4">4. Student Grades based on the Tutor Teaching (Select Tutor Below)</option>
+                            <option value="q5">5. Number of Resits (Select Course Below)</option>
+                            <option value="q6">6. Number of Enrollments in a Specific Year (Select Year Below)</option>
+                            <option value="q7">7. Has COVID-19 affected our Enrollment intake?</option>
+                            <option value="q8">8. Total Number of International Students on a Specific Course (Select Course Below)</option>
+                            <option value="q9">9. Number of Students That Changed Courses</option>
+                            <option value="q10">10. COVID-19 Affect on Enrollment of International Students</option>
                         </select>
                         <br/>
 
@@ -235,6 +235,7 @@
                             <%}%>
                         <%}%>
 
+                        <%--Q3: Average Grades--%>
                         <%if(session.getAttribute("selectedQuery").equals("q3"))
                         {%>
                             <h3>Results for: "Average Grade on a Specific Course"</h3>
@@ -333,6 +334,7 @@
                             <%}%>
                         <%}%>
 
+                        <%--Q4: Grades based against Tutor Teaching--%>
                         <%if(session.getAttribute("selectedQuery").equals("q4"))
                         {%>
                             <h3>Results for: "Student Grades based on the Tutor Teaching"</h3>
@@ -439,10 +441,85 @@
                             <h4>Using Tutor #: <strong><%=tutor%></strong>, Year(s): <strong><%=year%></strong> and Course #: <strong><%=course%></strong>, no Results were found.</h4>
                             <%}%>
                         <%}%>
-                        <%if(session.getAttribute("selectedQuery").equals("q5"))
-                        {
 
-                        }%>
+                        <%--Q4: Total Resits--%>
+                        <%if(session.getAttribute("selectedQuery").equals("q5"))
+                        {%>
+                            <h3>Results for: "Average Grade on a Specific Course"</h3>
+                            <%String year = "Unknown";
+                                String course = "Unknown";
+                                if(session.getAttribute("selectedYear") != null)
+                                {
+                                    year = (String) session.getAttribute("selectedYear");
+                                }
+                                if(session.getAttribute("selectedCourse") != null)
+                                {
+                                    course = (String) session.getAttribute("selectedCourse");
+                                }
+                            %>
+
+                            <%if(session.getAttribute("assignmentsBeans") != null)
+                            {%>
+                            <%List<DWAssignmentsBean> assignments = (List<DWAssignmentsBean>) session.getAttribute("assignmentsBeans");
+                                if(assignments != null && !assignments.isEmpty()) {%>
+                            <br/>
+                            <h4>Using Year(s): <strong><%=year%></strong> and Course #: <strong><%=course%></strong>, a Total of <strong><%=assignments.size()%></strong> Resits were found.</h4>
+                            <br/>
+                            <table class="table table-striped">
+                                <caption style="  display: table-caption; text-align: center;">Average Marks</caption>
+                                <thead>
+                                <tr>
+                                    <th scope="col">#ID</th>
+                                    <th scope="col">Student Number</th>
+                                    <th scope="col">Student Name</th>
+                                    <th scope="col">Course #ID</th>
+                                    <th scope="col">Course Name</th>
+                                    <th scope="col">Module #ID</th>
+                                    <th scope="col">Semester</th>
+                                    <th scope="col">Grade</th>
+                                    <th scope="col">Did Resit</th>
+                                    <th scope="col">Resist Grade</th>
+                                    <th scope="col">Year</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <%for (DWAssignmentsBean assignment : assignments)
+                                {%>
+                                <tr>
+                                    <th scope="row"><%=assignment.getAssignmentId()%></th>
+                                    <td><%=assignment.getStudentId()%></td>
+                                    <td><%=assignment.getStudentFirstname() + " " + assignment.getStudentSurname()%> </td>
+                                    <td><%=assignment.getCourseId()%></td>
+                                    <td><%=assignment.getCourseName()%></td>
+                                    <td><%=assignment.getModule()%></td>
+                                    <td><%=assignment.getSemester()%></td>
+                                    <%if(!assignment.getGrade().equalsIgnoreCase("none"))
+                                    {%>
+                                    <td><%=assignment.getGrade() + "%"%></td>
+                                    <%}
+                                    else
+                                    {%>
+                                    <td><%=assignment.getGrade()%></td>
+                                    <%}%>
+                                    <td><%=assignment.getResit()%></td>
+                                    <%if(!assignment.getResitGrade().equalsIgnoreCase("none"))
+                                    {%>
+                                    <td><%=assignment.getResitGrade() + "%"%></td>
+                                    <%}
+                                    else
+                                    {%>
+                                    <td><%=assignment.getResitGrade()%></td>
+                                    <%}%>
+                                    <td><%=assignment.getAcademicYear()%></td>
+                                </tr>
+                                <%}%>
+                                </tbody>
+                            </table>
+                            <%}%>
+                            <%}else{ %>
+                            <h4>Using Year(s): <strong><%=year%></strong> and Course #: <strong><%=course%></strong>, no Grades were found.</h4>
+                            <%}%>
+                        <%}%>
                         <%if(session.getAttribute("selectedQuery").equals("q6"))
                         {
 
