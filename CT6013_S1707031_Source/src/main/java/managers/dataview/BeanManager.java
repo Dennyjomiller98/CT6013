@@ -237,7 +237,7 @@ public class BeanManager
 				}
 				for (DimTutorsBean tutorBean : allTutorsBeans)
 				{
-					if(tutorBean.getTutorId() != null && tutorBean.getTutorId().equalsIgnoreCase(assignmentBean.getTutorId()))
+					if(tutorBean.getTutorId() != null && tutorBean.getTutorId().equals(assignmentBean.getTutorId()))
 					{
 						matchingTutor = tutorBean;
 					}
@@ -259,7 +259,7 @@ public class BeanManager
 
 				if(matchingTutor != null)
 				{
-					bean.setTutorId(matchingTutor.getTutorId());
+					bean.setTutorId(assignmentBean.getTutorId());
 					bean.setTutorFirstname(matchingTutor.getFirstname());
 					bean.setTutorSurname(matchingTutor.getSurname());
 				}
