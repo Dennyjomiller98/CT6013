@@ -481,7 +481,6 @@ public class ETLQueryManager implements IQueryManager
 		else
 		{
 			allEnrollmentBeans = connections.getDWEnrollmentsSpecifiedYear(null);
-
 		}
 		List<DimStudentsBean> allStudentsBeans = connections.getDWStudents();
 		List<DimCoursesBean> allCourses = connections.getDWCourses();
@@ -596,7 +595,24 @@ public class ETLQueryManager implements IQueryManager
 	@Override
 	public DWLoadBean getCovidInternationalStudentEnrollmentsAgainstAllYears()
 	{
-		DWLoadBean ret= new DWLoadBean();
+		DWLoadBean ret = new DWLoadBean();
+		DataViewConnections connections = new DataViewConnections();
+		DWLoadBean enrollmentFigures = getEnrollmentFigures(null);
+		List<DWEnrollmentsBean> dwEnrollments = enrollmentFigures.getDWEnrollments();
+		List<AssignmentsBean> dwResults = connections.getDWResultsInternational(null, null);
+		if(dwEnrollments != null && !dwEnrollments.isEmpty() && dwResults != null && !dwResults.isEmpty())
+		{
+			for (DWEnrollmentsBean enrollment : dwEnrollments)
+			{
+				for (AssignmentsBean assignmentsBean : dwResults)
+				{
+					if(assignmentsBean.getInternational().equals("true"))
+					{
+						ret.addDWEnrollments(enrollment);
+					}
+				}
+			}
+		}
 		return ret;
 	}
 
@@ -604,6 +620,27 @@ public class ETLQueryManager implements IQueryManager
 	public DWLoadBean getCovidInternationalStudentAgainstSelectedYear(String yearSelect)
 	{
 		DWLoadBean ret= new DWLoadBean();
+		DataViewConnections connections = new DataViewConnections();
+		List<AssignmentsBean> dwResults = connections.getDWResultsInternational(yearSelect, null);
+		DWLoadBean enrollmentFigures = getEnrollmentFigures(null);
+		List<DWEnrollmentsBean> dwEnrollments = enrollmentFigures.getDWEnrollments();
+		if(dwEnrollments != null && !dwEnrollments.isEmpty() && dwResults != null && !dwResults.isEmpty())
+		{
+			for (DWEnrollmentsBean enrollment : dwEnrollments)
+			{
+				for (AssignmentsBean assignment : dwResults)
+				{
+					//Add enrollment if selected year, or if 2020/2021 for covid figures
+					if (assignment.getStudentId().equals(enrollment.getStudentId()) && assignment.getInternational().equals("true") && (enrollment.getEnrollmentDate().startsWith(yearSelect)
+							|| enrollment.getEnrollmentDate().startsWith("2020")
+							|| enrollment.getEnrollmentDate().startsWith("2021")))
+					{
+						ret.addDWEnrollments(enrollment);
+					}
+				}
+
+			}
+		}
 		return ret;
 	}
 }

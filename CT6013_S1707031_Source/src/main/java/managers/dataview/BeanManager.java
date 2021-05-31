@@ -451,7 +451,7 @@ public class BeanManager
 		return ret;
 	}
 
-	/*For Q8*/
+	/*For Q8 and Q10*/
 	public DWLoadBean convertTotalInternationalStudents(List<AssignmentsBean> dwResults, List<DimStudentsBean> allStudentsBeans, List<DimEnrollmentsBean> allEnrollmentBeans, List<DimCoursesBean> allCourseBeans)
 	{
 		DWLoadBean ret = new DWLoadBean();
@@ -504,7 +504,39 @@ public class BeanManager
 								}
 								bean.setEnrollmentDate(enrollmentBean.getEnrollmentDate());
 								bean.setInternational("true");
-								ret.addDWEnrollments(bean);
+
+								String badEnrollmentId = null;
+								List<DWEnrollmentsBean> currentEnrollments = ret.getDWEnrollments();
+								if(currentEnrollments != null && !currentEnrollments.isEmpty())
+								{
+									for (DWEnrollmentsBean dwEnrollment : currentEnrollments)
+									{
+										//Take most up to date bean
+										if (dwEnrollment.getId().equals(bean.getId()) && enrollmentBean.getIsCurrent().equals("true"))
+										{
+											//Replace with existing one
+											badEnrollmentId = dwEnrollment.getId();
+										}
+									}
+								}
+								if(badEnrollmentId != null)
+								{
+									List<DWEnrollmentsBean> newBeans = new ArrayList<>();
+									for (DWEnrollmentsBean enrollment : currentEnrollments)
+									{
+										if(!enrollment.getId().equals(badEnrollmentId))
+										{
+											newBeans.add(enrollment);
+										}
+									}
+									//Now add new bean and send to DWLoadBean
+									newBeans.add(bean);
+									ret.setDWEnrollments(newBeans);
+								}
+								else
+								{
+									ret.addDWEnrollments(bean);
+								}
 							}
 						}
 					}
