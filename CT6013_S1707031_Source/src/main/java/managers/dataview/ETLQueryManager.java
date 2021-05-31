@@ -604,21 +604,20 @@ public class ETLQueryManager implements IQueryManager
 		{
 			for (DWEnrollmentsBean enrollment : dwEnrollments)
 			{
+				AssignmentsBean match = null;
 				for (AssignmentsBean dwResult : dwResults)
 				{
-					AssignmentsBean match = null;
 					if(enrollment.getStudentId().equals(dwResult.getStudentId()) && dwResult.getInternational().equals("true"))
 					{
 						match = dwResult;
-					}
-					if(match != null)
-					{
-						enrollment.setInternational("true");
-						ret.addDWEnrollments(enrollment);
+						break;
 					}
 				}
-				enrollment.setInternational("true");
-				ret.addDWEnrollments(enrollment);
+				if(match != null)
+				{
+					enrollment.setInternational("true");
+					ret.addDWEnrollments(enrollment);
+				}
 			}
 		}
 		return ret;
@@ -638,21 +637,20 @@ public class ETLQueryManager implements IQueryManager
 			{
 				if ((enrollment.getEnrollmentDate().startsWith(yearSelect) || enrollment.getEnrollmentDate().startsWith("2020") || enrollment.getEnrollmentDate().startsWith("2021")) )
 				{
+					AssignmentsBean match = null;
 					for (AssignmentsBean dwResult : dwResults)
 					{
-						AssignmentsBean match = null;
 						if(enrollment.getStudentId().equals(dwResult.getStudentId()) && dwResult.getInternational().equals("true"))
 						{
 							match = dwResult;
-						}
-						if(match != null)
-						{
-							enrollment.setInternational("true");
-							ret.addDWEnrollments(enrollment);
+							break;
 						}
 					}
-					enrollment.setInternational("true");
-					ret.addDWEnrollments(enrollment);
+					if(match != null)
+					{
+						enrollment.setInternational("true");
+						ret.addDWEnrollments(enrollment);
+					}
 				}
 			}
 		}
