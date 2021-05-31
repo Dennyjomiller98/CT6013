@@ -582,7 +582,142 @@
                         <%--Q7: Has COVID-19 affected Enrollment (Compared against 2020/2021)--%>
                         <%if(session.getAttribute("selectedQuery").equals("q7"))
                         {%>
+                            <h3>Results for: "Has COVID-19 affected our Enrollment Intake?"</h3>
+                            <%String year = "Unknown";
+                                String course = "Unknown";
+                                if(session.getAttribute("selectedYear") != null)
+                                {
+                                    year = (String) session.getAttribute("selectedYear");
+                                }
+                                if(session.getAttribute("selectedCourse") != null)
+                                {
+                                    course = (String) session.getAttribute("selectedCourse");
+                                }
+                            %>
+                            <%if(session.getAttribute("enrollmentsBeans") != null)
+                            {%>
+                            <%List<DWEnrollmentsBean> enrollments = (List<DWEnrollmentsBean>) session.getAttribute("enrollmentsBeans");
+                                if(enrollments != null && !enrollments.isEmpty()) {%>
+                            <br/>
+                            <h4>Using Year(s): <strong><%=year%></strong> and Course #: <strong><%=course%></strong>, a Total of <strong><%=enrollments.size()%></strong> Student Enrollment(s) were found.</h4>
+                            <br/>
+                            <%
+                                int enroll2015 = 0;
+                                int enroll2016 = 0;
+                                int enroll2017 = 0;
+                                int enroll2018 = 0;
+                                int enroll2019 = 0;
+                                int enroll2020 = 0;
+                                int enroll2021 = 0;
 
+                                for (DWEnrollmentsBean enrollment : enrollments)
+                                {
+                                	if(enrollment.getEnrollmentDate() != null){
+                                        String enrollmentDate = enrollment.getEnrollmentDate();
+                                        if(enrollmentDate.startsWith("2021"))
+                                        {
+                                        	enroll2021++;
+                                        }
+                                        else if(enrollmentDate.startsWith("2020"))
+                                        {
+                                            enroll2020++;
+                                        }
+                                        else if(enrollmentDate.startsWith("2019"))
+                                        {
+                                        	enroll2019++;
+                                        }
+                                        else if(enrollmentDate.startsWith("2018"))
+                                        {
+                                        	enroll2018++;
+                                        }
+                                        else if(enrollmentDate.startsWith("2017"))
+                                        {
+                                            enroll2017++;
+                                        }
+                                        else if(enrollmentDate.startsWith("2016"))
+                                        {
+                                            enroll2016++;
+                                        }
+                                        else if(enrollmentDate.startsWith("2015"))
+                                        {
+                                            enroll2015++;
+                                        }
+                                    }
+                                }%>
+                            <label for="2015Enrollments"></label><input style="display: none" type="text" name="2015Enrollments" id="2015Enrollments" value="<%=enroll2015%>">
+                            <label for="2016Enrollments"></label><input style="display: none" type="text" name="2016Enrollments" id="2016Enrollments" value="<%=enroll2016%>">
+                            <label for="2017Enrollments"></label><input style="display: none" type="text" name="2017Enrollments" id="2017Enrollments" value="<%=enroll2017%>">
+                            <label for="2018Enrollments"></label><input style="display: none" type="text" name="2018Enrollments" id="2018Enrollments" value="<%=enroll2018%>">
+                            <label for="2019Enrollments"></label><input style="display: none" type="text" name="2019Enrollments" id="2019Enrollments" value="<%=enroll2019%>">
+                            <label for="2020Enrollments"></label><input style="display: none" type="text" name="2020Enrollments" id="2020Enrollments" value="<%=enroll2020%>">
+                            <label for="2021Enrollments"></label><input style="display: none" type="text" name="2021Enrollments" id="2021Enrollments" value="<%=enroll2021%>">
+
+                            <canvas id="cv19Enrollment" style="width:50%;max-width:700px; display: inline-block"></canvas>
+                            <script>
+                                let enroll2015 = $("#2015Enrollments");
+                                let enroll2016 = $("#2016Enrollments");
+                                let enroll2017 = $("#2017Enrollments");
+                                let enroll2018 = $("#2018Enrollments");
+                                let enroll2019 = $("#2019Enrollments");
+                                let enroll2020 = $("#2020Enrollments");
+                                let enroll2021 = $("#2021Enrollments");
+
+                                let xValues = ["2015", "2016", "2017", "2018", "2019", "2020(COVID-19)", "2021(COVID-19)"];
+                                let yValues = [enroll2015.val(), enroll2016.val(), enroll2017.val(), enroll2018.val(), enroll2019.val(), enroll2020.val(), enroll2021.val()];
+                                let barColors = ["red", "green","blue","orange","brown", "red", "green"];
+
+                                new Chart("cv19Enrollment", {
+                                    type: "bar",
+                                    data: {
+                                        labels: xValues,
+                                        datasets: [{
+                                            backgroundColor: barColors,
+                                            data: yValues
+                                        }]
+                                    },
+                                    options: {
+                                        legend: {display: false},
+                                        title: {
+                                            display: true,
+                                            text: "Total Enrollments Per Year against COVID-19 enrollments"
+                                        }
+                                    }
+                                });
+                            </script>
+
+                            <br/>
+                            <table class="table table-striped">
+                                <caption style="  display: table-caption; text-align: center;">Total Enrollments Specified Year</caption>
+                                <thead>
+                                <tr>
+                                    <th scope="col">#ID</th>
+                                    <th scope="col">Student Number</th>
+                                    <th scope="col">Student Name</th>
+                                    <th scope="col">Course #ID</th>
+                                    <th scope="col">Course Name</th>
+                                    <th scope="col">Date of Enrollment</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <%for (DWEnrollmentsBean enrollment : enrollments)
+                                {%>
+                                <tr>
+                                    <th scope="row"><%=enrollment.getId()%></th>
+                                    <td><%=enrollment.getStudentId()%></td>
+                                    <td><%=enrollment.getStudentFirstname() + " " + enrollment.getStudentSurname()%> </td>
+                                    <td><%=enrollment.getCourseId()%></td>
+                                    <td><%=enrollment.getCourseName()%></td>
+                                    <td><%=enrollment.getEnrollmentDate()%></td>
+                                </tr>
+                                <%}%>
+                                </tbody>
+                            </table>
+                            <br/>
+                            <h4>Using Year(s): <strong><%=year%></strong> and Course #: <strong><%=course%></strong>, a total of <%=enrollments.size()%> Enrollment(s) were found.</h4>
+                            <%}%>
+                            <%}else{ %>
+                            <h4>Using Year(s): <strong><%=year%></strong> and Course #: <strong><%=course%></strong>, no Student Enrollment(s) were found.</h4>
+                            <%}%>
                         <%}%>
 
                         <%--Q8: Total International Students--%>
