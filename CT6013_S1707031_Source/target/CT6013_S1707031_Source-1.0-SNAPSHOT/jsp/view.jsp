@@ -704,7 +704,7 @@
                                     int totalSelected = 0;
                                     for (DWEnrollmentsBean enrollment : enrollments)
                                 {
-                                if(enrollment.getEnrollmentDate().startsWith(year)){
+                                if(year.equals("all") || enrollment.getEnrollmentDate().startsWith(year)){
                                 totalSelected++;
                                 %>
                                     <tr>

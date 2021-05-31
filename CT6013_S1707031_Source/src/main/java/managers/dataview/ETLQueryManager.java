@@ -1,5 +1,6 @@
 package managers.dataview;
 
+import beans.dw.DWEnrollmentsBean;
 import beans.dw.DWLoadBean;
 import beans.operational.AssignmentsBean;
 import beans.operational.dimensions.DimCoursesBean;
@@ -451,17 +452,17 @@ public class ETLQueryManager implements IQueryManager
 	{
 		DWLoadBean ret= new DWLoadBean();
 		DWLoadBean enrollmentFigures = getEnrollmentFigures(null);
-		List<DimEnrollmentsBean> dimEnrollments = enrollmentFigures.getDimEnrollments();
-		if(dimEnrollments != null && !dimEnrollments.isEmpty())
+		List<DWEnrollmentsBean> dwEnrollments = enrollmentFigures.getDWEnrollments();
+		if(dwEnrollments != null && !dwEnrollments.isEmpty())
 		{
-			for (DimEnrollmentsBean dimEnrollment : dimEnrollments)
+			for (DWEnrollmentsBean enrollment : dwEnrollments)
 			{
 				//Add enrollment if selected year, or if 2020/2021 for covid figures
-				if(dimEnrollment.getEnrollmentDate().startsWith(yearSelect)
-						|| dimEnrollment.getEnrollmentDate().startsWith("2020")
-						|| dimEnrollment.getEnrollmentDate().startsWith("2021"))
+				if(enrollment.getEnrollmentDate().startsWith(yearSelect)
+						|| enrollment.getEnrollmentDate().startsWith("2020")
+						|| enrollment.getEnrollmentDate().startsWith("2021"))
 				{
-					ret.addDimEnrollments(dimEnrollment);
+					ret.addDWEnrollments(enrollment);
 				}
 			}
 		}
