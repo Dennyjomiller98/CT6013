@@ -431,6 +431,15 @@ public class ETLQueryManager implements IQueryManager
 	public DWLoadBean getTotalEnrollmentsAllYears()
 	{
 		DWLoadBean ret= new DWLoadBean();
+		DataViewConnections connections = new DataViewConnections();
+		List<DimEnrollmentsBean> allEnrollmentBeans = connections.getDWEnrollmentsSpecifiedYear(null, null);
+		List<DimStudentsBean> allStudentsBeans = connections.getDWStudents();
+		List<DimCoursesBean> allCourses = connections.getDWCourses();
+		if(allStudentsBeans != null && !allStudentsBeans.isEmpty() && allEnrollmentBeans != null && !allEnrollmentBeans.isEmpty())
+		{
+			BeanManager beanManager = new BeanManager();
+			ret = beanManager.convertTotalEnrollments(allStudentsBeans, allEnrollmentBeans, allCourses);
+		}
 		return ret;
 	}
 

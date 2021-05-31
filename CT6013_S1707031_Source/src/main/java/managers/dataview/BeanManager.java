@@ -354,4 +354,64 @@ public class BeanManager
 		}
 		return ret;
 	}
+
+	public DWLoadBean convertTotalEnrollments(List<DimStudentsBean> allStudentsBeans, List<DimEnrollmentsBean> allEnrollmentBeans, List<DimCoursesBean> allCourses)
+	{
+		DWLoadBean ret = new DWLoadBean();
+		if(allStudentsBeans != null && !allStudentsBeans.isEmpty() && allEnrollmentBeans != null && !allEnrollmentBeans.isEmpty())
+		{
+			//Loop enrollment beans
+			for (DimEnrollmentsBean enrollmentBean : allEnrollmentBeans)
+			{
+				//Filter for enrolled only
+				if(enrollmentBean.getIsEnrolled().equals("true"))
+				{
+					DimStudentsBean matchingStudent = null;
+					DimCoursesBean matchingCourse = null;
+					String studentId = enrollmentBean.getStudentId();
+					for (DimStudentsBean studentBean : allStudentsBeans)
+					{
+						if(studentBean.getStudentId().equalsIgnoreCase(studentId))
+						{
+							matchingStudent = studentBean;
+						}
+					}
+					for (DimCoursesBean courseBean : allCourses)
+					{
+						if(courseBean.getCourseId().equalsIgnoreCase(enrollmentBean.getCourseId()))
+						{
+							matchingCourse = courseBean;
+						}
+					}
+
+					//Check matching student exists in DB
+					if(matchingStudent != null)
+					{
+						DWEnrollmentsBean bean = new DWEnrollmentsBean();
+						bean.setId(enrollmentBean.getEnrollmentId());
+						bean.setStudentId(enrollmentBean.getStudentId());
+						bean.setStudentFirstname(matchingStudent.getFirstname());
+						bean.setStudentSurname(matchingStudent.getSurname());
+						bean.setCourseId(enrollmentBean.getCourseId());
+						if(matchingCourse != null)
+						{
+							bean.setCourseName(matchingCourse.getCourseName());
+						}
+						else
+						{
+							bean.setCourseName("Unknown");
+						}
+						bean.setEnrollmentDate(enrollmentBean.getEnrollmentDate());
+						ret.addDWEnrollments(bean);
+					}
+					else
+					{
+						LOG.error("No matching information for student");
+					}
+				}
+
+			}
+		}
+		return ret;
+	}
 }

@@ -62,7 +62,7 @@
                         <label for="select">Select the question you would like to view Information on:</label>
                         <select style="display: inline-block" name="select" id="select">
                             <option value="none">Select Question</option>
-                            <option value="q1">1. Total Students on a Specific Course (Select Course Below)</option>
+                            <option value="q1">1. Total Current Students on a Specific Course (Select Course Below)</option>
                             <option value="q2">2. Total Dropouts on a Specific Course (Select Course Below)</option>
                             <option value="q3">3. Average Grade on a Specific Course (Select Course Below)</option>
                             <option value="q4">4. Student Grades based on the Tutor Teaching (Select Tutor Below)</option>
@@ -130,7 +130,7 @@
                         <%--Q1: Total Students--%>
                         <%if(session.getAttribute("selectedQuery").equals("q1"))
                         {%>
-                            <h3>Results for: "Total Students Enrolled on a Specific Course"</h3>
+                            <h3>Results for: "Total Current Students Enrolled on a Specific Course"</h3>
                             <%String year = "Unknown";
                                 String course = "Unknown";
                                 if(session.getAttribute("selectedYear") != null)
@@ -147,10 +147,10 @@
                             <%List<DWEnrollmentsBean> enrollments = (List<DWEnrollmentsBean>) session.getAttribute("enrollmentsBeans");
                                 if(enrollments != null && !enrollments.isEmpty()) {%>
                             <br/>
-                            <h4>Using Year(s): <strong><%=year%></strong> and Course #: <strong><%=course%></strong>, a Total of <strong><%=enrollments.size()%></strong> Student Enrollment(s) were found.</h4>
+                            <h4>Using Year(s): <strong><%=year%></strong> and Course #: <strong><%=course%></strong>, a Total of <strong><%=enrollments.size()%></strong> Current Student Enrollment(s) were found.</h4>
                             <br/>
                             <table class="table table-striped">
-                                <caption style="  display: table-caption; text-align: center;">Total Student Enrollments</caption>
+                                <caption style="  display: table-caption; text-align: center;">Total Current Student Enrollments</caption>
                                 <thead>
                                 <tr>
                                     <th scope="col">#ID</th>
@@ -177,7 +177,7 @@
                             </table>
                             <%}%>
                             <%}else{ %>
-                            <h4>Using Year(s): <strong><%=year%></strong> and Course #: <strong><%=course%></strong>, no Student Enrollment(s) were found.</h4>
+                            <h4>Using Year(s): <strong><%=year%></strong> and Course #: <strong><%=course%></strong>, no Current Student Enrollment(s) were found.</h4>
                             <%}%>
                         <%}%>
 
@@ -442,7 +442,7 @@
                             <%}%>
                         <%}%>
 
-                        <%--Q4: Total Resits--%>
+                        <%--Q5: Total Resits--%>
                         <%if(session.getAttribute("selectedQuery").equals("q5"))
                         {%>
                             <h3>Results for: "Total Resits on a Specific Course"</h3>
@@ -515,31 +515,93 @@
                                 <%}%>
                                 </tbody>
                             </table>
+                            <br/>
+                            <h4>Using Year(s): <strong><%=year%></strong> and Course #: <strong><%=course%></strong>, a total number of <%=assignments.size()%> Assignments were failed and required resitting.</h4>
                             <%}%>
                             <%}else{ %>
                             <h4>Using Year(s): <strong><%=year%></strong> and Course #: <strong><%=course%></strong>, no Resit Grades were found.</h4>
                             <%}%>
                         <%}%>
+
+                        <%--Q6: Total Enrollments in a Specific Year--%>
                         <%if(session.getAttribute("selectedQuery").equals("q6"))
-                        {
+                        {%>
+                            <h3>Results for: "Total Students Enrolled on a Specific Course"</h3>
+                            <%String year = "Unknown";
+                                String course = "Unknown";
+                                if(session.getAttribute("selectedYear") != null)
+                                {
+                                    year = (String) session.getAttribute("selectedYear");
+                                }
+                                if(session.getAttribute("selectedCourse") != null)
+                                {
+                                    course = (String) session.getAttribute("selectedCourse");
+                                }
+                            %>
+                            <%if(session.getAttribute("enrollmentsBeans") != null)
+                            {%>
+                            <%List<DWEnrollmentsBean> enrollments = (List<DWEnrollmentsBean>) session.getAttribute("enrollmentsBeans");
+                                if(enrollments != null && !enrollments.isEmpty()) {%>
+                            <br/>
+                            <h4>Using Year(s): <strong><%=year%></strong> and Course #: <strong><%=course%></strong>, a Total of <strong><%=enrollments.size()%></strong> Student Enrollment(s) were found.</h4>
+                            <br/>
+                            <table class="table table-striped">
+                                <caption style="  display: table-caption; text-align: center;">Total Enrollments Specified Year</caption>
+                                <thead>
+                                <tr>
+                                    <th scope="col">#ID</th>
+                                    <th scope="col">Student Number</th>
+                                    <th scope="col">Student Name</th>
+                                    <th scope="col">Course #ID</th>
+                                    <th scope="col">Course Name</th>
+                                    <th scope="col">Date of Enrollment</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <%for (DWEnrollmentsBean enrollment : enrollments)
+                                {%>
+                                <tr>
+                                    <th scope="row"><%=enrollment.getId()%></th>
+                                    <td><%=enrollment.getStudentId()%></td>
+                                    <td><%=enrollment.getStudentFirstname() + " " + enrollment.getStudentSurname()%> </td>
+                                    <td><%=enrollment.getCourseId()%></td>
+                                    <td><%=enrollment.getCourseName()%></td>
+                                    <td><%=enrollment.getEnrollmentDate()%></td>
+                                </tr>
+                                <%}%>
+                                </tbody>
+                            </table>
+                            <br/>
+                            <h4>Using Year(s): <strong><%=year%></strong> and Course #: <strong><%=course%></strong>, a total of <%=enrollments.size()%> Enrollment(s) were found.</h4>
+                            <%}%>
+                            <%}else{ %>
+                            <h4>Using Year(s): <strong><%=year%></strong> and Course #: <strong><%=course%></strong>, no Student Enrollment(s) were found.</h4>
+                            <%}%>
+                        <%}%>
 
-                        }%>
+                        <%--Q7: Has COVID-19 affected Enrollment (Compared against 2020/2021)--%>
                         <%if(session.getAttribute("selectedQuery").equals("q7"))
-                        {
+                        {%>
 
-                        }%>
+                        <%}%>
+
+                        <%--Q8: Total International Students--%>
                         <%if(session.getAttribute("selectedQuery").equals("q8"))
-                        {
+                        {%>
 
-                        }%>
+                        <%}%>
+
+                        <%--Q9: Total Course Changes--%>
                         <%if(session.getAttribute("selectedQuery").equals("q9"))
-                        {
+                        {%>
 
-                        }%>
+                        <%}%>
+
+                        <%--Q10: COVID-19 Affect on International Student Enrollment--%>
                         <%if(session.getAttribute("selectedQuery").equals("q10"))
-                        {
+                        {%>
 
-                        }%>
+                        <%}%>
 
                         <%--Button to hide table, show form and try again--%>
                         <br/>
