@@ -634,13 +634,12 @@ public class BeanManager
 		{
 			for (String id : idsToCheck)
 			{
-				testloopIdsForCourseChanges(allEnrollmentBeans, ret, id);
-				//loopIdsForCourseChanges(allEnrollmentBeans, ret, id);
+				loopIdsForCourseChanges(allEnrollmentBeans, ret, id);
 			}
 		}
 		return ret;
 	}
-	private void testloopIdsForCourseChanges(List<DimEnrollmentsBean> allEnrollmentBeans, List<DimEnrollmentsBean> ret, String id)
+	private void loopIdsForCourseChanges(List<DimEnrollmentsBean> allEnrollmentBeans, List<DimEnrollmentsBean> ret, String id)
 	{
 		DimEnrollmentsBean oldCourseVal = null;
 		DimEnrollmentsBean newCourseVal = null;
@@ -664,37 +663,6 @@ public class BeanManager
 		{
 			ret.add(oldCourseVal);
 			ret.add(newCourseVal);
-		}
-	}
-	private void loopIdsForCourseChanges(List<DimEnrollmentsBean> allEnrollmentBeans, List<DimEnrollmentsBean> ret, String id)
-	{
-		DimEnrollmentsBean oldVal = null;
-		DimEnrollmentsBean newVal = null;
-		for (DimEnrollmentsBean allEnrollmentBean : allEnrollmentBeans)
-		{
-			if(allEnrollmentBean.getEnrollmentId().equals(id))
-			{
-				if(allEnrollmentBean.getIsCurrent().equals("false"))
-				{
-					oldVal = allEnrollmentBean;
-				}
-				else
-				{
-					newVal = allEnrollmentBean;
-				}
-			}
-		}
-
-		if(oldVal != null && newVal != null)
-		{
-			//Add both Beans to returned list if course was changed
-			String oldCourseId = oldVal.getCourseId();
-			String newCourseId = newVal.getCourseId();
-			if(!oldCourseId.equals(newCourseId))
-			{
-				ret.add(oldVal);
-				ret.add(newVal);
-			}
 		}
 	}
 }
