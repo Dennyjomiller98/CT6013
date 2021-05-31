@@ -607,15 +607,15 @@ public class ETLQueryManager implements IQueryManager
 				for (AssignmentsBean assignment : dwResults)
 				{
 					//Add enrollment
-					if (assignment.getStudentId().equals(enrollment.getStudentId()) && assignment.getInternational().equals("true")
-							|| enrollment.getEnrollmentDate().startsWith("2020")
-							|| enrollment.getEnrollmentDate().startsWith("2021"))
+					if ((assignment.getStudentId().equals(enrollment.getStudentId()) && assignment.getInternational().equals("true"))
+							|| (enrollment.getEnrollmentDate().startsWith("2020") && assignment.getInternational().equals("true"))
+							|| (enrollment.getEnrollmentDate().startsWith("2021")) && assignment.getInternational().equals("true"))
 					{
 						enrollment.setInternational("true");
 						ret.addDWEnrollments(enrollment);
+						break;
 					}
 				}
-
 			}
 		}
 		return ret;
