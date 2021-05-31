@@ -7,6 +7,7 @@ import beans.operational.dimensions.DimCoursesBean;
 import beans.operational.dimensions.DimEnrollmentsBean;
 import beans.operational.dimensions.DimStudentsBean;
 import beans.operational.dimensions.DimTutorsBean;
+import java.util.ArrayList;
 import java.util.List;
 import oracle.DataViewConnections;
 
@@ -604,10 +605,10 @@ public class ETLQueryManager implements IQueryManager
 		DWLoadBean ret= new DWLoadBean();
 		DataViewConnections connections = new DataViewConnections();
 		List<DimEnrollmentsBean> allEnrollmentBeans = connections.getDWEnrollmentsCourseChanges(null, courseSelect);
+		allEnrollmentBeans = filterCourseSelect(allEnrollmentBeans, courseSelect);
 		List<DimStudentsBean> allStudentsBeans = connections.getDWStudents();
 		List<DimCoursesBean> allCourses = connections.getDWCourses();
-		if(allStudentsBeans != null && !allStudentsBeans.isEmpty() && allEnrollmentBeans != null
-				&& !allEnrollmentBeans.isEmpty() && allCourses != null && !allCourses.isEmpty())
+		if(allStudentsBeans != null && !allStudentsBeans.isEmpty() && !allEnrollmentBeans.isEmpty() && allCourses != null && !allCourses.isEmpty())
 		{
 			BeanManager beanManager = new BeanManager();
 			ret = beanManager.convertTotalCourseChanges(allStudentsBeans, allEnrollmentBeans, allCourses);
@@ -621,13 +622,56 @@ public class ETLQueryManager implements IQueryManager
 		DWLoadBean ret= new DWLoadBean();
 		DataViewConnections connections = new DataViewConnections();
 		List<DimEnrollmentsBean> allEnrollmentBeans = connections.getDWEnrollmentsCourseChanges(yearSelect, courseSelect);
+		allEnrollmentBeans = filterCourseSelect(allEnrollmentBeans, courseSelect);
 		List<DimStudentsBean> allStudentsBeans = connections.getDWStudents();
 		List<DimCoursesBean> allCourses = connections.getDWCourses();
-		if(allStudentsBeans != null && !allStudentsBeans.isEmpty() && allEnrollmentBeans != null
-				&& !allEnrollmentBeans.isEmpty() && allCourses != null && !allCourses.isEmpty())
+		if(allStudentsBeans != null && !allStudentsBeans.isEmpty() && !allEnrollmentBeans.isEmpty() && allCourses != null && !allCourses.isEmpty())
 		{
 			BeanManager beanManager = new BeanManager();
 			ret = beanManager.convertTotalCourseChanges(allStudentsBeans, allEnrollmentBeans, allCourses);
+		}
+		return ret;
+	}
+
+	/*This should handle both Changing from and Changing to Selected Course*/
+	private List<DimEnrollmentsBean> filterCourseSelect(List<DimEnrollmentsBean> allEnrollmentBeans, String courseSelect)
+	{
+		List<DimEnrollmentsBean> ret = new ArrayList<>();
+		List<String> notCurrentIds = new ArrayList<>();
+		for (DimEnrollmentsBean allEnrollmentBean : allEnrollmentBeans)
+		{
+			//First get IDs of all Changed fields
+			if(allEnrollmentBean.getIsCurrent().equals("false"))
+			{
+				notCurrentIds.add(allEnrollmentBean.getEnrollmentId());
+			}
+		}
+
+		if(!notCurrentIds.isEmpty())
+		{
+			//check if changes contain course in question
+			for (String id : notCurrentIds)
+			{
+				boolean shouldKeep = false;
+				for (DimEnrollmentsBean enrollBean : allEnrollmentBeans)
+				{
+					if(enrollBean.getCourseId().equals(courseSelect))
+					{
+						shouldKeep = true;
+						break;
+					}
+				}
+				if (shouldKeep)
+				{
+					for (DimEnrollmentsBean allEnrollmentBean : allEnrollmentBeans)
+					{
+						if(allEnrollmentBean.getCourseId().equals(id))
+						{
+							ret.add(allEnrollmentBean);
+						}
+					}
+				}
+			}
 		}
 		return ret;
 	}

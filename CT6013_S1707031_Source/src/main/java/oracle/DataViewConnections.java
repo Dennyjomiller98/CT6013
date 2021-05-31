@@ -134,7 +134,7 @@ public class DataViewConnections extends AbstractOracleConnections
 			if(yearSelect != null && courseSelect != null)
 			{
 				//course select year select
-				query = "SELECT * FROM " + TBL_DW_DIM_ENROLLMENT + " WHERE Is_Enrolled='true' AND Course_Id='" + courseSelect +"' AND Enrollment_Date LIKE '"+ yearSelect +"%'";
+				query = "SELECT * FROM " + TBL_DW_DIM_ENROLLMENT + " WHERE Is_Enrolled='true' AND Enrollment_Date LIKE '"+ yearSelect +"%'";
 			}
 			else if(yearSelect != null)
 			{
@@ -144,7 +144,7 @@ public class DataViewConnections extends AbstractOracleConnections
 			else
 			{
 				//Course select all years
-				query = "SELECT * FROM " + TBL_DW_DIM_ENROLLMENT + " WHERE Is_Enrolled='true' AND Course_Id='" + courseSelect +"'";
+				query = "SELECT * FROM " + TBL_DW_DIM_ENROLLMENT + " WHERE Is_Enrolled='true'";
 			}
 		}
 		else
