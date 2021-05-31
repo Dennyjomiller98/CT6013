@@ -412,18 +412,6 @@ public class DataViewConnections extends AbstractOracleConnections
 		return query;
 	}
 
-	public List<DimModulesBean> getDWModules()
-	{
-		//TODO
-		return null;
-	}
-
-	public List<DimSubjectsBean> getDWSubjects()
-	{
-		//TODO
-		return null;
-	}
-
 	private ArrayList<DimStudentsBean> executeStudentsQuery(Connection oracleClient, String query) throws SQLException
 	{
 		ArrayList<DimStudentsBean> allBeans = new ArrayList<>();
@@ -524,4 +512,17 @@ public class DataViewConnections extends AbstractOracleConnections
 		oracleClient.close();
 		return allBeans;
 	}
+
+	public List<DimModulesBean> getDWModules()
+	{
+		//TODO (if needed)
+		return null;
+	}
+
+	public List<DimSubjectsBean> getDWSubjects()
+	{
+		//TODO (if needed)
+		return null;
+	}
+
 }

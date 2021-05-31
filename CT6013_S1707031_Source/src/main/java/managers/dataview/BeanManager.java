@@ -356,6 +356,7 @@ public class BeanManager
 		return ret;
 	}
 
+	/*For Q6*/
 	public DWLoadBean convertTotalEnrollments(List<DimStudentsBean> allStudentsBeans, List<DimEnrollmentsBean> allEnrollmentBeans, List<DimCoursesBean> allCourses)
 	{
 		DWLoadBean ret = new DWLoadBean();
@@ -408,13 +409,16 @@ public class BeanManager
 						List<DWEnrollmentsBean> currentEnrollments = ret.getDWEnrollments();
 
 						String badEnrollmentId = null;
-						for (DWEnrollmentsBean dwEnrollment : currentEnrollments)
+						if(currentEnrollments != null && !currentEnrollments.isEmpty())
 						{
-							//Take most up to date bean
-							if (dwEnrollment.getId().equals(bean.getId()) && enrollmentBean.getIsCurrent().equals("true"))
+							for (DWEnrollmentsBean dwEnrollment : currentEnrollments)
 							{
-								//Replace with existing one
-								badEnrollmentId = dwEnrollment.getId();
+								//Take most up to date bean
+								if (dwEnrollment.getId().equals(bean.getId()) && enrollmentBean.getIsCurrent().equals("true"))
+								{
+									//Replace with existing one
+									badEnrollmentId = dwEnrollment.getId();
+								}
 							}
 						}
 						if(badEnrollmentId != null)

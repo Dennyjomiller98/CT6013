@@ -120,7 +120,7 @@
                         </select>
                         <br/>
 
-                        <input type="submit" value="View" class="btn btn-primary submitButton" style="display: none">
+                        <button type="submit" class="btn btn-primary submitButton" style="display: none">View</button>
                     </form>
                 </div>
 
