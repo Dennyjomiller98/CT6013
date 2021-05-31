@@ -166,7 +166,7 @@ public class BeanManager
 				}
 				for (DimCoursesBean courseBean : allCoursesBeans)
 				{
-					if(courseBean.getModuleIds().contains(assignmentBean.getModule()))
+					if(courseBean.getModuleIds() != null && courseBean.getModuleIds().contains(assignmentBean.getModule()))
 					{
 						matchingCourse = courseBean;
 					}
