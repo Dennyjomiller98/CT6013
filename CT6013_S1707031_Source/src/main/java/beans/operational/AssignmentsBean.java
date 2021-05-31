@@ -1,5 +1,6 @@
 package beans.operational;
 
+import beans.dw.DWAssignmentsBean;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import org.apache.log4j.Logger;
@@ -47,6 +48,25 @@ public class AssignmentsBean
 		}
 	}
 
+	public AssignmentsBean(DWAssignmentsBean bean)
+	{
+		try
+		{
+			fAssignmentId = String.valueOf(bean.getAssignmentId());
+			fStudentId = String.valueOf(bean.getStudentId());
+			fAcademicYear = String.valueOf(bean.getAcademicYear());
+			fModule = String.valueOf(bean.getModule());
+			fSemester = String.valueOf(bean.getSemester());
+			fGrade = String.valueOf(bean.getGrade());
+			fResit = String.valueOf(bean.getResit());
+			fResitGrade = String.valueOf(bean.getResitGrade());
+			fInternational = String.valueOf(bean.getInternational());
+		}
+		catch (Exception e)
+		{
+			LOG.error("Unable to create Bean from DW Bean", e);
+		}
+	}
 	public void setAssignmentId(String id)
 	{
 		fAssignmentId = id;

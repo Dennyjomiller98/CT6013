@@ -1,5 +1,6 @@
 package oracle;
 
+import beans.dw.DWAssignmentsBean;
 import beans.operational.AssignmentsBean;
 import beans.operational.dimensions.*;
 import java.sql.Connection;
@@ -351,8 +352,9 @@ public class DataViewConnections extends AbstractOracleConnections
 			ResultSet resultSet = preparedStatement.executeQuery(query);
 			while (resultSet.next())
 			{
-				AssignmentsBean bean = new AssignmentsBean(resultSet);
-				allBeans.add(bean);
+				DWAssignmentsBean bean = new DWAssignmentsBean(resultSet);
+				AssignmentsBean assignmentBean = new AssignmentsBean(bean);
+				allBeans.add(assignmentBean);
 			}
 		}
 		catch(Exception e)

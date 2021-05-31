@@ -1,7 +1,12 @@
 package beans.dw;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import org.apache.log4j.Logger;
+
 public class DWAssignmentsBean
 {
+	static final Logger LOG = Logger.getLogger(DWAssignmentsBean.class);
 	private String fAssignmentId;
 	private String fStudentId;
 	private String fAcademicYear;
@@ -19,6 +24,26 @@ public class DWAssignmentsBean
 	public DWAssignmentsBean()
 	{
 		//Empty Constructor
+	}
+
+	public DWAssignmentsBean(ResultSet resultSet)
+	{
+		try
+		{
+			fAssignmentId = String.valueOf(resultSet.getString("Assignment_Id"));
+			fStudentId = String.valueOf(resultSet.getString("Student_Id"));
+			fAcademicYear = String.valueOf(resultSet.getString("Academic_Year"));
+			fModule = String.valueOf(resultSet.getString("Module_Id"));
+			fSemester = String.valueOf(resultSet.getString("Semester"));
+			fGrade = String.valueOf(resultSet.getString("Grade"));
+			fResit = String.valueOf(resultSet.getString("Resit"));
+			fResitGrade = String.valueOf(resultSet.getString("Resit_Grade"));
+			fInternational = String.valueOf(resultSet.getString("International"));
+		}
+		catch (SQLException e)
+		{
+			LOG.error("Unable to create Bean from ResultSet", e);
+		}
 	}
 
 	public void setAssignmentId(String id)
