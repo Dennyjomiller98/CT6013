@@ -237,6 +237,17 @@ public class ETLQueryManager implements IQueryManager
 	public DWLoadBean getPassRateAllTutorsAllCoursesSelectedYear(String yearSelect)
 	{
 		DWLoadBean ret= new DWLoadBean();
+		DataViewConnections connections = new DataViewConnections();
+		List<AssignmentsBean> dwResults = connections.getDWResults(yearSelect, null, null);
+		List<DimStudentsBean> allStudentBeans = connections.getDWStudents();
+		List<DimTutorsBean> allTutorsBeans = connections.getDWTutors();
+		List<DimCoursesBean> allCourses = connections.getDWCourses();
+		if(dwResults != null && !dwResults.isEmpty() && allStudentBeans != null &&
+				!allStudentBeans.isEmpty() && allTutorsBeans != null && !allTutorsBeans.isEmpty())
+		{
+			BeanManager beanManager = new BeanManager();
+			ret = beanManager.convertGradeAgainstTutor(dwResults, allStudentBeans, allCourses, allTutorsBeans);
+		}
 		return ret;
 	}
 
@@ -244,6 +255,17 @@ public class ETLQueryManager implements IQueryManager
 	public DWLoadBean getPassRateAllTutorsSelectedCourseAllYears(String courseSelect)
 	{
 		DWLoadBean ret= new DWLoadBean();
+		DataViewConnections connections = new DataViewConnections();
+		List<AssignmentsBean> dwResults = connections.getDWResults(null, courseSelect, null);
+		List<DimStudentsBean> allStudentBeans = connections.getDWStudents();
+		List<DimTutorsBean> allTutorsBeans = connections.getDWTutors();
+		List<DimCoursesBean> allCourses = connections.getDWCourses();
+		if(dwResults != null && !dwResults.isEmpty() && allStudentBeans != null &&
+				!allStudentBeans.isEmpty() && allTutorsBeans != null && !allTutorsBeans.isEmpty())
+		{
+			BeanManager beanManager = new BeanManager();
+			ret = beanManager.convertGradeAgainstTutor(dwResults, allStudentBeans, allCourses, allTutorsBeans);
+		}
 		return ret;
 	}
 
@@ -251,6 +273,17 @@ public class ETLQueryManager implements IQueryManager
 	public DWLoadBean getPassRateAllTutorsSelectedCourseSelectedYear(String courseSelect, String yearSelect)
 	{
 		DWLoadBean ret= new DWLoadBean();
+		DataViewConnections connections = new DataViewConnections();
+		List<AssignmentsBean> dwResults = connections.getDWResults(null, courseSelect, yearSelect);
+		List<DimStudentsBean> allStudentBeans = connections.getDWStudents();
+		List<DimTutorsBean> allTutorsBeans = connections.getDWTutors();
+		List<DimCoursesBean> allCourses = connections.getDWCourses();
+		if(dwResults != null && !dwResults.isEmpty() && allStudentBeans != null &&
+				!allStudentBeans.isEmpty() && allTutorsBeans != null && !allTutorsBeans.isEmpty())
+		{
+			BeanManager beanManager = new BeanManager();
+			ret = beanManager.convertGradeAgainstTutor(dwResults, allStudentBeans, allCourses, allTutorsBeans);
+		}
 		return ret;
 	}
 
@@ -258,6 +291,17 @@ public class ETLQueryManager implements IQueryManager
 	public DWLoadBean getPassRateSelectedTutorAllCoursesAllYears(String tutorSelect)
 	{
 		DWLoadBean ret= new DWLoadBean();
+		DataViewConnections connections = new DataViewConnections();
+		List<AssignmentsBean> dwResults = connections.getDWResults(null, null, tutorSelect);
+		List<DimStudentsBean> allStudentBeans = connections.getDWStudents();
+		List<DimTutorsBean> allTutorsBeans = connections.getDWTutors();
+		List<DimCoursesBean> allCourses = connections.getDWCourses();
+		if(dwResults != null && !dwResults.isEmpty() && allStudentBeans != null &&
+				!allStudentBeans.isEmpty() && allTutorsBeans != null && !allTutorsBeans.isEmpty())
+		{
+			BeanManager beanManager = new BeanManager();
+			ret = beanManager.convertGradeAgainstTutor(dwResults, allStudentBeans, allCourses, allTutorsBeans);
+		}
 		return ret;
 	}
 
@@ -265,6 +309,17 @@ public class ETLQueryManager implements IQueryManager
 	public DWLoadBean getPassRateSelectedTutorAllCoursesSelectedYear(String tutorSelect, String yearSelect)
 	{
 		DWLoadBean ret= new DWLoadBean();
+		DataViewConnections connections = new DataViewConnections();
+		List<AssignmentsBean> dwResults = connections.getDWResults(yearSelect, null, tutorSelect);
+		List<DimStudentsBean> allStudentBeans = connections.getDWStudents();
+		List<DimTutorsBean> allTutorsBeans = connections.getDWTutors();
+		List<DimCoursesBean> allCourses = connections.getDWCourses();
+		if(dwResults != null && !dwResults.isEmpty() && allStudentBeans != null &&
+				!allStudentBeans.isEmpty() && allTutorsBeans != null && !allTutorsBeans.isEmpty())
+		{
+			BeanManager beanManager = new BeanManager();
+			ret = beanManager.convertGradeAgainstTutor(dwResults, allStudentBeans, allCourses, allTutorsBeans);
+		}
 		return ret;
 	}
 
@@ -272,6 +327,17 @@ public class ETLQueryManager implements IQueryManager
 	public DWLoadBean getPassRateSelectedTutorSelectedCourseAllYears(String tutorSelect, String courseSelect)
 	{
 		DWLoadBean ret= new DWLoadBean();
+		DataViewConnections connections = new DataViewConnections();
+		List<AssignmentsBean> dwResults = connections.getDWResults(null, courseSelect, tutorSelect);
+		List<DimStudentsBean> allStudentBeans = connections.getDWStudents();
+		List<DimTutorsBean> allTutorsBeans = connections.getDWTutors();
+		List<DimCoursesBean> allCourses = connections.getDWCourses();
+		if(dwResults != null && !dwResults.isEmpty() && allStudentBeans != null &&
+				!allStudentBeans.isEmpty() && allTutorsBeans != null && !allTutorsBeans.isEmpty())
+		{
+			BeanManager beanManager = new BeanManager();
+			ret = beanManager.convertGradeAgainstTutor(dwResults, allStudentBeans, allCourses, allTutorsBeans);
+		}
 		return ret;
 	}
 
@@ -279,6 +345,17 @@ public class ETLQueryManager implements IQueryManager
 	public DWLoadBean getPassRateSelectedTutorSelectedCourseSelectedYear(String tutorSelect, String courseSelect, String yearSelect)
 	{
 		DWLoadBean ret= new DWLoadBean();
+		DataViewConnections connections = new DataViewConnections();
+		List<AssignmentsBean> dwResults = connections.getDWResults(yearSelect, courseSelect, tutorSelect);
+		List<DimStudentsBean> allStudentBeans = connections.getDWStudents();
+		List<DimTutorsBean> allTutorsBeans = connections.getDWTutors();
+		List<DimCoursesBean> allCourses = connections.getDWCourses();
+		if(dwResults != null && !dwResults.isEmpty() && allStudentBeans != null &&
+				!allStudentBeans.isEmpty() && allTutorsBeans != null && !allTutorsBeans.isEmpty())
+		{
+			BeanManager beanManager = new BeanManager();
+			ret = beanManager.convertGradeAgainstTutor(dwResults, allStudentBeans, allCourses, allTutorsBeans);
+		}
 		return ret;
 	}
 
