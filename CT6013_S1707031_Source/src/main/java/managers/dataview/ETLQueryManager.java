@@ -430,57 +430,58 @@ public class ETLQueryManager implements IQueryManager
 	@Override
 	public DWLoadBean getTotalEnrollmentsAllYears()
 	{
-		DWLoadBean ret= new DWLoadBean();
-		DataViewConnections connections = new DataViewConnections();
-		List<DimEnrollmentsBean> allEnrollmentBeans = connections.getDWEnrollmentsSpecifiedYear(null);
-		List<DimStudentsBean> allStudentsBeans = connections.getDWStudents();
-		List<DimCoursesBean> allCourses = connections.getDWCourses();
-		if(allStudentsBeans != null && !allStudentsBeans.isEmpty() && allEnrollmentBeans != null && !allEnrollmentBeans.isEmpty())
-		{
-			BeanManager beanManager = new BeanManager();
-			ret = beanManager.convertTotalEnrollments(allStudentsBeans, allEnrollmentBeans, allCourses);
-		}
-		return ret;
+		return getEnrollmentFigures(null);
 	}
 
 	@Override
 	public DWLoadBean getTotalEnrollmentsSelectedYear(String yearSelect)
 	{
-		DWLoadBean ret= new DWLoadBean();
-		DataViewConnections connections = new DataViewConnections();
-		List<DimEnrollmentsBean> allEnrollmentBeans = connections.getDWEnrollmentsSpecifiedYear(yearSelect);
-		List<DimStudentsBean> allStudentsBeans = connections.getDWStudents();
-		List<DimCoursesBean> allCourses = connections.getDWCourses();
-		if(allStudentsBeans != null && !allStudentsBeans.isEmpty() && allEnrollmentBeans != null && !allEnrollmentBeans.isEmpty())
-		{
-			BeanManager beanManager = new BeanManager();
-			ret = beanManager.convertTotalEnrollments(allStudentsBeans, allEnrollmentBeans, allCourses);
-		}
-		return ret;
+		return getEnrollmentFigures(yearSelect);
+
 	}
 
 	@Override
 	public DWLoadBean getCovidFiguresAgainstAllYears()
 	{
-		DWLoadBean ret= new DWLoadBean();
-		DataViewConnections connections = new DataViewConnections();
-		List<DimEnrollmentsBean> allEnrollmentBeans = connections.getDWEnrollmentsSpecifiedYear(null);
-		List<DimStudentsBean> allStudentsBeans = connections.getDWStudents();
-		List<DimCoursesBean> allCourses = connections.getDWCourses();
-		if(allStudentsBeans != null && !allStudentsBeans.isEmpty() && allEnrollmentBeans != null && !allEnrollmentBeans.isEmpty())
-		{
-			BeanManager beanManager = new BeanManager();
-			ret = beanManager.convertTotalEnrollments(allStudentsBeans, allEnrollmentBeans, allCourses);
-		}
-		return ret;
+		return getEnrollmentFigures(null);
 	}
 
 	@Override
 	public DWLoadBean getCovidFiguresAgainstSelectedYear(String yearSelect)
 	{
 		DWLoadBean ret= new DWLoadBean();
+		DWLoadBean enrollmentFigures = getEnrollmentFigures(null);
+		List<DimEnrollmentsBean> dimEnrollments = enrollmentFigures.getDimEnrollments();
+		if(dimEnrollments != null && !dimEnrollments.isEmpty())
+		{
+			for (DimEnrollmentsBean dimEnrollment : dimEnrollments)
+			{
+				//Add enrollment if selected year, or if 2020/2021 for covid figures
+				if(dimEnrollment.getEnrollmentDate().startsWith(yearSelect)
+						|| dimEnrollment.getEnrollmentDate().startsWith("2020")
+						|| dimEnrollment.getEnrollmentDate().startsWith("2021"))
+				{
+					ret.addDimEnrollments(dimEnrollment);
+				}
+			}
+		}
+		return ret;
+	}
+
+	private DWLoadBean getEnrollmentFigures(String yearSelect)
+	{
+		DWLoadBean ret= new DWLoadBean();
 		DataViewConnections connections = new DataViewConnections();
-		List<DimEnrollmentsBean> allEnrollmentBeans = connections.getDWEnrollmentsSpecifiedYear(yearSelect);
+		List<DimEnrollmentsBean> allEnrollmentBeans;
+		if(yearSelect != null)
+		{
+			allEnrollmentBeans = connections.getDWEnrollmentsSpecifiedYear(yearSelect);
+		}
+		else
+		{
+			allEnrollmentBeans = connections.getDWEnrollmentsSpecifiedYear(null);
+
+		}
 		List<DimStudentsBean> allStudentsBeans = connections.getDWStudents();
 		List<DimCoursesBean> allCourses = connections.getDWCourses();
 		if(allStudentsBeans != null && !allStudentsBeans.isEmpty() && allEnrollmentBeans != null && !allEnrollmentBeans.isEmpty())

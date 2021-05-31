@@ -686,8 +686,9 @@
                             </script>
 
                             <br/>
+                            <h4>The following Table shows the Total Enrollments for selected Year(s): <strong><%=year%></strong></h4>
                             <table class="table table-striped">
-                                <caption style="  display: table-caption; text-align: center;">Total Enrollments Specified Year</caption>
+                                <caption style="  display: table-caption; text-align: center;">Total Enrollments Against COVID-19 Specified Year</caption>
                                 <thead>
                                 <tr>
                                     <th scope="col">#ID</th>
@@ -699,21 +700,27 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <%for (DWEnrollmentsBean enrollment : enrollments)
-                                {%>
-                                <tr>
-                                    <th scope="row"><%=enrollment.getId()%></th>
-                                    <td><%=enrollment.getStudentId()%></td>
-                                    <td><%=enrollment.getStudentFirstname() + " " + enrollment.getStudentSurname()%> </td>
-                                    <td><%=enrollment.getCourseId()%></td>
-                                    <td><%=enrollment.getCourseName()%></td>
-                                    <td><%=enrollment.getEnrollmentDate()%></td>
-                                </tr>
+                                <%
+                                    int totalSelected = 0;
+                                    for (DWEnrollmentsBean enrollment : enrollments)
+                                {
+                                if(enrollment.getEnrollmentDate().startsWith(year)){
+                                totalSelected++;
+                                %>
+                                    <tr>
+                                        <th scope="row"><%=enrollment.getId()%></th>
+                                        <td><%=enrollment.getStudentId()%></td>
+                                        <td><%=enrollment.getStudentFirstname() + " " + enrollment.getStudentSurname()%> </td>
+                                        <td><%=enrollment.getCourseId()%></td>
+                                        <td><%=enrollment.getCourseName()%></td>
+                                        <td><%=enrollment.getEnrollmentDate()%></td>
+                                    </tr>
+                                <%}%>
                                 <%}%>
                                 </tbody>
                             </table>
                             <br/>
-                            <h4>Using Year(s): <strong><%=year%></strong> and Course #: <strong><%=course%></strong>, a total of <%=enrollments.size()%> Enrollment(s) were found.</h4>
+                            <h4>Using Year(s): <strong><%=year%></strong> and Course #: <strong><%=course%></strong>, a total of <%=totalSelected%> Enrollment(s) were found.</h4>
                             <%}%>
                             <%}else{ %>
                             <h4>Using Year(s): <strong><%=year%></strong> and Course #: <strong><%=course%></strong>, no Student Enrollment(s) were found.</h4>
