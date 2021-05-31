@@ -803,7 +803,7 @@
                             <%List<DWEnrollmentsBean> enrollments = (List<DWEnrollmentsBean>) session.getAttribute("enrollmentsBeans");
                                 if(enrollments != null && !enrollments.isEmpty()) {%>
                             <br/>
-                            <h4>Using Year(s): <strong><%=year%></strong> and Course #: <strong><%=course%></strong>, a Total of <strong><%=enrollments.size()%></strong> Student Course Change(s) were found.</h4>
+                            <h4>Using Year(s): <strong><%=year%></strong> and Course #: <strong><%=course%></strong>, a Total of <strong><%=enrollments.size()%></strong> result(s) were found.</h4>
                             <br/>
                             <table class="table table-striped">
                                 <caption style="  display: table-caption; text-align: center;">Total Students Course Changes</caption>
@@ -832,7 +832,7 @@
                                 </tbody>
                             </table>
                             <br/>
-                            <h4>Using Year(s): <strong><%=year%></strong> and Course #: <strong><%=course%></strong>, a total of <%=enrollments.size()%> Course Change(s) were found.</h4>
+                            <h4>Using Year(s): <strong><%=year%></strong> and Course #: <strong><%=course%></strong>, a total of <%=enrollments.size()/2%> Course Change(s) were found.</h4>
                             <%}%>
                             <%}else{ %>
                             <h4>Using Year(s): <strong><%=year%></strong> and Course #: <strong><%=course%></strong>, no Course Changes were found.</h4>
