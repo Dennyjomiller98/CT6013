@@ -634,12 +634,24 @@ public class BeanManager
 		{
 			for (String id : idsToCheck)
 			{
-				loopIdsForCourseChanges(allEnrollmentBeans, ret, id);
+				testloopIdsForCourseChanges(allEnrollmentBeans, ret, id);
+				//loopIdsForCourseChanges(allEnrollmentBeans, ret, id);
 			}
 		}
 		return ret;
 	}
-
+	private void testloopIdsForCourseChanges(List<DimEnrollmentsBean> allEnrollmentBeans, List<DimEnrollmentsBean> ret, String id)
+	{
+		DimEnrollmentsBean oldCourseVal = null;
+		DimEnrollmentsBean newCourseVal = null;
+		for (DimEnrollmentsBean allEnrollmentBean : allEnrollmentBeans)
+		{
+			if(allEnrollmentBean.getEnrollmentId().equals(id))
+			{
+				ret.add(allEnrollmentBean);
+			}
+		}
+	}
 	private void loopIdsForCourseChanges(List<DimEnrollmentsBean> allEnrollmentBeans, List<DimEnrollmentsBean> ret, String id)
 	{
 		DimEnrollmentsBean oldVal = null;
