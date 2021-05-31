@@ -118,7 +118,7 @@ public class DataViewConnections extends AbstractOracleConnections
 		return query;
 	}
 
-	public List<DimEnrollmentsBean> getDWEnrollmentsSpecifiedYear(String yearSelect, String courseSelect)
+	public List<DimEnrollmentsBean> getDWEnrollmentsSpecifiedYear(String yearSelect)
 	{
 		List<DimEnrollmentsBean> ret = new ArrayList<>();
 		setOracleDriver();
@@ -130,7 +130,7 @@ public class DataViewConnections extends AbstractOracleConnections
 			{
 				//Select Query
 				String query;
-				query = getEnrollmentQuerySpecifiedYear(yearSelect, courseSelect);
+				query = getEnrollmentQuerySpecifiedYear(yearSelect);
 
 				//Execute query
 				ArrayList<DimEnrollmentsBean> allBeans = executeEnrollmentsQuery(oracleClient, query);
@@ -155,26 +155,13 @@ public class DataViewConnections extends AbstractOracleConnections
 		return ret;
 	}
 
-	private String getEnrollmentQuerySpecifiedYear(String yearSelect, String courseSelect)
+	private String getEnrollmentQuerySpecifiedYear(String yearSelect)
 	{
 		String query;
-		if(yearSelect != null || courseSelect != null)
+		if(yearSelect != null)
 		{
-			if(yearSelect != null && courseSelect != null)
-			{
-				//course select year select
-				query = "SELECT * FROM " + TBL_DW_DIM_ENROLLMENT + " WHERE Course_Id='" + courseSelect +"' AND Enrollment_Date LIKE '"+ yearSelect +"%'";
-			}
-			else if(yearSelect != null)
-			{
-				//all course year select
-				query = "SELECT * FROM " + TBL_DW_DIM_ENROLLMENT + " WHERE Enrollment_Date LIKE '"+ yearSelect +"%'";
-			}
-			else
-			{
-				//Course select all years
-				query = "SELECT * FROM " + TBL_DW_DIM_ENROLLMENT + " WHERE Course_Id='" + courseSelect +"'";
-			}
+			//all course year select
+			query = "SELECT * FROM " + TBL_DW_DIM_ENROLLMENT + " WHERE Enrollment_Date LIKE '"+ yearSelect +"%'";
 		}
 		else
 		{
