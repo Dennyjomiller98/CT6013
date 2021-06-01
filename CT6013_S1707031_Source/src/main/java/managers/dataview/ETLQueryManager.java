@@ -655,7 +655,7 @@ public class ETLQueryManager implements IQueryManager
 				boolean shouldKeep = false;
 				for (DimEnrollmentsBean enrollBean : allEnrollmentBeans)
 				{
-					if(enrollBean.getCourseId().equals(courseSelect))
+					if(enrollBean.getEnrollmentId().equals(id) && enrollBean.getCourseId().equals(courseSelect))
 					{
 						shouldKeep = true;
 						break;
@@ -665,7 +665,7 @@ public class ETLQueryManager implements IQueryManager
 				{
 					for (DimEnrollmentsBean allEnrollmentBean : allEnrollmentBeans)
 					{
-						if(allEnrollmentBean.getCourseId().equals(id))
+						if(allEnrollmentBean.getEnrollmentId().equals(id))
 						{
 							ret.add(allEnrollmentBean);
 						}
