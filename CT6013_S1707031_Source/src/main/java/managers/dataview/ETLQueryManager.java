@@ -604,7 +604,7 @@ public class ETLQueryManager implements IQueryManager
 	{
 		DWLoadBean ret= new DWLoadBean();
 		DataViewConnections connections = new DataViewConnections();
-		List<DimEnrollmentsBean> allEnrollmentBeans = connections.getDWEnrollmentsCourseChanges(null, courseSelect);
+		List<DimEnrollmentsBean> allEnrollmentBeans = connections.getDWEnrollmentsCourseChanges(null, null);
 		allEnrollmentBeans = filterCourseSelect(allEnrollmentBeans, courseSelect);
 		List<DimStudentsBean> allStudentsBeans = connections.getDWStudents();
 		List<DimCoursesBean> allCourses = connections.getDWCourses();
@@ -621,7 +621,7 @@ public class ETLQueryManager implements IQueryManager
 	{
 		DWLoadBean ret= new DWLoadBean();
 		DataViewConnections connections = new DataViewConnections();
-		List<DimEnrollmentsBean> allEnrollmentBeans = connections.getDWEnrollmentsCourseChanges(yearSelect, courseSelect);
+		List<DimEnrollmentsBean> allEnrollmentBeans = connections.getDWEnrollmentsCourseChanges(yearSelect, null);
 		allEnrollmentBeans = filterCourseSelect(allEnrollmentBeans, courseSelect);
 		List<DimStudentsBean> allStudentsBeans = connections.getDWStudents();
 		List<DimCoursesBean> allCourses = connections.getDWCourses();
