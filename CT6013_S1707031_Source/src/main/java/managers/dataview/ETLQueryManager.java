@@ -652,28 +652,33 @@ public class ETLQueryManager implements IQueryManager
 			//check if changes contain course in question
 			for (String id : notCurrentIds)
 			{
-				boolean shouldKeep = false;
-				for (DimEnrollmentsBean enrollBean : allEnrollmentBeans)
-				{
-					if(enrollBean.getEnrollmentId().equals(id) && enrollBean.getCourseId().equals(courseSelect))
-					{
-						shouldKeep = true;
-						break;
-					}
-				}
-				if (shouldKeep)
-				{
-					for (DimEnrollmentsBean allEnrollmentBean : allEnrollmentBeans)
-					{
-						if(allEnrollmentBean.getEnrollmentId().equals(id))
-						{
-							ret.add(allEnrollmentBean);
-						}
-					}
-				}
+				addMatchingIdBeans(allEnrollmentBeans, courseSelect, ret, id);
 			}
 		}
 		return ret;
+	}
+
+	private void addMatchingIdBeans(List<DimEnrollmentsBean> allEnrollmentBeans, String courseSelect, List<DimEnrollmentsBean> ret, String id)
+	{
+		boolean shouldKeep = false;
+		for (DimEnrollmentsBean enrollBean : allEnrollmentBeans)
+		{
+			if(enrollBean.getEnrollmentId().equals(id) && enrollBean.getCourseId().equals(courseSelect))
+			{
+				shouldKeep = true;
+				break;
+			}
+		}
+		if (shouldKeep)
+		{
+			for (DimEnrollmentsBean allEnrollmentBean : allEnrollmentBeans)
+			{
+				if(allEnrollmentBean.getEnrollmentId().equals(id))
+				{
+					ret.add(allEnrollmentBean);
+				}
+			}
+		}
 	}
 
 	@Override
