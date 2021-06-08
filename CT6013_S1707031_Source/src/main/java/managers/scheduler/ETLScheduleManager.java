@@ -96,7 +96,7 @@ public class ETLScheduleManager extends TimerTask
 				//Load Data
 				boolean loadSuccess = loadHelper.updateDW(loadBean);
 				boolean wasIndexed = loadHelper.indexDW();
-				if(loadSuccess)
+				if(loadSuccess && wasIndexed)
 				{
 					LOG.debug("Database Warehouse ETL Process Complete");
 				}

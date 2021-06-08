@@ -145,7 +145,7 @@ public class LoadHelper
 		}
 		else
 		{
-			LOG.error("An error has occured whilst attempting to index the database");
+			LOG.error("An error has occurred whilst attempting to index the database");
 		}
 		return indexSuccess;
 	}

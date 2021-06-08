@@ -111,7 +111,7 @@ public class ETL extends HttpServlet
 				//Load Data
 				boolean loadSuccess = loadHelper.updateDW(loadBean);
 				boolean wasIndexed = loadHelper.indexDW();
-				if(loadSuccess)
+				if(loadSuccess && wasIndexed)
 				{
 					request.getSession(true).setAttribute("success", "Database Warehouse ETL Process Complete");
 				}
