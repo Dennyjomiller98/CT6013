@@ -985,7 +985,10 @@
 
                         <%--Button to hide table, show form and try again--%>
                         <br/>
-                        <button type="button" class="btn btn-primary newSearch">New Search</button>
+                            <div>
+                                <button type="button" class="btn btn-primary newSearch">New Search</button>
+                            </div>
+                        <br/>
                     </div>
                 <%}%>
             </div>
