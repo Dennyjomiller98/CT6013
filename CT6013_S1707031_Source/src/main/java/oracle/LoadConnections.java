@@ -756,4 +756,65 @@ public class LoadConnections extends AbstractOracleConnections
 		}
 		oracleClient.close();
 	}
+
+	public boolean indexDimStudentsData()
+	{
+		return indexDW(INDEX_STUDENTS, TBL_DW_DIM_STUDENT, INDEX_DIMENSION_ID);
+	}
+
+	public boolean indexDimTutorsData()
+	{
+		return indexDW(INDEX_TUTORS, TBL_DW_DIM_TUTOR, INDEX_DIMENSION_ID);
+	}
+
+	public boolean indexDimModulesData()
+	{
+		return indexDW(INDEX_MODULES, TBL_DW_DIM_MODULE, INDEX_DIMENSION_ID);
+	}
+
+	public boolean indexDimCoursesData()
+	{
+		return indexDW(INDEX_COURSES, TBL_DW_DIM_COURSE, INDEX_DIMENSION_ID);
+	}
+
+	public boolean indexDimSubjectData()
+	{
+		return indexDW(INDEX_SUBJECTS, TBL_DW_DIM_SUBJECT, INDEX_DIMENSION_ID);
+	}
+
+	public boolean indexDimEnrollmentData()
+	{
+		return indexDW(INDEX_ENROLL, TBL_DW_DIM_ENROLLMENT, INDEX_DIMENSION_ID);
+	}
+
+	public boolean indexResultsData()
+	{
+		return indexDW(INDEX_RESULTS, TBL_DW_RESULTS, INDEX_ASSIGNMENT_ID);
+	}
+
+	private boolean indexDW(String indexName, String indexTable, String columnToIndex)
+	{
+		boolean wasSuccess = false;
+		AbstractOracleConnections conn = new AbstractOracleConnections();
+		Connection oracleClient = conn.getDWClient();
+		if(oracleClient != null)
+		{
+			try
+			{
+				String query = "CREATE INDEX " + indexName + " ON " + indexTable + "("+columnToIndex+")";
+				executeAdditionQuery(oracleClient, query);
+				wasSuccess = true;
+			}
+			catch (Exception e)
+			{
+				LOG.error("Error Indexing DW Table", e);
+				wasSuccess = false;
+			}
+		}
+		else
+		{
+			LOG.error("connection failure");
+		}
+		return wasSuccess;
+	}
 }

@@ -49,6 +49,16 @@ public class AbstractOracleConnections implements IOracleConnections
 	public static final String AUTH_COLLECTION = "dw_auth";
 	public static final String USERS_COLLECTION = "dw_users";
 
+	public static final String INDEX_DIMENSION_ID = "Dimension_Id";
+	public static final String INDEX_ASSIGNMENT_ID = "Assignment_Id";
+	public static final String INDEX_STUDENTS = "ind_dw_students";
+	public static final String INDEX_TUTORS = "ind_dw_tutors";
+	public static final String INDEX_MODULES = "ind_dw_modules";
+	public static final String INDEX_COURSES = "ind_dw_courses";
+	public static final String INDEX_SUBJECTS = "ind_dw_subjects";
+	public static final String INDEX_ENROLL = "ind_dw_enrollments";
+	public static final String INDEX_RESULTS = "ind_dw_results";
+
 	private Connection oracleClient;
 
 	protected AbstractOracleConnections()

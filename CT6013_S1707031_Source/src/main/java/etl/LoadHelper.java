@@ -127,6 +127,29 @@ public class LoadHelper
 		return wasTruncated;
 	}
 
+	/*Index the newly populated table, to speed up SELECT/WHERE SQL queries within the DW*/
+	public boolean indexDW()
+	{
+		boolean indexSuccess = false;
+		LoadConnections conn = new LoadConnections();
+		boolean students = conn.indexDimStudentsData();
+		boolean tutors = conn.indexDimTutorsData();
+		boolean modules = conn.indexDimModulesData();
+		boolean courses = conn.indexDimCoursesData();
+		boolean subjects = conn.indexDimSubjectData();
+		boolean enrollments = conn.indexDimEnrollmentData();
+		boolean results = conn.indexResultsData();
+		if(students && tutors && modules && courses && subjects && enrollments && results)
+		{
+			indexSuccess = true;
+		}
+		else
+		{
+			LOG.error("An error has occured whilst attempting to index the database");
+		}
+		return indexSuccess;
+	}
+
 	public boolean updateDW(DWLoadBean loadBean)
 	{
 		boolean loadSuccess = false;
