@@ -28,6 +28,8 @@ public class LoadHelper
 		try
 		{
 			LoadConnections conn = new LoadConnections();
+			//Remove results data and delete indexes
+			conn.removeAllIndexes();
 			wasTruncated = conn.removeResultsData();
 		}
 		catch (SQLException e)

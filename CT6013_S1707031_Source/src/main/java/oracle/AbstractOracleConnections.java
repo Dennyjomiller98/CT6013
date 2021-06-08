@@ -51,6 +51,7 @@ public class AbstractOracleConnections implements IOracleConnections
 
 	public static final String INDEX_DIMENSION_ID = "Dimension_Id";
 	public static final String INDEX_ASSIGNMENT_ID = "Assignment_Id";
+
 	public static final String INDEX_STUDENTS = "ind_dw_students";
 	public static final String INDEX_TUTORS = "ind_dw_tutors";
 	public static final String INDEX_MODULES = "ind_dw_modules";

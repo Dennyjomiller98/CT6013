@@ -817,4 +817,37 @@ public class LoadConnections extends AbstractOracleConnections
 		}
 		return wasSuccess;
 	}
+
+	public void removeAllIndexes()
+	{
+		removeIndex(INDEX_STUDENTS);
+		removeIndex(INDEX_TUTORS);
+		removeIndex(INDEX_MODULES);
+		removeIndex(INDEX_COURSES);
+		removeIndex(INDEX_SUBJECTS);
+		removeIndex(INDEX_ENROLL);
+		removeIndex(INDEX_RESULTS);
+	}
+
+	private void removeIndex(String indexToDrop)
+	{
+		AbstractOracleConnections conn = new AbstractOracleConnections();
+		Connection oracleClient = conn.getDWClient();
+		if(oracleClient != null)
+		{
+			try
+			{
+				String query = "DROP INDEX " + indexToDrop;
+				executeUpdateQuery(oracleClient, query);
+			}
+			catch (Exception e)
+			{
+				LOG.error("Error Indexing DW Table", e);
+			}
+		}
+		else
+		{
+			LOG.error("connection failure");
+		}
+	}
 }
